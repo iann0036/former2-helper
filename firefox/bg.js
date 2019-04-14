@@ -1,8 +1,14 @@
-chrome.runtime.onMessageExternal.addListener(
+browser.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
         if (["127.0.0.1", "former2.com", "www.former2.com"].includes(new URL(sender.url).hostname)) {
+            console.log(sender);
             if (request.action == "ping") {
-                sendResponse(true);
+                sendResponse({
+                    'success': true,
+                    'data': {}
+                });
+                
+                return true;
             } else if (request.action == "configUpdate") {
                 request.obj.credentials = new AWS.Credentials(
                     request.obj.credentials[0],
@@ -16,6 +22,8 @@ chrome.runtime.onMessageExternal.addListener(
                     'success': true,
                     'data': {}
                 });
+                
+                return true;
             } else if (request.action == "serviceAction") {
                 var svc = new AWS[request.service.name](request.service.properties);
 
@@ -33,12 +41,14 @@ chrome.runtime.onMessageExternal.addListener(
                         });
                     }
                 });
+
+                return true;
             } else {
                 console.log("Got unknown request");
                 console.dir(request);
             }
         } else {
-            console.log("Recieved request from non-whitelisted URL: " + sender.url);
+            console.log("Received request from non-whitelisted URL: " + sender.url);
         }
     }
 );
