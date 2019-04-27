@@ -1,7 +1,6 @@
 browser.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
         if (["127.0.0.1", "former2.com", "www.former2.com"].includes(new URL(sender.url).hostname)) {
-            console.log(sender);
             if (request.action == "ping") {
                 sendResponse({
                     'success': true,
