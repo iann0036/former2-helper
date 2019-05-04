@@ -1,12 +1,12 @@
 {
   "name": "Former2 Helper",
-  "version": "0.3",
+  "version": "0.4",
   "manifest_version": 2,
   "description": "Helps avoid CORS issues with former2.com",
   "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
   "background":  {
     "scripts": [
-      "aws-sdk-2.412.0.min.js",
+      "aws-sdk-2.449.0.min.js",
       "bg.js"
     ]
   },
