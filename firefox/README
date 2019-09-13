@@ -1,0 +1,3 @@
+# Notes for Add-on reviewer
+
+The aws-sdk-2.xxx.0.min.js file can be generated at https://sdk.amazonaws.com/builder/js/ with the "Select all versions" option. Also included the base file in this archive.
