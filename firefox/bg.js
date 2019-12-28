@@ -24,22 +24,30 @@ browser.runtime.onMessage.addListener(
                 
                 return true;
             } else if (request.action == "serviceAction") {
-                var svc = new AWS[request.service.name](request.service.properties);
+                try {
+                    var svc = new AWS[request.service.name](request.service.properties);
 
-                svc[request.service_action](request.params, function(err, data) {
-                    if (err) {
-                        sendResponse({
-                            'success': false,
-                            'error': err,
-                            'data': data
-                        });
-                    } else {
-                        sendResponse({
-                            'success': true,
-                            'data': data
-                        });
-                    }
-                });
+                    svc[request.service_action](request.params, function(err, data) {
+                        if (err) {
+                            sendResponse({
+                                'success': false,
+                                'error': err,
+                                'data': data
+                            });
+                        } else {
+                            sendResponse({
+                                'success': true,
+                                'data': data
+                            });
+                        }
+                    });
+                } catch(err) {
+                    sendResponse({
+                        'success': false,
+                        'error': 'The call to the SDK failed. You may need to update the Former2 Helper add-on.',
+                        'data': null
+                    });
+                }
 
                 return true;
             } else {

@@ -20,22 +20,30 @@ chrome.runtime.onMessageExternal.addListener(
                     'data': {}
                 });
             } else if (request.action == "serviceAction") {
-                var svc = new AWS[request.service.name](request.service.properties);
+                try {
+                    var svc = new AWS[request.service.name](request.service.properties);
 
-                svc[request.service_action](request.params, function(err, data) {
-                    if (err) {
-                        sendResponse({
-                            'success': false,
-                            'error': err,
-                            'data': data
-                        });
-                    } else {
-                        sendResponse({
-                            'success': true,
-                            'data': data
-                        });
-                    }
-                });
+                    svc[request.service_action](request.params, function(err, data) {
+                        if (err) {
+                            sendResponse({
+                                'success': false,
+                                'error': err,
+                                'data': data
+                            });
+                        } else {
+                            sendResponse({
+                                'success': true,
+                                'data': data
+                            });
+                        }
+                    });
+                } catch(err) {
+                    sendResponse({
+                        'success': false,
+                        'error': 'The call to the SDK failed. You may need to update the Former2 Helper extension.',
+                        'data': null
+                    });
+                }
             } else {
                 console.log("Got unknown request");
                 console.dir(request);
