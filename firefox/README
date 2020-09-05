@@ -1,3 +1,19 @@
 # Notes for Add-on reviewer
 
-The aws-sdk-2.xxx.0.min.js file can be generated at https://sdk.amazonaws.com/builder/js/ with the "Select all services" option. Also included the base file in this archive.
+The aws-sdk-2.xxx.0.min.js file can be generated at https://sdk.amazonaws.com/builder/js/ with the "Select all services" option, then removing the following services:
+
+* Bracket
+* AppFlow
+* IVS
+* HoneyCode
+* KinesisVideoSignalingChannels
+* ConnectParticipant
+* ComprehendMedical
+* Comprehend
+* Translate
+* Rekognition
+* MTurk
+
+Note the build time on the page can be a few minutes. Also included the base file (Development) in this archive.
+
+Credentials are available on the whiteboard.
