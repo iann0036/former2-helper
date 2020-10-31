@@ -2,9 +2,8 @@
 
 The aws-sdk-2.xxx.0.min.js file can be generated at https://sdk.amazonaws.com/builder/js/ with the "Select all services" option, then removing the following services:
 
+* TimestreamWrite
 * Bracket
-* AppFlow
-* IVS
 * HoneyCode
 * KinesisVideoSignalingChannels
 * ConnectParticipant
@@ -13,6 +12,17 @@ The aws-sdk-2.xxx.0.min.js file can be generated at https://sdk.amazonaws.com/bu
 * Translate
 * Rekognition
 * MTurk
+* MarketplaceCommerceAnalytics
+* AugmentedAIRuntime
+* WorkMailMessageFlow
+* RDSDataService
+* Chime
+* AlexaForBusiness
+* SageMakerRuntime
+* Snowball
+* LexRuntime
+* CloudSearch
+* CloudSearchDomain
 
 Note the build time on the page can be a few minutes. Also included the base file (Development) in this archive.
 
