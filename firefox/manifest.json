@@ -1,15 +1,16 @@
 {
   "name": "Former2 Helper",
-  "version": "1.32",
+  "version": "1.34",
   "manifest_version": 2,
   "description": "Helps avoid CORS issues with former2.com",
   "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
   "background":  {
     "scripts": [
-      "aws-sdk-2.792.0-part1.js",
-      "aws-sdk-2.792.0-part2.js",
-      "aws-sdk-2.792.0-part3.js",
-      "aws-sdk-2.792.0-part4.js",
+      "aws-sdk-2.814.0-part1.js",
+      "aws-sdk-2.814.0-part2.js",
+      "aws-sdk-2.814.0-part3.js",
+      "aws-sdk-2.814.0-part4.js",
+      "aws-sdk-2.814.0-part5.js",
       "bg.js"
     ]
   },
