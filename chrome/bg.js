@@ -40,7 +40,7 @@ chrome.runtime.onMessageExternal.addListener(
                 } catch(err) {
                     sendResponse({
                         'success': false,
-                        'error': 'The call to the SDK failed. You may need to update the Former2 Helper extension.',
+                        'error': `The call to the SDK failed (${request.service.name}.${request.service_action}). You may need to update the Former2 Helper extension.`,
                         'data': null
                     });
                 }
