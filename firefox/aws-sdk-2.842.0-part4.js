@@ -1,11237 +1,3 @@
-
-
-AWS.apiLoader.services["pinpointemail"] = {};
-
-AWS.PinpointEmail = AWS.Service.defineService("pinpointemail", [ "2018-07-26" ]);
-
-AWS.apiLoader.services["pinpointemail"]["2018-07-26"] = {
-    version: "2.0",
-    metadata: {
-        apiVersion: "2018-07-26",
-        endpointPrefix: "email",
-        jsonVersion: "1.1",
-        protocol: "rest-json",
-        serviceAbbreviation: "Pinpoint Email",
-        serviceFullName: "Amazon Pinpoint Email Service",
-        serviceId: "Pinpoint Email",
-        signatureVersion: "v4",
-        signingName: "ses",
-        uid: "pinpoint-email-2018-07-26"
-    },
-    operations: {
-        CreateConfigurationSet: {
-            http: {
-                requestUri: "/v1/email/configuration-sets"
-            },
-            input: {
-                type: "structure",
-                required: [ "ConfigurationSetName" ],
-                members: {
-                    ConfigurationSetName: {},
-                    TrackingOptions: {
-                        shape: "S3"
-                    },
-                    DeliveryOptions: {
-                        shape: "S5"
-                    },
-                    ReputationOptions: {
-                        shape: "S8"
-                    },
-                    SendingOptions: {
-                        shape: "Sb"
-                    },
-                    Tags: {
-                        shape: "Sc"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {}
-            }
-        },
-        CreateConfigurationSetEventDestination: {
-            http: {
-                requestUri: "/v1/email/configuration-sets/{ConfigurationSetName}/event-destinations"
-            },
-            input: {
-                type: "structure",
-                required: [ "ConfigurationSetName", "EventDestinationName", "EventDestination" ],
-                members: {
-                    ConfigurationSetName: {
-                        location: "uri",
-                        locationName: "ConfigurationSetName"
-                    },
-                    EventDestinationName: {},
-                    EventDestination: {
-                        shape: "Sj"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {}
-            }
-        },
-        CreateDedicatedIpPool: {
-            http: {
-                requestUri: "/v1/email/dedicated-ip-pools"
-            },
-            input: {
-                type: "structure",
-                required: [ "PoolName" ],
-                members: {
-                    PoolName: {},
-                    Tags: {
-                        shape: "Sc"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {}
-            }
-        },
-        CreateDeliverabilityTestReport: {
-            http: {
-                requestUri: "/v1/email/deliverability-dashboard/test"
-            },
-            input: {
-                type: "structure",
-                required: [ "FromEmailAddress", "Content" ],
-                members: {
-                    ReportName: {},
-                    FromEmailAddress: {},
-                    Content: {
-                        shape: "S12"
-                    },
-                    Tags: {
-                        shape: "Sc"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                required: [ "ReportId", "DeliverabilityTestStatus" ],
-                members: {
-                    ReportId: {},
-                    DeliverabilityTestStatus: {}
-                }
-            }
-        },
-        CreateEmailIdentity: {
-            http: {
-                requestUri: "/v1/email/identities"
-            },
-            input: {
-                type: "structure",
-                required: [ "EmailIdentity" ],
-                members: {
-                    EmailIdentity: {},
-                    Tags: {
-                        shape: "Sc"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    IdentityType: {},
-                    VerifiedForSendingStatus: {
-                        type: "boolean"
-                    },
-                    DkimAttributes: {
-                        shape: "S1k"
-                    }
-                }
-            }
-        },
-        DeleteConfigurationSet: {
-            http: {
-                method: "DELETE",
-                requestUri: "/v1/email/configuration-sets/{ConfigurationSetName}"
-            },
-            input: {
-                type: "structure",
-                required: [ "ConfigurationSetName" ],
-                members: {
-                    ConfigurationSetName: {
-                        location: "uri",
-                        locationName: "ConfigurationSetName"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {}
-            }
-        },
-        DeleteConfigurationSetEventDestination: {
-            http: {
-                method: "DELETE",
-                requestUri: "/v1/email/configuration-sets/{ConfigurationSetName}/event-destinations/{EventDestinationName}"
-            },
-            input: {
-                type: "structure",
-                required: [ "ConfigurationSetName", "EventDestinationName" ],
-                members: {
-                    ConfigurationSetName: {
-                        location: "uri",
-                        locationName: "ConfigurationSetName"
-                    },
-                    EventDestinationName: {
-                        location: "uri",
-                        locationName: "EventDestinationName"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {}
-            }
-        },
-        DeleteDedicatedIpPool: {
-            http: {
-                method: "DELETE",
-                requestUri: "/v1/email/dedicated-ip-pools/{PoolName}"
-            },
-            input: {
-                type: "structure",
-                required: [ "PoolName" ],
-                members: {
-                    PoolName: {
-                        location: "uri",
-                        locationName: "PoolName"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {}
-            }
-        },
-        DeleteEmailIdentity: {
-            http: {
-                method: "DELETE",
-                requestUri: "/v1/email/identities/{EmailIdentity}"
-            },
-            input: {
-                type: "structure",
-                required: [ "EmailIdentity" ],
-                members: {
-                    EmailIdentity: {
-                        location: "uri",
-                        locationName: "EmailIdentity"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {}
-            }
-        },
-        GetAccount: {
-            http: {
-                method: "GET",
-                requestUri: "/v1/email/account"
-            },
-            input: {
-                type: "structure",
-                members: {}
-            },
-            output: {
-                type: "structure",
-                members: {
-                    SendQuota: {
-                        type: "structure",
-                        members: {
-                            Max24HourSend: {
-                                type: "double"
-                            },
-                            MaxSendRate: {
-                                type: "double"
-                            },
-                            SentLast24Hours: {
-                                type: "double"
-                            }
-                        }
-                    },
-                    SendingEnabled: {
-                        type: "boolean"
-                    },
-                    DedicatedIpAutoWarmupEnabled: {
-                        type: "boolean"
-                    },
-                    EnforcementStatus: {},
-                    ProductionAccessEnabled: {
-                        type: "boolean"
-                    }
-                }
-            }
-        },
-        GetBlacklistReports: {
-            http: {
-                method: "GET",
-                requestUri: "/v1/email/deliverability-dashboard/blacklist-report"
-            },
-            input: {
-                type: "structure",
-                required: [ "BlacklistItemNames" ],
-                members: {
-                    BlacklistItemNames: {
-                        location: "querystring",
-                        locationName: "BlacklistItemNames",
-                        type: "list",
-                        member: {}
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                required: [ "BlacklistReport" ],
-                members: {
-                    BlacklistReport: {
-                        type: "map",
-                        key: {},
-                        value: {
-                            type: "list",
-                            member: {
-                                type: "structure",
-                                members: {
-                                    RblName: {},
-                                    ListingTime: {
-                                        type: "timestamp"
-                                    },
-                                    Description: {}
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        GetConfigurationSet: {
-            http: {
-                method: "GET",
-                requestUri: "/v1/email/configuration-sets/{ConfigurationSetName}"
-            },
-            input: {
-                type: "structure",
-                required: [ "ConfigurationSetName" ],
-                members: {
-                    ConfigurationSetName: {
-                        location: "uri",
-                        locationName: "ConfigurationSetName"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    ConfigurationSetName: {},
-                    TrackingOptions: {
-                        shape: "S3"
-                    },
-                    DeliveryOptions: {
-                        shape: "S5"
-                    },
-                    ReputationOptions: {
-                        shape: "S8"
-                    },
-                    SendingOptions: {
-                        shape: "Sb"
-                    },
-                    Tags: {
-                        shape: "Sc"
-                    }
-                }
-            }
-        },
-        GetConfigurationSetEventDestinations: {
-            http: {
-                method: "GET",
-                requestUri: "/v1/email/configuration-sets/{ConfigurationSetName}/event-destinations"
-            },
-            input: {
-                type: "structure",
-                required: [ "ConfigurationSetName" ],
-                members: {
-                    ConfigurationSetName: {
-                        location: "uri",
-                        locationName: "ConfigurationSetName"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    EventDestinations: {
-                        type: "list",
-                        member: {
-                            type: "structure",
-                            required: [ "Name", "MatchingEventTypes" ],
-                            members: {
-                                Name: {},
-                                Enabled: {
-                                    type: "boolean"
-                                },
-                                MatchingEventTypes: {
-                                    shape: "Sk"
-                                },
-                                KinesisFirehoseDestination: {
-                                    shape: "Sm"
-                                },
-                                CloudWatchDestination: {
-                                    shape: "So"
-                                },
-                                SnsDestination: {
-                                    shape: "Su"
-                                },
-                                PinpointDestination: {
-                                    shape: "Sv"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        GetDedicatedIp: {
-            http: {
-                method: "GET",
-                requestUri: "/v1/email/dedicated-ips/{IP}"
-            },
-            input: {
-                type: "structure",
-                required: [ "Ip" ],
-                members: {
-                    Ip: {
-                        location: "uri",
-                        locationName: "IP"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    DedicatedIp: {
-                        shape: "S2m"
-                    }
-                }
-            }
-        },
-        GetDedicatedIps: {
-            http: {
-                method: "GET",
-                requestUri: "/v1/email/dedicated-ips"
-            },
-            input: {
-                type: "structure",
-                members: {
-                    PoolName: {
-                        location: "querystring",
-                        locationName: "PoolName"
-                    },
-                    NextToken: {
-                        location: "querystring",
-                        locationName: "NextToken"
-                    },
-                    PageSize: {
-                        location: "querystring",
-                        locationName: "PageSize",
-                        type: "integer"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    DedicatedIps: {
-                        type: "list",
-                        member: {
-                            shape: "S2m"
-                        }
-                    },
-                    NextToken: {}
-                }
-            }
-        },
-        GetDeliverabilityDashboardOptions: {
-            http: {
-                method: "GET",
-                requestUri: "/v1/email/deliverability-dashboard"
-            },
-            input: {
-                type: "structure",
-                members: {}
-            },
-            output: {
-                type: "structure",
-                required: [ "DashboardEnabled" ],
-                members: {
-                    DashboardEnabled: {
-                        type: "boolean"
-                    },
-                    SubscriptionExpiryDate: {
-                        type: "timestamp"
-                    },
-                    AccountStatus: {},
-                    ActiveSubscribedDomains: {
-                        shape: "S2x"
-                    },
-                    PendingExpirationSubscribedDomains: {
-                        shape: "S2x"
-                    }
-                }
-            }
-        },
-        GetDeliverabilityTestReport: {
-            http: {
-                method: "GET",
-                requestUri: "/v1/email/deliverability-dashboard/test-reports/{ReportId}"
-            },
-            input: {
-                type: "structure",
-                required: [ "ReportId" ],
-                members: {
-                    ReportId: {
-                        location: "uri",
-                        locationName: "ReportId"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                required: [ "DeliverabilityTestReport", "OverallPlacement", "IspPlacements" ],
-                members: {
-                    DeliverabilityTestReport: {
-                        shape: "S35"
-                    },
-                    OverallPlacement: {
-                        shape: "S37"
-                    },
-                    IspPlacements: {
-                        type: "list",
-                        member: {
-                            type: "structure",
-                            members: {
-                                IspName: {},
-                                PlacementStatistics: {
-                                    shape: "S37"
-                                }
-                            }
-                        }
-                    },
-                    Message: {},
-                    Tags: {
-                        shape: "Sc"
-                    }
-                }
-            }
-        },
-        GetDomainDeliverabilityCampaign: {
-            http: {
-                method: "GET",
-                requestUri: "/v1/email/deliverability-dashboard/campaigns/{CampaignId}"
-            },
-            input: {
-                type: "structure",
-                required: [ "CampaignId" ],
-                members: {
-                    CampaignId: {
-                        location: "uri",
-                        locationName: "CampaignId"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                required: [ "DomainDeliverabilityCampaign" ],
-                members: {
-                    DomainDeliverabilityCampaign: {
-                        shape: "S3f"
-                    }
-                }
-            }
-        },
-        GetDomainStatisticsReport: {
-            http: {
-                method: "GET",
-                requestUri: "/v1/email/deliverability-dashboard/statistics-report/{Domain}"
-            },
-            input: {
-                type: "structure",
-                required: [ "Domain", "StartDate", "EndDate" ],
-                members: {
-                    Domain: {
-                        location: "uri",
-                        locationName: "Domain"
-                    },
-                    StartDate: {
-                        location: "querystring",
-                        locationName: "StartDate",
-                        type: "timestamp"
-                    },
-                    EndDate: {
-                        location: "querystring",
-                        locationName: "EndDate",
-                        type: "timestamp"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                required: [ "OverallVolume", "DailyVolumes" ],
-                members: {
-                    OverallVolume: {
-                        type: "structure",
-                        members: {
-                            VolumeStatistics: {
-                                shape: "S3p"
-                            },
-                            ReadRatePercent: {
-                                type: "double"
-                            },
-                            DomainIspPlacements: {
-                                shape: "S3q"
-                            }
-                        }
-                    },
-                    DailyVolumes: {
-                        type: "list",
-                        member: {
-                            type: "structure",
-                            members: {
-                                StartDate: {
-                                    type: "timestamp"
-                                },
-                                VolumeStatistics: {
-                                    shape: "S3p"
-                                },
-                                DomainIspPlacements: {
-                                    shape: "S3q"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        GetEmailIdentity: {
-            http: {
-                method: "GET",
-                requestUri: "/v1/email/identities/{EmailIdentity}"
-            },
-            input: {
-                type: "structure",
-                required: [ "EmailIdentity" ],
-                members: {
-                    EmailIdentity: {
-                        location: "uri",
-                        locationName: "EmailIdentity"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    IdentityType: {},
-                    FeedbackForwardingStatus: {
-                        type: "boolean"
-                    },
-                    VerifiedForSendingStatus: {
-                        type: "boolean"
-                    },
-                    DkimAttributes: {
-                        shape: "S1k"
-                    },
-                    MailFromAttributes: {
-                        type: "structure",
-                        required: [ "MailFromDomain", "MailFromDomainStatus", "BehaviorOnMxFailure" ],
-                        members: {
-                            MailFromDomain: {},
-                            MailFromDomainStatus: {},
-                            BehaviorOnMxFailure: {}
-                        }
-                    },
-                    Tags: {
-                        shape: "Sc"
-                    }
-                }
-            }
-        },
-        ListConfigurationSets: {
-            http: {
-                method: "GET",
-                requestUri: "/v1/email/configuration-sets"
-            },
-            input: {
-                type: "structure",
-                members: {
-                    NextToken: {
-                        location: "querystring",
-                        locationName: "NextToken"
-                    },
-                    PageSize: {
-                        location: "querystring",
-                        locationName: "PageSize",
-                        type: "integer"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    ConfigurationSets: {
-                        type: "list",
-                        member: {}
-                    },
-                    NextToken: {}
-                }
-            }
-        },
-        ListDedicatedIpPools: {
-            http: {
-                method: "GET",
-                requestUri: "/v1/email/dedicated-ip-pools"
-            },
-            input: {
-                type: "structure",
-                members: {
-                    NextToken: {
-                        location: "querystring",
-                        locationName: "NextToken"
-                    },
-                    PageSize: {
-                        location: "querystring",
-                        locationName: "PageSize",
-                        type: "integer"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    DedicatedIpPools: {
-                        type: "list",
-                        member: {}
-                    },
-                    NextToken: {}
-                }
-            }
-        },
-        ListDeliverabilityTestReports: {
-            http: {
-                method: "GET",
-                requestUri: "/v1/email/deliverability-dashboard/test-reports"
-            },
-            input: {
-                type: "structure",
-                members: {
-                    NextToken: {
-                        location: "querystring",
-                        locationName: "NextToken"
-                    },
-                    PageSize: {
-                        location: "querystring",
-                        locationName: "PageSize",
-                        type: "integer"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                required: [ "DeliverabilityTestReports" ],
-                members: {
-                    DeliverabilityTestReports: {
-                        type: "list",
-                        member: {
-                            shape: "S35"
-                        }
-                    },
-                    NextToken: {}
-                }
-            }
-        },
-        ListDomainDeliverabilityCampaigns: {
-            http: {
-                method: "GET",
-                requestUri: "/v1/email/deliverability-dashboard/domains/{SubscribedDomain}/campaigns"
-            },
-            input: {
-                type: "structure",
-                required: [ "StartDate", "EndDate", "SubscribedDomain" ],
-                members: {
-                    StartDate: {
-                        location: "querystring",
-                        locationName: "StartDate",
-                        type: "timestamp"
-                    },
-                    EndDate: {
-                        location: "querystring",
-                        locationName: "EndDate",
-                        type: "timestamp"
-                    },
-                    SubscribedDomain: {
-                        location: "uri",
-                        locationName: "SubscribedDomain"
-                    },
-                    NextToken: {
-                        location: "querystring",
-                        locationName: "NextToken"
-                    },
-                    PageSize: {
-                        location: "querystring",
-                        locationName: "PageSize",
-                        type: "integer"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                required: [ "DomainDeliverabilityCampaigns" ],
-                members: {
-                    DomainDeliverabilityCampaigns: {
-                        type: "list",
-                        member: {
-                            shape: "S3f"
-                        }
-                    },
-                    NextToken: {}
-                }
-            }
-        },
-        ListEmailIdentities: {
-            http: {
-                method: "GET",
-                requestUri: "/v1/email/identities"
-            },
-            input: {
-                type: "structure",
-                members: {
-                    NextToken: {
-                        location: "querystring",
-                        locationName: "NextToken"
-                    },
-                    PageSize: {
-                        location: "querystring",
-                        locationName: "PageSize",
-                        type: "integer"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    EmailIdentities: {
-                        type: "list",
-                        member: {
-                            type: "structure",
-                            members: {
-                                IdentityType: {},
-                                IdentityName: {},
-                                SendingEnabled: {
-                                    type: "boolean"
-                                }
-                            }
-                        }
-                    },
-                    NextToken: {}
-                }
-            }
-        },
-        ListTagsForResource: {
-            http: {
-                method: "GET",
-                requestUri: "/v1/email/tags"
-            },
-            input: {
-                type: "structure",
-                required: [ "ResourceArn" ],
-                members: {
-                    ResourceArn: {
-                        location: "querystring",
-                        locationName: "ResourceArn"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                required: [ "Tags" ],
-                members: {
-                    Tags: {
-                        shape: "Sc"
-                    }
-                }
-            }
-        },
-        PutAccountDedicatedIpWarmupAttributes: {
-            http: {
-                method: "PUT",
-                requestUri: "/v1/email/account/dedicated-ips/warmup"
-            },
-            input: {
-                type: "structure",
-                members: {
-                    AutoWarmupEnabled: {
-                        type: "boolean"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {}
-            }
-        },
-        PutAccountSendingAttributes: {
-            http: {
-                method: "PUT",
-                requestUri: "/v1/email/account/sending"
-            },
-            input: {
-                type: "structure",
-                members: {
-                    SendingEnabled: {
-                        type: "boolean"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {}
-            }
-        },
-        PutConfigurationSetDeliveryOptions: {
-            http: {
-                method: "PUT",
-                requestUri: "/v1/email/configuration-sets/{ConfigurationSetName}/delivery-options"
-            },
-            input: {
-                type: "structure",
-                required: [ "ConfigurationSetName" ],
-                members: {
-                    ConfigurationSetName: {
-                        location: "uri",
-                        locationName: "ConfigurationSetName"
-                    },
-                    TlsPolicy: {},
-                    SendingPoolName: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {}
-            }
-        },
-        PutConfigurationSetReputationOptions: {
-            http: {
-                method: "PUT",
-                requestUri: "/v1/email/configuration-sets/{ConfigurationSetName}/reputation-options"
-            },
-            input: {
-                type: "structure",
-                required: [ "ConfigurationSetName" ],
-                members: {
-                    ConfigurationSetName: {
-                        location: "uri",
-                        locationName: "ConfigurationSetName"
-                    },
-                    ReputationMetricsEnabled: {
-                        type: "boolean"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {}
-            }
-        },
-        PutConfigurationSetSendingOptions: {
-            http: {
-                method: "PUT",
-                requestUri: "/v1/email/configuration-sets/{ConfigurationSetName}/sending"
-            },
-            input: {
-                type: "structure",
-                required: [ "ConfigurationSetName" ],
-                members: {
-                    ConfigurationSetName: {
-                        location: "uri",
-                        locationName: "ConfigurationSetName"
-                    },
-                    SendingEnabled: {
-                        type: "boolean"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {}
-            }
-        },
-        PutConfigurationSetTrackingOptions: {
-            http: {
-                method: "PUT",
-                requestUri: "/v1/email/configuration-sets/{ConfigurationSetName}/tracking-options"
-            },
-            input: {
-                type: "structure",
-                required: [ "ConfigurationSetName" ],
-                members: {
-                    ConfigurationSetName: {
-                        location: "uri",
-                        locationName: "ConfigurationSetName"
-                    },
-                    CustomRedirectDomain: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {}
-            }
-        },
-        PutDedicatedIpInPool: {
-            http: {
-                method: "PUT",
-                requestUri: "/v1/email/dedicated-ips/{IP}/pool"
-            },
-            input: {
-                type: "structure",
-                required: [ "Ip", "DestinationPoolName" ],
-                members: {
-                    Ip: {
-                        location: "uri",
-                        locationName: "IP"
-                    },
-                    DestinationPoolName: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {}
-            }
-        },
-        PutDedicatedIpWarmupAttributes: {
-            http: {
-                method: "PUT",
-                requestUri: "/v1/email/dedicated-ips/{IP}/warmup"
-            },
-            input: {
-                type: "structure",
-                required: [ "Ip", "WarmupPercentage" ],
-                members: {
-                    Ip: {
-                        location: "uri",
-                        locationName: "IP"
-                    },
-                    WarmupPercentage: {
-                        type: "integer"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {}
-            }
-        },
-        PutDeliverabilityDashboardOption: {
-            http: {
-                method: "PUT",
-                requestUri: "/v1/email/deliverability-dashboard"
-            },
-            input: {
-                type: "structure",
-                required: [ "DashboardEnabled" ],
-                members: {
-                    DashboardEnabled: {
-                        type: "boolean"
-                    },
-                    SubscribedDomains: {
-                        shape: "S2x"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {}
-            }
-        },
-        PutEmailIdentityDkimAttributes: {
-            http: {
-                method: "PUT",
-                requestUri: "/v1/email/identities/{EmailIdentity}/dkim"
-            },
-            input: {
-                type: "structure",
-                required: [ "EmailIdentity" ],
-                members: {
-                    EmailIdentity: {
-                        location: "uri",
-                        locationName: "EmailIdentity"
-                    },
-                    SigningEnabled: {
-                        type: "boolean"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {}
-            }
-        },
-        PutEmailIdentityFeedbackAttributes: {
-            http: {
-                method: "PUT",
-                requestUri: "/v1/email/identities/{EmailIdentity}/feedback"
-            },
-            input: {
-                type: "structure",
-                required: [ "EmailIdentity" ],
-                members: {
-                    EmailIdentity: {
-                        location: "uri",
-                        locationName: "EmailIdentity"
-                    },
-                    EmailForwardingEnabled: {
-                        type: "boolean"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {}
-            }
-        },
-        PutEmailIdentityMailFromAttributes: {
-            http: {
-                method: "PUT",
-                requestUri: "/v1/email/identities/{EmailIdentity}/mail-from"
-            },
-            input: {
-                type: "structure",
-                required: [ "EmailIdentity" ],
-                members: {
-                    EmailIdentity: {
-                        location: "uri",
-                        locationName: "EmailIdentity"
-                    },
-                    MailFromDomain: {},
-                    BehaviorOnMxFailure: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {}
-            }
-        },
-        SendEmail: {
-            http: {
-                requestUri: "/v1/email/outbound-emails"
-            },
-            input: {
-                type: "structure",
-                required: [ "Destination", "Content" ],
-                members: {
-                    FromEmailAddress: {},
-                    Destination: {
-                        type: "structure",
-                        members: {
-                            ToAddresses: {
-                                shape: "S59"
-                            },
-                            CcAddresses: {
-                                shape: "S59"
-                            },
-                            BccAddresses: {
-                                shape: "S59"
-                            }
-                        }
-                    },
-                    ReplyToAddresses: {
-                        shape: "S59"
-                    },
-                    FeedbackForwardingEmailAddress: {},
-                    Content: {
-                        shape: "S12"
-                    },
-                    EmailTags: {
-                        type: "list",
-                        member: {
-                            type: "structure",
-                            required: [ "Name", "Value" ],
-                            members: {
-                                Name: {},
-                                Value: {}
-                            }
-                        }
-                    },
-                    ConfigurationSetName: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    MessageId: {}
-                }
-            }
-        },
-        TagResource: {
-            http: {
-                requestUri: "/v1/email/tags"
-            },
-            input: {
-                type: "structure",
-                required: [ "ResourceArn", "Tags" ],
-                members: {
-                    ResourceArn: {},
-                    Tags: {
-                        shape: "Sc"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {}
-            }
-        },
-        UntagResource: {
-            http: {
-                method: "DELETE",
-                requestUri: "/v1/email/tags"
-            },
-            input: {
-                type: "structure",
-                required: [ "ResourceArn", "TagKeys" ],
-                members: {
-                    ResourceArn: {
-                        location: "querystring",
-                        locationName: "ResourceArn"
-                    },
-                    TagKeys: {
-                        location: "querystring",
-                        locationName: "TagKeys",
-                        type: "list",
-                        member: {}
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {}
-            }
-        },
-        UpdateConfigurationSetEventDestination: {
-            http: {
-                method: "PUT",
-                requestUri: "/v1/email/configuration-sets/{ConfigurationSetName}/event-destinations/{EventDestinationName}"
-            },
-            input: {
-                type: "structure",
-                required: [ "ConfigurationSetName", "EventDestinationName", "EventDestination" ],
-                members: {
-                    ConfigurationSetName: {
-                        location: "uri",
-                        locationName: "ConfigurationSetName"
-                    },
-                    EventDestinationName: {
-                        location: "uri",
-                        locationName: "EventDestinationName"
-                    },
-                    EventDestination: {
-                        shape: "Sj"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {}
-            }
-        }
-    },
-    shapes: {
-        S3: {
-            type: "structure",
-            required: [ "CustomRedirectDomain" ],
-            members: {
-                CustomRedirectDomain: {}
-            }
-        },
-        S5: {
-            type: "structure",
-            members: {
-                TlsPolicy: {},
-                SendingPoolName: {}
-            }
-        },
-        S8: {
-            type: "structure",
-            members: {
-                ReputationMetricsEnabled: {
-                    type: "boolean"
-                },
-                LastFreshStart: {
-                    type: "timestamp"
-                }
-            }
-        },
-        Sb: {
-            type: "structure",
-            members: {
-                SendingEnabled: {
-                    type: "boolean"
-                }
-            }
-        },
-        Sc: {
-            type: "list",
-            member: {
-                type: "structure",
-                required: [ "Key", "Value" ],
-                members: {
-                    Key: {},
-                    Value: {}
-                }
-            }
-        },
-        Sj: {
-            type: "structure",
-            members: {
-                Enabled: {
-                    type: "boolean"
-                },
-                MatchingEventTypes: {
-                    shape: "Sk"
-                },
-                KinesisFirehoseDestination: {
-                    shape: "Sm"
-                },
-                CloudWatchDestination: {
-                    shape: "So"
-                },
-                SnsDestination: {
-                    shape: "Su"
-                },
-                PinpointDestination: {
-                    shape: "Sv"
-                }
-            }
-        },
-        Sk: {
-            type: "list",
-            member: {}
-        },
-        Sm: {
-            type: "structure",
-            required: [ "IamRoleArn", "DeliveryStreamArn" ],
-            members: {
-                IamRoleArn: {},
-                DeliveryStreamArn: {}
-            }
-        },
-        So: {
-            type: "structure",
-            required: [ "DimensionConfigurations" ],
-            members: {
-                DimensionConfigurations: {
-                    type: "list",
-                    member: {
-                        type: "structure",
-                        required: [ "DimensionName", "DimensionValueSource", "DefaultDimensionValue" ],
-                        members: {
-                            DimensionName: {},
-                            DimensionValueSource: {},
-                            DefaultDimensionValue: {}
-                        }
-                    }
-                }
-            }
-        },
-        Su: {
-            type: "structure",
-            required: [ "TopicArn" ],
-            members: {
-                TopicArn: {}
-            }
-        },
-        Sv: {
-            type: "structure",
-            members: {
-                ApplicationArn: {}
-            }
-        },
-        S12: {
-            type: "structure",
-            members: {
-                Simple: {
-                    type: "structure",
-                    required: [ "Subject", "Body" ],
-                    members: {
-                        Subject: {
-                            shape: "S14"
-                        },
-                        Body: {
-                            type: "structure",
-                            members: {
-                                Text: {
-                                    shape: "S14"
-                                },
-                                Html: {
-                                    shape: "S14"
-                                }
-                            }
-                        }
-                    }
-                },
-                Raw: {
-                    type: "structure",
-                    required: [ "Data" ],
-                    members: {
-                        Data: {
-                            type: "blob"
-                        }
-                    }
-                },
-                Template: {
-                    type: "structure",
-                    members: {
-                        TemplateArn: {},
-                        TemplateData: {}
-                    }
-                }
-            }
-        },
-        S14: {
-            type: "structure",
-            required: [ "Data" ],
-            members: {
-                Data: {},
-                Charset: {}
-            }
-        },
-        S1k: {
-            type: "structure",
-            members: {
-                SigningEnabled: {
-                    type: "boolean"
-                },
-                Status: {},
-                Tokens: {
-                    type: "list",
-                    member: {}
-                }
-            }
-        },
-        S2m: {
-            type: "structure",
-            required: [ "Ip", "WarmupStatus", "WarmupPercentage" ],
-            members: {
-                Ip: {},
-                WarmupStatus: {},
-                WarmupPercentage: {
-                    type: "integer"
-                },
-                PoolName: {}
-            }
-        },
-        S2x: {
-            type: "list",
-            member: {
-                type: "structure",
-                members: {
-                    Domain: {},
-                    SubscriptionStartDate: {
-                        type: "timestamp"
-                    },
-                    InboxPlacementTrackingOption: {
-                        type: "structure",
-                        members: {
-                            Global: {
-                                type: "boolean"
-                            },
-                            TrackedIsps: {
-                                type: "list",
-                                member: {}
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        S35: {
-            type: "structure",
-            members: {
-                ReportId: {},
-                ReportName: {},
-                Subject: {},
-                FromEmailAddress: {},
-                CreateDate: {
-                    type: "timestamp"
-                },
-                DeliverabilityTestStatus: {}
-            }
-        },
-        S37: {
-            type: "structure",
-            members: {
-                InboxPercentage: {
-                    type: "double"
-                },
-                SpamPercentage: {
-                    type: "double"
-                },
-                MissingPercentage: {
-                    type: "double"
-                },
-                SpfPercentage: {
-                    type: "double"
-                },
-                DkimPercentage: {
-                    type: "double"
-                }
-            }
-        },
-        S3f: {
-            type: "structure",
-            members: {
-                CampaignId: {},
-                ImageUrl: {},
-                Subject: {},
-                FromAddress: {},
-                SendingIps: {
-                    type: "list",
-                    member: {}
-                },
-                FirstSeenDateTime: {
-                    type: "timestamp"
-                },
-                LastSeenDateTime: {
-                    type: "timestamp"
-                },
-                InboxCount: {
-                    type: "long"
-                },
-                SpamCount: {
-                    type: "long"
-                },
-                ReadRate: {
-                    type: "double"
-                },
-                DeleteRate: {
-                    type: "double"
-                },
-                ReadDeleteRate: {
-                    type: "double"
-                },
-                ProjectedVolume: {
-                    type: "long"
-                },
-                Esps: {
-                    type: "list",
-                    member: {}
-                }
-            }
-        },
-        S3p: {
-            type: "structure",
-            members: {
-                InboxRawCount: {
-                    type: "long"
-                },
-                SpamRawCount: {
-                    type: "long"
-                },
-                ProjectedInbox: {
-                    type: "long"
-                },
-                ProjectedSpam: {
-                    type: "long"
-                }
-            }
-        },
-        S3q: {
-            type: "list",
-            member: {
-                type: "structure",
-                members: {
-                    IspName: {},
-                    InboxRawCount: {
-                        type: "long"
-                    },
-                    SpamRawCount: {
-                        type: "long"
-                    },
-                    InboxPercentage: {
-                        type: "double"
-                    },
-                    SpamPercentage: {
-                        type: "double"
-                    }
-                }
-            }
-        },
-        S59: {
-            type: "list",
-            member: {}
-        }
-    },
-    paginators: {
-        GetDedicatedIps: {
-            input_token: "NextToken",
-            output_token: "NextToken",
-            limit_key: "PageSize"
-        },
-        ListConfigurationSets: {
-            input_token: "NextToken",
-            output_token: "NextToken",
-            limit_key: "PageSize"
-        },
-        ListDedicatedIpPools: {
-            input_token: "NextToken",
-            output_token: "NextToken",
-            limit_key: "PageSize"
-        },
-        ListDeliverabilityTestReports: {
-            input_token: "NextToken",
-            output_token: "NextToken",
-            limit_key: "PageSize"
-        },
-        ListDomainDeliverabilityCampaigns: {
-            input_token: "NextToken",
-            output_token: "NextToken",
-            limit_key: "PageSize"
-        },
-        ListEmailIdentities: {
-            input_token: "NextToken",
-            output_token: "NextToken",
-            limit_key: "PageSize"
-        }
-    }
-};
-
-AWS.apiLoader.services["ram"] = {};
-
-AWS.RAM = AWS.Service.defineService("ram", [ "2018-01-04" ]);
-
-AWS.apiLoader.services["ram"]["2018-01-04"] = {
-    version: "2.0",
-    metadata: {
-        apiVersion: "2018-01-04",
-        endpointPrefix: "ram",
-        jsonVersion: "1.1",
-        protocol: "rest-json",
-        serviceAbbreviation: "RAM",
-        serviceFullName: "AWS Resource Access Manager",
-        serviceId: "RAM",
-        signatureVersion: "v4",
-        uid: "ram-2018-01-04"
-    },
-    operations: {
-        AcceptResourceShareInvitation: {
-            http: {
-                requestUri: "/acceptresourceshareinvitation"
-            },
-            input: {
-                type: "structure",
-                required: [ "resourceShareInvitationArn" ],
-                members: {
-                    resourceShareInvitationArn: {},
-                    clientToken: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    resourceShareInvitation: {
-                        shape: "S4"
-                    },
-                    clientToken: {}
-                }
-            }
-        },
-        AssociateResourceShare: {
-            http: {
-                requestUri: "/associateresourceshare"
-            },
-            input: {
-                type: "structure",
-                required: [ "resourceShareArn" ],
-                members: {
-                    resourceShareArn: {},
-                    resourceArns: {
-                        shape: "Sd"
-                    },
-                    principals: {
-                        shape: "Se"
-                    },
-                    clientToken: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    resourceShareAssociations: {
-                        shape: "S7"
-                    },
-                    clientToken: {}
-                }
-            }
-        },
-        AssociateResourceSharePermission: {
-            http: {
-                requestUri: "/associateresourcesharepermission"
-            },
-            input: {
-                type: "structure",
-                required: [ "resourceShareArn", "permissionArn" ],
-                members: {
-                    resourceShareArn: {},
-                    permissionArn: {},
-                    replace: {
-                        type: "boolean"
-                    },
-                    clientToken: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    returnValue: {
-                        type: "boolean"
-                    },
-                    clientToken: {}
-                }
-            }
-        },
-        CreateResourceShare: {
-            http: {
-                requestUri: "/createresourceshare"
-            },
-            input: {
-                type: "structure",
-                required: [ "name" ],
-                members: {
-                    name: {},
-                    resourceArns: {
-                        shape: "Sd"
-                    },
-                    principals: {
-                        shape: "Se"
-                    },
-                    tags: {
-                        shape: "Sj"
-                    },
-                    allowExternalPrincipals: {
-                        type: "boolean"
-                    },
-                    clientToken: {},
-                    permissionArns: {
-                        type: "list",
-                        member: {}
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    resourceShare: {
-                        shape: "Sp"
-                    },
-                    clientToken: {}
-                }
-            }
-        },
-        DeleteResourceShare: {
-            http: {
-                method: "DELETE",
-                requestUri: "/deleteresourceshare"
-            },
-            input: {
-                type: "structure",
-                required: [ "resourceShareArn" ],
-                members: {
-                    resourceShareArn: {
-                        location: "querystring",
-                        locationName: "resourceShareArn"
-                    },
-                    clientToken: {
-                        location: "querystring",
-                        locationName: "clientToken"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    returnValue: {
-                        type: "boolean"
-                    },
-                    clientToken: {}
-                }
-            }
-        },
-        DisassociateResourceShare: {
-            http: {
-                requestUri: "/disassociateresourceshare"
-            },
-            input: {
-                type: "structure",
-                required: [ "resourceShareArn" ],
-                members: {
-                    resourceShareArn: {},
-                    resourceArns: {
-                        shape: "Sd"
-                    },
-                    principals: {
-                        shape: "Se"
-                    },
-                    clientToken: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    resourceShareAssociations: {
-                        shape: "S7"
-                    },
-                    clientToken: {}
-                }
-            }
-        },
-        DisassociateResourceSharePermission: {
-            http: {
-                requestUri: "/disassociateresourcesharepermission"
-            },
-            input: {
-                type: "structure",
-                required: [ "resourceShareArn", "permissionArn" ],
-                members: {
-                    resourceShareArn: {},
-                    permissionArn: {},
-                    clientToken: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    returnValue: {
-                        type: "boolean"
-                    },
-                    clientToken: {}
-                }
-            }
-        },
-        EnableSharingWithAwsOrganization: {
-            http: {
-                requestUri: "/enablesharingwithawsorganization"
-            },
-            input: {
-                type: "structure",
-                members: {}
-            },
-            output: {
-                type: "structure",
-                members: {
-                    returnValue: {
-                        type: "boolean"
-                    }
-                }
-            }
-        },
-        GetPermission: {
-            http: {
-                requestUri: "/getpermission"
-            },
-            input: {
-                type: "structure",
-                required: [ "permissionArn" ],
-                members: {
-                    permissionArn: {},
-                    permissionVersion: {
-                        type: "integer"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    permission: {
-                        type: "structure",
-                        members: {
-                            arn: {},
-                            version: {},
-                            defaultVersion: {
-                                type: "boolean"
-                            },
-                            name: {},
-                            resourceType: {},
-                            permission: {},
-                            creationTime: {
-                                type: "timestamp"
-                            },
-                            lastUpdatedTime: {
-                                type: "timestamp"
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        GetResourcePolicies: {
-            http: {
-                requestUri: "/getresourcepolicies"
-            },
-            input: {
-                type: "structure",
-                required: [ "resourceArns" ],
-                members: {
-                    resourceArns: {
-                        shape: "Sd"
-                    },
-                    principal: {},
-                    nextToken: {},
-                    maxResults: {
-                        type: "integer"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    policies: {
-                        type: "list",
-                        member: {}
-                    },
-                    nextToken: {}
-                }
-            }
-        },
-        GetResourceShareAssociations: {
-            http: {
-                requestUri: "/getresourceshareassociations"
-            },
-            input: {
-                type: "structure",
-                required: [ "associationType" ],
-                members: {
-                    associationType: {},
-                    resourceShareArns: {
-                        shape: "S1a"
-                    },
-                    resourceArn: {},
-                    principal: {},
-                    associationStatus: {},
-                    nextToken: {},
-                    maxResults: {
-                        type: "integer"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    resourceShareAssociations: {
-                        shape: "S7"
-                    },
-                    nextToken: {}
-                }
-            }
-        },
-        GetResourceShareInvitations: {
-            http: {
-                requestUri: "/getresourceshareinvitations"
-            },
-            input: {
-                type: "structure",
-                members: {
-                    resourceShareInvitationArns: {
-                        type: "list",
-                        member: {}
-                    },
-                    resourceShareArns: {
-                        shape: "S1a"
-                    },
-                    nextToken: {},
-                    maxResults: {
-                        type: "integer"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    resourceShareInvitations: {
-                        type: "list",
-                        member: {
-                            shape: "S4"
-                        }
-                    },
-                    nextToken: {}
-                }
-            }
-        },
-        GetResourceShares: {
-            http: {
-                requestUri: "/getresourceshares"
-            },
-            input: {
-                type: "structure",
-                required: [ "resourceOwner" ],
-                members: {
-                    resourceShareArns: {
-                        shape: "S1a"
-                    },
-                    resourceShareStatus: {},
-                    resourceOwner: {},
-                    name: {},
-                    tagFilters: {
-                        type: "list",
-                        member: {
-                            type: "structure",
-                            members: {
-                                tagKey: {},
-                                tagValues: {
-                                    type: "list",
-                                    member: {}
-                                }
-                            }
-                        }
-                    },
-                    nextToken: {},
-                    maxResults: {
-                        type: "integer"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    resourceShares: {
-                        type: "list",
-                        member: {
-                            shape: "Sp"
-                        }
-                    },
-                    nextToken: {}
-                }
-            }
-        },
-        ListPendingInvitationResources: {
-            http: {
-                requestUri: "/listpendinginvitationresources"
-            },
-            input: {
-                type: "structure",
-                required: [ "resourceShareInvitationArn" ],
-                members: {
-                    resourceShareInvitationArn: {},
-                    nextToken: {},
-                    maxResults: {
-                        type: "integer"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    resources: {
-                        shape: "S1p"
-                    },
-                    nextToken: {}
-                }
-            }
-        },
-        ListPermissions: {
-            http: {
-                requestUri: "/listpermissions"
-            },
-            input: {
-                type: "structure",
-                members: {
-                    resourceType: {},
-                    nextToken: {},
-                    maxResults: {
-                        type: "integer"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    permissions: {
-                        shape: "S1u"
-                    },
-                    nextToken: {}
-                }
-            }
-        },
-        ListPrincipals: {
-            http: {
-                requestUri: "/listprincipals"
-            },
-            input: {
-                type: "structure",
-                required: [ "resourceOwner" ],
-                members: {
-                    resourceOwner: {},
-                    resourceArn: {},
-                    principals: {
-                        shape: "Se"
-                    },
-                    resourceType: {},
-                    resourceShareArns: {
-                        shape: "S1a"
-                    },
-                    nextToken: {},
-                    maxResults: {
-                        type: "integer"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    principals: {
-                        type: "list",
-                        member: {
-                            type: "structure",
-                            members: {
-                                id: {},
-                                resourceShareArn: {},
-                                creationTime: {
-                                    type: "timestamp"
-                                },
-                                lastUpdatedTime: {
-                                    type: "timestamp"
-                                },
-                                external: {
-                                    type: "boolean"
-                                }
-                            }
-                        }
-                    },
-                    nextToken: {}
-                }
-            }
-        },
-        ListResourceSharePermissions: {
-            http: {
-                requestUri: "/listresourcesharepermissions"
-            },
-            input: {
-                type: "structure",
-                required: [ "resourceShareArn" ],
-                members: {
-                    resourceShareArn: {},
-                    nextToken: {},
-                    maxResults: {
-                        type: "integer"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    permissions: {
-                        shape: "S1u"
-                    },
-                    nextToken: {}
-                }
-            }
-        },
-        ListResourceTypes: {
-            http: {
-                requestUri: "/listresourcetypes"
-            },
-            input: {
-                type: "structure",
-                members: {
-                    nextToken: {},
-                    maxResults: {
-                        type: "integer"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    resourceTypes: {
-                        type: "list",
-                        member: {
-                            type: "structure",
-                            members: {
-                                resourceType: {},
-                                serviceName: {}
-                            }
-                        }
-                    },
-                    nextToken: {}
-                }
-            }
-        },
-        ListResources: {
-            http: {
-                requestUri: "/listresources"
-            },
-            input: {
-                type: "structure",
-                required: [ "resourceOwner" ],
-                members: {
-                    resourceOwner: {},
-                    principal: {},
-                    resourceType: {},
-                    resourceArns: {
-                        shape: "Sd"
-                    },
-                    resourceShareArns: {
-                        shape: "S1a"
-                    },
-                    nextToken: {},
-                    maxResults: {
-                        type: "integer"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    resources: {
-                        shape: "S1p"
-                    },
-                    nextToken: {}
-                }
-            }
-        },
-        PromoteResourceShareCreatedFromPolicy: {
-            http: {
-                requestUri: "/promoteresourcesharecreatedfrompolicy"
-            },
-            input: {
-                type: "structure",
-                required: [ "resourceShareArn" ],
-                members: {
-                    resourceShareArn: {
-                        location: "querystring",
-                        locationName: "resourceShareArn"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    returnValue: {
-                        type: "boolean"
-                    }
-                }
-            }
-        },
-        RejectResourceShareInvitation: {
-            http: {
-                requestUri: "/rejectresourceshareinvitation"
-            },
-            input: {
-                type: "structure",
-                required: [ "resourceShareInvitationArn" ],
-                members: {
-                    resourceShareInvitationArn: {},
-                    clientToken: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    resourceShareInvitation: {
-                        shape: "S4"
-                    },
-                    clientToken: {}
-                }
-            }
-        },
-        TagResource: {
-            http: {
-                requestUri: "/tagresource"
-            },
-            input: {
-                type: "structure",
-                required: [ "resourceShareArn", "tags" ],
-                members: {
-                    resourceShareArn: {},
-                    tags: {
-                        shape: "Sj"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {}
-            }
-        },
-        UntagResource: {
-            http: {
-                requestUri: "/untagresource"
-            },
-            input: {
-                type: "structure",
-                required: [ "resourceShareArn", "tagKeys" ],
-                members: {
-                    resourceShareArn: {},
-                    tagKeys: {
-                        type: "list",
-                        member: {}
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {}
-            }
-        },
-        UpdateResourceShare: {
-            http: {
-                requestUri: "/updateresourceshare"
-            },
-            input: {
-                type: "structure",
-                required: [ "resourceShareArn" ],
-                members: {
-                    resourceShareArn: {},
-                    name: {},
-                    allowExternalPrincipals: {
-                        type: "boolean"
-                    },
-                    clientToken: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    resourceShare: {
-                        shape: "Sp"
-                    },
-                    clientToken: {}
-                }
-            }
-        }
-    },
-    shapes: {
-        S4: {
-            type: "structure",
-            members: {
-                resourceShareInvitationArn: {},
-                resourceShareName: {},
-                resourceShareArn: {},
-                senderAccountId: {},
-                receiverAccountId: {},
-                invitationTimestamp: {
-                    type: "timestamp"
-                },
-                status: {},
-                resourceShareAssociations: {
-                    shape: "S7",
-                    deprecated: true,
-                    deprecatedMessage: "This member has been deprecated. Use ListPendingInvitationResources."
-                }
-            }
-        },
-        S7: {
-            type: "list",
-            member: {
-                type: "structure",
-                members: {
-                    resourceShareArn: {},
-                    resourceShareName: {},
-                    associatedEntity: {},
-                    associationType: {},
-                    status: {},
-                    statusMessage: {},
-                    creationTime: {
-                        type: "timestamp"
-                    },
-                    lastUpdatedTime: {
-                        type: "timestamp"
-                    },
-                    external: {
-                        type: "boolean"
-                    }
-                }
-            }
-        },
-        Sd: {
-            type: "list",
-            member: {}
-        },
-        Se: {
-            type: "list",
-            member: {}
-        },
-        Sj: {
-            type: "list",
-            member: {
-                type: "structure",
-                members: {
-                    key: {},
-                    value: {}
-                }
-            }
-        },
-        Sp: {
-            type: "structure",
-            members: {
-                resourceShareArn: {},
-                name: {},
-                owningAccountId: {},
-                allowExternalPrincipals: {
-                    type: "boolean"
-                },
-                status: {},
-                statusMessage: {},
-                tags: {
-                    shape: "Sj"
-                },
-                creationTime: {
-                    type: "timestamp"
-                },
-                lastUpdatedTime: {
-                    type: "timestamp"
-                },
-                featureSet: {}
-            }
-        },
-        S1a: {
-            type: "list",
-            member: {}
-        },
-        S1p: {
-            type: "list",
-            member: {
-                type: "structure",
-                members: {
-                    arn: {},
-                    type: {},
-                    resourceShareArn: {},
-                    resourceGroupArn: {},
-                    status: {},
-                    statusMessage: {},
-                    creationTime: {
-                        type: "timestamp"
-                    },
-                    lastUpdatedTime: {
-                        type: "timestamp"
-                    }
-                }
-            }
-        },
-        S1u: {
-            type: "list",
-            member: {
-                type: "structure",
-                members: {
-                    arn: {},
-                    version: {},
-                    defaultVersion: {
-                        type: "boolean"
-                    },
-                    name: {},
-                    resourceType: {},
-                    status: {},
-                    creationTime: {
-                        type: "timestamp"
-                    },
-                    lastUpdatedTime: {
-                        type: "timestamp"
-                    }
-                }
-            }
-        }
-    },
-    paginators: {
-        GetResourcePolicies: {
-            input_token: "nextToken",
-            output_token: "nextToken",
-            limit_key: "maxResults"
-        },
-        GetResourceShareAssociations: {
-            input_token: "nextToken",
-            output_token: "nextToken",
-            limit_key: "maxResults"
-        },
-        GetResourceShareInvitations: {
-            input_token: "nextToken",
-            output_token: "nextToken",
-            limit_key: "maxResults"
-        },
-        GetResourceShares: {
-            input_token: "nextToken",
-            output_token: "nextToken",
-            limit_key: "maxResults"
-        },
-        ListPendingInvitationResources: {
-            input_token: "nextToken",
-            output_token: "nextToken",
-            limit_key: "maxResults"
-        },
-        ListPrincipals: {
-            input_token: "nextToken",
-            output_token: "nextToken",
-            limit_key: "maxResults"
-        },
-        ListResources: {
-            input_token: "nextToken",
-            output_token: "nextToken",
-            limit_key: "maxResults"
-        }
-    }
-};
-
-AWS.apiLoader.services["route53resolver"] = {};
-
-AWS.Route53Resolver = AWS.Service.defineService("route53resolver", [ "2018-04-01" ]);
-
-AWS.apiLoader.services["route53resolver"]["2018-04-01"] = {
-    version: "2.0",
-    metadata: {
-        apiVersion: "2018-04-01",
-        endpointPrefix: "route53resolver",
-        jsonVersion: "1.1",
-        protocol: "json",
-        serviceAbbreviation: "Route53Resolver",
-        serviceFullName: "Amazon Route 53 Resolver",
-        serviceId: "Route53Resolver",
-        signatureVersion: "v4",
-        targetPrefix: "Route53Resolver",
-        uid: "route53resolver-2018-04-01"
-    },
-    operations: {
-        AssociateResolverEndpointIpAddress: {
-            input: {
-                type: "structure",
-                required: [ "ResolverEndpointId", "IpAddress" ],
-                members: {
-                    ResolverEndpointId: {},
-                    IpAddress: {
-                        shape: "S3"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    ResolverEndpoint: {
-                        shape: "S7"
-                    }
-                }
-            }
-        },
-        AssociateResolverQueryLogConfig: {
-            input: {
-                type: "structure",
-                required: [ "ResolverQueryLogConfigId", "ResourceId" ],
-                members: {
-                    ResolverQueryLogConfigId: {},
-                    ResourceId: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    ResolverQueryLogConfigAssociation: {
-                        shape: "Sj"
-                    }
-                }
-            }
-        },
-        AssociateResolverRule: {
-            input: {
-                type: "structure",
-                required: [ "ResolverRuleId", "VPCId" ],
-                members: {
-                    ResolverRuleId: {},
-                    Name: {},
-                    VPCId: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    ResolverRuleAssociation: {
-                        shape: "Sp"
-                    }
-                }
-            }
-        },
-        CreateResolverEndpoint: {
-            input: {
-                type: "structure",
-                required: [ "CreatorRequestId", "SecurityGroupIds", "Direction", "IpAddresses" ],
-                members: {
-                    CreatorRequestId: {},
-                    Name: {},
-                    SecurityGroupIds: {
-                        shape: "Sb"
-                    },
-                    Direction: {},
-                    IpAddresses: {
-                        type: "list",
-                        member: {
-                            type: "structure",
-                            required: [ "SubnetId" ],
-                            members: {
-                                SubnetId: {},
-                                Ip: {}
-                            }
-                        }
-                    },
-                    Tags: {
-                        shape: "Su"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    ResolverEndpoint: {
-                        shape: "S7"
-                    }
-                }
-            }
-        },
-        CreateResolverQueryLogConfig: {
-            input: {
-                type: "structure",
-                required: [ "Name", "DestinationArn", "CreatorRequestId" ],
-                members: {
-                    Name: {},
-                    DestinationArn: {},
-                    CreatorRequestId: {
-                        idempotencyToken: true
-                    },
-                    Tags: {
-                        shape: "Su"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    ResolverQueryLogConfig: {
-                        shape: "S13"
-                    }
-                }
-            }
-        },
-        CreateResolverRule: {
-            input: {
-                type: "structure",
-                required: [ "CreatorRequestId", "RuleType", "DomainName" ],
-                members: {
-                    CreatorRequestId: {},
-                    Name: {},
-                    RuleType: {},
-                    DomainName: {},
-                    TargetIps: {
-                        shape: "S1b"
-                    },
-                    ResolverEndpointId: {},
-                    Tags: {
-                        shape: "Su"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    ResolverRule: {
-                        shape: "S1f"
-                    }
-                }
-            }
-        },
-        DeleteResolverEndpoint: {
-            input: {
-                type: "structure",
-                required: [ "ResolverEndpointId" ],
-                members: {
-                    ResolverEndpointId: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    ResolverEndpoint: {
-                        shape: "S7"
-                    }
-                }
-            }
-        },
-        DeleteResolverQueryLogConfig: {
-            input: {
-                type: "structure",
-                required: [ "ResolverQueryLogConfigId" ],
-                members: {
-                    ResolverQueryLogConfigId: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    ResolverQueryLogConfig: {
-                        shape: "S13"
-                    }
-                }
-            }
-        },
-        DeleteResolverRule: {
-            input: {
-                type: "structure",
-                required: [ "ResolverRuleId" ],
-                members: {
-                    ResolverRuleId: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    ResolverRule: {
-                        shape: "S1f"
-                    }
-                }
-            }
-        },
-        DisassociateResolverEndpointIpAddress: {
-            input: {
-                type: "structure",
-                required: [ "ResolverEndpointId", "IpAddress" ],
-                members: {
-                    ResolverEndpointId: {},
-                    IpAddress: {
-                        shape: "S3"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    ResolverEndpoint: {
-                        shape: "S7"
-                    }
-                }
-            }
-        },
-        DisassociateResolverQueryLogConfig: {
-            input: {
-                type: "structure",
-                required: [ "ResolverQueryLogConfigId", "ResourceId" ],
-                members: {
-                    ResolverQueryLogConfigId: {},
-                    ResourceId: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    ResolverQueryLogConfigAssociation: {
-                        shape: "Sj"
-                    }
-                }
-            }
-        },
-        DisassociateResolverRule: {
-            input: {
-                type: "structure",
-                required: [ "VPCId", "ResolverRuleId" ],
-                members: {
-                    VPCId: {},
-                    ResolverRuleId: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    ResolverRuleAssociation: {
-                        shape: "Sp"
-                    }
-                }
-            }
-        },
-        GetResolverDnssecConfig: {
-            input: {
-                type: "structure",
-                required: [ "ResourceId" ],
-                members: {
-                    ResourceId: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    ResolverDNSSECConfig: {
-                        shape: "S1v"
-                    }
-                }
-            }
-        },
-        GetResolverEndpoint: {
-            input: {
-                type: "structure",
-                required: [ "ResolverEndpointId" ],
-                members: {
-                    ResolverEndpointId: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    ResolverEndpoint: {
-                        shape: "S7"
-                    }
-                }
-            }
-        },
-        GetResolverQueryLogConfig: {
-            input: {
-                type: "structure",
-                required: [ "ResolverQueryLogConfigId" ],
-                members: {
-                    ResolverQueryLogConfigId: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    ResolverQueryLogConfig: {
-                        shape: "S13"
-                    }
-                }
-            }
-        },
-        GetResolverQueryLogConfigAssociation: {
-            input: {
-                type: "structure",
-                required: [ "ResolverQueryLogConfigAssociationId" ],
-                members: {
-                    ResolverQueryLogConfigAssociationId: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    ResolverQueryLogConfigAssociation: {
-                        shape: "Sj"
-                    }
-                }
-            }
-        },
-        GetResolverQueryLogConfigPolicy: {
-            input: {
-                type: "structure",
-                required: [ "Arn" ],
-                members: {
-                    Arn: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    ResolverQueryLogConfigPolicy: {}
-                }
-            }
-        },
-        GetResolverRule: {
-            input: {
-                type: "structure",
-                required: [ "ResolverRuleId" ],
-                members: {
-                    ResolverRuleId: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    ResolverRule: {
-                        shape: "S1f"
-                    }
-                }
-            }
-        },
-        GetResolverRuleAssociation: {
-            input: {
-                type: "structure",
-                required: [ "ResolverRuleAssociationId" ],
-                members: {
-                    ResolverRuleAssociationId: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    ResolverRuleAssociation: {
-                        shape: "Sp"
-                    }
-                }
-            }
-        },
-        GetResolverRulePolicy: {
-            input: {
-                type: "structure",
-                required: [ "Arn" ],
-                members: {
-                    Arn: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    ResolverRulePolicy: {}
-                }
-            }
-        },
-        ListResolverDnssecConfigs: {
-            input: {
-                type: "structure",
-                members: {
-                    MaxResults: {
-                        type: "integer"
-                    },
-                    NextToken: {},
-                    Filters: {
-                        shape: "S2g"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    NextToken: {},
-                    ResolverDnssecConfigs: {
-                        type: "list",
-                        member: {
-                            shape: "S1v"
-                        }
-                    }
-                }
-            }
-        },
-        ListResolverEndpointIpAddresses: {
-            input: {
-                type: "structure",
-                required: [ "ResolverEndpointId" ],
-                members: {
-                    ResolverEndpointId: {},
-                    MaxResults: {
-                        type: "integer"
-                    },
-                    NextToken: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    NextToken: {},
-                    MaxResults: {
-                        type: "integer"
-                    },
-                    IpAddresses: {
-                        type: "list",
-                        member: {
-                            type: "structure",
-                            members: {
-                                IpId: {},
-                                SubnetId: {},
-                                Ip: {},
-                                Status: {},
-                                StatusMessage: {},
-                                CreationTime: {},
-                                ModificationTime: {}
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        ListResolverEndpoints: {
-            input: {
-                type: "structure",
-                members: {
-                    MaxResults: {
-                        type: "integer"
-                    },
-                    NextToken: {},
-                    Filters: {
-                        shape: "S2g"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    NextToken: {},
-                    MaxResults: {
-                        type: "integer"
-                    },
-                    ResolverEndpoints: {
-                        type: "list",
-                        member: {
-                            shape: "S7"
-                        }
-                    }
-                }
-            }
-        },
-        ListResolverQueryLogConfigAssociations: {
-            input: {
-                type: "structure",
-                members: {
-                    MaxResults: {
-                        type: "integer"
-                    },
-                    NextToken: {},
-                    Filters: {
-                        shape: "S2g"
-                    },
-                    SortBy: {},
-                    SortOrder: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    NextToken: {},
-                    TotalCount: {
-                        type: "integer"
-                    },
-                    TotalFilteredCount: {
-                        type: "integer"
-                    },
-                    ResolverQueryLogConfigAssociations: {
-                        type: "list",
-                        member: {
-                            shape: "Sj"
-                        }
-                    }
-                }
-            }
-        },
-        ListResolverQueryLogConfigs: {
-            input: {
-                type: "structure",
-                members: {
-                    MaxResults: {
-                        type: "integer"
-                    },
-                    NextToken: {},
-                    Filters: {
-                        shape: "S2g"
-                    },
-                    SortBy: {},
-                    SortOrder: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    NextToken: {},
-                    TotalCount: {
-                        type: "integer"
-                    },
-                    TotalFilteredCount: {
-                        type: "integer"
-                    },
-                    ResolverQueryLogConfigs: {
-                        type: "list",
-                        member: {
-                            shape: "S13"
-                        }
-                    }
-                }
-            }
-        },
-        ListResolverRuleAssociations: {
-            input: {
-                type: "structure",
-                members: {
-                    MaxResults: {
-                        type: "integer"
-                    },
-                    NextToken: {},
-                    Filters: {
-                        shape: "S2g"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    NextToken: {},
-                    MaxResults: {
-                        type: "integer"
-                    },
-                    ResolverRuleAssociations: {
-                        type: "list",
-                        member: {
-                            shape: "Sp"
-                        }
-                    }
-                }
-            }
-        },
-        ListResolverRules: {
-            input: {
-                type: "structure",
-                members: {
-                    MaxResults: {
-                        type: "integer"
-                    },
-                    NextToken: {},
-                    Filters: {
-                        shape: "S2g"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    NextToken: {},
-                    MaxResults: {
-                        type: "integer"
-                    },
-                    ResolverRules: {
-                        type: "list",
-                        member: {
-                            shape: "S1f"
-                        }
-                    }
-                }
-            }
-        },
-        ListTagsForResource: {
-            input: {
-                type: "structure",
-                required: [ "ResourceArn" ],
-                members: {
-                    ResourceArn: {},
-                    MaxResults: {
-                        type: "integer"
-                    },
-                    NextToken: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    Tags: {
-                        shape: "Su"
-                    },
-                    NextToken: {}
-                }
-            }
-        },
-        PutResolverQueryLogConfigPolicy: {
-            input: {
-                type: "structure",
-                required: [ "Arn", "ResolverQueryLogConfigPolicy" ],
-                members: {
-                    Arn: {},
-                    ResolverQueryLogConfigPolicy: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    ReturnValue: {
-                        type: "boolean"
-                    }
-                }
-            }
-        },
-        PutResolverRulePolicy: {
-            input: {
-                type: "structure",
-                required: [ "Arn", "ResolverRulePolicy" ],
-                members: {
-                    Arn: {},
-                    ResolverRulePolicy: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    ReturnValue: {
-                        type: "boolean"
-                    }
-                }
-            }
-        },
-        TagResource: {
-            input: {
-                type: "structure",
-                required: [ "ResourceArn", "Tags" ],
-                members: {
-                    ResourceArn: {},
-                    Tags: {
-                        shape: "Su"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {}
-            }
-        },
-        UntagResource: {
-            input: {
-                type: "structure",
-                required: [ "ResourceArn", "TagKeys" ],
-                members: {
-                    ResourceArn: {},
-                    TagKeys: {
-                        type: "list",
-                        member: {}
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {}
-            }
-        },
-        UpdateResolverDnssecConfig: {
-            input: {
-                type: "structure",
-                required: [ "ResourceId", "Validation" ],
-                members: {
-                    ResourceId: {},
-                    Validation: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    ResolverDNSSECConfig: {
-                        shape: "S1v"
-                    }
-                }
-            }
-        },
-        UpdateResolverEndpoint: {
-            input: {
-                type: "structure",
-                required: [ "ResolverEndpointId" ],
-                members: {
-                    ResolverEndpointId: {},
-                    Name: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    ResolverEndpoint: {
-                        shape: "S7"
-                    }
-                }
-            }
-        },
-        UpdateResolverRule: {
-            input: {
-                type: "structure",
-                required: [ "ResolverRuleId", "Config" ],
-                members: {
-                    ResolverRuleId: {},
-                    Config: {
-                        type: "structure",
-                        members: {
-                            Name: {},
-                            TargetIps: {
-                                shape: "S1b"
-                            },
-                            ResolverEndpointId: {}
-                        }
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    ResolverRule: {
-                        shape: "S1f"
-                    }
-                }
-            }
-        }
-    },
-    shapes: {
-        S3: {
-            type: "structure",
-            members: {
-                IpId: {},
-                SubnetId: {},
-                Ip: {}
-            }
-        },
-        S7: {
-            type: "structure",
-            members: {
-                Id: {},
-                CreatorRequestId: {},
-                Arn: {},
-                Name: {},
-                SecurityGroupIds: {
-                    shape: "Sb"
-                },
-                Direction: {},
-                IpAddressCount: {
-                    type: "integer"
-                },
-                HostVPCId: {},
-                Status: {},
-                StatusMessage: {},
-                CreationTime: {},
-                ModificationTime: {}
-            }
-        },
-        Sb: {
-            type: "list",
-            member: {}
-        },
-        Sj: {
-            type: "structure",
-            members: {
-                Id: {},
-                ResolverQueryLogConfigId: {},
-                ResourceId: {},
-                Status: {},
-                Error: {},
-                ErrorMessage: {},
-                CreationTime: {}
-            }
-        },
-        Sp: {
-            type: "structure",
-            members: {
-                Id: {},
-                ResolverRuleId: {},
-                Name: {},
-                VPCId: {},
-                Status: {},
-                StatusMessage: {}
-            }
-        },
-        Su: {
-            type: "list",
-            member: {
-                type: "structure",
-                required: [ "Key", "Value" ],
-                members: {
-                    Key: {},
-                    Value: {}
-                }
-            }
-        },
-        S13: {
-            type: "structure",
-            members: {
-                Id: {},
-                OwnerId: {},
-                Status: {},
-                ShareStatus: {},
-                AssociationCount: {
-                    type: "integer"
-                },
-                Arn: {},
-                Name: {},
-                DestinationArn: {},
-                CreatorRequestId: {},
-                CreationTime: {}
-            }
-        },
-        S1b: {
-            type: "list",
-            member: {
-                type: "structure",
-                required: [ "Ip" ],
-                members: {
-                    Ip: {},
-                    Port: {
-                        type: "integer"
-                    }
-                }
-            }
-        },
-        S1f: {
-            type: "structure",
-            members: {
-                Id: {},
-                CreatorRequestId: {},
-                Arn: {},
-                DomainName: {},
-                Status: {},
-                StatusMessage: {},
-                RuleType: {},
-                Name: {},
-                TargetIps: {
-                    shape: "S1b"
-                },
-                ResolverEndpointId: {},
-                OwnerId: {},
-                ShareStatus: {},
-                CreationTime: {},
-                ModificationTime: {}
-            }
-        },
-        S1v: {
-            type: "structure",
-            members: {
-                Id: {},
-                OwnerId: {},
-                ResourceId: {},
-                ValidationStatus: {}
-            }
-        },
-        S2g: {
-            type: "list",
-            member: {
-                type: "structure",
-                members: {
-                    Name: {},
-                    Values: {
-                        type: "list",
-                        member: {}
-                    }
-                }
-            }
-        }
-    },
-    paginators: {
-        ListResolverDnssecConfigs: {
-            input_token: "NextToken",
-            output_token: "NextToken",
-            limit_key: "MaxResults",
-            result_key: "ResolverDnssecConfigs"
-        },
-        ListResolverEndpointIpAddresses: {
-            input_token: "NextToken",
-            output_token: "NextToken",
-            limit_key: "MaxResults",
-            result_key: "IpAddresses"
-        },
-        ListResolverEndpoints: {
-            input_token: "NextToken",
-            output_token: "NextToken",
-            limit_key: "MaxResults",
-            result_key: "ResolverEndpoints"
-        },
-        ListResolverQueryLogConfigAssociations: {
-            input_token: "NextToken",
-            output_token: "NextToken",
-            limit_key: "MaxResults",
-            result_key: "ResolverQueryLogConfigAssociations"
-        },
-        ListResolverQueryLogConfigs: {
-            input_token: "NextToken",
-            output_token: "NextToken",
-            limit_key: "MaxResults",
-            result_key: "ResolverQueryLogConfigs"
-        },
-        ListResolverRuleAssociations: {
-            input_token: "NextToken",
-            output_token: "NextToken",
-            limit_key: "MaxResults",
-            result_key: "ResolverRuleAssociations"
-        },
-        ListResolverRules: {
-            input_token: "NextToken",
-            output_token: "NextToken",
-            limit_key: "MaxResults",
-            result_key: "ResolverRules"
-        },
-        ListTagsForResource: {
-            input_token: "NextToken",
-            output_token: "NextToken",
-            limit_key: "MaxResults",
-            result_key: "Tags"
-        }
-    }
-};
-
-AWS.apiLoader.services["pinpointsmsvoice"] = {};
-
-AWS.PinpointSMSVoice = AWS.Service.defineService("pinpointsmsvoice", [ "2018-09-05" ]);
-
-AWS.apiLoader.services["pinpointsmsvoice"]["2018-09-05"] = {
-    metadata: {
-        apiVersion: "2018-09-05",
-        endpointPrefix: "sms-voice.pinpoint",
-        signingName: "sms-voice",
-        serviceAbbreviation: "Pinpoint SMS Voice",
-        serviceFullName: "Amazon Pinpoint SMS and Voice Service",
-        serviceId: "Pinpoint SMS Voice",
-        protocol: "rest-json",
-        jsonVersion: "1.1",
-        uid: "pinpoint-sms-voice-2018-09-05",
-        signatureVersion: "v4"
-    },
-    operations: {
-        CreateConfigurationSet: {
-            http: {
-                requestUri: "/v1/sms-voice/configuration-sets",
-                responseCode: 200
-            },
-            input: {
-                type: "structure",
-                members: {
-                    ConfigurationSetName: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {}
-            }
-        },
-        CreateConfigurationSetEventDestination: {
-            http: {
-                requestUri: "/v1/sms-voice/configuration-sets/{ConfigurationSetName}/event-destinations",
-                responseCode: 200
-            },
-            input: {
-                type: "structure",
-                members: {
-                    ConfigurationSetName: {
-                        location: "uri",
-                        locationName: "ConfigurationSetName"
-                    },
-                    EventDestination: {
-                        shape: "S6"
-                    },
-                    EventDestinationName: {}
-                },
-                required: [ "ConfigurationSetName" ]
-            },
-            output: {
-                type: "structure",
-                members: {}
-            }
-        },
-        DeleteConfigurationSet: {
-            http: {
-                method: "DELETE",
-                requestUri: "/v1/sms-voice/configuration-sets/{ConfigurationSetName}",
-                responseCode: 200
-            },
-            input: {
-                type: "structure",
-                members: {
-                    ConfigurationSetName: {
-                        location: "uri",
-                        locationName: "ConfigurationSetName"
-                    }
-                },
-                required: [ "ConfigurationSetName" ]
-            },
-            output: {
-                type: "structure",
-                members: {}
-            }
-        },
-        DeleteConfigurationSetEventDestination: {
-            http: {
-                method: "DELETE",
-                requestUri: "/v1/sms-voice/configuration-sets/{ConfigurationSetName}/event-destinations/{EventDestinationName}",
-                responseCode: 200
-            },
-            input: {
-                type: "structure",
-                members: {
-                    ConfigurationSetName: {
-                        location: "uri",
-                        locationName: "ConfigurationSetName"
-                    },
-                    EventDestinationName: {
-                        location: "uri",
-                        locationName: "EventDestinationName"
-                    }
-                },
-                required: [ "EventDestinationName", "ConfigurationSetName" ]
-            },
-            output: {
-                type: "structure",
-                members: {}
-            }
-        },
-        GetConfigurationSetEventDestinations: {
-            http: {
-                method: "GET",
-                requestUri: "/v1/sms-voice/configuration-sets/{ConfigurationSetName}/event-destinations",
-                responseCode: 200
-            },
-            input: {
-                type: "structure",
-                members: {
-                    ConfigurationSetName: {
-                        location: "uri",
-                        locationName: "ConfigurationSetName"
-                    }
-                },
-                required: [ "ConfigurationSetName" ]
-            },
-            output: {
-                type: "structure",
-                members: {
-                    EventDestinations: {
-                        type: "list",
-                        member: {
-                            type: "structure",
-                            members: {
-                                CloudWatchLogsDestination: {
-                                    shape: "S7"
-                                },
-                                Enabled: {
-                                    type: "boolean"
-                                },
-                                KinesisFirehoseDestination: {
-                                    shape: "Sa"
-                                },
-                                MatchingEventTypes: {
-                                    shape: "Sb"
-                                },
-                                Name: {},
-                                SnsDestination: {
-                                    shape: "Sd"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        ListConfigurationSets: {
-            http: {
-                method: "GET",
-                requestUri: "/v1/sms-voice/configuration-sets",
-                responseCode: 200
-            },
-            input: {
-                type: "structure",
-                members: {
-                    NextToken: {
-                        location: "querystring",
-                        locationName: "NextToken"
-                    },
-                    PageSize: {
-                        location: "querystring",
-                        locationName: "PageSize"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    ConfigurationSets: {
-                        type: "list",
-                        member: {}
-                    },
-                    NextToken: {}
-                }
-            }
-        },
-        SendVoiceMessage: {
-            http: {
-                requestUri: "/v1/sms-voice/voice/message",
-                responseCode: 200
-            },
-            input: {
-                type: "structure",
-                members: {
-                    CallerId: {},
-                    ConfigurationSetName: {},
-                    Content: {
-                        type: "structure",
-                        members: {
-                            CallInstructionsMessage: {
-                                type: "structure",
-                                members: {
-                                    Text: {}
-                                },
-                                required: []
-                            },
-                            PlainTextMessage: {
-                                type: "structure",
-                                members: {
-                                    LanguageCode: {},
-                                    Text: {},
-                                    VoiceId: {}
-                                },
-                                required: []
-                            },
-                            SSMLMessage: {
-                                type: "structure",
-                                members: {
-                                    LanguageCode: {},
-                                    Text: {},
-                                    VoiceId: {}
-                                },
-                                required: []
-                            }
-                        }
-                    },
-                    DestinationPhoneNumber: {},
-                    OriginationPhoneNumber: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    MessageId: {}
-                }
-            }
-        },
-        UpdateConfigurationSetEventDestination: {
-            http: {
-                method: "PUT",
-                requestUri: "/v1/sms-voice/configuration-sets/{ConfigurationSetName}/event-destinations/{EventDestinationName}",
-                responseCode: 200
-            },
-            input: {
-                type: "structure",
-                members: {
-                    ConfigurationSetName: {
-                        location: "uri",
-                        locationName: "ConfigurationSetName"
-                    },
-                    EventDestination: {
-                        shape: "S6"
-                    },
-                    EventDestinationName: {
-                        location: "uri",
-                        locationName: "EventDestinationName"
-                    }
-                },
-                required: [ "EventDestinationName", "ConfigurationSetName" ]
-            },
-            output: {
-                type: "structure",
-                members: {}
-            }
-        }
-    },
-    shapes: {
-        S6: {
-            type: "structure",
-            members: {
-                CloudWatchLogsDestination: {
-                    shape: "S7"
-                },
-                Enabled: {
-                    type: "boolean"
-                },
-                KinesisFirehoseDestination: {
-                    shape: "Sa"
-                },
-                MatchingEventTypes: {
-                    shape: "Sb"
-                },
-                SnsDestination: {
-                    shape: "Sd"
-                }
-            },
-            required: []
-        },
-        S7: {
-            type: "structure",
-            members: {
-                IamRoleArn: {},
-                LogGroupArn: {}
-            },
-            required: []
-        },
-        Sa: {
-            type: "structure",
-            members: {
-                DeliveryStreamArn: {},
-                IamRoleArn: {}
-            },
-            required: []
-        },
-        Sb: {
-            type: "list",
-            member: {}
-        },
-        Sd: {
-            type: "structure",
-            members: {
-                TopicArn: {}
-            },
-            required: []
-        }
-    }
-};
-
-AWS.apiLoader.services["quicksight"] = {};
-
-AWS.QuickSight = AWS.Service.defineService("quicksight", [ "2018-04-01" ]);
-
-AWS.apiLoader.services["quicksight"]["2018-04-01"] = {
-    version: "2.0",
-    metadata: {
-        apiVersion: "2018-04-01",
-        endpointPrefix: "quicksight",
-        jsonVersion: "1.0",
-        protocol: "rest-json",
-        serviceFullName: "Amazon QuickSight",
-        serviceId: "QuickSight",
-        signatureVersion: "v4",
-        uid: "quicksight-2018-04-01"
-    },
-    operations: {
-        CancelIngestion: {
-            http: {
-                method: "DELETE",
-                requestUri: "/accounts/{AwsAccountId}/data-sets/{DataSetId}/ingestions/{IngestionId}"
-            },
-            input: {
-                type: "structure",
-                required: [ "AwsAccountId", "DataSetId", "IngestionId" ],
-                members: {
-                    AwsAccountId: {
-                        location: "uri",
-                        locationName: "AwsAccountId"
-                    },
-                    DataSetId: {
-                        location: "uri",
-                        locationName: "DataSetId"
-                    },
-                    IngestionId: {
-                        location: "uri",
-                        locationName: "IngestionId"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    Arn: {},
-                    IngestionId: {},
-                    RequestId: {},
-                    Status: {
-                        location: "statusCode",
-                        type: "integer"
-                    }
-                }
-            }
-        },
-        CreateAccountCustomization: {
-            http: {
-                requestUri: "/accounts/{AwsAccountId}/customizations"
-            },
-            input: {
-                type: "structure",
-                required: [ "AwsAccountId", "AccountCustomization" ],
-                members: {
-                    AwsAccountId: {
-                        location: "uri",
-                        locationName: "AwsAccountId"
-                    },
-                    Namespace: {
-                        location: "querystring",
-                        locationName: "namespace"
-                    },
-                    AccountCustomization: {
-                        shape: "Sa"
-                    },
-                    Tags: {
-                        shape: "Sb"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    Arn: {},
-                    AwsAccountId: {},
-                    Namespace: {},
-                    AccountCustomization: {
-                        shape: "Sa"
-                    },
-                    RequestId: {},
-                    Status: {
-                        location: "statusCode",
-                        type: "integer"
-                    }
-                }
-            }
-        },
-        CreateAnalysis: {
-            http: {
-                requestUri: "/accounts/{AwsAccountId}/analyses/{AnalysisId}"
-            },
-            input: {
-                type: "structure",
-                required: [ "AwsAccountId", "AnalysisId", "Name", "SourceEntity" ],
-                members: {
-                    AwsAccountId: {
-                        location: "uri",
-                        locationName: "AwsAccountId"
-                    },
-                    AnalysisId: {
-                        location: "uri",
-                        locationName: "AnalysisId"
-                    },
-                    Name: {},
-                    Parameters: {
-                        shape: "Sk"
-                    },
-                    Permissions: {
-                        shape: "S11"
-                    },
-                    SourceEntity: {
-                        shape: "S15"
-                    },
-                    ThemeArn: {},
-                    Tags: {
-                        shape: "Sb"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    Arn: {},
-                    AnalysisId: {},
-                    CreationStatus: {},
-                    Status: {
-                        location: "statusCode",
-                        type: "integer"
-                    },
-                    RequestId: {}
-                }
-            }
-        },
-        CreateDashboard: {
-            http: {
-                requestUri: "/accounts/{AwsAccountId}/dashboards/{DashboardId}"
-            },
-            input: {
-                type: "structure",
-                required: [ "AwsAccountId", "DashboardId", "Name", "SourceEntity" ],
-                members: {
-                    AwsAccountId: {
-                        location: "uri",
-                        locationName: "AwsAccountId"
-                    },
-                    DashboardId: {
-                        location: "uri",
-                        locationName: "DashboardId"
-                    },
-                    Name: {},
-                    Parameters: {
-                        shape: "Sk"
-                    },
-                    Permissions: {
-                        shape: "S11"
-                    },
-                    SourceEntity: {
-                        shape: "S1d"
-                    },
-                    Tags: {
-                        shape: "Sb"
-                    },
-                    VersionDescription: {},
-                    DashboardPublishOptions: {
-                        shape: "S1g"
-                    },
-                    ThemeArn: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    Arn: {},
-                    VersionArn: {},
-                    DashboardId: {},
-                    CreationStatus: {},
-                    Status: {
-                        location: "statusCode",
-                        type: "integer"
-                    },
-                    RequestId: {}
-                }
-            }
-        },
-        CreateDataSet: {
-            http: {
-                requestUri: "/accounts/{AwsAccountId}/data-sets"
-            },
-            input: {
-                type: "structure",
-                required: [ "AwsAccountId", "DataSetId", "Name", "PhysicalTableMap", "ImportMode" ],
-                members: {
-                    AwsAccountId: {
-                        location: "uri",
-                        locationName: "AwsAccountId"
-                    },
-                    DataSetId: {},
-                    Name: {},
-                    PhysicalTableMap: {
-                        shape: "S1q"
-                    },
-                    LogicalTableMap: {
-                        shape: "S2b"
-                    },
-                    ImportMode: {},
-                    ColumnGroups: {
-                        shape: "S35"
-                    },
-                    FieldFolders: {
-                        shape: "S3b"
-                    },
-                    Permissions: {
-                        shape: "S11"
-                    },
-                    RowLevelPermissionDataSet: {
-                        shape: "S3g"
-                    },
-                    ColumnLevelPermissionRules: {
-                        shape: "S3i"
-                    },
-                    Tags: {
-                        shape: "Sb"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    Arn: {},
-                    DataSetId: {},
-                    IngestionArn: {},
-                    IngestionId: {},
-                    RequestId: {},
-                    Status: {
-                        location: "statusCode",
-                        type: "integer"
-                    }
-                }
-            }
-        },
-        CreateDataSource: {
-            http: {
-                requestUri: "/accounts/{AwsAccountId}/data-sources"
-            },
-            input: {
-                type: "structure",
-                required: [ "AwsAccountId", "DataSourceId", "Name", "Type" ],
-                members: {
-                    AwsAccountId: {
-                        location: "uri",
-                        locationName: "AwsAccountId"
-                    },
-                    DataSourceId: {},
-                    Name: {},
-                    Type: {},
-                    DataSourceParameters: {
-                        shape: "S3p"
-                    },
-                    Credentials: {
-                        shape: "S4q"
-                    },
-                    Permissions: {
-                        shape: "S11"
-                    },
-                    VpcConnectionProperties: {
-                        shape: "S4w"
-                    },
-                    SslProperties: {
-                        shape: "S4x"
-                    },
-                    Tags: {
-                        shape: "Sb"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    Arn: {},
-                    DataSourceId: {},
-                    CreationStatus: {},
-                    RequestId: {},
-                    Status: {
-                        location: "statusCode",
-                        type: "integer"
-                    }
-                }
-            }
-        },
-        CreateGroup: {
-            http: {
-                requestUri: "/accounts/{AwsAccountId}/namespaces/{Namespace}/groups"
-            },
-            input: {
-                type: "structure",
-                required: [ "GroupName", "AwsAccountId", "Namespace" ],
-                members: {
-                    GroupName: {},
-                    Description: {},
-                    AwsAccountId: {
-                        location: "uri",
-                        locationName: "AwsAccountId"
-                    },
-                    Namespace: {
-                        location: "uri",
-                        locationName: "Namespace"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    Group: {
-                        shape: "S53"
-                    },
-                    RequestId: {},
-                    Status: {
-                        location: "statusCode",
-                        type: "integer"
-                    }
-                }
-            }
-        },
-        CreateGroupMembership: {
-            http: {
-                method: "PUT",
-                requestUri: "/accounts/{AwsAccountId}/namespaces/{Namespace}/groups/{GroupName}/members/{MemberName}"
-            },
-            input: {
-                type: "structure",
-                required: [ "MemberName", "GroupName", "AwsAccountId", "Namespace" ],
-                members: {
-                    MemberName: {
-                        location: "uri",
-                        locationName: "MemberName"
-                    },
-                    GroupName: {
-                        location: "uri",
-                        locationName: "GroupName"
-                    },
-                    AwsAccountId: {
-                        location: "uri",
-                        locationName: "AwsAccountId"
-                    },
-                    Namespace: {
-                        location: "uri",
-                        locationName: "Namespace"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    GroupMember: {
-                        shape: "S57"
-                    },
-                    RequestId: {},
-                    Status: {
-                        location: "statusCode",
-                        type: "integer"
-                    }
-                }
-            }
-        },
-        CreateIAMPolicyAssignment: {
-            http: {
-                requestUri: "/accounts/{AwsAccountId}/namespaces/{Namespace}/iam-policy-assignments/"
-            },
-            input: {
-                type: "structure",
-                required: [ "AwsAccountId", "AssignmentName", "AssignmentStatus", "Namespace" ],
-                members: {
-                    AwsAccountId: {
-                        location: "uri",
-                        locationName: "AwsAccountId"
-                    },
-                    AssignmentName: {},
-                    AssignmentStatus: {},
-                    PolicyArn: {},
-                    Identities: {
-                        shape: "S5b"
-                    },
-                    Namespace: {
-                        location: "uri",
-                        locationName: "Namespace"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    AssignmentName: {},
-                    AssignmentId: {},
-                    AssignmentStatus: {},
-                    PolicyArn: {},
-                    Identities: {
-                        shape: "S5b"
-                    },
-                    RequestId: {},
-                    Status: {
-                        location: "statusCode",
-                        type: "integer"
-                    }
-                }
-            }
-        },
-        CreateIngestion: {
-            http: {
-                method: "PUT",
-                requestUri: "/accounts/{AwsAccountId}/data-sets/{DataSetId}/ingestions/{IngestionId}"
-            },
-            input: {
-                type: "structure",
-                required: [ "DataSetId", "IngestionId", "AwsAccountId" ],
-                members: {
-                    DataSetId: {
-                        location: "uri",
-                        locationName: "DataSetId"
-                    },
-                    IngestionId: {
-                        location: "uri",
-                        locationName: "IngestionId"
-                    },
-                    AwsAccountId: {
-                        location: "uri",
-                        locationName: "AwsAccountId"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    Arn: {},
-                    IngestionId: {},
-                    IngestionStatus: {},
-                    RequestId: {},
-                    Status: {
-                        location: "statusCode",
-                        type: "integer"
-                    }
-                }
-            }
-        },
-        CreateNamespace: {
-            http: {
-                requestUri: "/accounts/{AwsAccountId}"
-            },
-            input: {
-                type: "structure",
-                required: [ "AwsAccountId", "Namespace", "IdentityStore" ],
-                members: {
-                    AwsAccountId: {
-                        location: "uri",
-                        locationName: "AwsAccountId"
-                    },
-                    Namespace: {},
-                    IdentityStore: {},
-                    Tags: {
-                        shape: "Sb"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    Arn: {},
-                    Name: {},
-                    CapacityRegion: {},
-                    CreationStatus: {},
-                    IdentityStore: {},
-                    RequestId: {},
-                    Status: {
-                        location: "statusCode",
-                        type: "integer"
-                    }
-                }
-            }
-        },
-        CreateTemplate: {
-            http: {
-                requestUri: "/accounts/{AwsAccountId}/templates/{TemplateId}"
-            },
-            input: {
-                type: "structure",
-                required: [ "AwsAccountId", "TemplateId", "SourceEntity" ],
-                members: {
-                    AwsAccountId: {
-                        location: "uri",
-                        locationName: "AwsAccountId"
-                    },
-                    TemplateId: {
-                        location: "uri",
-                        locationName: "TemplateId"
-                    },
-                    Name: {},
-                    Permissions: {
-                        shape: "S11"
-                    },
-                    SourceEntity: {
-                        shape: "S5o"
-                    },
-                    Tags: {
-                        shape: "Sb"
-                    },
-                    VersionDescription: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    Arn: {},
-                    VersionArn: {},
-                    TemplateId: {},
-                    CreationStatus: {},
-                    Status: {
-                        location: "statusCode",
-                        type: "integer"
-                    },
-                    RequestId: {}
-                }
-            }
-        },
-        CreateTemplateAlias: {
-            http: {
-                requestUri: "/accounts/{AwsAccountId}/templates/{TemplateId}/aliases/{AliasName}"
-            },
-            input: {
-                type: "structure",
-                required: [ "AwsAccountId", "TemplateId", "AliasName", "TemplateVersionNumber" ],
-                members: {
-                    AwsAccountId: {
-                        location: "uri",
-                        locationName: "AwsAccountId"
-                    },
-                    TemplateId: {
-                        location: "uri",
-                        locationName: "TemplateId"
-                    },
-                    AliasName: {
-                        location: "uri",
-                        locationName: "AliasName"
-                    },
-                    TemplateVersionNumber: {
-                        type: "long"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    TemplateAlias: {
-                        shape: "S5w"
-                    },
-                    Status: {
-                        location: "statusCode",
-                        type: "integer"
-                    },
-                    RequestId: {}
-                }
-            }
-        },
-        CreateTheme: {
-            http: {
-                requestUri: "/accounts/{AwsAccountId}/themes/{ThemeId}"
-            },
-            input: {
-                type: "structure",
-                required: [ "AwsAccountId", "ThemeId", "Name", "BaseThemeId", "Configuration" ],
-                members: {
-                    AwsAccountId: {
-                        location: "uri",
-                        locationName: "AwsAccountId"
-                    },
-                    ThemeId: {
-                        location: "uri",
-                        locationName: "ThemeId"
-                    },
-                    Name: {},
-                    BaseThemeId: {},
-                    VersionDescription: {},
-                    Configuration: {
-                        shape: "S5z"
-                    },
-                    Permissions: {
-                        shape: "S11"
-                    },
-                    Tags: {
-                        shape: "Sb"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    Arn: {},
-                    VersionArn: {},
-                    ThemeId: {},
-                    CreationStatus: {},
-                    Status: {
-                        location: "statusCode",
-                        type: "integer"
-                    },
-                    RequestId: {}
-                }
-            }
-        },
-        CreateThemeAlias: {
-            http: {
-                requestUri: "/accounts/{AwsAccountId}/themes/{ThemeId}/aliases/{AliasName}"
-            },
-            input: {
-                type: "structure",
-                required: [ "AwsAccountId", "ThemeId", "AliasName", "ThemeVersionNumber" ],
-                members: {
-                    AwsAccountId: {
-                        location: "uri",
-                        locationName: "AwsAccountId"
-                    },
-                    ThemeId: {
-                        location: "uri",
-                        locationName: "ThemeId"
-                    },
-                    AliasName: {
-                        location: "uri",
-                        locationName: "AliasName"
-                    },
-                    ThemeVersionNumber: {
-                        type: "long"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    ThemeAlias: {
-                        shape: "S6e"
-                    },
-                    Status: {
-                        location: "statusCode",
-                        type: "integer"
-                    },
-                    RequestId: {}
-                }
-            }
-        },
-        DeleteAccountCustomization: {
-            http: {
-                method: "DELETE",
-                requestUri: "/accounts/{AwsAccountId}/customizations"
-            },
-            input: {
-                type: "structure",
-                required: [ "AwsAccountId" ],
-                members: {
-                    AwsAccountId: {
-                        location: "uri",
-                        locationName: "AwsAccountId"
-                    },
-                    Namespace: {
-                        location: "querystring",
-                        locationName: "namespace"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    RequestId: {},
-                    Status: {
-                        location: "statusCode",
-                        type: "integer"
-                    }
-                }
-            }
-        },
-        DeleteAnalysis: {
-            http: {
-                method: "DELETE",
-                requestUri: "/accounts/{AwsAccountId}/analyses/{AnalysisId}"
-            },
-            input: {
-                type: "structure",
-                required: [ "AwsAccountId", "AnalysisId" ],
-                members: {
-                    AwsAccountId: {
-                        location: "uri",
-                        locationName: "AwsAccountId"
-                    },
-                    AnalysisId: {
-                        location: "uri",
-                        locationName: "AnalysisId"
-                    },
-                    RecoveryWindowInDays: {
-                        location: "querystring",
-                        locationName: "recovery-window-in-days",
-                        type: "long"
-                    },
-                    ForceDeleteWithoutRecovery: {
-                        location: "querystring",
-                        locationName: "force-delete-without-recovery",
-                        type: "boolean"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    Status: {
-                        location: "statusCode",
-                        type: "integer"
-                    },
-                    Arn: {},
-                    AnalysisId: {},
-                    DeletionTime: {
-                        type: "timestamp"
-                    },
-                    RequestId: {}
-                }
-            }
-        },
-        DeleteDashboard: {
-            http: {
-                method: "DELETE",
-                requestUri: "/accounts/{AwsAccountId}/dashboards/{DashboardId}"
-            },
-            input: {
-                type: "structure",
-                required: [ "AwsAccountId", "DashboardId" ],
-                members: {
-                    AwsAccountId: {
-                        location: "uri",
-                        locationName: "AwsAccountId"
-                    },
-                    DashboardId: {
-                        location: "uri",
-                        locationName: "DashboardId"
-                    },
-                    VersionNumber: {
-                        location: "querystring",
-                        locationName: "version-number",
-                        type: "long"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    Status: {
-                        location: "statusCode",
-                        type: "integer"
-                    },
-                    Arn: {},
-                    DashboardId: {},
-                    RequestId: {}
-                }
-            }
-        },
-        DeleteDataSet: {
-            http: {
-                method: "DELETE",
-                requestUri: "/accounts/{AwsAccountId}/data-sets/{DataSetId}"
-            },
-            input: {
-                type: "structure",
-                required: [ "AwsAccountId", "DataSetId" ],
-                members: {
-                    AwsAccountId: {
-                        location: "uri",
-                        locationName: "AwsAccountId"
-                    },
-                    DataSetId: {
-                        location: "uri",
-                        locationName: "DataSetId"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    Arn: {},
-                    DataSetId: {},
-                    RequestId: {},
-                    Status: {
-                        location: "statusCode",
-                        type: "integer"
-                    }
-                }
-            }
-        },
-        DeleteDataSource: {
-            http: {
-                method: "DELETE",
-                requestUri: "/accounts/{AwsAccountId}/data-sources/{DataSourceId}"
-            },
-            input: {
-                type: "structure",
-                required: [ "AwsAccountId", "DataSourceId" ],
-                members: {
-                    AwsAccountId: {
-                        location: "uri",
-                        locationName: "AwsAccountId"
-                    },
-                    DataSourceId: {
-                        location: "uri",
-                        locationName: "DataSourceId"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    Arn: {},
-                    DataSourceId: {},
-                    RequestId: {},
-                    Status: {
-                        location: "statusCode",
-                        type: "integer"
-                    }
-                }
-            }
-        },
-        DeleteGroup: {
-            http: {
-                method: "DELETE",
-                requestUri: "/accounts/{AwsAccountId}/namespaces/{Namespace}/groups/{GroupName}"
-            },
-            input: {
-                type: "structure",
-                required: [ "GroupName", "AwsAccountId", "Namespace" ],
-                members: {
-                    GroupName: {
-                        location: "uri",
-                        locationName: "GroupName"
-                    },
-                    AwsAccountId: {
-                        location: "uri",
-                        locationName: "AwsAccountId"
-                    },
-                    Namespace: {
-                        location: "uri",
-                        locationName: "Namespace"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    RequestId: {},
-                    Status: {
-                        location: "statusCode",
-                        type: "integer"
-                    }
-                }
-            }
-        },
-        DeleteGroupMembership: {
-            http: {
-                method: "DELETE",
-                requestUri: "/accounts/{AwsAccountId}/namespaces/{Namespace}/groups/{GroupName}/members/{MemberName}"
-            },
-            input: {
-                type: "structure",
-                required: [ "MemberName", "GroupName", "AwsAccountId", "Namespace" ],
-                members: {
-                    MemberName: {
-                        location: "uri",
-                        locationName: "MemberName"
-                    },
-                    GroupName: {
-                        location: "uri",
-                        locationName: "GroupName"
-                    },
-                    AwsAccountId: {
-                        location: "uri",
-                        locationName: "AwsAccountId"
-                    },
-                    Namespace: {
-                        location: "uri",
-                        locationName: "Namespace"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    RequestId: {},
-                    Status: {
-                        location: "statusCode",
-                        type: "integer"
-                    }
-                }
-            }
-        },
-        DeleteIAMPolicyAssignment: {
-            http: {
-                method: "DELETE",
-                requestUri: "/accounts/{AwsAccountId}/namespace/{Namespace}/iam-policy-assignments/{AssignmentName}"
-            },
-            input: {
-                type: "structure",
-                required: [ "AwsAccountId", "AssignmentName", "Namespace" ],
-                members: {
-                    AwsAccountId: {
-                        location: "uri",
-                        locationName: "AwsAccountId"
-                    },
-                    AssignmentName: {
-                        location: "uri",
-                        locationName: "AssignmentName"
-                    },
-                    Namespace: {
-                        location: "uri",
-                        locationName: "Namespace"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    AssignmentName: {},
-                    RequestId: {},
-                    Status: {
-                        location: "statusCode",
-                        type: "integer"
-                    }
-                }
-            }
-        },
-        DeleteNamespace: {
-            http: {
-                method: "DELETE",
-                requestUri: "/accounts/{AwsAccountId}/namespaces/{Namespace}"
-            },
-            input: {
-                type: "structure",
-                required: [ "AwsAccountId", "Namespace" ],
-                members: {
-                    AwsAccountId: {
-                        location: "uri",
-                        locationName: "AwsAccountId"
-                    },
-                    Namespace: {
-                        location: "uri",
-                        locationName: "Namespace"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    RequestId: {},
-                    Status: {
-                        location: "statusCode",
-                        type: "integer"
-                    }
-                }
-            }
-        },
-        DeleteTemplate: {
-            http: {
-                method: "DELETE",
-                requestUri: "/accounts/{AwsAccountId}/templates/{TemplateId}"
-            },
-            input: {
-                type: "structure",
-                required: [ "AwsAccountId", "TemplateId" ],
-                members: {
-                    AwsAccountId: {
-                        location: "uri",
-                        locationName: "AwsAccountId"
-                    },
-                    TemplateId: {
-                        location: "uri",
-                        locationName: "TemplateId"
-                    },
-                    VersionNumber: {
-                        location: "querystring",
-                        locationName: "version-number",
-                        type: "long"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    RequestId: {},
-                    Arn: {},
-                    TemplateId: {},
-                    Status: {
-                        location: "statusCode",
-                        type: "integer"
-                    }
-                }
-            }
-        },
-        DeleteTemplateAlias: {
-            http: {
-                method: "DELETE",
-                requestUri: "/accounts/{AwsAccountId}/templates/{TemplateId}/aliases/{AliasName}"
-            },
-            input: {
-                type: "structure",
-                required: [ "AwsAccountId", "TemplateId", "AliasName" ],
-                members: {
-                    AwsAccountId: {
-                        location: "uri",
-                        locationName: "AwsAccountId"
-                    },
-                    TemplateId: {
-                        location: "uri",
-                        locationName: "TemplateId"
-                    },
-                    AliasName: {
-                        location: "uri",
-                        locationName: "AliasName"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    Status: {
-                        location: "statusCode",
-                        type: "integer"
-                    },
-                    TemplateId: {},
-                    AliasName: {},
-                    Arn: {},
-                    RequestId: {}
-                }
-            }
-        },
-        DeleteTheme: {
-            http: {
-                method: "DELETE",
-                requestUri: "/accounts/{AwsAccountId}/themes/{ThemeId}"
-            },
-            input: {
-                type: "structure",
-                required: [ "AwsAccountId", "ThemeId" ],
-                members: {
-                    AwsAccountId: {
-                        location: "uri",
-                        locationName: "AwsAccountId"
-                    },
-                    ThemeId: {
-                        location: "uri",
-                        locationName: "ThemeId"
-                    },
-                    VersionNumber: {
-                        location: "querystring",
-                        locationName: "version-number",
-                        type: "long"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    Arn: {},
-                    RequestId: {},
-                    Status: {
-                        location: "statusCode",
-                        type: "integer"
-                    },
-                    ThemeId: {}
-                }
-            }
-        },
-        DeleteThemeAlias: {
-            http: {
-                method: "DELETE",
-                requestUri: "/accounts/{AwsAccountId}/themes/{ThemeId}/aliases/{AliasName}"
-            },
-            input: {
-                type: "structure",
-                required: [ "AwsAccountId", "ThemeId", "AliasName" ],
-                members: {
-                    AwsAccountId: {
-                        location: "uri",
-                        locationName: "AwsAccountId"
-                    },
-                    ThemeId: {
-                        location: "uri",
-                        locationName: "ThemeId"
-                    },
-                    AliasName: {
-                        location: "uri",
-                        locationName: "AliasName"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    AliasName: {},
-                    Arn: {},
-                    RequestId: {},
-                    Status: {
-                        location: "statusCode",
-                        type: "integer"
-                    },
-                    ThemeId: {}
-                }
-            }
-        },
-        DeleteUser: {
-            http: {
-                method: "DELETE",
-                requestUri: "/accounts/{AwsAccountId}/namespaces/{Namespace}/users/{UserName}"
-            },
-            input: {
-                type: "structure",
-                required: [ "UserName", "AwsAccountId", "Namespace" ],
-                members: {
-                    UserName: {
-                        location: "uri",
-                        locationName: "UserName"
-                    },
-                    AwsAccountId: {
-                        location: "uri",
-                        locationName: "AwsAccountId"
-                    },
-                    Namespace: {
-                        location: "uri",
-                        locationName: "Namespace"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    RequestId: {},
-                    Status: {
-                        location: "statusCode",
-                        type: "integer"
-                    }
-                }
-            }
-        },
-        DeleteUserByPrincipalId: {
-            http: {
-                method: "DELETE",
-                requestUri: "/accounts/{AwsAccountId}/namespaces/{Namespace}/user-principals/{PrincipalId}"
-            },
-            input: {
-                type: "structure",
-                required: [ "PrincipalId", "AwsAccountId", "Namespace" ],
-                members: {
-                    PrincipalId: {
-                        location: "uri",
-                        locationName: "PrincipalId"
-                    },
-                    AwsAccountId: {
-                        location: "uri",
-                        locationName: "AwsAccountId"
-                    },
-                    Namespace: {
-                        location: "uri",
-                        locationName: "Namespace"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    RequestId: {},
-                    Status: {
-                        location: "statusCode",
-                        type: "integer"
-                    }
-                }
-            }
-        },
-        DescribeAccountCustomization: {
-            http: {
-                method: "GET",
-                requestUri: "/accounts/{AwsAccountId}/customizations"
-            },
-            input: {
-                type: "structure",
-                required: [ "AwsAccountId" ],
-                members: {
-                    AwsAccountId: {
-                        location: "uri",
-                        locationName: "AwsAccountId"
-                    },
-                    Namespace: {
-                        location: "querystring",
-                        locationName: "namespace"
-                    },
-                    Resolved: {
-                        location: "querystring",
-                        locationName: "resolved",
-                        type: "boolean"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    Arn: {},
-                    AwsAccountId: {},
-                    Namespace: {},
-                    AccountCustomization: {
-                        shape: "Sa"
-                    },
-                    RequestId: {},
-                    Status: {
-                        location: "statusCode",
-                        type: "integer"
-                    }
-                }
-            }
-        },
-        DescribeAccountSettings: {
-            http: {
-                method: "GET",
-                requestUri: "/accounts/{AwsAccountId}/settings"
-            },
-            input: {
-                type: "structure",
-                required: [ "AwsAccountId" ],
-                members: {
-                    AwsAccountId: {
-                        location: "uri",
-                        locationName: "AwsAccountId"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    AccountSettings: {
-                        type: "structure",
-                        members: {
-                            AccountName: {},
-                            Edition: {},
-                            DefaultNamespace: {},
-                            NotificationEmail: {}
-                        }
-                    },
-                    RequestId: {},
-                    Status: {
-                        location: "statusCode",
-                        type: "integer"
-                    }
-                }
-            }
-        },
-        DescribeAnalysis: {
-            http: {
-                method: "GET",
-                requestUri: "/accounts/{AwsAccountId}/analyses/{AnalysisId}"
-            },
-            input: {
-                type: "structure",
-                required: [ "AwsAccountId", "AnalysisId" ],
-                members: {
-                    AwsAccountId: {
-                        location: "uri",
-                        locationName: "AwsAccountId"
-                    },
-                    AnalysisId: {
-                        location: "uri",
-                        locationName: "AnalysisId"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    Analysis: {
-                        type: "structure",
-                        members: {
-                            AnalysisId: {},
-                            Arn: {},
-                            Name: {},
-                            Status: {},
-                            Errors: {
-                                type: "list",
-                                member: {
-                                    type: "structure",
-                                    members: {
-                                        Type: {},
-                                        Message: {}
-                                    }
-                                }
-                            },
-                            DataSetArns: {
-                                shape: "S7n"
-                            },
-                            ThemeArn: {},
-                            CreatedTime: {
-                                type: "timestamp"
-                            },
-                            LastUpdatedTime: {
-                                type: "timestamp"
-                            },
-                            Sheets: {
-                                shape: "S7o"
-                            }
-                        }
-                    },
-                    Status: {
-                        location: "statusCode",
-                        type: "integer"
-                    },
-                    RequestId: {}
-                }
-            }
-        },
-        DescribeAnalysisPermissions: {
-            http: {
-                method: "GET",
-                requestUri: "/accounts/{AwsAccountId}/analyses/{AnalysisId}/permissions"
-            },
-            input: {
-                type: "structure",
-                required: [ "AwsAccountId", "AnalysisId" ],
-                members: {
-                    AwsAccountId: {
-                        location: "uri",
-                        locationName: "AwsAccountId"
-                    },
-                    AnalysisId: {
-                        location: "uri",
-                        locationName: "AnalysisId"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    AnalysisId: {},
-                    AnalysisArn: {},
-                    Permissions: {
-                        shape: "S11"
-                    },
-                    Status: {
-                        location: "statusCode",
-                        type: "integer"
-                    },
-                    RequestId: {}
-                }
-            }
-        },
-        DescribeDashboard: {
-            http: {
-                method: "GET",
-                requestUri: "/accounts/{AwsAccountId}/dashboards/{DashboardId}"
-            },
-            input: {
-                type: "structure",
-                required: [ "AwsAccountId", "DashboardId" ],
-                members: {
-                    AwsAccountId: {
-                        location: "uri",
-                        locationName: "AwsAccountId"
-                    },
-                    DashboardId: {
-                        location: "uri",
-                        locationName: "DashboardId"
-                    },
-                    VersionNumber: {
-                        location: "querystring",
-                        locationName: "version-number",
-                        type: "long"
-                    },
-                    AliasName: {
-                        location: "querystring",
-                        locationName: "alias-name"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    Dashboard: {
-                        type: "structure",
-                        members: {
-                            DashboardId: {},
-                            Arn: {},
-                            Name: {},
-                            Version: {
-                                type: "structure",
-                                members: {
-                                    CreatedTime: {
-                                        type: "timestamp"
-                                    },
-                                    Errors: {
-                                        type: "list",
-                                        member: {
-                                            type: "structure",
-                                            members: {
-                                                Type: {},
-                                                Message: {}
-                                            }
-                                        }
-                                    },
-                                    VersionNumber: {
-                                        type: "long"
-                                    },
-                                    Status: {},
-                                    Arn: {},
-                                    SourceEntityArn: {},
-                                    DataSetArns: {
-                                        shape: "S7n"
-                                    },
-                                    Description: {},
-                                    ThemeArn: {},
-                                    Sheets: {
-                                        shape: "S7o"
-                                    }
-                                }
-                            },
-                            CreatedTime: {
-                                type: "timestamp"
-                            },
-                            LastPublishedTime: {
-                                type: "timestamp"
-                            },
-                            LastUpdatedTime: {
-                                type: "timestamp"
-                            }
-                        }
-                    },
-                    Status: {
-                        location: "statusCode",
-                        type: "integer"
-                    },
-                    RequestId: {}
-                }
-            }
-        },
-        DescribeDashboardPermissions: {
-            http: {
-                method: "GET",
-                requestUri: "/accounts/{AwsAccountId}/dashboards/{DashboardId}/permissions"
-            },
-            input: {
-                type: "structure",
-                required: [ "AwsAccountId", "DashboardId" ],
-                members: {
-                    AwsAccountId: {
-                        location: "uri",
-                        locationName: "AwsAccountId"
-                    },
-                    DashboardId: {
-                        location: "uri",
-                        locationName: "DashboardId"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    DashboardId: {},
-                    DashboardArn: {},
-                    Permissions: {
-                        shape: "S11"
-                    },
-                    Status: {
-                        location: "statusCode",
-                        type: "integer"
-                    },
-                    RequestId: {}
-                }
-            }
-        },
-        DescribeDataSet: {
-            http: {
-                method: "GET",
-                requestUri: "/accounts/{AwsAccountId}/data-sets/{DataSetId}"
-            },
-            input: {
-                type: "structure",
-                required: [ "AwsAccountId", "DataSetId" ],
-                members: {
-                    AwsAccountId: {
-                        location: "uri",
-                        locationName: "AwsAccountId"
-                    },
-                    DataSetId: {
-                        location: "uri",
-                        locationName: "DataSetId"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    DataSet: {
-                        type: "structure",
-                        members: {
-                            Arn: {},
-                            DataSetId: {},
-                            Name: {},
-                            CreatedTime: {
-                                type: "timestamp"
-                            },
-                            LastUpdatedTime: {
-                                type: "timestamp"
-                            },
-                            PhysicalTableMap: {
-                                shape: "S1q"
-                            },
-                            LogicalTableMap: {
-                                shape: "S2b"
-                            },
-                            OutputColumns: {
-                                type: "list",
-                                member: {
-                                    type: "structure",
-                                    members: {
-                                        Name: {},
-                                        Description: {},
-                                        Type: {}
-                                    }
-                                }
-                            },
-                            ImportMode: {},
-                            ConsumedSpiceCapacityInBytes: {
-                                type: "long"
-                            },
-                            ColumnGroups: {
-                                shape: "S35"
-                            },
-                            FieldFolders: {
-                                shape: "S3b"
-                            },
-                            RowLevelPermissionDataSet: {
-                                shape: "S3g"
-                            },
-                            ColumnLevelPermissionRules: {
-                                shape: "S3i"
-                            }
-                        }
-                    },
-                    RequestId: {},
-                    Status: {
-                        location: "statusCode",
-                        type: "integer"
-                    }
-                }
-            }
-        },
-        DescribeDataSetPermissions: {
-            http: {
-                method: "GET",
-                requestUri: "/accounts/{AwsAccountId}/data-sets/{DataSetId}/permissions"
-            },
-            input: {
-                type: "structure",
-                required: [ "AwsAccountId", "DataSetId" ],
-                members: {
-                    AwsAccountId: {
-                        location: "uri",
-                        locationName: "AwsAccountId"
-                    },
-                    DataSetId: {
-                        location: "uri",
-                        locationName: "DataSetId"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    DataSetArn: {},
-                    DataSetId: {},
-                    Permissions: {
-                        shape: "S11"
-                    },
-                    RequestId: {},
-                    Status: {
-                        location: "statusCode",
-                        type: "integer"
-                    }
-                }
-            }
-        },
-        DescribeDataSource: {
-            http: {
-                method: "GET",
-                requestUri: "/accounts/{AwsAccountId}/data-sources/{DataSourceId}"
-            },
-            input: {
-                type: "structure",
-                required: [ "AwsAccountId", "DataSourceId" ],
-                members: {
-                    AwsAccountId: {
-                        location: "uri",
-                        locationName: "AwsAccountId"
-                    },
-                    DataSourceId: {
-                        location: "uri",
-                        locationName: "DataSourceId"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    DataSource: {
-                        shape: "S8a"
-                    },
-                    RequestId: {},
-                    Status: {
-                        location: "statusCode",
-                        type: "integer"
-                    }
-                }
-            }
-        },
-        DescribeDataSourcePermissions: {
-            http: {
-                method: "GET",
-                requestUri: "/accounts/{AwsAccountId}/data-sources/{DataSourceId}/permissions"
-            },
-            input: {
-                type: "structure",
-                required: [ "AwsAccountId", "DataSourceId" ],
-                members: {
-                    AwsAccountId: {
-                        location: "uri",
-                        locationName: "AwsAccountId"
-                    },
-                    DataSourceId: {
-                        location: "uri",
-                        locationName: "DataSourceId"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    DataSourceArn: {},
-                    DataSourceId: {},
-                    Permissions: {
-                        shape: "S11"
-                    },
-                    RequestId: {},
-                    Status: {
-                        location: "statusCode",
-                        type: "integer"
-                    }
-                }
-            }
-        },
-        DescribeGroup: {
-            http: {
-                method: "GET",
-                requestUri: "/accounts/{AwsAccountId}/namespaces/{Namespace}/groups/{GroupName}"
-            },
-            input: {
-                type: "structure",
-                required: [ "GroupName", "AwsAccountId", "Namespace" ],
-                members: {
-                    GroupName: {
-                        location: "uri",
-                        locationName: "GroupName"
-                    },
-                    AwsAccountId: {
-                        location: "uri",
-                        locationName: "AwsAccountId"
-                    },
-                    Namespace: {
-                        location: "uri",
-                        locationName: "Namespace"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    Group: {
-                        shape: "S53"
-                    },
-                    RequestId: {},
-                    Status: {
-                        location: "statusCode",
-                        type: "integer"
-                    }
-                }
-            }
-        },
-        DescribeIAMPolicyAssignment: {
-            http: {
-                method: "GET",
-                requestUri: "/accounts/{AwsAccountId}/namespaces/{Namespace}/iam-policy-assignments/{AssignmentName}"
-            },
-            input: {
-                type: "structure",
-                required: [ "AwsAccountId", "AssignmentName", "Namespace" ],
-                members: {
-                    AwsAccountId: {
-                        location: "uri",
-                        locationName: "AwsAccountId"
-                    },
-                    AssignmentName: {
-                        location: "uri",
-                        locationName: "AssignmentName"
-                    },
-                    Namespace: {
-                        location: "uri",
-                        locationName: "Namespace"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    IAMPolicyAssignment: {
-                        type: "structure",
-                        members: {
-                            AwsAccountId: {},
-                            AssignmentId: {},
-                            AssignmentName: {},
-                            PolicyArn: {},
-                            Identities: {
-                                shape: "S5b"
-                            },
-                            AssignmentStatus: {}
-                        }
-                    },
-                    RequestId: {},
-                    Status: {
-                        location: "statusCode",
-                        type: "integer"
-                    }
-                }
-            }
-        },
-        DescribeIngestion: {
-            http: {
-                method: "GET",
-                requestUri: "/accounts/{AwsAccountId}/data-sets/{DataSetId}/ingestions/{IngestionId}"
-            },
-            input: {
-                type: "structure",
-                required: [ "AwsAccountId", "DataSetId", "IngestionId" ],
-                members: {
-                    AwsAccountId: {
-                        location: "uri",
-                        locationName: "AwsAccountId"
-                    },
-                    DataSetId: {
-                        location: "uri",
-                        locationName: "DataSetId"
-                    },
-                    IngestionId: {
-                        location: "uri",
-                        locationName: "IngestionId"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    Ingestion: {
-                        shape: "S8m"
-                    },
-                    RequestId: {},
-                    Status: {
-                        location: "statusCode",
-                        type: "integer"
-                    }
-                }
-            }
-        },
-        DescribeNamespace: {
-            http: {
-                method: "GET",
-                requestUri: "/accounts/{AwsAccountId}/namespaces/{Namespace}"
-            },
-            input: {
-                type: "structure",
-                required: [ "AwsAccountId", "Namespace" ],
-                members: {
-                    AwsAccountId: {
-                        location: "uri",
-                        locationName: "AwsAccountId"
-                    },
-                    Namespace: {
-                        location: "uri",
-                        locationName: "Namespace"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    Namespace: {
-                        shape: "S8x"
-                    },
-                    RequestId: {},
-                    Status: {
-                        location: "statusCode",
-                        type: "integer"
-                    }
-                }
-            }
-        },
-        DescribeTemplate: {
-            http: {
-                method: "GET",
-                requestUri: "/accounts/{AwsAccountId}/templates/{TemplateId}"
-            },
-            input: {
-                type: "structure",
-                required: [ "AwsAccountId", "TemplateId" ],
-                members: {
-                    AwsAccountId: {
-                        location: "uri",
-                        locationName: "AwsAccountId"
-                    },
-                    TemplateId: {
-                        location: "uri",
-                        locationName: "TemplateId"
-                    },
-                    VersionNumber: {
-                        location: "querystring",
-                        locationName: "version-number",
-                        type: "long"
-                    },
-                    AliasName: {
-                        location: "querystring",
-                        locationName: "alias-name"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    Template: {
-                        type: "structure",
-                        members: {
-                            Arn: {},
-                            Name: {},
-                            Version: {
-                                type: "structure",
-                                members: {
-                                    CreatedTime: {
-                                        type: "timestamp"
-                                    },
-                                    Errors: {
-                                        type: "list",
-                                        member: {
-                                            type: "structure",
-                                            members: {
-                                                Type: {},
-                                                Message: {}
-                                            }
-                                        }
-                                    },
-                                    VersionNumber: {
-                                        type: "long"
-                                    },
-                                    Status: {},
-                                    DataSetConfigurations: {
-                                        type: "list",
-                                        member: {
-                                            type: "structure",
-                                            members: {
-                                                Placeholder: {},
-                                                DataSetSchema: {
-                                                    type: "structure",
-                                                    members: {
-                                                        ColumnSchemaList: {
-                                                            type: "list",
-                                                            member: {
-                                                                type: "structure",
-                                                                members: {
-                                                                    Name: {},
-                                                                    DataType: {},
-                                                                    GeographicRole: {}
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-                                                },
-                                                ColumnGroupSchemaList: {
-                                                    type: "list",
-                                                    member: {
-                                                        type: "structure",
-                                                        members: {
-                                                            Name: {},
-                                                            ColumnGroupColumnSchemaList: {
-                                                                type: "list",
-                                                                member: {
-                                                                    type: "structure",
-                                                                    members: {
-                                                                        Name: {}
-                                                                    }
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    },
-                                    Description: {},
-                                    SourceEntityArn: {},
-                                    ThemeArn: {},
-                                    Sheets: {
-                                        shape: "S7o"
-                                    }
-                                }
-                            },
-                            TemplateId: {},
-                            LastUpdatedTime: {
-                                type: "timestamp"
-                            },
-                            CreatedTime: {
-                                type: "timestamp"
-                            }
-                        }
-                    },
-                    Status: {
-                        location: "statusCode",
-                        type: "integer"
-                    },
-                    RequestId: {}
-                }
-            }
-        },
-        DescribeTemplateAlias: {
-            http: {
-                method: "GET",
-                requestUri: "/accounts/{AwsAccountId}/templates/{TemplateId}/aliases/{AliasName}"
-            },
-            input: {
-                type: "structure",
-                required: [ "AwsAccountId", "TemplateId", "AliasName" ],
-                members: {
-                    AwsAccountId: {
-                        location: "uri",
-                        locationName: "AwsAccountId"
-                    },
-                    TemplateId: {
-                        location: "uri",
-                        locationName: "TemplateId"
-                    },
-                    AliasName: {
-                        location: "uri",
-                        locationName: "AliasName"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    TemplateAlias: {
-                        shape: "S5w"
-                    },
-                    Status: {
-                        location: "statusCode",
-                        type: "integer"
-                    },
-                    RequestId: {}
-                }
-            }
-        },
-        DescribeTemplatePermissions: {
-            http: {
-                method: "GET",
-                requestUri: "/accounts/{AwsAccountId}/templates/{TemplateId}/permissions"
-            },
-            input: {
-                type: "structure",
-                required: [ "AwsAccountId", "TemplateId" ],
-                members: {
-                    AwsAccountId: {
-                        location: "uri",
-                        locationName: "AwsAccountId"
-                    },
-                    TemplateId: {
-                        location: "uri",
-                        locationName: "TemplateId"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    TemplateId: {},
-                    TemplateArn: {},
-                    Permissions: {
-                        shape: "S11"
-                    },
-                    RequestId: {},
-                    Status: {
-                        location: "statusCode",
-                        type: "integer"
-                    }
-                }
-            }
-        },
-        DescribeTheme: {
-            http: {
-                method: "GET",
-                requestUri: "/accounts/{AwsAccountId}/themes/{ThemeId}"
-            },
-            input: {
-                type: "structure",
-                required: [ "AwsAccountId", "ThemeId" ],
-                members: {
-                    AwsAccountId: {
-                        location: "uri",
-                        locationName: "AwsAccountId"
-                    },
-                    ThemeId: {
-                        location: "uri",
-                        locationName: "ThemeId"
-                    },
-                    VersionNumber: {
-                        location: "querystring",
-                        locationName: "version-number",
-                        type: "long"
-                    },
-                    AliasName: {
-                        location: "querystring",
-                        locationName: "alias-name"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    Theme: {
-                        type: "structure",
-                        members: {
-                            Arn: {},
-                            Name: {},
-                            ThemeId: {},
-                            Version: {
-                                type: "structure",
-                                members: {
-                                    VersionNumber: {
-                                        type: "long"
-                                    },
-                                    Arn: {},
-                                    Description: {},
-                                    BaseThemeId: {},
-                                    CreatedTime: {
-                                        type: "timestamp"
-                                    },
-                                    Configuration: {
-                                        shape: "S5z"
-                                    },
-                                    Errors: {
-                                        type: "list",
-                                        member: {
-                                            type: "structure",
-                                            members: {
-                                                Type: {},
-                                                Message: {}
-                                            }
-                                        }
-                                    },
-                                    Status: {}
-                                }
-                            },
-                            CreatedTime: {
-                                type: "timestamp"
-                            },
-                            LastUpdatedTime: {
-                                type: "timestamp"
-                            },
-                            Type: {}
-                        }
-                    },
-                    Status: {
-                        location: "statusCode",
-                        type: "integer"
-                    },
-                    RequestId: {}
-                }
-            }
-        },
-        DescribeThemeAlias: {
-            http: {
-                method: "GET",
-                requestUri: "/accounts/{AwsAccountId}/themes/{ThemeId}/aliases/{AliasName}"
-            },
-            input: {
-                type: "structure",
-                required: [ "AwsAccountId", "ThemeId", "AliasName" ],
-                members: {
-                    AwsAccountId: {
-                        location: "uri",
-                        locationName: "AwsAccountId"
-                    },
-                    ThemeId: {
-                        location: "uri",
-                        locationName: "ThemeId"
-                    },
-                    AliasName: {
-                        location: "uri",
-                        locationName: "AliasName"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    ThemeAlias: {
-                        shape: "S6e"
-                    },
-                    Status: {
-                        location: "statusCode",
-                        type: "integer"
-                    },
-                    RequestId: {}
-                }
-            }
-        },
-        DescribeThemePermissions: {
-            http: {
-                method: "GET",
-                requestUri: "/accounts/{AwsAccountId}/themes/{ThemeId}/permissions"
-            },
-            input: {
-                type: "structure",
-                required: [ "AwsAccountId", "ThemeId" ],
-                members: {
-                    AwsAccountId: {
-                        location: "uri",
-                        locationName: "AwsAccountId"
-                    },
-                    ThemeId: {
-                        location: "uri",
-                        locationName: "ThemeId"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    ThemeId: {},
-                    ThemeArn: {},
-                    Permissions: {
-                        shape: "S11"
-                    },
-                    RequestId: {},
-                    Status: {
-                        location: "statusCode",
-                        type: "integer"
-                    }
-                }
-            }
-        },
-        DescribeUser: {
-            http: {
-                method: "GET",
-                requestUri: "/accounts/{AwsAccountId}/namespaces/{Namespace}/users/{UserName}"
-            },
-            input: {
-                type: "structure",
-                required: [ "UserName", "AwsAccountId", "Namespace" ],
-                members: {
-                    UserName: {
-                        location: "uri",
-                        locationName: "UserName"
-                    },
-                    AwsAccountId: {
-                        location: "uri",
-                        locationName: "AwsAccountId"
-                    },
-                    Namespace: {
-                        location: "uri",
-                        locationName: "Namespace"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    User: {
-                        shape: "S9z"
-                    },
-                    RequestId: {},
-                    Status: {
-                        location: "statusCode",
-                        type: "integer"
-                    }
-                }
-            }
-        },
-        GetDashboardEmbedUrl: {
-            http: {
-                method: "GET",
-                requestUri: "/accounts/{AwsAccountId}/dashboards/{DashboardId}/embed-url"
-            },
-            input: {
-                type: "structure",
-                required: [ "AwsAccountId", "DashboardId", "IdentityType" ],
-                members: {
-                    AwsAccountId: {
-                        location: "uri",
-                        locationName: "AwsAccountId"
-                    },
-                    DashboardId: {
-                        location: "uri",
-                        locationName: "DashboardId"
-                    },
-                    IdentityType: {
-                        location: "querystring",
-                        locationName: "creds-type"
-                    },
-                    SessionLifetimeInMinutes: {
-                        location: "querystring",
-                        locationName: "session-lifetime",
-                        type: "long"
-                    },
-                    UndoRedoDisabled: {
-                        location: "querystring",
-                        locationName: "undo-redo-disabled",
-                        type: "boolean"
-                    },
-                    ResetDisabled: {
-                        location: "querystring",
-                        locationName: "reset-disabled",
-                        type: "boolean"
-                    },
-                    StatePersistenceEnabled: {
-                        location: "querystring",
-                        locationName: "state-persistence-enabled",
-                        type: "boolean"
-                    },
-                    UserArn: {
-                        location: "querystring",
-                        locationName: "user-arn"
-                    },
-                    Namespace: {
-                        location: "querystring",
-                        locationName: "namespace"
-                    },
-                    AdditionalDashboardIds: {
-                        location: "querystring",
-                        locationName: "additional-dashboard-ids",
-                        type: "list",
-                        member: {}
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    EmbedUrl: {
-                        shape: "Sa8"
-                    },
-                    Status: {
-                        location: "statusCode",
-                        type: "integer"
-                    },
-                    RequestId: {}
-                }
-            }
-        },
-        GetSessionEmbedUrl: {
-            http: {
-                method: "GET",
-                requestUri: "/accounts/{AwsAccountId}/session-embed-url"
-            },
-            input: {
-                type: "structure",
-                required: [ "AwsAccountId" ],
-                members: {
-                    AwsAccountId: {
-                        location: "uri",
-                        locationName: "AwsAccountId"
-                    },
-                    EntryPoint: {
-                        location: "querystring",
-                        locationName: "entry-point"
-                    },
-                    SessionLifetimeInMinutes: {
-                        location: "querystring",
-                        locationName: "session-lifetime",
-                        type: "long"
-                    },
-                    UserArn: {
-                        location: "querystring",
-                        locationName: "user-arn"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    EmbedUrl: {
-                        shape: "Sa8"
-                    },
-                    Status: {
-                        location: "statusCode",
-                        type: "integer"
-                    },
-                    RequestId: {}
-                }
-            }
-        },
-        ListAnalyses: {
-            http: {
-                method: "GET",
-                requestUri: "/accounts/{AwsAccountId}/analyses"
-            },
-            input: {
-                type: "structure",
-                required: [ "AwsAccountId" ],
-                members: {
-                    AwsAccountId: {
-                        location: "uri",
-                        locationName: "AwsAccountId"
-                    },
-                    NextToken: {
-                        location: "querystring",
-                        locationName: "next-token"
-                    },
-                    MaxResults: {
-                        location: "querystring",
-                        locationName: "max-results",
-                        type: "integer"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    AnalysisSummaryList: {
-                        shape: "Saf"
-                    },
-                    NextToken: {},
-                    Status: {
-                        location: "statusCode",
-                        type: "integer"
-                    },
-                    RequestId: {}
-                }
-            }
-        },
-        ListDashboardVersions: {
-            http: {
-                method: "GET",
-                requestUri: "/accounts/{AwsAccountId}/dashboards/{DashboardId}/versions"
-            },
-            input: {
-                type: "structure",
-                required: [ "AwsAccountId", "DashboardId" ],
-                members: {
-                    AwsAccountId: {
-                        location: "uri",
-                        locationName: "AwsAccountId"
-                    },
-                    DashboardId: {
-                        location: "uri",
-                        locationName: "DashboardId"
-                    },
-                    NextToken: {
-                        location: "querystring",
-                        locationName: "next-token"
-                    },
-                    MaxResults: {
-                        location: "querystring",
-                        locationName: "max-results",
-                        type: "integer"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    DashboardVersionSummaryList: {
-                        type: "list",
-                        member: {
-                            type: "structure",
-                            members: {
-                                Arn: {},
-                                CreatedTime: {
-                                    type: "timestamp"
-                                },
-                                VersionNumber: {
-                                    type: "long"
-                                },
-                                Status: {},
-                                SourceEntityArn: {},
-                                Description: {}
-                            }
-                        }
-                    },
-                    NextToken: {},
-                    Status: {
-                        location: "statusCode",
-                        type: "integer"
-                    },
-                    RequestId: {}
-                }
-            }
-        },
-        ListDashboards: {
-            http: {
-                method: "GET",
-                requestUri: "/accounts/{AwsAccountId}/dashboards"
-            },
-            input: {
-                type: "structure",
-                required: [ "AwsAccountId" ],
-                members: {
-                    AwsAccountId: {
-                        location: "uri",
-                        locationName: "AwsAccountId"
-                    },
-                    NextToken: {
-                        location: "querystring",
-                        locationName: "next-token"
-                    },
-                    MaxResults: {
-                        location: "querystring",
-                        locationName: "max-results",
-                        type: "integer"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    DashboardSummaryList: {
-                        shape: "San"
-                    },
-                    NextToken: {},
-                    Status: {
-                        location: "statusCode",
-                        type: "integer"
-                    },
-                    RequestId: {}
-                }
-            }
-        },
-        ListDataSets: {
-            http: {
-                method: "GET",
-                requestUri: "/accounts/{AwsAccountId}/data-sets"
-            },
-            input: {
-                type: "structure",
-                required: [ "AwsAccountId" ],
-                members: {
-                    AwsAccountId: {
-                        location: "uri",
-                        locationName: "AwsAccountId"
-                    },
-                    NextToken: {
-                        location: "querystring",
-                        locationName: "next-token"
-                    },
-                    MaxResults: {
-                        location: "querystring",
-                        locationName: "max-results",
-                        type: "integer"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    DataSetSummaries: {
-                        type: "list",
-                        member: {
-                            type: "structure",
-                            members: {
-                                Arn: {},
-                                DataSetId: {},
-                                Name: {},
-                                CreatedTime: {
-                                    type: "timestamp"
-                                },
-                                LastUpdatedTime: {
-                                    type: "timestamp"
-                                },
-                                ImportMode: {},
-                                RowLevelPermissionDataSet: {
-                                    shape: "S3g"
-                                },
-                                ColumnLevelPermissionRulesApplied: {
-                                    type: "boolean"
-                                }
-                            }
-                        }
-                    },
-                    NextToken: {},
-                    RequestId: {},
-                    Status: {
-                        location: "statusCode",
-                        type: "integer"
-                    }
-                }
-            }
-        },
-        ListDataSources: {
-            http: {
-                method: "GET",
-                requestUri: "/accounts/{AwsAccountId}/data-sources"
-            },
-            input: {
-                type: "structure",
-                required: [ "AwsAccountId" ],
-                members: {
-                    AwsAccountId: {
-                        location: "uri",
-                        locationName: "AwsAccountId"
-                    },
-                    NextToken: {
-                        location: "querystring",
-                        locationName: "next-token"
-                    },
-                    MaxResults: {
-                        location: "querystring",
-                        locationName: "max-results",
-                        type: "integer"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    DataSources: {
-                        type: "list",
-                        member: {
-                            shape: "S8a"
-                        }
-                    },
-                    NextToken: {},
-                    RequestId: {},
-                    Status: {
-                        location: "statusCode",
-                        type: "integer"
-                    }
-                }
-            }
-        },
-        ListGroupMemberships: {
-            http: {
-                method: "GET",
-                requestUri: "/accounts/{AwsAccountId}/namespaces/{Namespace}/groups/{GroupName}/members"
-            },
-            input: {
-                type: "structure",
-                required: [ "GroupName", "AwsAccountId", "Namespace" ],
-                members: {
-                    GroupName: {
-                        location: "uri",
-                        locationName: "GroupName"
-                    },
-                    NextToken: {
-                        location: "querystring",
-                        locationName: "next-token"
-                    },
-                    MaxResults: {
-                        location: "querystring",
-                        locationName: "max-results",
-                        type: "integer"
-                    },
-                    AwsAccountId: {
-                        location: "uri",
-                        locationName: "AwsAccountId"
-                    },
-                    Namespace: {
-                        location: "uri",
-                        locationName: "Namespace"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    GroupMemberList: {
-                        type: "list",
-                        member: {
-                            shape: "S57"
-                        }
-                    },
-                    NextToken: {},
-                    RequestId: {},
-                    Status: {
-                        location: "statusCode",
-                        type: "integer"
-                    }
-                }
-            }
-        },
-        ListGroups: {
-            http: {
-                method: "GET",
-                requestUri: "/accounts/{AwsAccountId}/namespaces/{Namespace}/groups"
-            },
-            input: {
-                type: "structure",
-                required: [ "AwsAccountId", "Namespace" ],
-                members: {
-                    AwsAccountId: {
-                        location: "uri",
-                        locationName: "AwsAccountId"
-                    },
-                    NextToken: {
-                        location: "querystring",
-                        locationName: "next-token"
-                    },
-                    MaxResults: {
-                        location: "querystring",
-                        locationName: "max-results",
-                        type: "integer"
-                    },
-                    Namespace: {
-                        location: "uri",
-                        locationName: "Namespace"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    GroupList: {
-                        shape: "Sb1"
-                    },
-                    NextToken: {},
-                    RequestId: {},
-                    Status: {
-                        location: "statusCode",
-                        type: "integer"
-                    }
-                }
-            }
-        },
-        ListIAMPolicyAssignments: {
-            http: {
-                method: "GET",
-                requestUri: "/accounts/{AwsAccountId}/namespaces/{Namespace}/iam-policy-assignments"
-            },
-            input: {
-                type: "structure",
-                required: [ "AwsAccountId", "Namespace" ],
-                members: {
-                    AwsAccountId: {
-                        location: "uri",
-                        locationName: "AwsAccountId"
-                    },
-                    AssignmentStatus: {},
-                    Namespace: {
-                        location: "uri",
-                        locationName: "Namespace"
-                    },
-                    NextToken: {
-                        location: "querystring",
-                        locationName: "next-token"
-                    },
-                    MaxResults: {
-                        location: "querystring",
-                        locationName: "max-results",
-                        type: "integer"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    IAMPolicyAssignments: {
-                        type: "list",
-                        member: {
-                            type: "structure",
-                            members: {
-                                AssignmentName: {},
-                                AssignmentStatus: {}
-                            }
-                        }
-                    },
-                    NextToken: {},
-                    RequestId: {},
-                    Status: {
-                        location: "statusCode",
-                        type: "integer"
-                    }
-                }
-            }
-        },
-        ListIAMPolicyAssignmentsForUser: {
-            http: {
-                method: "GET",
-                requestUri: "/accounts/{AwsAccountId}/namespaces/{Namespace}/users/{UserName}/iam-policy-assignments"
-            },
-            input: {
-                type: "structure",
-                required: [ "AwsAccountId", "UserName", "Namespace" ],
-                members: {
-                    AwsAccountId: {
-                        location: "uri",
-                        locationName: "AwsAccountId"
-                    },
-                    UserName: {
-                        location: "uri",
-                        locationName: "UserName"
-                    },
-                    NextToken: {
-                        location: "querystring",
-                        locationName: "next-token"
-                    },
-                    MaxResults: {
-                        location: "querystring",
-                        locationName: "max-results",
-                        type: "integer"
-                    },
-                    Namespace: {
-                        location: "uri",
-                        locationName: "Namespace"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    ActiveAssignments: {
-                        type: "list",
-                        member: {
-                            type: "structure",
-                            members: {
-                                AssignmentName: {},
-                                PolicyArn: {}
-                            }
-                        }
-                    },
-                    RequestId: {},
-                    NextToken: {},
-                    Status: {
-                        location: "statusCode",
-                        type: "integer"
-                    }
-                }
-            }
-        },
-        ListIngestions: {
-            http: {
-                method: "GET",
-                requestUri: "/accounts/{AwsAccountId}/data-sets/{DataSetId}/ingestions"
-            },
-            input: {
-                type: "structure",
-                required: [ "DataSetId", "AwsAccountId" ],
-                members: {
-                    DataSetId: {
-                        location: "uri",
-                        locationName: "DataSetId"
-                    },
-                    NextToken: {
-                        location: "querystring",
-                        locationName: "next-token"
-                    },
-                    AwsAccountId: {
-                        location: "uri",
-                        locationName: "AwsAccountId"
-                    },
-                    MaxResults: {
-                        location: "querystring",
-                        locationName: "max-results",
-                        type: "integer"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    Ingestions: {
-                        type: "list",
-                        member: {
-                            shape: "S8m"
-                        }
-                    },
-                    NextToken: {},
-                    RequestId: {},
-                    Status: {
-                        location: "statusCode",
-                        type: "integer"
-                    }
-                }
-            }
-        },
-        ListNamespaces: {
-            http: {
-                method: "GET",
-                requestUri: "/accounts/{AwsAccountId}/namespaces"
-            },
-            input: {
-                type: "structure",
-                required: [ "AwsAccountId" ],
-                members: {
-                    AwsAccountId: {
-                        location: "uri",
-                        locationName: "AwsAccountId"
-                    },
-                    NextToken: {
-                        location: "querystring",
-                        locationName: "next-token"
-                    },
-                    MaxResults: {
-                        location: "querystring",
-                        locationName: "max-results",
-                        type: "integer"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    Namespaces: {
-                        type: "list",
-                        member: {
-                            shape: "S8x"
-                        }
-                    },
-                    NextToken: {},
-                    RequestId: {},
-                    Status: {
-                        location: "statusCode",
-                        type: "integer"
-                    }
-                }
-            }
-        },
-        ListTagsForResource: {
-            http: {
-                method: "GET",
-                requestUri: "/resources/{ResourceArn}/tags"
-            },
-            input: {
-                type: "structure",
-                required: [ "ResourceArn" ],
-                members: {
-                    ResourceArn: {
-                        location: "uri",
-                        locationName: "ResourceArn"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    Tags: {
-                        shape: "Sb"
-                    },
-                    RequestId: {},
-                    Status: {
-                        location: "statusCode",
-                        type: "integer"
-                    }
-                }
-            }
-        },
-        ListTemplateAliases: {
-            http: {
-                method: "GET",
-                requestUri: "/accounts/{AwsAccountId}/templates/{TemplateId}/aliases"
-            },
-            input: {
-                type: "structure",
-                required: [ "AwsAccountId", "TemplateId" ],
-                members: {
-                    AwsAccountId: {
-                        location: "uri",
-                        locationName: "AwsAccountId"
-                    },
-                    TemplateId: {
-                        location: "uri",
-                        locationName: "TemplateId"
-                    },
-                    NextToken: {
-                        location: "querystring",
-                        locationName: "next-token"
-                    },
-                    MaxResults: {
-                        location: "querystring",
-                        locationName: "max-result",
-                        type: "integer"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    TemplateAliasList: {
-                        type: "list",
-                        member: {
-                            shape: "S5w"
-                        }
-                    },
-                    Status: {
-                        location: "statusCode",
-                        type: "integer"
-                    },
-                    RequestId: {},
-                    NextToken: {}
-                }
-            }
-        },
-        ListTemplateVersions: {
-            http: {
-                method: "GET",
-                requestUri: "/accounts/{AwsAccountId}/templates/{TemplateId}/versions"
-            },
-            input: {
-                type: "structure",
-                required: [ "AwsAccountId", "TemplateId" ],
-                members: {
-                    AwsAccountId: {
-                        location: "uri",
-                        locationName: "AwsAccountId"
-                    },
-                    TemplateId: {
-                        location: "uri",
-                        locationName: "TemplateId"
-                    },
-                    NextToken: {
-                        location: "querystring",
-                        locationName: "next-token"
-                    },
-                    MaxResults: {
-                        location: "querystring",
-                        locationName: "max-results",
-                        type: "integer"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    TemplateVersionSummaryList: {
-                        type: "list",
-                        member: {
-                            type: "structure",
-                            members: {
-                                Arn: {},
-                                VersionNumber: {
-                                    type: "long"
-                                },
-                                CreatedTime: {
-                                    type: "timestamp"
-                                },
-                                Status: {},
-                                Description: {}
-                            }
-                        }
-                    },
-                    NextToken: {},
-                    Status: {
-                        location: "statusCode",
-                        type: "integer"
-                    },
-                    RequestId: {}
-                }
-            }
-        },
-        ListTemplates: {
-            http: {
-                method: "GET",
-                requestUri: "/accounts/{AwsAccountId}/templates"
-            },
-            input: {
-                type: "structure",
-                required: [ "AwsAccountId" ],
-                members: {
-                    AwsAccountId: {
-                        location: "uri",
-                        locationName: "AwsAccountId"
-                    },
-                    NextToken: {
-                        location: "querystring",
-                        locationName: "next-token"
-                    },
-                    MaxResults: {
-                        location: "querystring",
-                        locationName: "max-result",
-                        type: "integer"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    TemplateSummaryList: {
-                        type: "list",
-                        member: {
-                            type: "structure",
-                            members: {
-                                Arn: {},
-                                TemplateId: {},
-                                Name: {},
-                                LatestVersionNumber: {
-                                    type: "long"
-                                },
-                                CreatedTime: {
-                                    type: "timestamp"
-                                },
-                                LastUpdatedTime: {
-                                    type: "timestamp"
-                                }
-                            }
-                        }
-                    },
-                    NextToken: {},
-                    Status: {
-                        location: "statusCode",
-                        type: "integer"
-                    },
-                    RequestId: {}
-                }
-            }
-        },
-        ListThemeAliases: {
-            http: {
-                method: "GET",
-                requestUri: "/accounts/{AwsAccountId}/themes/{ThemeId}/aliases"
-            },
-            input: {
-                type: "structure",
-                required: [ "AwsAccountId", "ThemeId" ],
-                members: {
-                    AwsAccountId: {
-                        location: "uri",
-                        locationName: "AwsAccountId"
-                    },
-                    ThemeId: {
-                        location: "uri",
-                        locationName: "ThemeId"
-                    },
-                    NextToken: {
-                        location: "querystring",
-                        locationName: "next-token"
-                    },
-                    MaxResults: {
-                        location: "querystring",
-                        locationName: "max-result",
-                        type: "integer"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    ThemeAliasList: {
-                        type: "list",
-                        member: {
-                            shape: "S6e"
-                        }
-                    },
-                    Status: {
-                        location: "statusCode",
-                        type: "integer"
-                    },
-                    RequestId: {},
-                    NextToken: {}
-                }
-            }
-        },
-        ListThemeVersions: {
-            http: {
-                method: "GET",
-                requestUri: "/accounts/{AwsAccountId}/themes/{ThemeId}/versions"
-            },
-            input: {
-                type: "structure",
-                required: [ "AwsAccountId", "ThemeId" ],
-                members: {
-                    AwsAccountId: {
-                        location: "uri",
-                        locationName: "AwsAccountId"
-                    },
-                    ThemeId: {
-                        location: "uri",
-                        locationName: "ThemeId"
-                    },
-                    NextToken: {
-                        location: "querystring",
-                        locationName: "next-token"
-                    },
-                    MaxResults: {
-                        location: "querystring",
-                        locationName: "max-results",
-                        type: "integer"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    ThemeVersionSummaryList: {
-                        type: "list",
-                        member: {
-                            type: "structure",
-                            members: {
-                                VersionNumber: {
-                                    type: "long"
-                                },
-                                Arn: {},
-                                Description: {},
-                                CreatedTime: {
-                                    type: "timestamp"
-                                },
-                                Status: {}
-                            }
-                        }
-                    },
-                    NextToken: {},
-                    Status: {
-                        location: "statusCode",
-                        type: "integer"
-                    },
-                    RequestId: {}
-                }
-            }
-        },
-        ListThemes: {
-            http: {
-                method: "GET",
-                requestUri: "/accounts/{AwsAccountId}/themes"
-            },
-            input: {
-                type: "structure",
-                required: [ "AwsAccountId" ],
-                members: {
-                    AwsAccountId: {
-                        location: "uri",
-                        locationName: "AwsAccountId"
-                    },
-                    NextToken: {
-                        location: "querystring",
-                        locationName: "next-token"
-                    },
-                    MaxResults: {
-                        location: "querystring",
-                        locationName: "max-results",
-                        type: "integer"
-                    },
-                    Type: {
-                        location: "querystring",
-                        locationName: "type"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    ThemeSummaryList: {
-                        type: "list",
-                        member: {
-                            type: "structure",
-                            members: {
-                                Arn: {},
-                                Name: {},
-                                ThemeId: {},
-                                LatestVersionNumber: {
-                                    type: "long"
-                                },
-                                CreatedTime: {
-                                    type: "timestamp"
-                                },
-                                LastUpdatedTime: {
-                                    type: "timestamp"
-                                }
-                            }
-                        }
-                    },
-                    NextToken: {},
-                    Status: {
-                        location: "statusCode",
-                        type: "integer"
-                    },
-                    RequestId: {}
-                }
-            }
-        },
-        ListUserGroups: {
-            http: {
-                method: "GET",
-                requestUri: "/accounts/{AwsAccountId}/namespaces/{Namespace}/users/{UserName}/groups"
-            },
-            input: {
-                type: "structure",
-                required: [ "UserName", "AwsAccountId", "Namespace" ],
-                members: {
-                    UserName: {
-                        location: "uri",
-                        locationName: "UserName"
-                    },
-                    AwsAccountId: {
-                        location: "uri",
-                        locationName: "AwsAccountId"
-                    },
-                    Namespace: {
-                        location: "uri",
-                        locationName: "Namespace"
-                    },
-                    NextToken: {
-                        location: "querystring",
-                        locationName: "next-token"
-                    },
-                    MaxResults: {
-                        location: "querystring",
-                        locationName: "max-results",
-                        type: "integer"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    GroupList: {
-                        shape: "Sb1"
-                    },
-                    NextToken: {},
-                    RequestId: {},
-                    Status: {
-                        location: "statusCode",
-                        type: "integer"
-                    }
-                }
-            }
-        },
-        ListUsers: {
-            http: {
-                method: "GET",
-                requestUri: "/accounts/{AwsAccountId}/namespaces/{Namespace}/users"
-            },
-            input: {
-                type: "structure",
-                required: [ "AwsAccountId", "Namespace" ],
-                members: {
-                    AwsAccountId: {
-                        location: "uri",
-                        locationName: "AwsAccountId"
-                    },
-                    NextToken: {
-                        location: "querystring",
-                        locationName: "next-token"
-                    },
-                    MaxResults: {
-                        location: "querystring",
-                        locationName: "max-results",
-                        type: "integer"
-                    },
-                    Namespace: {
-                        location: "uri",
-                        locationName: "Namespace"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    UserList: {
-                        type: "list",
-                        member: {
-                            shape: "S9z"
-                        }
-                    },
-                    NextToken: {},
-                    RequestId: {},
-                    Status: {
-                        location: "statusCode",
-                        type: "integer"
-                    }
-                }
-            }
-        },
-        RegisterUser: {
-            http: {
-                requestUri: "/accounts/{AwsAccountId}/namespaces/{Namespace}/users"
-            },
-            input: {
-                type: "structure",
-                required: [ "IdentityType", "Email", "UserRole", "AwsAccountId", "Namespace" ],
-                members: {
-                    IdentityType: {},
-                    Email: {},
-                    UserRole: {},
-                    IamArn: {},
-                    SessionName: {},
-                    AwsAccountId: {
-                        location: "uri",
-                        locationName: "AwsAccountId"
-                    },
-                    Namespace: {
-                        location: "uri",
-                        locationName: "Namespace"
-                    },
-                    UserName: {},
-                    CustomPermissionsName: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    User: {
-                        shape: "S9z"
-                    },
-                    UserInvitationUrl: {},
-                    RequestId: {},
-                    Status: {
-                        location: "statusCode",
-                        type: "integer"
-                    }
-                }
-            }
-        },
-        RestoreAnalysis: {
-            http: {
-                requestUri: "/accounts/{AwsAccountId}/restore/analyses/{AnalysisId}"
-            },
-            input: {
-                type: "structure",
-                required: [ "AwsAccountId", "AnalysisId" ],
-                members: {
-                    AwsAccountId: {
-                        location: "uri",
-                        locationName: "AwsAccountId"
-                    },
-                    AnalysisId: {
-                        location: "uri",
-                        locationName: "AnalysisId"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    Status: {
-                        location: "statusCode",
-                        type: "integer"
-                    },
-                    Arn: {},
-                    AnalysisId: {},
-                    RequestId: {}
-                }
-            }
-        },
-        SearchAnalyses: {
-            http: {
-                requestUri: "/accounts/{AwsAccountId}/search/analyses"
-            },
-            input: {
-                type: "structure",
-                required: [ "AwsAccountId", "Filters" ],
-                members: {
-                    AwsAccountId: {
-                        location: "uri",
-                        locationName: "AwsAccountId"
-                    },
-                    Filters: {
-                        type: "list",
-                        member: {
-                            type: "structure",
-                            members: {
-                                Operator: {},
-                                Name: {},
-                                Value: {}
-                            }
-                        }
-                    },
-                    NextToken: {},
-                    MaxResults: {
-                        type: "integer"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    AnalysisSummaryList: {
-                        shape: "Saf"
-                    },
-                    NextToken: {},
-                    Status: {
-                        location: "statusCode",
-                        type: "integer"
-                    },
-                    RequestId: {}
-                }
-            }
-        },
-        SearchDashboards: {
-            http: {
-                requestUri: "/accounts/{AwsAccountId}/search/dashboards"
-            },
-            input: {
-                type: "structure",
-                required: [ "AwsAccountId", "Filters" ],
-                members: {
-                    AwsAccountId: {
-                        location: "uri",
-                        locationName: "AwsAccountId"
-                    },
-                    Filters: {
-                        type: "list",
-                        member: {
-                            type: "structure",
-                            required: [ "Operator" ],
-                            members: {
-                                Operator: {},
-                                Name: {},
-                                Value: {}
-                            }
-                        }
-                    },
-                    NextToken: {},
-                    MaxResults: {
-                        type: "integer"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    DashboardSummaryList: {
-                        shape: "San"
-                    },
-                    NextToken: {},
-                    Status: {
-                        location: "statusCode",
-                        type: "integer"
-                    },
-                    RequestId: {}
-                }
-            }
-        },
-        TagResource: {
-            http: {
-                requestUri: "/resources/{ResourceArn}/tags"
-            },
-            input: {
-                type: "structure",
-                required: [ "ResourceArn", "Tags" ],
-                members: {
-                    ResourceArn: {
-                        location: "uri",
-                        locationName: "ResourceArn"
-                    },
-                    Tags: {
-                        shape: "Sb"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    RequestId: {},
-                    Status: {
-                        location: "statusCode",
-                        type: "integer"
-                    }
-                }
-            }
-        },
-        UntagResource: {
-            http: {
-                method: "DELETE",
-                requestUri: "/resources/{ResourceArn}/tags"
-            },
-            input: {
-                type: "structure",
-                required: [ "ResourceArn", "TagKeys" ],
-                members: {
-                    ResourceArn: {
-                        location: "uri",
-                        locationName: "ResourceArn"
-                    },
-                    TagKeys: {
-                        location: "querystring",
-                        locationName: "keys",
-                        type: "list",
-                        member: {}
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    RequestId: {},
-                    Status: {
-                        location: "statusCode",
-                        type: "integer"
-                    }
-                }
-            }
-        },
-        UpdateAccountCustomization: {
-            http: {
-                method: "PUT",
-                requestUri: "/accounts/{AwsAccountId}/customizations"
-            },
-            input: {
-                type: "structure",
-                required: [ "AwsAccountId", "AccountCustomization" ],
-                members: {
-                    AwsAccountId: {
-                        location: "uri",
-                        locationName: "AwsAccountId"
-                    },
-                    Namespace: {
-                        location: "querystring",
-                        locationName: "namespace"
-                    },
-                    AccountCustomization: {
-                        shape: "Sa"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    Arn: {},
-                    AwsAccountId: {},
-                    Namespace: {},
-                    AccountCustomization: {
-                        shape: "Sa"
-                    },
-                    RequestId: {},
-                    Status: {
-                        location: "statusCode",
-                        type: "integer"
-                    }
-                }
-            }
-        },
-        UpdateAccountSettings: {
-            http: {
-                method: "PUT",
-                requestUri: "/accounts/{AwsAccountId}/settings"
-            },
-            input: {
-                type: "structure",
-                required: [ "AwsAccountId", "DefaultNamespace" ],
-                members: {
-                    AwsAccountId: {
-                        location: "uri",
-                        locationName: "AwsAccountId"
-                    },
-                    DefaultNamespace: {},
-                    NotificationEmail: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    RequestId: {},
-                    Status: {
-                        location: "statusCode",
-                        type: "integer"
-                    }
-                }
-            }
-        },
-        UpdateAnalysis: {
-            http: {
-                method: "PUT",
-                requestUri: "/accounts/{AwsAccountId}/analyses/{AnalysisId}"
-            },
-            input: {
-                type: "structure",
-                required: [ "AwsAccountId", "AnalysisId", "Name", "SourceEntity" ],
-                members: {
-                    AwsAccountId: {
-                        location: "uri",
-                        locationName: "AwsAccountId"
-                    },
-                    AnalysisId: {
-                        location: "uri",
-                        locationName: "AnalysisId"
-                    },
-                    Name: {},
-                    Parameters: {
-                        shape: "Sk"
-                    },
-                    SourceEntity: {
-                        shape: "S15"
-                    },
-                    ThemeArn: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    Arn: {},
-                    AnalysisId: {},
-                    UpdateStatus: {},
-                    Status: {
-                        location: "statusCode",
-                        type: "integer"
-                    },
-                    RequestId: {}
-                }
-            }
-        },
-        UpdateAnalysisPermissions: {
-            http: {
-                method: "PUT",
-                requestUri: "/accounts/{AwsAccountId}/analyses/{AnalysisId}/permissions"
-            },
-            input: {
-                type: "structure",
-                required: [ "AwsAccountId", "AnalysisId" ],
-                members: {
-                    AwsAccountId: {
-                        location: "uri",
-                        locationName: "AwsAccountId"
-                    },
-                    AnalysisId: {
-                        location: "uri",
-                        locationName: "AnalysisId"
-                    },
-                    GrantPermissions: {
-                        shape: "Sd2"
-                    },
-                    RevokePermissions: {
-                        shape: "Sd2"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    AnalysisArn: {},
-                    AnalysisId: {},
-                    Permissions: {
-                        shape: "S11"
-                    },
-                    RequestId: {},
-                    Status: {
-                        location: "statusCode",
-                        type: "integer"
-                    }
-                }
-            }
-        },
-        UpdateDashboard: {
-            http: {
-                method: "PUT",
-                requestUri: "/accounts/{AwsAccountId}/dashboards/{DashboardId}"
-            },
-            input: {
-                type: "structure",
-                required: [ "AwsAccountId", "DashboardId", "Name", "SourceEntity" ],
-                members: {
-                    AwsAccountId: {
-                        location: "uri",
-                        locationName: "AwsAccountId"
-                    },
-                    DashboardId: {
-                        location: "uri",
-                        locationName: "DashboardId"
-                    },
-                    Name: {},
-                    SourceEntity: {
-                        shape: "S1d"
-                    },
-                    Parameters: {
-                        shape: "Sk"
-                    },
-                    VersionDescription: {},
-                    DashboardPublishOptions: {
-                        shape: "S1g"
-                    },
-                    ThemeArn: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    Arn: {},
-                    VersionArn: {},
-                    DashboardId: {},
-                    CreationStatus: {},
-                    Status: {
-                        type: "integer"
-                    },
-                    RequestId: {}
-                }
-            }
-        },
-        UpdateDashboardPermissions: {
-            http: {
-                method: "PUT",
-                requestUri: "/accounts/{AwsAccountId}/dashboards/{DashboardId}/permissions"
-            },
-            input: {
-                type: "structure",
-                required: [ "AwsAccountId", "DashboardId" ],
-                members: {
-                    AwsAccountId: {
-                        location: "uri",
-                        locationName: "AwsAccountId"
-                    },
-                    DashboardId: {
-                        location: "uri",
-                        locationName: "DashboardId"
-                    },
-                    GrantPermissions: {
-                        shape: "Sd2"
-                    },
-                    RevokePermissions: {
-                        shape: "Sd2"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    DashboardArn: {},
-                    DashboardId: {},
-                    Permissions: {
-                        shape: "S11"
-                    },
-                    RequestId: {},
-                    Status: {
-                        location: "statusCode",
-                        type: "integer"
-                    }
-                }
-            }
-        },
-        UpdateDashboardPublishedVersion: {
-            http: {
-                method: "PUT",
-                requestUri: "/accounts/{AwsAccountId}/dashboards/{DashboardId}/versions/{VersionNumber}"
-            },
-            input: {
-                type: "structure",
-                required: [ "AwsAccountId", "DashboardId", "VersionNumber" ],
-                members: {
-                    AwsAccountId: {
-                        location: "uri",
-                        locationName: "AwsAccountId"
-                    },
-                    DashboardId: {
-                        location: "uri",
-                        locationName: "DashboardId"
-                    },
-                    VersionNumber: {
-                        location: "uri",
-                        locationName: "VersionNumber",
-                        type: "long"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    DashboardId: {},
-                    DashboardArn: {},
-                    Status: {
-                        location: "statusCode",
-                        type: "integer"
-                    },
-                    RequestId: {}
-                }
-            }
-        },
-        UpdateDataSet: {
-            http: {
-                method: "PUT",
-                requestUri: "/accounts/{AwsAccountId}/data-sets/{DataSetId}"
-            },
-            input: {
-                type: "structure",
-                required: [ "AwsAccountId", "DataSetId", "Name", "PhysicalTableMap", "ImportMode" ],
-                members: {
-                    AwsAccountId: {
-                        location: "uri",
-                        locationName: "AwsAccountId"
-                    },
-                    DataSetId: {
-                        location: "uri",
-                        locationName: "DataSetId"
-                    },
-                    Name: {},
-                    PhysicalTableMap: {
-                        shape: "S1q"
-                    },
-                    LogicalTableMap: {
-                        shape: "S2b"
-                    },
-                    ImportMode: {},
-                    ColumnGroups: {
-                        shape: "S35"
-                    },
-                    FieldFolders: {
-                        shape: "S3b"
-                    },
-                    RowLevelPermissionDataSet: {
-                        shape: "S3g"
-                    },
-                    ColumnLevelPermissionRules: {
-                        shape: "S3i"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    Arn: {},
-                    DataSetId: {},
-                    IngestionArn: {},
-                    IngestionId: {},
-                    RequestId: {},
-                    Status: {
-                        location: "statusCode",
-                        type: "integer"
-                    }
-                }
-            }
-        },
-        UpdateDataSetPermissions: {
-            http: {
-                requestUri: "/accounts/{AwsAccountId}/data-sets/{DataSetId}/permissions"
-            },
-            input: {
-                type: "structure",
-                required: [ "AwsAccountId", "DataSetId" ],
-                members: {
-                    AwsAccountId: {
-                        location: "uri",
-                        locationName: "AwsAccountId"
-                    },
-                    DataSetId: {
-                        location: "uri",
-                        locationName: "DataSetId"
-                    },
-                    GrantPermissions: {
-                        shape: "S11"
-                    },
-                    RevokePermissions: {
-                        shape: "S11"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    DataSetArn: {},
-                    DataSetId: {},
-                    RequestId: {},
-                    Status: {
-                        location: "statusCode",
-                        type: "integer"
-                    }
-                }
-            }
-        },
-        UpdateDataSource: {
-            http: {
-                method: "PUT",
-                requestUri: "/accounts/{AwsAccountId}/data-sources/{DataSourceId}"
-            },
-            input: {
-                type: "structure",
-                required: [ "AwsAccountId", "DataSourceId", "Name" ],
-                members: {
-                    AwsAccountId: {
-                        location: "uri",
-                        locationName: "AwsAccountId"
-                    },
-                    DataSourceId: {
-                        location: "uri",
-                        locationName: "DataSourceId"
-                    },
-                    Name: {},
-                    DataSourceParameters: {
-                        shape: "S3p"
-                    },
-                    Credentials: {
-                        shape: "S4q"
-                    },
-                    VpcConnectionProperties: {
-                        shape: "S4w"
-                    },
-                    SslProperties: {
-                        shape: "S4x"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    Arn: {},
-                    DataSourceId: {},
-                    UpdateStatus: {},
-                    RequestId: {},
-                    Status: {
-                        location: "statusCode",
-                        type: "integer"
-                    }
-                }
-            }
-        },
-        UpdateDataSourcePermissions: {
-            http: {
-                requestUri: "/accounts/{AwsAccountId}/data-sources/{DataSourceId}/permissions"
-            },
-            input: {
-                type: "structure",
-                required: [ "AwsAccountId", "DataSourceId" ],
-                members: {
-                    AwsAccountId: {
-                        location: "uri",
-                        locationName: "AwsAccountId"
-                    },
-                    DataSourceId: {
-                        location: "uri",
-                        locationName: "DataSourceId"
-                    },
-                    GrantPermissions: {
-                        shape: "S11"
-                    },
-                    RevokePermissions: {
-                        shape: "S11"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    DataSourceArn: {},
-                    DataSourceId: {},
-                    RequestId: {},
-                    Status: {
-                        location: "statusCode",
-                        type: "integer"
-                    }
-                }
-            }
-        },
-        UpdateGroup: {
-            http: {
-                method: "PUT",
-                requestUri: "/accounts/{AwsAccountId}/namespaces/{Namespace}/groups/{GroupName}"
-            },
-            input: {
-                type: "structure",
-                required: [ "GroupName", "AwsAccountId", "Namespace" ],
-                members: {
-                    GroupName: {
-                        location: "uri",
-                        locationName: "GroupName"
-                    },
-                    Description: {},
-                    AwsAccountId: {
-                        location: "uri",
-                        locationName: "AwsAccountId"
-                    },
-                    Namespace: {
-                        location: "uri",
-                        locationName: "Namespace"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    Group: {
-                        shape: "S53"
-                    },
-                    RequestId: {},
-                    Status: {
-                        location: "statusCode",
-                        type: "integer"
-                    }
-                }
-            }
-        },
-        UpdateIAMPolicyAssignment: {
-            http: {
-                method: "PUT",
-                requestUri: "/accounts/{AwsAccountId}/namespaces/{Namespace}/iam-policy-assignments/{AssignmentName}"
-            },
-            input: {
-                type: "structure",
-                required: [ "AwsAccountId", "AssignmentName", "Namespace" ],
-                members: {
-                    AwsAccountId: {
-                        location: "uri",
-                        locationName: "AwsAccountId"
-                    },
-                    AssignmentName: {
-                        location: "uri",
-                        locationName: "AssignmentName"
-                    },
-                    Namespace: {
-                        location: "uri",
-                        locationName: "Namespace"
-                    },
-                    AssignmentStatus: {},
-                    PolicyArn: {},
-                    Identities: {
-                        shape: "S5b"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    AssignmentName: {},
-                    AssignmentId: {},
-                    PolicyArn: {},
-                    Identities: {
-                        shape: "S5b"
-                    },
-                    AssignmentStatus: {},
-                    RequestId: {},
-                    Status: {
-                        location: "statusCode",
-                        type: "integer"
-                    }
-                }
-            }
-        },
-        UpdateTemplate: {
-            http: {
-                method: "PUT",
-                requestUri: "/accounts/{AwsAccountId}/templates/{TemplateId}"
-            },
-            input: {
-                type: "structure",
-                required: [ "AwsAccountId", "TemplateId", "SourceEntity" ],
-                members: {
-                    AwsAccountId: {
-                        location: "uri",
-                        locationName: "AwsAccountId"
-                    },
-                    TemplateId: {
-                        location: "uri",
-                        locationName: "TemplateId"
-                    },
-                    SourceEntity: {
-                        shape: "S5o"
-                    },
-                    VersionDescription: {},
-                    Name: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    TemplateId: {},
-                    Arn: {},
-                    VersionArn: {},
-                    CreationStatus: {},
-                    Status: {
-                        location: "statusCode",
-                        type: "integer"
-                    },
-                    RequestId: {}
-                }
-            }
-        },
-        UpdateTemplateAlias: {
-            http: {
-                method: "PUT",
-                requestUri: "/accounts/{AwsAccountId}/templates/{TemplateId}/aliases/{AliasName}"
-            },
-            input: {
-                type: "structure",
-                required: [ "AwsAccountId", "TemplateId", "AliasName", "TemplateVersionNumber" ],
-                members: {
-                    AwsAccountId: {
-                        location: "uri",
-                        locationName: "AwsAccountId"
-                    },
-                    TemplateId: {
-                        location: "uri",
-                        locationName: "TemplateId"
-                    },
-                    AliasName: {
-                        location: "uri",
-                        locationName: "AliasName"
-                    },
-                    TemplateVersionNumber: {
-                        type: "long"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    TemplateAlias: {
-                        shape: "S5w"
-                    },
-                    Status: {
-                        location: "statusCode",
-                        type: "integer"
-                    },
-                    RequestId: {}
-                }
-            }
-        },
-        UpdateTemplatePermissions: {
-            http: {
-                method: "PUT",
-                requestUri: "/accounts/{AwsAccountId}/templates/{TemplateId}/permissions"
-            },
-            input: {
-                type: "structure",
-                required: [ "AwsAccountId", "TemplateId" ],
-                members: {
-                    AwsAccountId: {
-                        location: "uri",
-                        locationName: "AwsAccountId"
-                    },
-                    TemplateId: {
-                        location: "uri",
-                        locationName: "TemplateId"
-                    },
-                    GrantPermissions: {
-                        shape: "Sd2"
-                    },
-                    RevokePermissions: {
-                        shape: "Sd2"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    TemplateId: {},
-                    TemplateArn: {},
-                    Permissions: {
-                        shape: "S11"
-                    },
-                    RequestId: {},
-                    Status: {
-                        location: "statusCode",
-                        type: "integer"
-                    }
-                }
-            }
-        },
-        UpdateTheme: {
-            http: {
-                method: "PUT",
-                requestUri: "/accounts/{AwsAccountId}/themes/{ThemeId}"
-            },
-            input: {
-                type: "structure",
-                required: [ "AwsAccountId", "ThemeId", "BaseThemeId" ],
-                members: {
-                    AwsAccountId: {
-                        location: "uri",
-                        locationName: "AwsAccountId"
-                    },
-                    ThemeId: {
-                        location: "uri",
-                        locationName: "ThemeId"
-                    },
-                    Name: {},
-                    BaseThemeId: {},
-                    VersionDescription: {},
-                    Configuration: {
-                        shape: "S5z"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    ThemeId: {},
-                    Arn: {},
-                    VersionArn: {},
-                    CreationStatus: {},
-                    Status: {
-                        location: "statusCode",
-                        type: "integer"
-                    },
-                    RequestId: {}
-                }
-            }
-        },
-        UpdateThemeAlias: {
-            http: {
-                method: "PUT",
-                requestUri: "/accounts/{AwsAccountId}/themes/{ThemeId}/aliases/{AliasName}"
-            },
-            input: {
-                type: "structure",
-                required: [ "AwsAccountId", "ThemeId", "AliasName", "ThemeVersionNumber" ],
-                members: {
-                    AwsAccountId: {
-                        location: "uri",
-                        locationName: "AwsAccountId"
-                    },
-                    ThemeId: {
-                        location: "uri",
-                        locationName: "ThemeId"
-                    },
-                    AliasName: {
-                        location: "uri",
-                        locationName: "AliasName"
-                    },
-                    ThemeVersionNumber: {
-                        type: "long"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    ThemeAlias: {
-                        shape: "S6e"
-                    },
-                    Status: {
-                        location: "statusCode",
-                        type: "integer"
-                    },
-                    RequestId: {}
-                }
-            }
-        },
-        UpdateThemePermissions: {
-            http: {
-                method: "PUT",
-                requestUri: "/accounts/{AwsAccountId}/themes/{ThemeId}/permissions"
-            },
-            input: {
-                type: "structure",
-                required: [ "AwsAccountId", "ThemeId" ],
-                members: {
-                    AwsAccountId: {
-                        location: "uri",
-                        locationName: "AwsAccountId"
-                    },
-                    ThemeId: {
-                        location: "uri",
-                        locationName: "ThemeId"
-                    },
-                    GrantPermissions: {
-                        shape: "Sd2"
-                    },
-                    RevokePermissions: {
-                        shape: "Sd2"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    ThemeId: {},
-                    ThemeArn: {},
-                    Permissions: {
-                        shape: "S11"
-                    },
-                    RequestId: {},
-                    Status: {
-                        location: "statusCode",
-                        type: "integer"
-                    }
-                }
-            }
-        },
-        UpdateUser: {
-            http: {
-                method: "PUT",
-                requestUri: "/accounts/{AwsAccountId}/namespaces/{Namespace}/users/{UserName}"
-            },
-            input: {
-                type: "structure",
-                required: [ "UserName", "AwsAccountId", "Namespace", "Email", "Role" ],
-                members: {
-                    UserName: {
-                        location: "uri",
-                        locationName: "UserName"
-                    },
-                    AwsAccountId: {
-                        location: "uri",
-                        locationName: "AwsAccountId"
-                    },
-                    Namespace: {
-                        location: "uri",
-                        locationName: "Namespace"
-                    },
-                    Email: {},
-                    Role: {},
-                    CustomPermissionsName: {},
-                    UnapplyCustomPermissions: {
-                        type: "boolean"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    User: {
-                        shape: "S9z"
-                    },
-                    RequestId: {},
-                    Status: {
-                        location: "statusCode",
-                        type: "integer"
-                    }
-                }
-            }
-        }
-    },
-    shapes: {
-        Sa: {
-            type: "structure",
-            members: {
-                DefaultTheme: {}
-            }
-        },
-        Sb: {
-            type: "list",
-            member: {
-                type: "structure",
-                required: [ "Key", "Value" ],
-                members: {
-                    Key: {},
-                    Value: {}
-                }
-            }
-        },
-        Sk: {
-            type: "structure",
-            members: {
-                StringParameters: {
-                    type: "list",
-                    member: {
-                        type: "structure",
-                        required: [ "Name", "Values" ],
-                        members: {
-                            Name: {},
-                            Values: {
-                                type: "list",
-                                member: {}
-                            }
-                        }
-                    }
-                },
-                IntegerParameters: {
-                    type: "list",
-                    member: {
-                        type: "structure",
-                        required: [ "Name", "Values" ],
-                        members: {
-                            Name: {},
-                            Values: {
-                                type: "list",
-                                member: {
-                                    type: "long"
-                                }
-                            }
-                        }
-                    }
-                },
-                DecimalParameters: {
-                    type: "list",
-                    member: {
-                        type: "structure",
-                        required: [ "Name", "Values" ],
-                        members: {
-                            Name: {},
-                            Values: {
-                                type: "list",
-                                member: {
-                                    type: "double"
-                                }
-                            }
-                        }
-                    }
-                },
-                DateTimeParameters: {
-                    type: "list",
-                    member: {
-                        type: "structure",
-                        required: [ "Name", "Values" ],
-                        members: {
-                            Name: {},
-                            Values: {
-                                type: "list",
-                                member: {
-                                    type: "timestamp"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        S11: {
-            type: "list",
-            member: {
-                shape: "S12"
-            }
-        },
-        S12: {
-            type: "structure",
-            required: [ "Principal", "Actions" ],
-            members: {
-                Principal: {},
-                Actions: {
-                    type: "list",
-                    member: {}
-                }
-            }
-        },
-        S15: {
-            type: "structure",
-            members: {
-                SourceTemplate: {
-                    type: "structure",
-                    required: [ "DataSetReferences", "Arn" ],
-                    members: {
-                        DataSetReferences: {
-                            shape: "S17"
-                        },
-                        Arn: {}
-                    }
-                }
-            }
-        },
-        S17: {
-            type: "list",
-            member: {
-                type: "structure",
-                required: [ "DataSetPlaceholder", "DataSetArn" ],
-                members: {
-                    DataSetPlaceholder: {},
-                    DataSetArn: {}
-                }
-            }
-        },
-        S1d: {
-            type: "structure",
-            members: {
-                SourceTemplate: {
-                    type: "structure",
-                    required: [ "DataSetReferences", "Arn" ],
-                    members: {
-                        DataSetReferences: {
-                            shape: "S17"
-                        },
-                        Arn: {}
-                    }
-                }
-            }
-        },
-        S1g: {
-            type: "structure",
-            members: {
-                AdHocFilteringOption: {
-                    type: "structure",
-                    members: {
-                        AvailabilityStatus: {}
-                    }
-                },
-                ExportToCSVOption: {
-                    type: "structure",
-                    members: {
-                        AvailabilityStatus: {}
-                    }
-                },
-                SheetControlsOption: {
-                    type: "structure",
-                    members: {
-                        VisibilityState: {}
-                    }
-                }
-            }
-        },
-        S1q: {
-            type: "map",
-            key: {},
-            value: {
-                type: "structure",
-                members: {
-                    RelationalTable: {
-                        type: "structure",
-                        required: [ "DataSourceArn", "Name", "InputColumns" ],
-                        members: {
-                            DataSourceArn: {},
-                            Catalog: {},
-                            Schema: {},
-                            Name: {},
-                            InputColumns: {
-                                shape: "S1x"
-                            }
-                        }
-                    },
-                    CustomSql: {
-                        type: "structure",
-                        required: [ "DataSourceArn", "Name", "SqlQuery" ],
-                        members: {
-                            DataSourceArn: {},
-                            Name: {},
-                            SqlQuery: {},
-                            Columns: {
-                                shape: "S1x"
-                            }
-                        }
-                    },
-                    S3Source: {
-                        type: "structure",
-                        required: [ "DataSourceArn", "InputColumns" ],
-                        members: {
-                            DataSourceArn: {},
-                            UploadSettings: {
-                                type: "structure",
-                                members: {
-                                    Format: {},
-                                    StartFromRow: {
-                                        type: "integer"
-                                    },
-                                    ContainsHeader: {
-                                        type: "boolean"
-                                    },
-                                    TextQualifier: {},
-                                    Delimiter: {}
-                                }
-                            },
-                            InputColumns: {
-                                shape: "S1x"
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        S1x: {
-            type: "list",
-            member: {
-                type: "structure",
-                required: [ "Name", "Type" ],
-                members: {
-                    Name: {},
-                    Type: {}
-                }
-            }
-        },
-        S2b: {
-            type: "map",
-            key: {},
-            value: {
-                type: "structure",
-                required: [ "Alias", "Source" ],
-                members: {
-                    Alias: {},
-                    DataTransforms: {
-                        type: "list",
-                        member: {
-                            type: "structure",
-                            members: {
-                                ProjectOperation: {
-                                    type: "structure",
-                                    required: [ "ProjectedColumns" ],
-                                    members: {
-                                        ProjectedColumns: {
-                                            type: "list",
-                                            member: {}
-                                        }
-                                    }
-                                },
-                                FilterOperation: {
-                                    type: "structure",
-                                    required: [ "ConditionExpression" ],
-                                    members: {
-                                        ConditionExpression: {}
-                                    }
-                                },
-                                CreateColumnsOperation: {
-                                    type: "structure",
-                                    required: [ "Columns" ],
-                                    members: {
-                                        Columns: {
-                                            type: "list",
-                                            member: {
-                                                type: "structure",
-                                                required: [ "ColumnName", "ColumnId", "Expression" ],
-                                                members: {
-                                                    ColumnName: {},
-                                                    ColumnId: {},
-                                                    Expression: {}
-                                                }
-                                            }
-                                        }
-                                    }
-                                },
-                                RenameColumnOperation: {
-                                    type: "structure",
-                                    required: [ "ColumnName", "NewColumnName" ],
-                                    members: {
-                                        ColumnName: {},
-                                        NewColumnName: {}
-                                    }
-                                },
-                                CastColumnTypeOperation: {
-                                    type: "structure",
-                                    required: [ "ColumnName", "NewColumnType" ],
-                                    members: {
-                                        ColumnName: {},
-                                        NewColumnType: {},
-                                        Format: {}
-                                    }
-                                },
-                                TagColumnOperation: {
-                                    type: "structure",
-                                    required: [ "ColumnName", "Tags" ],
-                                    members: {
-                                        ColumnName: {},
-                                        Tags: {
-                                            type: "list",
-                                            member: {
-                                                type: "structure",
-                                                members: {
-                                                    ColumnGeographicRole: {},
-                                                    ColumnDescription: {
-                                                        type: "structure",
-                                                        members: {
-                                                            Text: {}
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    Source: {
-                        type: "structure",
-                        members: {
-                            JoinInstruction: {
-                                type: "structure",
-                                required: [ "LeftOperand", "RightOperand", "Type", "OnClause" ],
-                                members: {
-                                    LeftOperand: {},
-                                    RightOperand: {},
-                                    LeftJoinKeyProperties: {
-                                        shape: "S31"
-                                    },
-                                    RightJoinKeyProperties: {
-                                        shape: "S31"
-                                    },
-                                    Type: {},
-                                    OnClause: {}
-                                }
-                            },
-                            PhysicalTableId: {}
-                        }
-                    }
-                }
-            }
-        },
-        S31: {
-            type: "structure",
-            members: {
-                UniqueKey: {
-                    type: "boolean"
-                }
-            }
-        },
-        S35: {
-            type: "list",
-            member: {
-                type: "structure",
-                members: {
-                    GeoSpatialColumnGroup: {
-                        type: "structure",
-                        required: [ "Name", "CountryCode", "Columns" ],
-                        members: {
-                            Name: {},
-                            CountryCode: {},
-                            Columns: {
-                                type: "list",
-                                member: {}
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        S3b: {
-            type: "map",
-            key: {},
-            value: {
-                type: "structure",
-                members: {
-                    description: {},
-                    columns: {
-                        type: "list",
-                        member: {}
-                    }
-                }
-            }
-        },
-        S3g: {
-            type: "structure",
-            required: [ "Arn", "PermissionPolicy" ],
-            members: {
-                Namespace: {},
-                Arn: {},
-                PermissionPolicy: {}
-            }
-        },
-        S3i: {
-            type: "list",
-            member: {
-                type: "structure",
-                members: {
-                    Principals: {
-                        type: "list",
-                        member: {}
-                    },
-                    ColumnNames: {
-                        type: "list",
-                        member: {}
-                    }
-                }
-            }
-        },
-        S3p: {
-            type: "structure",
-            members: {
-                AmazonElasticsearchParameters: {
-                    type: "structure",
-                    required: [ "Domain" ],
-                    members: {
-                        Domain: {}
-                    }
-                },
-                AthenaParameters: {
-                    type: "structure",
-                    members: {
-                        WorkGroup: {}
-                    }
-                },
-                AuroraParameters: {
-                    type: "structure",
-                    required: [ "Host", "Port", "Database" ],
-                    members: {
-                        Host: {},
-                        Port: {
-                            type: "integer"
-                        },
-                        Database: {}
-                    }
-                },
-                AuroraPostgreSqlParameters: {
-                    type: "structure",
-                    required: [ "Host", "Port", "Database" ],
-                    members: {
-                        Host: {},
-                        Port: {
-                            type: "integer"
-                        },
-                        Database: {}
-                    }
-                },
-                AwsIotAnalyticsParameters: {
-                    type: "structure",
-                    required: [ "DataSetName" ],
-                    members: {
-                        DataSetName: {}
-                    }
-                },
-                JiraParameters: {
-                    type: "structure",
-                    required: [ "SiteBaseUrl" ],
-                    members: {
-                        SiteBaseUrl: {}
-                    }
-                },
-                MariaDbParameters: {
-                    type: "structure",
-                    required: [ "Host", "Port", "Database" ],
-                    members: {
-                        Host: {},
-                        Port: {
-                            type: "integer"
-                        },
-                        Database: {}
-                    }
-                },
-                MySqlParameters: {
-                    type: "structure",
-                    required: [ "Host", "Port", "Database" ],
-                    members: {
-                        Host: {},
-                        Port: {
-                            type: "integer"
-                        },
-                        Database: {}
-                    }
-                },
-                OracleParameters: {
-                    type: "structure",
-                    required: [ "Host", "Port", "Database" ],
-                    members: {
-                        Host: {},
-                        Port: {
-                            type: "integer"
-                        },
-                        Database: {}
-                    }
-                },
-                PostgreSqlParameters: {
-                    type: "structure",
-                    required: [ "Host", "Port", "Database" ],
-                    members: {
-                        Host: {},
-                        Port: {
-                            type: "integer"
-                        },
-                        Database: {}
-                    }
-                },
-                PrestoParameters: {
-                    type: "structure",
-                    required: [ "Host", "Port", "Catalog" ],
-                    members: {
-                        Host: {},
-                        Port: {
-                            type: "integer"
-                        },
-                        Catalog: {}
-                    }
-                },
-                RdsParameters: {
-                    type: "structure",
-                    required: [ "InstanceId", "Database" ],
-                    members: {
-                        InstanceId: {},
-                        Database: {}
-                    }
-                },
-                RedshiftParameters: {
-                    type: "structure",
-                    required: [ "Database" ],
-                    members: {
-                        Host: {},
-                        Port: {
-                            type: "integer"
-                        },
-                        Database: {},
-                        ClusterId: {}
-                    }
-                },
-                S3Parameters: {
-                    type: "structure",
-                    required: [ "ManifestFileLocation" ],
-                    members: {
-                        ManifestFileLocation: {
-                            type: "structure",
-                            required: [ "Bucket", "Key" ],
-                            members: {
-                                Bucket: {},
-                                Key: {}
-                            }
-                        }
-                    }
-                },
-                ServiceNowParameters: {
-                    type: "structure",
-                    required: [ "SiteBaseUrl" ],
-                    members: {
-                        SiteBaseUrl: {}
-                    }
-                },
-                SnowflakeParameters: {
-                    type: "structure",
-                    required: [ "Host", "Database", "Warehouse" ],
-                    members: {
-                        Host: {},
-                        Database: {},
-                        Warehouse: {}
-                    }
-                },
-                SparkParameters: {
-                    type: "structure",
-                    required: [ "Host", "Port" ],
-                    members: {
-                        Host: {},
-                        Port: {
-                            type: "integer"
-                        }
-                    }
-                },
-                SqlServerParameters: {
-                    type: "structure",
-                    required: [ "Host", "Port", "Database" ],
-                    members: {
-                        Host: {},
-                        Port: {
-                            type: "integer"
-                        },
-                        Database: {}
-                    }
-                },
-                TeradataParameters: {
-                    type: "structure",
-                    required: [ "Host", "Port", "Database" ],
-                    members: {
-                        Host: {},
-                        Port: {
-                            type: "integer"
-                        },
-                        Database: {}
-                    }
-                },
-                TwitterParameters: {
-                    type: "structure",
-                    required: [ "Query", "MaxRows" ],
-                    members: {
-                        Query: {},
-                        MaxRows: {
-                            type: "integer"
-                        }
-                    }
-                }
-            }
-        },
-        S4q: {
-            type: "structure",
-            members: {
-                CredentialPair: {
-                    type: "structure",
-                    required: [ "Username", "Password" ],
-                    members: {
-                        Username: {},
-                        Password: {},
-                        AlternateDataSourceParameters: {
-                            shape: "S4u"
-                        }
-                    }
-                },
-                CopySourceArn: {}
-            },
-            sensitive: true
-        },
-        S4u: {
-            type: "list",
-            member: {
-                shape: "S3p"
-            }
-        },
-        S4w: {
-            type: "structure",
-            required: [ "VpcConnectionArn" ],
-            members: {
-                VpcConnectionArn: {}
-            }
-        },
-        S4x: {
-            type: "structure",
-            members: {
-                DisableSsl: {
-                    type: "boolean"
-                }
-            }
-        },
-        S53: {
-            type: "structure",
-            members: {
-                Arn: {},
-                GroupName: {},
-                Description: {},
-                PrincipalId: {}
-            }
-        },
-        S57: {
-            type: "structure",
-            members: {
-                Arn: {},
-                MemberName: {}
-            }
-        },
-        S5b: {
-            type: "map",
-            key: {},
-            value: {
-                type: "list",
-                member: {}
-            }
-        },
-        S5o: {
-            type: "structure",
-            members: {
-                SourceAnalysis: {
-                    type: "structure",
-                    required: [ "Arn", "DataSetReferences" ],
-                    members: {
-                        Arn: {},
-                        DataSetReferences: {
-                            shape: "S17"
-                        }
-                    }
-                },
-                SourceTemplate: {
-                    type: "structure",
-                    required: [ "Arn" ],
-                    members: {
-                        Arn: {}
-                    }
-                }
-            }
-        },
-        S5w: {
-            type: "structure",
-            members: {
-                AliasName: {},
-                Arn: {},
-                TemplateVersionNumber: {
-                    type: "long"
-                }
-            }
-        },
-        S5z: {
-            type: "structure",
-            members: {
-                DataColorPalette: {
-                    type: "structure",
-                    members: {
-                        Colors: {
-                            shape: "S61"
-                        },
-                        MinMaxGradient: {
-                            shape: "S61"
-                        },
-                        EmptyFillColor: {}
-                    }
-                },
-                UIColorPalette: {
-                    type: "structure",
-                    members: {
-                        PrimaryForeground: {},
-                        PrimaryBackground: {},
-                        SecondaryForeground: {},
-                        SecondaryBackground: {},
-                        Accent: {},
-                        AccentForeground: {},
-                        Danger: {},
-                        DangerForeground: {},
-                        Warning: {},
-                        WarningForeground: {},
-                        Success: {},
-                        SuccessForeground: {},
-                        Dimension: {},
-                        DimensionForeground: {},
-                        Measure: {},
-                        MeasureForeground: {}
-                    }
-                },
-                Sheet: {
-                    type: "structure",
-                    members: {
-                        Tile: {
-                            type: "structure",
-                            members: {
-                                Border: {
-                                    type: "structure",
-                                    members: {
-                                        Show: {
-                                            type: "boolean"
-                                        }
-                                    }
-                                }
-                            }
-                        },
-                        TileLayout: {
-                            type: "structure",
-                            members: {
-                                Gutter: {
-                                    type: "structure",
-                                    members: {
-                                        Show: {
-                                            type: "boolean"
-                                        }
-                                    }
-                                },
-                                Margin: {
-                                    type: "structure",
-                                    members: {
-                                        Show: {
-                                            type: "boolean"
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        S61: {
-            type: "list",
-            member: {}
-        },
-        S6e: {
-            type: "structure",
-            members: {
-                Arn: {},
-                AliasName: {},
-                ThemeVersionNumber: {
-                    type: "long"
-                }
-            }
-        },
-        S7n: {
-            type: "list",
-            member: {}
-        },
-        S7o: {
-            type: "list",
-            member: {
-                type: "structure",
-                members: {
-                    SheetId: {},
-                    Name: {}
-                }
-            }
-        },
-        S8a: {
-            type: "structure",
-            members: {
-                Arn: {},
-                DataSourceId: {},
-                Name: {},
-                Type: {},
-                Status: {},
-                CreatedTime: {
-                    type: "timestamp"
-                },
-                LastUpdatedTime: {
-                    type: "timestamp"
-                },
-                DataSourceParameters: {
-                    shape: "S3p"
-                },
-                AlternateDataSourceParameters: {
-                    shape: "S4u"
-                },
-                VpcConnectionProperties: {
-                    shape: "S4w"
-                },
-                SslProperties: {
-                    shape: "S4x"
-                },
-                ErrorInfo: {
-                    type: "structure",
-                    members: {
-                        Type: {},
-                        Message: {}
-                    }
-                }
-            }
-        },
-        S8m: {
-            type: "structure",
-            required: [ "Arn", "IngestionStatus", "CreatedTime" ],
-            members: {
-                Arn: {},
-                IngestionId: {},
-                IngestionStatus: {},
-                ErrorInfo: {
-                    type: "structure",
-                    members: {
-                        Type: {},
-                        Message: {}
-                    }
-                },
-                RowInfo: {
-                    type: "structure",
-                    members: {
-                        RowsIngested: {
-                            type: "long"
-                        },
-                        RowsDropped: {
-                            type: "long"
-                        }
-                    }
-                },
-                QueueInfo: {
-                    type: "structure",
-                    required: [ "WaitingOnIngestion", "QueuedIngestion" ],
-                    members: {
-                        WaitingOnIngestion: {},
-                        QueuedIngestion: {}
-                    }
-                },
-                CreatedTime: {
-                    type: "timestamp"
-                },
-                IngestionTimeInSeconds: {
-                    type: "long"
-                },
-                IngestionSizeInBytes: {
-                    type: "long"
-                },
-                RequestSource: {},
-                RequestType: {}
-            }
-        },
-        S8x: {
-            type: "structure",
-            members: {
-                Name: {},
-                Arn: {},
-                CapacityRegion: {},
-                CreationStatus: {},
-                IdentityStore: {},
-                NamespaceError: {
-                    type: "structure",
-                    members: {
-                        Type: {},
-                        Message: {}
-                    }
-                }
-            }
-        },
-        S9z: {
-            type: "structure",
-            members: {
-                Arn: {},
-                UserName: {},
-                Email: {},
-                Role: {},
-                IdentityType: {},
-                Active: {
-                    type: "boolean"
-                },
-                PrincipalId: {},
-                CustomPermissionsName: {}
-            }
-        },
-        Sa8: {
-            type: "string",
-            sensitive: true
-        },
-        Saf: {
-            type: "list",
-            member: {
-                type: "structure",
-                members: {
-                    Arn: {},
-                    AnalysisId: {},
-                    Name: {},
-                    Status: {},
-                    CreatedTime: {
-                        type: "timestamp"
-                    },
-                    LastUpdatedTime: {
-                        type: "timestamp"
-                    }
-                }
-            }
-        },
-        San: {
-            type: "list",
-            member: {
-                type: "structure",
-                members: {
-                    Arn: {},
-                    DashboardId: {},
-                    Name: {},
-                    CreatedTime: {
-                        type: "timestamp"
-                    },
-                    LastUpdatedTime: {
-                        type: "timestamp"
-                    },
-                    PublishedVersionNumber: {
-                        type: "long"
-                    },
-                    LastPublishedTime: {
-                        type: "timestamp"
-                    }
-                }
-            }
-        },
-        Sb1: {
-            type: "list",
-            member: {
-                shape: "S53"
-            }
-        },
-        Sd2: {
-            type: "list",
-            member: {
-                shape: "S12"
-            }
-        }
-    },
-    paginators: {
-        ListAnalyses: {
-            input_token: "NextToken",
-            output_token: "NextToken",
-            limit_key: "MaxResults",
-            result_key: "AnalysisSummaryList"
-        },
-        ListDashboardVersions: {
-            input_token: "NextToken",
-            output_token: "NextToken",
-            limit_key: "MaxResults",
-            result_key: "DashboardVersionSummaryList"
-        },
-        ListDashboards: {
-            input_token: "NextToken",
-            output_token: "NextToken",
-            limit_key: "MaxResults",
-            result_key: "DashboardSummaryList"
-        },
-        ListDataSets: {
-            input_token: "NextToken",
-            output_token: "NextToken",
-            limit_key: "MaxResults",
-            result_key: "DataSetSummaries"
-        },
-        ListDataSources: {
-            input_token: "NextToken",
-            output_token: "NextToken",
-            limit_key: "MaxResults",
-            result_key: "DataSources"
-        },
-        ListIngestions: {
-            input_token: "NextToken",
-            output_token: "NextToken",
-            limit_key: "MaxResults",
-            result_key: "Ingestions"
-        },
-        ListNamespaces: {
-            input_token: "NextToken",
-            output_token: "NextToken",
-            limit_key: "MaxResults",
-            result_key: "Namespaces"
-        },
-        ListTemplateAliases: {
-            input_token: "NextToken",
-            output_token: "NextToken",
-            limit_key: "MaxResults",
-            result_key: "TemplateAliasList"
-        },
-        ListTemplateVersions: {
-            input_token: "NextToken",
-            output_token: "NextToken",
-            limit_key: "MaxResults",
-            result_key: "TemplateVersionSummaryList"
-        },
-        ListTemplates: {
-            input_token: "NextToken",
-            output_token: "NextToken",
-            limit_key: "MaxResults",
-            result_key: "TemplateSummaryList"
-        },
-        ListThemeVersions: {
-            input_token: "NextToken",
-            output_token: "NextToken",
-            limit_key: "MaxResults",
-            result_key: "ThemeVersionSummaryList"
-        },
-        ListThemes: {
-            input_token: "NextToken",
-            output_token: "NextToken",
-            limit_key: "MaxResults",
-            result_key: "ThemeSummaryList"
-        },
-        SearchAnalyses: {
-            input_token: "NextToken",
-            output_token: "NextToken",
-            limit_key: "MaxResults",
-            result_key: "AnalysisSummaryList"
-        },
-        SearchDashboards: {
-            input_token: "NextToken",
-            output_token: "NextToken",
-            limit_key: "MaxResults",
-            result_key: "DashboardSummaryList"
-        }
-    }
-};
-
-AWS.apiLoader.services["rdsdataservice"] = {};
-
-AWS.RDSDataService = AWS.Service.defineService("rdsdataservice", [ "2018-08-01" ]);
-
-_xamzrequire = function e(t, n, r) {
-    function s(o, u) {
-        if (!n[o]) {
-            if (!t[o]) {
-                var a = typeof _xamzrequire == "function" && _xamzrequire;
-                if (!u && a) return a(o, !0);
-                if (i) return i(o, !0);
-                var f = new Error("Cannot find module '" + o + "'");
-                throw f.code = "MODULE_NOT_FOUND", f;
-            }
-            var l = n[o] = {
-                exports: {}
-            };
-            t[o][0].call(l.exports, function(e) {
-                var n = t[o][1][e];
-                return s(n ? n : e);
-            }, l, l.exports, e, t, n, r);
-        }
-        return n[o].exports;
-    }
-    var i = typeof _xamzrequire == "function" && _xamzrequire;
-    for (var o = 0; o < r.length; o++) s(r[o]);
-    return s;
-}({
-    104: [ function(require, module, exports) {
-        var AWS = require("../core");
-        AWS.util.update(AWS.RDSDataService.prototype, {
-            retryableError: function retryableError(error) {
-                if (error.code === "BadRequestException" && error.message && error.message.match(/^Communications link failure/) && error.statusCode === 400) {
-                    return true;
-                } else {
-                    var _super = AWS.Service.prototype.retryableError;
-                    return _super.call(this, error);
-                }
-            }
-        });
-    }, {
-        "../core": 39
-    } ]
-}, {}, [ 104 ]);
-
-AWS.apiLoader.services["rdsdataservice"]["2018-08-01"] = {
-    version: "2.0",
-    metadata: {
-        apiVersion: "2018-08-01",
-        endpointPrefix: "rds-data",
-        jsonVersion: "1.1",
-        protocol: "rest-json",
-        serviceFullName: "AWS RDS DataService",
-        serviceId: "RDS Data",
-        signatureVersion: "v4",
-        signingName: "rds-data",
-        uid: "rds-data-2018-08-01"
-    },
-    operations: {
-        BatchExecuteStatement: {
-            http: {
-                requestUri: "/BatchExecute",
-                responseCode: 200
-            },
-            input: {
-                type: "structure",
-                required: [ "resourceArn", "secretArn", "sql" ],
-                members: {
-                    database: {},
-                    parameterSets: {
-                        type: "list",
-                        member: {
-                            shape: "S4"
-                        }
-                    },
-                    resourceArn: {},
-                    schema: {},
-                    secretArn: {},
-                    sql: {},
-                    transactionId: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    updateResults: {
-                        type: "list",
-                        member: {
-                            type: "structure",
-                            members: {
-                                generatedFields: {
-                                    shape: "Sq"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        BeginTransaction: {
-            http: {
-                requestUri: "/BeginTransaction",
-                responseCode: 200
-            },
-            input: {
-                type: "structure",
-                required: [ "resourceArn", "secretArn" ],
-                members: {
-                    database: {},
-                    resourceArn: {},
-                    schema: {},
-                    secretArn: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    transactionId: {}
-                }
-            }
-        },
-        CommitTransaction: {
-            http: {
-                requestUri: "/CommitTransaction",
-                responseCode: 200
-            },
-            input: {
-                type: "structure",
-                required: [ "resourceArn", "secretArn", "transactionId" ],
-                members: {
-                    resourceArn: {},
-                    secretArn: {},
-                    transactionId: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    transactionStatus: {}
-                }
-            }
-        },
-        ExecuteSql: {
-            http: {
-                requestUri: "/ExecuteSql",
-                responseCode: 200
-            },
-            input: {
-                type: "structure",
-                required: [ "awsSecretStoreArn", "dbClusterOrInstanceArn", "sqlStatements" ],
-                members: {
-                    awsSecretStoreArn: {},
-                    database: {},
-                    dbClusterOrInstanceArn: {},
-                    schema: {},
-                    sqlStatements: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    sqlStatementResults: {
-                        type: "list",
-                        member: {
-                            type: "structure",
-                            members: {
-                                numberOfRecordsUpdated: {
-                                    type: "long"
-                                },
-                                resultFrame: {
-                                    type: "structure",
-                                    members: {
-                                        records: {
-                                            type: "list",
-                                            member: {
-                                                type: "structure",
-                                                members: {
-                                                    values: {
-                                                        type: "list",
-                                                        member: {
-                                                            shape: "S15"
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        },
-                                        resultSetMetadata: {
-                                            type: "structure",
-                                            members: {
-                                                columnCount: {
-                                                    type: "long"
-                                                },
-                                                columnMetadata: {
-                                                    shape: "S1c"
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            deprecated: true,
-            deprecatedMessage: "The ExecuteSql API is deprecated, please use the ExecuteStatement API."
-        },
-        ExecuteStatement: {
-            http: {
-                requestUri: "/Execute",
-                responseCode: 200
-            },
-            input: {
-                type: "structure",
-                required: [ "resourceArn", "secretArn", "sql" ],
-                members: {
-                    continueAfterTimeout: {
-                        type: "boolean"
-                    },
-                    database: {},
-                    includeResultMetadata: {
-                        type: "boolean"
-                    },
-                    parameters: {
-                        shape: "S4"
-                    },
-                    resourceArn: {},
-                    resultSetOptions: {
-                        type: "structure",
-                        members: {
-                            decimalReturnType: {}
-                        }
-                    },
-                    schema: {},
-                    secretArn: {},
-                    sql: {},
-                    transactionId: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    columnMetadata: {
-                        shape: "S1c"
-                    },
-                    generatedFields: {
-                        shape: "Sq"
-                    },
-                    numberOfRecordsUpdated: {
-                        type: "long"
-                    },
-                    records: {
-                        type: "list",
-                        member: {
-                            shape: "Sq"
-                        }
-                    }
-                }
-            }
-        },
-        RollbackTransaction: {
-            http: {
-                requestUri: "/RollbackTransaction",
-                responseCode: 200
-            },
-            input: {
-                type: "structure",
-                required: [ "resourceArn", "secretArn", "transactionId" ],
-                members: {
-                    resourceArn: {},
-                    secretArn: {},
-                    transactionId: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    transactionStatus: {}
-                }
-            }
-        }
-    },
-    shapes: {
-        S4: {
-            type: "list",
-            member: {
-                type: "structure",
-                members: {
-                    name: {},
-                    typeHint: {},
-                    value: {
-                        shape: "S8"
-                    }
-                }
-            }
-        },
-        S8: {
-            type: "structure",
-            members: {
-                arrayValue: {
-                    shape: "S9"
-                },
-                blobValue: {
-                    type: "blob"
-                },
-                booleanValue: {
-                    type: "boolean"
-                },
-                doubleValue: {
-                    type: "double"
-                },
-                isNull: {
-                    type: "boolean"
-                },
-                longValue: {
-                    type: "long"
-                },
-                stringValue: {}
-            },
-            union: true
-        },
-        S9: {
-            type: "structure",
-            members: {
-                arrayValues: {
-                    type: "list",
-                    member: {
-                        shape: "S9"
-                    }
-                },
-                booleanValues: {
-                    type: "list",
-                    member: {
-                        type: "boolean"
-                    }
-                },
-                doubleValues: {
-                    type: "list",
-                    member: {
-                        type: "double"
-                    }
-                },
-                longValues: {
-                    type: "list",
-                    member: {
-                        type: "long"
-                    }
-                },
-                stringValues: {
-                    type: "list",
-                    member: {}
-                }
-            },
-            union: true
-        },
-        Sq: {
-            type: "list",
-            member: {
-                shape: "S8"
-            }
-        },
-        S15: {
-            type: "structure",
-            members: {
-                arrayValues: {
-                    shape: "S16"
-                },
-                bigIntValue: {
-                    type: "long"
-                },
-                bitValue: {
-                    type: "boolean"
-                },
-                blobValue: {
-                    type: "blob"
-                },
-                doubleValue: {
-                    type: "double"
-                },
-                intValue: {
-                    type: "integer"
-                },
-                isNull: {
-                    type: "boolean"
-                },
-                realValue: {
-                    type: "float"
-                },
-                stringValue: {},
-                structValue: {
-                    type: "structure",
-                    members: {
-                        attributes: {
-                            shape: "S16"
-                        }
-                    }
-                }
-            },
-            union: true
-        },
-        S16: {
-            type: "list",
-            member: {
-                shape: "S15"
-            }
-        },
-        S1c: {
-            type: "list",
-            member: {
-                type: "structure",
-                members: {
-                    arrayBaseColumnType: {
-                        type: "integer"
-                    },
-                    isAutoIncrement: {
-                        type: "boolean"
-                    },
-                    isCaseSensitive: {
-                        type: "boolean"
-                    },
-                    isCurrency: {
-                        type: "boolean"
-                    },
-                    isSigned: {
-                        type: "boolean"
-                    },
-                    label: {},
-                    name: {},
-                    nullable: {
-                        type: "integer"
-                    },
-                    precision: {
-                        type: "integer"
-                    },
-                    scale: {
-                        type: "integer"
-                    },
-                    schemaName: {},
-                    tableName: {},
-                    type: {
-                        type: "integer"
-                    },
-                    typeName: {}
-                }
-            }
-        }
-    },
-    paginators: {}
-};
-
-AWS.apiLoader.services["amplify"] = {};
-
-AWS.Amplify = AWS.Service.defineService("amplify", [ "2017-07-25" ]);
-
-AWS.apiLoader.services["amplify"]["2017-07-25"] = {
-    version: "2.0",
-    metadata: {
-        apiVersion: "2017-07-25",
-        endpointPrefix: "amplify",
-        jsonVersion: "1.1",
-        protocol: "rest-json",
-        serviceAbbreviation: "Amplify",
-        serviceFullName: "AWS Amplify",
-        serviceId: "Amplify",
-        signatureVersion: "v4",
-        signingName: "amplify",
-        uid: "amplify-2017-07-25"
-    },
-    operations: {
-        CreateApp: {
-            http: {
-                requestUri: "/apps"
-            },
-            input: {
-                type: "structure",
-                required: [ "name" ],
-                members: {
-                    name: {},
-                    description: {},
-                    repository: {},
-                    platform: {},
-                    iamServiceRoleArn: {},
-                    oauthToken: {
-                        shape: "S7"
-                    },
-                    accessToken: {
-                        shape: "S8"
-                    },
-                    environmentVariables: {
-                        shape: "S9"
-                    },
-                    enableBranchAutoBuild: {
-                        type: "boolean"
-                    },
-                    enableBranchAutoDeletion: {
-                        type: "boolean"
-                    },
-                    enableBasicAuth: {
-                        type: "boolean"
-                    },
-                    basicAuthCredentials: {
-                        shape: "Sf"
-                    },
-                    customRules: {
-                        shape: "Sg"
-                    },
-                    tags: {
-                        shape: "Sm"
-                    },
-                    buildSpec: {},
-                    customHeaders: {},
-                    enableAutoBranchCreation: {
-                        type: "boolean"
-                    },
-                    autoBranchCreationPatterns: {
-                        shape: "Ss"
-                    },
-                    autoBranchCreationConfig: {
-                        shape: "Su"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                required: [ "app" ],
-                members: {
-                    app: {
-                        shape: "S12"
-                    }
-                }
-            }
-        },
-        CreateBackendEnvironment: {
-            http: {
-                requestUri: "/apps/{appId}/backendenvironments"
-            },
-            input: {
-                type: "structure",
-                required: [ "appId", "environmentName" ],
-                members: {
-                    appId: {
-                        location: "uri",
-                        locationName: "appId"
-                    },
-                    environmentName: {},
-                    stackName: {},
-                    deploymentArtifacts: {}
-                }
-            },
-            output: {
-                type: "structure",
-                required: [ "backendEnvironment" ],
-                members: {
-                    backendEnvironment: {
-                        shape: "S1h"
-                    }
-                }
-            }
-        },
-        CreateBranch: {
-            http: {
-                requestUri: "/apps/{appId}/branches"
-            },
-            input: {
-                type: "structure",
-                required: [ "appId", "branchName" ],
-                members: {
-                    appId: {
-                        location: "uri",
-                        locationName: "appId"
-                    },
-                    branchName: {},
-                    description: {},
-                    stage: {},
-                    framework: {},
-                    enableNotification: {
-                        type: "boolean"
-                    },
-                    enableAutoBuild: {
-                        type: "boolean"
-                    },
-                    environmentVariables: {
-                        shape: "S9"
-                    },
-                    basicAuthCredentials: {
-                        shape: "Sf"
-                    },
-                    enableBasicAuth: {
-                        type: "boolean"
-                    },
-                    enablePerformanceMode: {
-                        type: "boolean"
-                    },
-                    tags: {
-                        shape: "Sm"
-                    },
-                    buildSpec: {},
-                    ttl: {},
-                    displayName: {},
-                    enablePullRequestPreview: {
-                        type: "boolean"
-                    },
-                    pullRequestEnvironmentName: {},
-                    backendEnvironmentArn: {}
-                }
-            },
-            output: {
-                type: "structure",
-                required: [ "branch" ],
-                members: {
-                    branch: {
-                        shape: "S1o"
-                    }
-                }
-            }
-        },
-        CreateDeployment: {
-            http: {
-                requestUri: "/apps/{appId}/branches/{branchName}/deployments"
-            },
-            input: {
-                type: "structure",
-                required: [ "appId", "branchName" ],
-                members: {
-                    appId: {
-                        location: "uri",
-                        locationName: "appId"
-                    },
-                    branchName: {
-                        location: "uri",
-                        locationName: "branchName"
-                    },
-                    fileMap: {
-                        type: "map",
-                        key: {},
-                        value: {}
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                required: [ "fileUploadUrls", "zipUploadUrl" ],
-                members: {
-                    jobId: {},
-                    fileUploadUrls: {
-                        type: "map",
-                        key: {},
-                        value: {}
-                    },
-                    zipUploadUrl: {}
-                }
-            }
-        },
-        CreateDomainAssociation: {
-            http: {
-                requestUri: "/apps/{appId}/domains"
-            },
-            input: {
-                type: "structure",
-                required: [ "appId", "domainName", "subDomainSettings" ],
-                members: {
-                    appId: {
-                        location: "uri",
-                        locationName: "appId"
-                    },
-                    domainName: {},
-                    enableAutoSubDomain: {
-                        type: "boolean"
-                    },
-                    subDomainSettings: {
-                        shape: "S27"
-                    },
-                    autoSubDomainCreationPatterns: {
-                        shape: "S2a"
-                    },
-                    autoSubDomainIAMRole: {}
-                }
-            },
-            output: {
-                type: "structure",
-                required: [ "domainAssociation" ],
-                members: {
-                    domainAssociation: {
-                        shape: "S2e"
-                    }
-                }
-            }
-        },
-        CreateWebhook: {
-            http: {
-                requestUri: "/apps/{appId}/webhooks"
-            },
-            input: {
-                type: "structure",
-                required: [ "appId", "branchName" ],
-                members: {
-                    appId: {
-                        location: "uri",
-                        locationName: "appId"
-                    },
-                    branchName: {},
-                    description: {}
-                }
-            },
-            output: {
-                type: "structure",
-                required: [ "webhook" ],
-                members: {
-                    webhook: {
-                        shape: "S2p"
-                    }
-                }
-            }
-        },
-        DeleteApp: {
-            http: {
-                method: "DELETE",
-                requestUri: "/apps/{appId}"
-            },
-            input: {
-                type: "structure",
-                required: [ "appId" ],
-                members: {
-                    appId: {
-                        location: "uri",
-                        locationName: "appId"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                required: [ "app" ],
-                members: {
-                    app: {
-                        shape: "S12"
-                    }
-                }
-            }
-        },
-        DeleteBackendEnvironment: {
-            http: {
-                method: "DELETE",
-                requestUri: "/apps/{appId}/backendenvironments/{environmentName}"
-            },
-            input: {
-                type: "structure",
-                required: [ "appId", "environmentName" ],
-                members: {
-                    appId: {
-                        location: "uri",
-                        locationName: "appId"
-                    },
-                    environmentName: {
-                        location: "uri",
-                        locationName: "environmentName"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                required: [ "backendEnvironment" ],
-                members: {
-                    backendEnvironment: {
-                        shape: "S1h"
-                    }
-                }
-            }
-        },
-        DeleteBranch: {
-            http: {
-                method: "DELETE",
-                requestUri: "/apps/{appId}/branches/{branchName}"
-            },
-            input: {
-                type: "structure",
-                required: [ "appId", "branchName" ],
-                members: {
-                    appId: {
-                        location: "uri",
-                        locationName: "appId"
-                    },
-                    branchName: {
-                        location: "uri",
-                        locationName: "branchName"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                required: [ "branch" ],
-                members: {
-                    branch: {
-                        shape: "S1o"
-                    }
-                }
-            }
-        },
-        DeleteDomainAssociation: {
-            http: {
-                method: "DELETE",
-                requestUri: "/apps/{appId}/domains/{domainName}"
-            },
-            input: {
-                type: "structure",
-                required: [ "appId", "domainName" ],
-                members: {
-                    appId: {
-                        location: "uri",
-                        locationName: "appId"
-                    },
-                    domainName: {
-                        location: "uri",
-                        locationName: "domainName"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                required: [ "domainAssociation" ],
-                members: {
-                    domainAssociation: {
-                        shape: "S2e"
-                    }
-                }
-            }
-        },
-        DeleteJob: {
-            http: {
-                method: "DELETE",
-                requestUri: "/apps/{appId}/branches/{branchName}/jobs/{jobId}"
-            },
-            input: {
-                type: "structure",
-                required: [ "appId", "branchName", "jobId" ],
-                members: {
-                    appId: {
-                        location: "uri",
-                        locationName: "appId"
-                    },
-                    branchName: {
-                        location: "uri",
-                        locationName: "branchName"
-                    },
-                    jobId: {
-                        location: "uri",
-                        locationName: "jobId"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                required: [ "jobSummary" ],
-                members: {
-                    jobSummary: {
-                        shape: "S33"
-                    }
-                }
-            }
-        },
-        DeleteWebhook: {
-            http: {
-                method: "DELETE",
-                requestUri: "/webhooks/{webhookId}"
-            },
-            input: {
-                type: "structure",
-                required: [ "webhookId" ],
-                members: {
-                    webhookId: {
-                        location: "uri",
-                        locationName: "webhookId"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                required: [ "webhook" ],
-                members: {
-                    webhook: {
-                        shape: "S2p"
-                    }
-                }
-            }
-        },
-        GenerateAccessLogs: {
-            http: {
-                requestUri: "/apps/{appId}/accesslogs"
-            },
-            input: {
-                type: "structure",
-                required: [ "domainName", "appId" ],
-                members: {
-                    startTime: {
-                        type: "timestamp"
-                    },
-                    endTime: {
-                        type: "timestamp"
-                    },
-                    domainName: {},
-                    appId: {
-                        location: "uri",
-                        locationName: "appId"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    logUrl: {}
-                }
-            }
-        },
-        GetApp: {
-            http: {
-                method: "GET",
-                requestUri: "/apps/{appId}"
-            },
-            input: {
-                type: "structure",
-                required: [ "appId" ],
-                members: {
-                    appId: {
-                        location: "uri",
-                        locationName: "appId"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                required: [ "app" ],
-                members: {
-                    app: {
-                        shape: "S12"
-                    }
-                }
-            }
-        },
-        GetArtifactUrl: {
-            http: {
-                method: "GET",
-                requestUri: "/artifacts/{artifactId}"
-            },
-            input: {
-                type: "structure",
-                required: [ "artifactId" ],
-                members: {
-                    artifactId: {
-                        location: "uri",
-                        locationName: "artifactId"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                required: [ "artifactId", "artifactUrl" ],
-                members: {
-                    artifactId: {},
-                    artifactUrl: {}
-                }
-            }
-        },
-        GetBackendEnvironment: {
-            http: {
-                method: "GET",
-                requestUri: "/apps/{appId}/backendenvironments/{environmentName}"
-            },
-            input: {
-                type: "structure",
-                required: [ "appId", "environmentName" ],
-                members: {
-                    appId: {
-                        location: "uri",
-                        locationName: "appId"
-                    },
-                    environmentName: {
-                        location: "uri",
-                        locationName: "environmentName"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                required: [ "backendEnvironment" ],
-                members: {
-                    backendEnvironment: {
-                        shape: "S1h"
-                    }
-                }
-            }
-        },
-        GetBranch: {
-            http: {
-                method: "GET",
-                requestUri: "/apps/{appId}/branches/{branchName}"
-            },
-            input: {
-                type: "structure",
-                required: [ "appId", "branchName" ],
-                members: {
-                    appId: {
-                        location: "uri",
-                        locationName: "appId"
-                    },
-                    branchName: {
-                        location: "uri",
-                        locationName: "branchName"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                required: [ "branch" ],
-                members: {
-                    branch: {
-                        shape: "S1o"
-                    }
-                }
-            }
-        },
-        GetDomainAssociation: {
-            http: {
-                method: "GET",
-                requestUri: "/apps/{appId}/domains/{domainName}"
-            },
-            input: {
-                type: "structure",
-                required: [ "appId", "domainName" ],
-                members: {
-                    appId: {
-                        location: "uri",
-                        locationName: "appId"
-                    },
-                    domainName: {
-                        location: "uri",
-                        locationName: "domainName"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                required: [ "domainAssociation" ],
-                members: {
-                    domainAssociation: {
-                        shape: "S2e"
-                    }
-                }
-            }
-        },
-        GetJob: {
-            http: {
-                method: "GET",
-                requestUri: "/apps/{appId}/branches/{branchName}/jobs/{jobId}"
-            },
-            input: {
-                type: "structure",
-                required: [ "appId", "branchName", "jobId" ],
-                members: {
-                    appId: {
-                        location: "uri",
-                        locationName: "appId"
-                    },
-                    branchName: {
-                        location: "uri",
-                        locationName: "branchName"
-                    },
-                    jobId: {
-                        location: "uri",
-                        locationName: "jobId"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                required: [ "job" ],
-                members: {
-                    job: {
-                        type: "structure",
-                        required: [ "summary", "steps" ],
-                        members: {
-                            summary: {
-                                shape: "S33"
-                            },
-                            steps: {
-                                type: "list",
-                                member: {
-                                    type: "structure",
-                                    required: [ "stepName", "startTime", "status", "endTime" ],
-                                    members: {
-                                        stepName: {},
-                                        startTime: {
-                                            type: "timestamp"
-                                        },
-                                        status: {},
-                                        endTime: {
-                                            type: "timestamp"
-                                        },
-                                        logUrl: {},
-                                        artifactsUrl: {},
-                                        testArtifactsUrl: {},
-                                        testConfigUrl: {},
-                                        screenshots: {
-                                            type: "map",
-                                            key: {},
-                                            value: {}
-                                        },
-                                        statusReason: {},
-                                        context: {}
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        GetWebhook: {
-            http: {
-                method: "GET",
-                requestUri: "/webhooks/{webhookId}"
-            },
-            input: {
-                type: "structure",
-                required: [ "webhookId" ],
-                members: {
-                    webhookId: {
-                        location: "uri",
-                        locationName: "webhookId"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                required: [ "webhook" ],
-                members: {
-                    webhook: {
-                        shape: "S2p"
-                    }
-                }
-            }
-        },
-        ListApps: {
-            http: {
-                method: "GET",
-                requestUri: "/apps"
-            },
-            input: {
-                type: "structure",
-                members: {
-                    nextToken: {
-                        location: "querystring",
-                        locationName: "nextToken"
-                    },
-                    maxResults: {
-                        location: "querystring",
-                        locationName: "maxResults",
-                        type: "integer"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                required: [ "apps" ],
-                members: {
-                    apps: {
-                        type: "list",
-                        member: {
-                            shape: "S12"
-                        }
-                    },
-                    nextToken: {}
-                }
-            }
-        },
-        ListArtifacts: {
-            http: {
-                method: "GET",
-                requestUri: "/apps/{appId}/branches/{branchName}/jobs/{jobId}/artifacts"
-            },
-            input: {
-                type: "structure",
-                required: [ "appId", "branchName", "jobId" ],
-                members: {
-                    appId: {
-                        location: "uri",
-                        locationName: "appId"
-                    },
-                    branchName: {
-                        location: "uri",
-                        locationName: "branchName"
-                    },
-                    jobId: {
-                        location: "uri",
-                        locationName: "jobId"
-                    },
-                    nextToken: {
-                        location: "querystring",
-                        locationName: "nextToken"
-                    },
-                    maxResults: {
-                        location: "querystring",
-                        locationName: "maxResults",
-                        type: "integer"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                required: [ "artifacts" ],
-                members: {
-                    artifacts: {
-                        type: "list",
-                        member: {
-                            type: "structure",
-                            required: [ "artifactFileName", "artifactId" ],
-                            members: {
-                                artifactFileName: {},
-                                artifactId: {}
-                            }
-                        }
-                    },
-                    nextToken: {}
-                }
-            }
-        },
-        ListBackendEnvironments: {
-            http: {
-                method: "GET",
-                requestUri: "/apps/{appId}/backendenvironments"
-            },
-            input: {
-                type: "structure",
-                required: [ "appId" ],
-                members: {
-                    appId: {
-                        location: "uri",
-                        locationName: "appId"
-                    },
-                    environmentName: {
-                        location: "querystring",
-                        locationName: "environmentName"
-                    },
-                    nextToken: {
-                        location: "querystring",
-                        locationName: "nextToken"
-                    },
-                    maxResults: {
-                        location: "querystring",
-                        locationName: "maxResults",
-                        type: "integer"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                required: [ "backendEnvironments" ],
-                members: {
-                    backendEnvironments: {
-                        type: "list",
-                        member: {
-                            shape: "S1h"
-                        }
-                    },
-                    nextToken: {}
-                }
-            }
-        },
-        ListBranches: {
-            http: {
-                method: "GET",
-                requestUri: "/apps/{appId}/branches"
-            },
-            input: {
-                type: "structure",
-                required: [ "appId" ],
-                members: {
-                    appId: {
-                        location: "uri",
-                        locationName: "appId"
-                    },
-                    nextToken: {
-                        location: "querystring",
-                        locationName: "nextToken"
-                    },
-                    maxResults: {
-                        location: "querystring",
-                        locationName: "maxResults",
-                        type: "integer"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                required: [ "branches" ],
-                members: {
-                    branches: {
-                        type: "list",
-                        member: {
-                            shape: "S1o"
-                        }
-                    },
-                    nextToken: {}
-                }
-            }
-        },
-        ListDomainAssociations: {
-            http: {
-                method: "GET",
-                requestUri: "/apps/{appId}/domains"
-            },
-            input: {
-                type: "structure",
-                required: [ "appId" ],
-                members: {
-                    appId: {
-                        location: "uri",
-                        locationName: "appId"
-                    },
-                    nextToken: {
-                        location: "querystring",
-                        locationName: "nextToken"
-                    },
-                    maxResults: {
-                        location: "querystring",
-                        locationName: "maxResults",
-                        type: "integer"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                required: [ "domainAssociations" ],
-                members: {
-                    domainAssociations: {
-                        type: "list",
-                        member: {
-                            shape: "S2e"
-                        }
-                    },
-                    nextToken: {}
-                }
-            }
-        },
-        ListJobs: {
-            http: {
-                method: "GET",
-                requestUri: "/apps/{appId}/branches/{branchName}/jobs"
-            },
-            input: {
-                type: "structure",
-                required: [ "appId", "branchName" ],
-                members: {
-                    appId: {
-                        location: "uri",
-                        locationName: "appId"
-                    },
-                    branchName: {
-                        location: "uri",
-                        locationName: "branchName"
-                    },
-                    nextToken: {
-                        location: "querystring",
-                        locationName: "nextToken"
-                    },
-                    maxResults: {
-                        location: "querystring",
-                        locationName: "maxResults",
-                        type: "integer"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                required: [ "jobSummaries" ],
-                members: {
-                    jobSummaries: {
-                        type: "list",
-                        member: {
-                            shape: "S33"
-                        }
-                    },
-                    nextToken: {}
-                }
-            }
-        },
-        ListTagsForResource: {
-            http: {
-                method: "GET",
-                requestUri: "/tags/{resourceArn}"
-            },
-            input: {
-                type: "structure",
-                required: [ "resourceArn" ],
-                members: {
-                    resourceArn: {
-                        location: "uri",
-                        locationName: "resourceArn"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    tags: {
-                        shape: "Sm"
-                    }
-                }
-            }
-        },
-        ListWebhooks: {
-            http: {
-                method: "GET",
-                requestUri: "/apps/{appId}/webhooks"
-            },
-            input: {
-                type: "structure",
-                required: [ "appId" ],
-                members: {
-                    appId: {
-                        location: "uri",
-                        locationName: "appId"
-                    },
-                    nextToken: {
-                        location: "querystring",
-                        locationName: "nextToken"
-                    },
-                    maxResults: {
-                        location: "querystring",
-                        locationName: "maxResults",
-                        type: "integer"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                required: [ "webhooks" ],
-                members: {
-                    webhooks: {
-                        type: "list",
-                        member: {
-                            shape: "S2p"
-                        }
-                    },
-                    nextToken: {}
-                }
-            }
-        },
-        StartDeployment: {
-            http: {
-                requestUri: "/apps/{appId}/branches/{branchName}/deployments/start"
-            },
-            input: {
-                type: "structure",
-                required: [ "appId", "branchName" ],
-                members: {
-                    appId: {
-                        location: "uri",
-                        locationName: "appId"
-                    },
-                    branchName: {
-                        location: "uri",
-                        locationName: "branchName"
-                    },
-                    jobId: {},
-                    sourceUrl: {}
-                }
-            },
-            output: {
-                type: "structure",
-                required: [ "jobSummary" ],
-                members: {
-                    jobSummary: {
-                        shape: "S33"
-                    }
-                }
-            }
-        },
-        StartJob: {
-            http: {
-                requestUri: "/apps/{appId}/branches/{branchName}/jobs"
-            },
-            input: {
-                type: "structure",
-                required: [ "appId", "branchName", "jobType" ],
-                members: {
-                    appId: {
-                        location: "uri",
-                        locationName: "appId"
-                    },
-                    branchName: {
-                        location: "uri",
-                        locationName: "branchName"
-                    },
-                    jobId: {},
-                    jobType: {},
-                    jobReason: {},
-                    commitId: {},
-                    commitMessage: {},
-                    commitTime: {
-                        type: "timestamp"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                required: [ "jobSummary" ],
-                members: {
-                    jobSummary: {
-                        shape: "S33"
-                    }
-                }
-            }
-        },
-        StopJob: {
-            http: {
-                method: "DELETE",
-                requestUri: "/apps/{appId}/branches/{branchName}/jobs/{jobId}/stop"
-            },
-            input: {
-                type: "structure",
-                required: [ "appId", "branchName", "jobId" ],
-                members: {
-                    appId: {
-                        location: "uri",
-                        locationName: "appId"
-                    },
-                    branchName: {
-                        location: "uri",
-                        locationName: "branchName"
-                    },
-                    jobId: {
-                        location: "uri",
-                        locationName: "jobId"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                required: [ "jobSummary" ],
-                members: {
-                    jobSummary: {
-                        shape: "S33"
-                    }
-                }
-            }
-        },
-        TagResource: {
-            http: {
-                requestUri: "/tags/{resourceArn}"
-            },
-            input: {
-                type: "structure",
-                required: [ "resourceArn", "tags" ],
-                members: {
-                    resourceArn: {
-                        location: "uri",
-                        locationName: "resourceArn"
-                    },
-                    tags: {
-                        shape: "Sm"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {}
-            }
-        },
-        UntagResource: {
-            http: {
-                method: "DELETE",
-                requestUri: "/tags/{resourceArn}"
-            },
-            input: {
-                type: "structure",
-                required: [ "resourceArn", "tagKeys" ],
-                members: {
-                    resourceArn: {
-                        location: "uri",
-                        locationName: "resourceArn"
-                    },
-                    tagKeys: {
-                        location: "querystring",
-                        locationName: "tagKeys",
-                        type: "list",
-                        member: {}
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {}
-            }
-        },
-        UpdateApp: {
-            http: {
-                requestUri: "/apps/{appId}"
-            },
-            input: {
-                type: "structure",
-                required: [ "appId" ],
-                members: {
-                    appId: {
-                        location: "uri",
-                        locationName: "appId"
-                    },
-                    name: {},
-                    description: {},
-                    platform: {},
-                    iamServiceRoleArn: {},
-                    environmentVariables: {
-                        shape: "S9"
-                    },
-                    enableBranchAutoBuild: {
-                        type: "boolean"
-                    },
-                    enableBranchAutoDeletion: {
-                        type: "boolean"
-                    },
-                    enableBasicAuth: {
-                        type: "boolean"
-                    },
-                    basicAuthCredentials: {
-                        shape: "Sf"
-                    },
-                    customRules: {
-                        shape: "Sg"
-                    },
-                    buildSpec: {},
-                    customHeaders: {},
-                    enableAutoBranchCreation: {
-                        type: "boolean"
-                    },
-                    autoBranchCreationPatterns: {
-                        shape: "Ss"
-                    },
-                    autoBranchCreationConfig: {
-                        shape: "Su"
-                    },
-                    repository: {},
-                    oauthToken: {
-                        shape: "S7"
-                    },
-                    accessToken: {
-                        shape: "S8"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                required: [ "app" ],
-                members: {
-                    app: {
-                        shape: "S12"
-                    }
-                }
-            }
-        },
-        UpdateBranch: {
-            http: {
-                requestUri: "/apps/{appId}/branches/{branchName}"
-            },
-            input: {
-                type: "structure",
-                required: [ "appId", "branchName" ],
-                members: {
-                    appId: {
-                        location: "uri",
-                        locationName: "appId"
-                    },
-                    branchName: {
-                        location: "uri",
-                        locationName: "branchName"
-                    },
-                    description: {},
-                    framework: {},
-                    stage: {},
-                    enableNotification: {
-                        type: "boolean"
-                    },
-                    enableAutoBuild: {
-                        type: "boolean"
-                    },
-                    environmentVariables: {
-                        shape: "S9"
-                    },
-                    basicAuthCredentials: {
-                        shape: "Sf"
-                    },
-                    enableBasicAuth: {
-                        type: "boolean"
-                    },
-                    enablePerformanceMode: {
-                        type: "boolean"
-                    },
-                    buildSpec: {},
-                    ttl: {},
-                    displayName: {},
-                    enablePullRequestPreview: {
-                        type: "boolean"
-                    },
-                    pullRequestEnvironmentName: {},
-                    backendEnvironmentArn: {}
-                }
-            },
-            output: {
-                type: "structure",
-                required: [ "branch" ],
-                members: {
-                    branch: {
-                        shape: "S1o"
-                    }
-                }
-            }
-        },
-        UpdateDomainAssociation: {
-            http: {
-                requestUri: "/apps/{appId}/domains/{domainName}"
-            },
-            input: {
-                type: "structure",
-                required: [ "appId", "domainName", "subDomainSettings" ],
-                members: {
-                    appId: {
-                        location: "uri",
-                        locationName: "appId"
-                    },
-                    domainName: {
-                        location: "uri",
-                        locationName: "domainName"
-                    },
-                    enableAutoSubDomain: {
-                        type: "boolean"
-                    },
-                    subDomainSettings: {
-                        shape: "S27"
-                    },
-                    autoSubDomainCreationPatterns: {
-                        shape: "S2a"
-                    },
-                    autoSubDomainIAMRole: {}
-                }
-            },
-            output: {
-                type: "structure",
-                required: [ "domainAssociation" ],
-                members: {
-                    domainAssociation: {
-                        shape: "S2e"
-                    }
-                }
-            }
-        },
-        UpdateWebhook: {
-            http: {
-                requestUri: "/webhooks/{webhookId}"
-            },
-            input: {
-                type: "structure",
-                required: [ "webhookId" ],
-                members: {
-                    webhookId: {
-                        location: "uri",
-                        locationName: "webhookId"
-                    },
-                    branchName: {},
-                    description: {}
-                }
-            },
-            output: {
-                type: "structure",
-                required: [ "webhook" ],
-                members: {
-                    webhook: {
-                        shape: "S2p"
-                    }
-                }
-            }
-        }
-    },
-    shapes: {
-        S7: {
-            type: "string",
-            sensitive: true
-        },
-        S8: {
-            type: "string",
-            sensitive: true
-        },
-        S9: {
-            type: "map",
-            key: {},
-            value: {}
-        },
-        Sf: {
-            type: "string",
-            sensitive: true
-        },
-        Sg: {
-            type: "list",
-            member: {
-                type: "structure",
-                required: [ "source", "target" ],
-                members: {
-                    source: {},
-                    target: {},
-                    status: {},
-                    condition: {}
-                }
-            }
-        },
-        Sm: {
-            type: "map",
-            key: {},
-            value: {}
-        },
-        Ss: {
-            type: "list",
-            member: {}
-        },
-        Su: {
-            type: "structure",
-            members: {
-                stage: {},
-                framework: {},
-                enableAutoBuild: {
-                    type: "boolean"
-                },
-                environmentVariables: {
-                    shape: "S9"
-                },
-                basicAuthCredentials: {
-                    shape: "Sf"
-                },
-                enableBasicAuth: {
-                    type: "boolean"
-                },
-                enablePerformanceMode: {
-                    type: "boolean"
-                },
-                buildSpec: {},
-                enablePullRequestPreview: {
-                    type: "boolean"
-                },
-                pullRequestEnvironmentName: {}
-            }
-        },
-        S12: {
-            type: "structure",
-            required: [ "appId", "appArn", "name", "description", "repository", "platform", "createTime", "updateTime", "environmentVariables", "defaultDomain", "enableBranchAutoBuild", "enableBasicAuth" ],
-            members: {
-                appId: {},
-                appArn: {},
-                name: {},
-                tags: {
-                    shape: "Sm"
-                },
-                description: {},
-                repository: {},
-                platform: {},
-                createTime: {
-                    type: "timestamp"
-                },
-                updateTime: {
-                    type: "timestamp"
-                },
-                iamServiceRoleArn: {},
-                environmentVariables: {
-                    shape: "S9"
-                },
-                defaultDomain: {},
-                enableBranchAutoBuild: {
-                    type: "boolean"
-                },
-                enableBranchAutoDeletion: {
-                    type: "boolean"
-                },
-                enableBasicAuth: {
-                    type: "boolean"
-                },
-                basicAuthCredentials: {
-                    shape: "Sf"
-                },
-                customRules: {
-                    shape: "Sg"
-                },
-                productionBranch: {
-                    type: "structure",
-                    members: {
-                        lastDeployTime: {
-                            type: "timestamp"
-                        },
-                        status: {},
-                        thumbnailUrl: {},
-                        branchName: {}
-                    }
-                },
-                buildSpec: {},
-                customHeaders: {},
-                enableAutoBranchCreation: {
-                    type: "boolean"
-                },
-                autoBranchCreationPatterns: {
-                    shape: "Ss"
-                },
-                autoBranchCreationConfig: {
-                    shape: "Su"
-                }
-            }
-        },
-        S1h: {
-            type: "structure",
-            required: [ "backendEnvironmentArn", "environmentName", "createTime", "updateTime" ],
-            members: {
-                backendEnvironmentArn: {},
-                environmentName: {},
-                stackName: {},
-                deploymentArtifacts: {},
-                createTime: {
-                    type: "timestamp"
-                },
-                updateTime: {
-                    type: "timestamp"
-                }
-            }
-        },
-        S1o: {
-            type: "structure",
-            required: [ "branchArn", "branchName", "description", "stage", "displayName", "enableNotification", "createTime", "updateTime", "environmentVariables", "enableAutoBuild", "customDomains", "framework", "activeJobId", "totalNumberOfJobs", "enableBasicAuth", "ttl", "enablePullRequestPreview" ],
-            members: {
-                branchArn: {},
-                branchName: {},
-                description: {},
-                tags: {
-                    shape: "Sm"
-                },
-                stage: {},
-                displayName: {},
-                enableNotification: {
-                    type: "boolean"
-                },
-                createTime: {
-                    type: "timestamp"
-                },
-                updateTime: {
-                    type: "timestamp"
-                },
-                environmentVariables: {
-                    shape: "S9"
-                },
-                enableAutoBuild: {
-                    type: "boolean"
-                },
-                customDomains: {
-                    type: "list",
-                    member: {}
-                },
-                framework: {},
-                activeJobId: {},
-                totalNumberOfJobs: {},
-                enableBasicAuth: {
-                    type: "boolean"
-                },
-                enablePerformanceMode: {
-                    type: "boolean"
-                },
-                thumbnailUrl: {},
-                basicAuthCredentials: {
-                    shape: "Sf"
-                },
-                buildSpec: {},
-                ttl: {},
-                associatedResources: {
-                    type: "list",
-                    member: {}
-                },
-                enablePullRequestPreview: {
-                    type: "boolean"
-                },
-                pullRequestEnvironmentName: {},
-                destinationBranch: {},
-                sourceBranch: {},
-                backendEnvironmentArn: {}
-            }
-        },
-        S27: {
-            type: "list",
-            member: {
-                shape: "S28"
-            }
-        },
-        S28: {
-            type: "structure",
-            required: [ "prefix", "branchName" ],
-            members: {
-                prefix: {},
-                branchName: {}
-            }
-        },
-        S2a: {
-            type: "list",
-            member: {}
-        },
-        S2e: {
-            type: "structure",
-            required: [ "domainAssociationArn", "domainName", "enableAutoSubDomain", "domainStatus", "statusReason", "subDomains" ],
-            members: {
-                domainAssociationArn: {},
-                domainName: {},
-                enableAutoSubDomain: {
-                    type: "boolean"
-                },
-                autoSubDomainCreationPatterns: {
-                    shape: "S2a"
-                },
-                autoSubDomainIAMRole: {},
-                domainStatus: {},
-                statusReason: {},
-                certificateVerificationDNSRecord: {},
-                subDomains: {
-                    type: "list",
-                    member: {
-                        type: "structure",
-                        required: [ "subDomainSetting", "verified", "dnsRecord" ],
-                        members: {
-                            subDomainSetting: {
-                                shape: "S28"
-                            },
-                            verified: {
-                                type: "boolean"
-                            },
-                            dnsRecord: {}
-                        }
-                    }
-                }
-            }
-        },
-        S2p: {
-            type: "structure",
-            required: [ "webhookArn", "webhookId", "webhookUrl", "branchName", "description", "createTime", "updateTime" ],
-            members: {
-                webhookArn: {},
-                webhookId: {},
-                webhookUrl: {},
-                branchName: {},
-                description: {},
-                createTime: {
-                    type: "timestamp"
-                },
-                updateTime: {
-                    type: "timestamp"
-                }
-            }
-        },
-        S33: {
-            type: "structure",
-            required: [ "jobArn", "jobId", "commitId", "commitMessage", "commitTime", "startTime", "status", "jobType" ],
-            members: {
-                jobArn: {},
-                jobId: {},
-                commitId: {},
-                commitMessage: {},
-                commitTime: {
-                    type: "timestamp"
-                },
-                startTime: {
-                    type: "timestamp"
-                },
-                status: {},
-                endTime: {
-                    type: "timestamp"
-                },
-                jobType: {}
-            }
-        }
-    },
-    paginators: {}
-};
-
 AWS.apiLoader.services["datasync"] = {};
 
 AWS.DataSync = AWS.Service.defineService("datasync", [ "2018-11-09" ]);
@@ -95439,3 +84205,16867 @@ AWS.apiLoader.services["amplifybackend"]["2020-08-11"] = {
         }
     }
 };
+
+AWS.apiLoader.services["appintegrations"] = {};
+
+AWS.AppIntegrations = AWS.Service.defineService("appintegrations", [ "2020-07-29" ]);
+
+AWS.apiLoader.services["appintegrations"]["2020-07-29"] = {
+    version: "2.0",
+    metadata: {
+        apiVersion: "2020-07-29",
+        endpointPrefix: "app-integrations",
+        jsonVersion: "1.1",
+        protocol: "rest-json",
+        serviceFullName: "Amazon AppIntegrations Service",
+        serviceId: "AppIntegrations",
+        signatureVersion: "v4",
+        signingName: "app-integrations",
+        uid: "appintegrations-2020-07-29"
+    },
+    operations: {
+        CreateEventIntegration: {
+            http: {
+                requestUri: "/eventIntegrations"
+            },
+            input: {
+                type: "structure",
+                required: [ "Name", "EventFilter", "EventBridgeBus" ],
+                members: {
+                    Name: {},
+                    Description: {},
+                    EventFilter: {
+                        shape: "S4"
+                    },
+                    EventBridgeBus: {},
+                    ClientToken: {
+                        idempotencyToken: true
+                    },
+                    Tags: {
+                        shape: "S8"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    EventIntegrationArn: {}
+                }
+            }
+        },
+        DeleteEventIntegration: {
+            http: {
+                method: "DELETE",
+                requestUri: "/eventIntegrations/{Name}"
+            },
+            input: {
+                type: "structure",
+                required: [ "Name" ],
+                members: {
+                    Name: {
+                        location: "uri",
+                        locationName: "Name"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {}
+            }
+        },
+        GetEventIntegration: {
+            http: {
+                method: "GET",
+                requestUri: "/eventIntegrations/{Name}"
+            },
+            input: {
+                type: "structure",
+                required: [ "Name" ],
+                members: {
+                    Name: {
+                        location: "uri",
+                        locationName: "Name"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    Name: {},
+                    Description: {},
+                    EventIntegrationArn: {},
+                    EventBridgeBus: {},
+                    EventFilter: {
+                        shape: "S4"
+                    },
+                    Tags: {
+                        shape: "S8"
+                    }
+                }
+            }
+        },
+        ListEventIntegrationAssociations: {
+            http: {
+                method: "GET",
+                requestUri: "/eventIntegrations/{Name}/associations"
+            },
+            input: {
+                type: "structure",
+                required: [ "EventIntegrationName" ],
+                members: {
+                    EventIntegrationName: {
+                        location: "uri",
+                        locationName: "Name"
+                    },
+                    NextToken: {
+                        location: "querystring",
+                        locationName: "nextToken"
+                    },
+                    MaxResults: {
+                        location: "querystring",
+                        locationName: "maxResults",
+                        type: "integer"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    EventIntegrationAssociations: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            members: {
+                                EventIntegrationAssociationArn: {},
+                                EventIntegrationAssociationId: {},
+                                EventIntegrationName: {},
+                                ClientId: {},
+                                EventBridgeRuleName: {},
+                                ClientAssociationMetadata: {
+                                    type: "map",
+                                    key: {},
+                                    value: {}
+                                }
+                            }
+                        }
+                    },
+                    NextToken: {}
+                }
+            }
+        },
+        ListEventIntegrations: {
+            http: {
+                method: "GET",
+                requestUri: "/eventIntegrations"
+            },
+            input: {
+                type: "structure",
+                members: {
+                    NextToken: {
+                        location: "querystring",
+                        locationName: "nextToken"
+                    },
+                    MaxResults: {
+                        location: "querystring",
+                        locationName: "maxResults",
+                        type: "integer"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    EventIntegrations: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            members: {
+                                EventIntegrationArn: {},
+                                Name: {},
+                                Description: {},
+                                EventFilter: {
+                                    shape: "S4"
+                                },
+                                EventBridgeBus: {},
+                                Tags: {
+                                    shape: "S8"
+                                }
+                            }
+                        }
+                    },
+                    NextToken: {}
+                }
+            }
+        },
+        ListTagsForResource: {
+            http: {
+                method: "GET",
+                requestUri: "/tags/{resourceArn}"
+            },
+            input: {
+                type: "structure",
+                required: [ "resourceArn" ],
+                members: {
+                    resourceArn: {
+                        location: "uri",
+                        locationName: "resourceArn"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    tags: {
+                        shape: "S8"
+                    }
+                }
+            }
+        },
+        TagResource: {
+            http: {
+                requestUri: "/tags/{resourceArn}"
+            },
+            input: {
+                type: "structure",
+                required: [ "resourceArn", "tags" ],
+                members: {
+                    resourceArn: {
+                        location: "uri",
+                        locationName: "resourceArn"
+                    },
+                    tags: {
+                        shape: "S8"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {}
+            }
+        },
+        UntagResource: {
+            http: {
+                method: "DELETE",
+                requestUri: "/tags/{resourceArn}"
+            },
+            input: {
+                type: "structure",
+                required: [ "resourceArn", "tagKeys" ],
+                members: {
+                    resourceArn: {
+                        location: "uri",
+                        locationName: "resourceArn"
+                    },
+                    tagKeys: {
+                        location: "querystring",
+                        locationName: "tagKeys",
+                        type: "list",
+                        member: {}
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {}
+            }
+        },
+        UpdateEventIntegration: {
+            http: {
+                method: "PATCH",
+                requestUri: "/eventIntegrations/{Name}"
+            },
+            input: {
+                type: "structure",
+                required: [ "Name" ],
+                members: {
+                    Name: {
+                        location: "uri",
+                        locationName: "Name"
+                    },
+                    Description: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {}
+            }
+        }
+    },
+    shapes: {
+        S4: {
+            type: "structure",
+            required: [ "Source" ],
+            members: {
+                Source: {}
+            }
+        },
+        S8: {
+            type: "map",
+            key: {},
+            value: {}
+        }
+    },
+    paginators: {}
+};
+
+AWS.apiLoader.services["connectcontactlens"] = {};
+
+AWS.ConnectContactLens = AWS.Service.defineService("connectcontactlens", [ "2020-08-21" ]);
+
+AWS.apiLoader.services["connectcontactlens"]["2020-08-21"] = {
+    version: "2.0",
+    metadata: {
+        apiVersion: "2020-08-21",
+        endpointPrefix: "contact-lens",
+        jsonVersion: "1.1",
+        protocol: "rest-json",
+        serviceAbbreviation: "Amazon Connect Contact Lens",
+        serviceFullName: "Amazon Connect Contact Lens",
+        serviceId: "Connect Contact Lens",
+        signatureVersion: "v4",
+        signingName: "connect",
+        uid: "connect-contact-lens-2020-08-21"
+    },
+    operations: {
+        ListRealtimeContactAnalysisSegments: {
+            http: {
+                requestUri: "/realtime-contact-analysis/analysis-segments"
+            },
+            input: {
+                type: "structure",
+                required: [ "InstanceId", "ContactId" ],
+                members: {
+                    InstanceId: {},
+                    ContactId: {},
+                    MaxResults: {
+                        type: "integer"
+                    },
+                    NextToken: {}
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "Segments" ],
+                members: {
+                    Segments: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            members: {
+                                Transcript: {
+                                    type: "structure",
+                                    required: [ "Id", "ParticipantId", "ParticipantRole", "Content", "BeginOffsetMillis", "EndOffsetMillis", "Sentiment" ],
+                                    members: {
+                                        Id: {},
+                                        ParticipantId: {},
+                                        ParticipantRole: {},
+                                        Content: {},
+                                        BeginOffsetMillis: {
+                                            type: "integer"
+                                        },
+                                        EndOffsetMillis: {
+                                            type: "integer"
+                                        },
+                                        Sentiment: {},
+                                        IssuesDetected: {
+                                            type: "list",
+                                            member: {
+                                                type: "structure",
+                                                required: [ "CharacterOffsets" ],
+                                                members: {
+                                                    CharacterOffsets: {
+                                                        type: "structure",
+                                                        required: [ "BeginOffsetChar", "EndOffsetChar" ],
+                                                        members: {
+                                                            BeginOffsetChar: {
+                                                                type: "integer"
+                                                            },
+                                                            EndOffsetChar: {
+                                                                type: "integer"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                Categories: {
+                                    type: "structure",
+                                    required: [ "MatchedCategories", "MatchedDetails" ],
+                                    members: {
+                                        MatchedCategories: {
+                                            type: "list",
+                                            member: {}
+                                        },
+                                        MatchedDetails: {
+                                            type: "map",
+                                            key: {},
+                                            value: {
+                                                type: "structure",
+                                                required: [ "PointsOfInterest" ],
+                                                members: {
+                                                    PointsOfInterest: {
+                                                        type: "list",
+                                                        member: {
+                                                            type: "structure",
+                                                            required: [ "BeginOffsetMillis", "EndOffsetMillis" ],
+                                                            members: {
+                                                                BeginOffsetMillis: {
+                                                                    type: "integer"
+                                                                },
+                                                                EndOffsetMillis: {
+                                                                    type: "integer"
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    NextToken: {}
+                }
+            }
+        }
+    },
+    shapes: {},
+    paginators: {
+        ListRealtimeContactAnalysisSegments: {
+            input_token: "NextToken",
+            output_token: "NextToken",
+            limit_key: "MaxResults"
+        }
+    }
+};
+
+AWS.apiLoader.services["devopsguru"] = {};
+
+AWS.DevOpsGuru = AWS.Service.defineService("devopsguru", [ "2020-12-01" ]);
+
+AWS.apiLoader.services["devopsguru"]["2020-12-01"] = {
+    version: "2.0",
+    metadata: {
+        apiVersion: "2020-12-01",
+        endpointPrefix: "devops-guru",
+        jsonVersion: "1.1",
+        protocol: "rest-json",
+        serviceFullName: "Amazon DevOps Guru",
+        serviceId: "DevOps Guru",
+        signatureVersion: "v4",
+        signingName: "devops-guru",
+        uid: "devops-guru-2020-12-01"
+    },
+    operations: {
+        AddNotificationChannel: {
+            http: {
+                method: "PUT",
+                requestUri: "/channels",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                required: [ "Config" ],
+                members: {
+                    Config: {
+                        shape: "S2"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "Id" ],
+                members: {
+                    Id: {}
+                }
+            }
+        },
+        DescribeAccountHealth: {
+            http: {
+                method: "GET",
+                requestUri: "/accounts/health",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                members: {}
+            },
+            output: {
+                type: "structure",
+                required: [ "OpenReactiveInsights", "OpenProactiveInsights", "MetricsAnalyzed", "ResourceHours" ],
+                members: {
+                    OpenReactiveInsights: {
+                        type: "integer"
+                    },
+                    OpenProactiveInsights: {
+                        type: "integer"
+                    },
+                    MetricsAnalyzed: {
+                        type: "integer"
+                    },
+                    ResourceHours: {
+                        type: "long"
+                    }
+                }
+            }
+        },
+        DescribeAccountOverview: {
+            http: {
+                requestUri: "/accounts/overview",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                required: [ "FromTime" ],
+                members: {
+                    FromTime: {
+                        type: "timestamp"
+                    },
+                    ToTime: {
+                        type: "timestamp"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "ReactiveInsights", "ProactiveInsights", "MeanTimeToRecoverInMilliseconds" ],
+                members: {
+                    ReactiveInsights: {
+                        type: "integer"
+                    },
+                    ProactiveInsights: {
+                        type: "integer"
+                    },
+                    MeanTimeToRecoverInMilliseconds: {
+                        type: "long"
+                    }
+                }
+            }
+        },
+        DescribeAnomaly: {
+            http: {
+                method: "GET",
+                requestUri: "/anomalies/{Id}",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                required: [ "Id" ],
+                members: {
+                    Id: {
+                        location: "uri",
+                        locationName: "Id"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    ProactiveAnomaly: {
+                        type: "structure",
+                        members: {
+                            Id: {},
+                            Severity: {},
+                            Status: {},
+                            UpdateTime: {
+                                type: "timestamp"
+                            },
+                            AnomalyTimeRange: {
+                                shape: "Sp"
+                            },
+                            PredictionTimeRange: {
+                                shape: "Sq"
+                            },
+                            SourceDetails: {
+                                shape: "Sr"
+                            },
+                            AssociatedInsightId: {},
+                            ResourceCollection: {
+                                shape: "S14"
+                            },
+                            Limit: {
+                                type: "double"
+                            }
+                        }
+                    },
+                    ReactiveAnomaly: {
+                        type: "structure",
+                        members: {
+                            Id: {},
+                            Severity: {},
+                            Status: {},
+                            AnomalyTimeRange: {
+                                shape: "Sp"
+                            },
+                            SourceDetails: {
+                                shape: "Sr"
+                            },
+                            AssociatedInsightId: {},
+                            ResourceCollection: {
+                                shape: "S14"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        DescribeInsight: {
+            http: {
+                method: "GET",
+                requestUri: "/insights/{Id}",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                required: [ "Id" ],
+                members: {
+                    Id: {
+                        location: "uri",
+                        locationName: "Id"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    ProactiveInsight: {
+                        type: "structure",
+                        members: {
+                            Id: {},
+                            Name: {},
+                            Severity: {},
+                            Status: {},
+                            InsightTimeRange: {
+                                shape: "S1g"
+                            },
+                            PredictionTimeRange: {
+                                shape: "Sq"
+                            },
+                            ResourceCollection: {
+                                shape: "S14"
+                            },
+                            SsmOpsItemId: {}
+                        }
+                    },
+                    ReactiveInsight: {
+                        type: "structure",
+                        members: {
+                            Id: {},
+                            Name: {},
+                            Severity: {},
+                            Status: {},
+                            InsightTimeRange: {
+                                shape: "S1g"
+                            },
+                            ResourceCollection: {
+                                shape: "S14"
+                            },
+                            SsmOpsItemId: {}
+                        }
+                    }
+                }
+            }
+        },
+        DescribeResourceCollectionHealth: {
+            http: {
+                method: "GET",
+                requestUri: "/accounts/health/resource-collection/{ResourceCollectionType}",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                required: [ "ResourceCollectionType" ],
+                members: {
+                    ResourceCollectionType: {
+                        location: "uri",
+                        locationName: "ResourceCollectionType"
+                    },
+                    NextToken: {
+                        location: "querystring",
+                        locationName: "NextToken"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "CloudFormation" ],
+                members: {
+                    CloudFormation: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            members: {
+                                StackName: {},
+                                Insight: {
+                                    type: "structure",
+                                    members: {
+                                        OpenProactiveInsights: {
+                                            type: "integer"
+                                        },
+                                        OpenReactiveInsights: {
+                                            type: "integer"
+                                        },
+                                        MeanTimeToRecoverInMilliseconds: {
+                                            type: "long"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    NextToken: {}
+                }
+            }
+        },
+        DescribeServiceIntegration: {
+            http: {
+                method: "GET",
+                requestUri: "/service-integrations",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                members: {}
+            },
+            output: {
+                type: "structure",
+                members: {
+                    ServiceIntegration: {
+                        type: "structure",
+                        members: {
+                            OpsCenter: {
+                                type: "structure",
+                                members: {
+                                    OptInStatus: {}
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        GetResourceCollection: {
+            http: {
+                method: "GET",
+                requestUri: "/resource-collections/{ResourceCollectionType}",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                required: [ "ResourceCollectionType" ],
+                members: {
+                    ResourceCollectionType: {
+                        location: "uri",
+                        locationName: "ResourceCollectionType"
+                    },
+                    NextToken: {
+                        location: "querystring",
+                        locationName: "NextToken"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    ResourceCollection: {
+                        type: "structure",
+                        members: {
+                            CloudFormation: {
+                                type: "structure",
+                                members: {
+                                    StackNames: {
+                                        shape: "S16"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    NextToken: {}
+                }
+            }
+        },
+        ListAnomaliesForInsight: {
+            http: {
+                requestUri: "/anomalies/insight/{InsightId}",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                required: [ "InsightId" ],
+                members: {
+                    InsightId: {
+                        location: "uri",
+                        locationName: "InsightId"
+                    },
+                    StartTimeRange: {
+                        shape: "S20"
+                    },
+                    MaxResults: {
+                        type: "integer"
+                    },
+                    NextToken: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    ProactiveAnomalies: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            members: {
+                                Id: {},
+                                Severity: {},
+                                Status: {},
+                                UpdateTime: {
+                                    type: "timestamp"
+                                },
+                                AnomalyTimeRange: {
+                                    shape: "Sp"
+                                },
+                                PredictionTimeRange: {
+                                    shape: "Sq"
+                                },
+                                SourceDetails: {
+                                    shape: "Sr"
+                                },
+                                AssociatedInsightId: {},
+                                ResourceCollection: {
+                                    shape: "S14"
+                                },
+                                Limit: {
+                                    type: "double"
+                                }
+                            }
+                        }
+                    },
+                    ReactiveAnomalies: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            members: {
+                                Id: {},
+                                Severity: {},
+                                Status: {},
+                                AnomalyTimeRange: {
+                                    shape: "Sp"
+                                },
+                                SourceDetails: {
+                                    shape: "Sr"
+                                },
+                                AssociatedInsightId: {},
+                                ResourceCollection: {
+                                    shape: "S14"
+                                }
+                            }
+                        }
+                    },
+                    NextToken: {}
+                }
+            }
+        },
+        ListEvents: {
+            http: {
+                requestUri: "/events",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                required: [ "Filters" ],
+                members: {
+                    Filters: {
+                        type: "structure",
+                        members: {
+                            InsightId: {},
+                            EventTimeRange: {
+                                type: "structure",
+                                required: [ "FromTime", "ToTime" ],
+                                members: {
+                                    FromTime: {
+                                        type: "timestamp"
+                                    },
+                                    ToTime: {
+                                        type: "timestamp"
+                                    }
+                                }
+                            },
+                            EventClass: {},
+                            EventSource: {},
+                            DataSource: {},
+                            ResourceCollection: {
+                                shape: "S14"
+                            }
+                        }
+                    },
+                    MaxResults: {
+                        type: "integer"
+                    },
+                    NextToken: {}
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "Events" ],
+                members: {
+                    Events: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            members: {
+                                ResourceCollection: {
+                                    shape: "S14"
+                                },
+                                Id: {},
+                                Time: {
+                                    type: "timestamp"
+                                },
+                                EventSource: {},
+                                Name: {},
+                                DataSource: {},
+                                EventClass: {},
+                                Resources: {
+                                    type: "list",
+                                    member: {
+                                        type: "structure",
+                                        members: {
+                                            Type: {},
+                                            Name: {},
+                                            Arn: {}
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    NextToken: {}
+                }
+            }
+        },
+        ListInsights: {
+            http: {
+                requestUri: "/insights",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                required: [ "StatusFilter" ],
+                members: {
+                    StatusFilter: {
+                        type: "structure",
+                        members: {
+                            Ongoing: {
+                                type: "structure",
+                                required: [ "Type" ],
+                                members: {
+                                    Type: {}
+                                }
+                            },
+                            Closed: {
+                                type: "structure",
+                                required: [ "Type", "EndTimeRange" ],
+                                members: {
+                                    Type: {},
+                                    EndTimeRange: {
+                                        type: "structure",
+                                        members: {
+                                            FromTime: {
+                                                type: "timestamp"
+                                            },
+                                            ToTime: {
+                                                type: "timestamp"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            Any: {
+                                type: "structure",
+                                required: [ "Type", "StartTimeRange" ],
+                                members: {
+                                    Type: {},
+                                    StartTimeRange: {
+                                        shape: "S20"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    MaxResults: {
+                        type: "integer"
+                    },
+                    NextToken: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    ProactiveInsights: {
+                        shape: "S2x"
+                    },
+                    ReactiveInsights: {
+                        shape: "S2z"
+                    },
+                    NextToken: {}
+                }
+            }
+        },
+        ListNotificationChannels: {
+            http: {
+                requestUri: "/channels",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                members: {
+                    NextToken: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    Channels: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            members: {
+                                Id: {},
+                                Config: {
+                                    shape: "S2"
+                                }
+                            }
+                        }
+                    },
+                    NextToken: {}
+                }
+            }
+        },
+        ListRecommendations: {
+            http: {
+                requestUri: "/recommendations",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                required: [ "InsightId" ],
+                members: {
+                    InsightId: {},
+                    NextToken: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    Recommendations: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            members: {
+                                Description: {},
+                                Link: {},
+                                Name: {},
+                                Reason: {},
+                                RelatedEvents: {
+                                    type: "list",
+                                    member: {
+                                        type: "structure",
+                                        members: {
+                                            Name: {},
+                                            Resources: {
+                                                type: "list",
+                                                member: {
+                                                    type: "structure",
+                                                    members: {
+                                                        Name: {},
+                                                        Type: {}
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                RelatedAnomalies: {
+                                    type: "list",
+                                    member: {
+                                        type: "structure",
+                                        members: {
+                                            Resources: {
+                                                type: "list",
+                                                member: {
+                                                    type: "structure",
+                                                    members: {
+                                                        Name: {},
+                                                        Type: {}
+                                                    }
+                                                }
+                                            },
+                                            SourceDetails: {
+                                                type: "list",
+                                                member: {
+                                                    type: "structure",
+                                                    members: {
+                                                        CloudWatchMetrics: {
+                                                            type: "list",
+                                                            member: {
+                                                                type: "structure",
+                                                                members: {
+                                                                    MetricName: {},
+                                                                    Namespace: {}
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    NextToken: {}
+                }
+            }
+        },
+        PutFeedback: {
+            http: {
+                method: "PUT",
+                requestUri: "/feedback",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                members: {
+                    InsightFeedback: {
+                        type: "structure",
+                        members: {
+                            Id: {},
+                            Feedback: {}
+                        }
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {}
+            }
+        },
+        RemoveNotificationChannel: {
+            http: {
+                method: "DELETE",
+                requestUri: "/channels/{Id}",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                required: [ "Id" ],
+                members: {
+                    Id: {
+                        location: "uri",
+                        locationName: "Id"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {}
+            }
+        },
+        SearchInsights: {
+            http: {
+                requestUri: "/insights/search",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                required: [ "StartTimeRange", "Type" ],
+                members: {
+                    StartTimeRange: {
+                        shape: "S20"
+                    },
+                    Filters: {
+                        type: "structure",
+                        members: {
+                            Severities: {
+                                type: "list",
+                                member: {}
+                            },
+                            Statuses: {
+                                type: "list",
+                                member: {}
+                            },
+                            ResourceCollection: {
+                                shape: "S14"
+                            }
+                        }
+                    },
+                    MaxResults: {
+                        type: "integer"
+                    },
+                    NextToken: {},
+                    Type: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    ProactiveInsights: {
+                        shape: "S2x"
+                    },
+                    ReactiveInsights: {
+                        shape: "S2z"
+                    },
+                    NextToken: {}
+                }
+            }
+        },
+        UpdateResourceCollection: {
+            http: {
+                method: "PUT",
+                requestUri: "/resource-collections",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                required: [ "Action", "ResourceCollection" ],
+                members: {
+                    Action: {},
+                    ResourceCollection: {
+                        type: "structure",
+                        members: {
+                            CloudFormation: {
+                                type: "structure",
+                                members: {
+                                    StackNames: {
+                                        type: "list",
+                                        member: {}
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {}
+            }
+        },
+        UpdateServiceIntegration: {
+            http: {
+                method: "PUT",
+                requestUri: "/service-integrations",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                required: [ "ServiceIntegration" ],
+                members: {
+                    ServiceIntegration: {
+                        type: "structure",
+                        members: {
+                            OpsCenter: {
+                                type: "structure",
+                                members: {
+                                    OptInStatus: {}
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {}
+            }
+        }
+    },
+    shapes: {
+        S2: {
+            type: "structure",
+            required: [ "Sns" ],
+            members: {
+                Sns: {
+                    type: "structure",
+                    members: {
+                        TopicArn: {}
+                    }
+                }
+            }
+        },
+        Sp: {
+            type: "structure",
+            required: [ "StartTime" ],
+            members: {
+                StartTime: {
+                    type: "timestamp"
+                },
+                EndTime: {
+                    type: "timestamp"
+                }
+            }
+        },
+        Sq: {
+            type: "structure",
+            required: [ "StartTime" ],
+            members: {
+                StartTime: {
+                    type: "timestamp"
+                },
+                EndTime: {
+                    type: "timestamp"
+                }
+            }
+        },
+        Sr: {
+            type: "structure",
+            members: {
+                CloudWatchMetrics: {
+                    type: "list",
+                    member: {
+                        type: "structure",
+                        members: {
+                            MetricName: {},
+                            Namespace: {},
+                            Dimensions: {
+                                type: "list",
+                                member: {
+                                    type: "structure",
+                                    members: {
+                                        Name: {},
+                                        Value: {}
+                                    }
+                                }
+                            },
+                            Stat: {},
+                            Unit: {},
+                            Period: {
+                                type: "integer"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        S14: {
+            type: "structure",
+            members: {
+                CloudFormation: {
+                    type: "structure",
+                    members: {
+                        StackNames: {
+                            shape: "S16"
+                        }
+                    }
+                }
+            }
+        },
+        S16: {
+            type: "list",
+            member: {}
+        },
+        S1g: {
+            type: "structure",
+            required: [ "StartTime" ],
+            members: {
+                StartTime: {
+                    type: "timestamp"
+                },
+                EndTime: {
+                    type: "timestamp"
+                }
+            }
+        },
+        S20: {
+            type: "structure",
+            members: {
+                FromTime: {
+                    type: "timestamp"
+                },
+                ToTime: {
+                    type: "timestamp"
+                }
+            }
+        },
+        S2x: {
+            type: "list",
+            member: {
+                type: "structure",
+                members: {
+                    Id: {},
+                    Name: {},
+                    Severity: {},
+                    Status: {},
+                    InsightTimeRange: {
+                        shape: "S1g"
+                    },
+                    PredictionTimeRange: {
+                        shape: "Sq"
+                    },
+                    ResourceCollection: {
+                        shape: "S14"
+                    }
+                }
+            }
+        },
+        S2z: {
+            type: "list",
+            member: {
+                type: "structure",
+                members: {
+                    Id: {},
+                    Name: {},
+                    Severity: {},
+                    Status: {},
+                    InsightTimeRange: {
+                        shape: "S1g"
+                    },
+                    ResourceCollection: {
+                        shape: "S14"
+                    }
+                }
+            }
+        }
+    },
+    paginators: {
+        DescribeResourceCollectionHealth: {
+            input_token: "NextToken",
+            output_token: "NextToken",
+            result_key: [ "CloudFormation" ]
+        },
+        GetResourceCollection: {
+            input_token: "NextToken",
+            non_aggregate_keys: [ "ResourceCollection" ],
+            output_token: "NextToken",
+            result_key: [ "ResourceCollection.CloudFormation.StackNames" ]
+        },
+        ListAnomaliesForInsight: {
+            input_token: "NextToken",
+            limit_key: "MaxResults",
+            output_token: "NextToken",
+            result_key: [ "ReactiveAnomalies", "ProactiveAnomalies" ]
+        },
+        ListEvents: {
+            input_token: "NextToken",
+            limit_key: "MaxResults",
+            output_token: "NextToken",
+            result_key: "Events"
+        },
+        ListInsights: {
+            input_token: "NextToken",
+            limit_key: "MaxResults",
+            output_token: "NextToken",
+            result_key: [ "ProactiveInsights", "ReactiveInsights" ]
+        },
+        ListNotificationChannels: {
+            input_token: "NextToken",
+            output_token: "NextToken",
+            result_key: "Channels"
+        },
+        ListRecommendations: {
+            input_token: "NextToken",
+            output_token: "NextToken",
+            result_key: "Recommendations"
+        },
+        SearchInsights: {
+            input_token: "NextToken",
+            limit_key: "MaxResults",
+            output_token: "NextToken",
+            result_key: [ "ProactiveInsights", "ReactiveInsights" ]
+        }
+    }
+};
+
+AWS.apiLoader.services["ecrpublic"] = {};
+
+AWS.ECRPUBLIC = AWS.Service.defineService("ecrpublic", [ "2020-10-30" ]);
+
+AWS.apiLoader.services["ecrpublic"]["2020-10-30"] = {
+    version: "2.0",
+    metadata: {
+        apiVersion: "2020-10-30",
+        endpointPrefix: "api.ecr-public",
+        jsonVersion: "1.1",
+        protocol: "json",
+        serviceAbbreviation: "Amazon ECR Public",
+        serviceFullName: "Amazon Elastic Container Registry Public",
+        serviceId: "ECR PUBLIC",
+        signatureVersion: "v4",
+        signingName: "ecr-public",
+        targetPrefix: "SpencerFrontendService",
+        uid: "ecr-public-2020-10-30"
+    },
+    operations: {
+        BatchCheckLayerAvailability: {
+            input: {
+                type: "structure",
+                required: [ "repositoryName", "layerDigests" ],
+                members: {
+                    registryId: {},
+                    repositoryName: {},
+                    layerDigests: {
+                        type: "list",
+                        member: {}
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    layers: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            members: {
+                                layerDigest: {},
+                                layerAvailability: {},
+                                layerSize: {
+                                    type: "long"
+                                },
+                                mediaType: {}
+                            }
+                        }
+                    },
+                    failures: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            members: {
+                                layerDigest: {},
+                                failureCode: {},
+                                failureReason: {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        BatchDeleteImage: {
+            input: {
+                type: "structure",
+                required: [ "repositoryName", "imageIds" ],
+                members: {
+                    registryId: {},
+                    repositoryName: {},
+                    imageIds: {
+                        shape: "Sj"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    imageIds: {
+                        shape: "Sj"
+                    },
+                    failures: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            members: {
+                                imageId: {
+                                    shape: "Sk"
+                                },
+                                failureCode: {},
+                                failureReason: {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        CompleteLayerUpload: {
+            input: {
+                type: "structure",
+                required: [ "repositoryName", "uploadId", "layerDigests" ],
+                members: {
+                    registryId: {},
+                    repositoryName: {},
+                    uploadId: {},
+                    layerDigests: {
+                        type: "list",
+                        member: {}
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    registryId: {},
+                    repositoryName: {},
+                    uploadId: {},
+                    layerDigest: {}
+                }
+            }
+        },
+        CreateRepository: {
+            input: {
+                type: "structure",
+                required: [ "repositoryName" ],
+                members: {
+                    repositoryName: {},
+                    catalogData: {
+                        shape: "Sx"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    repository: {
+                        shape: "S17"
+                    },
+                    catalogData: {
+                        shape: "S1b"
+                    }
+                }
+            }
+        },
+        DeleteRepository: {
+            input: {
+                type: "structure",
+                required: [ "repositoryName" ],
+                members: {
+                    registryId: {},
+                    repositoryName: {},
+                    force: {
+                        type: "boolean"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    repository: {
+                        shape: "S17"
+                    }
+                }
+            }
+        },
+        DeleteRepositoryPolicy: {
+            input: {
+                type: "structure",
+                required: [ "repositoryName" ],
+                members: {
+                    registryId: {},
+                    repositoryName: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    registryId: {},
+                    repositoryName: {},
+                    policyText: {}
+                }
+            }
+        },
+        DescribeImageTags: {
+            input: {
+                type: "structure",
+                required: [ "repositoryName" ],
+                members: {
+                    registryId: {},
+                    repositoryName: {},
+                    nextToken: {},
+                    maxResults: {
+                        type: "integer"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    imageTagDetails: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            members: {
+                                imageTag: {},
+                                createdAt: {
+                                    type: "timestamp"
+                                },
+                                imageDetail: {
+                                    type: "structure",
+                                    members: {
+                                        imageDigest: {},
+                                        imageSizeInBytes: {
+                                            type: "long"
+                                        },
+                                        imagePushedAt: {
+                                            type: "timestamp"
+                                        },
+                                        imageManifestMediaType: {},
+                                        artifactMediaType: {}
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    nextToken: {}
+                }
+            }
+        },
+        DescribeImages: {
+            input: {
+                type: "structure",
+                required: [ "repositoryName" ],
+                members: {
+                    registryId: {},
+                    repositoryName: {},
+                    imageIds: {
+                        shape: "Sj"
+                    },
+                    nextToken: {},
+                    maxResults: {
+                        type: "integer"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    imageDetails: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            members: {
+                                registryId: {},
+                                repositoryName: {},
+                                imageDigest: {},
+                                imageTags: {
+                                    type: "list",
+                                    member: {}
+                                },
+                                imageSizeInBytes: {
+                                    type: "long"
+                                },
+                                imagePushedAt: {
+                                    type: "timestamp"
+                                },
+                                imageManifestMediaType: {},
+                                artifactMediaType: {}
+                            }
+                        }
+                    },
+                    nextToken: {}
+                }
+            }
+        },
+        DescribeRegistries: {
+            input: {
+                type: "structure",
+                members: {
+                    nextToken: {},
+                    maxResults: {
+                        type: "integer"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "registries" ],
+                members: {
+                    registries: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            required: [ "registryId", "registryArn", "registryUri", "verified", "aliases" ],
+                            members: {
+                                registryId: {},
+                                registryArn: {},
+                                registryUri: {},
+                                verified: {
+                                    type: "boolean"
+                                },
+                                aliases: {
+                                    type: "list",
+                                    member: {
+                                        type: "structure",
+                                        required: [ "name", "status", "primaryRegistryAlias", "defaultRegistryAlias" ],
+                                        members: {
+                                            name: {},
+                                            status: {},
+                                            primaryRegistryAlias: {
+                                                type: "boolean"
+                                            },
+                                            defaultRegistryAlias: {
+                                                type: "boolean"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    nextToken: {}
+                }
+            }
+        },
+        DescribeRepositories: {
+            input: {
+                type: "structure",
+                members: {
+                    registryId: {},
+                    repositoryNames: {
+                        type: "list",
+                        member: {}
+                    },
+                    nextToken: {},
+                    maxResults: {
+                        type: "integer"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    repositories: {
+                        type: "list",
+                        member: {
+                            shape: "S17"
+                        }
+                    },
+                    nextToken: {}
+                }
+            }
+        },
+        GetAuthorizationToken: {
+            input: {
+                type: "structure",
+                members: {}
+            },
+            output: {
+                type: "structure",
+                members: {
+                    authorizationData: {
+                        type: "structure",
+                        members: {
+                            authorizationToken: {},
+                            expiresAt: {
+                                type: "timestamp"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        GetRegistryCatalogData: {
+            input: {
+                type: "structure",
+                members: {}
+            },
+            output: {
+                type: "structure",
+                required: [ "registryCatalogData" ],
+                members: {
+                    registryCatalogData: {
+                        shape: "S2k"
+                    }
+                }
+            }
+        },
+        GetRepositoryCatalogData: {
+            input: {
+                type: "structure",
+                required: [ "repositoryName" ],
+                members: {
+                    registryId: {},
+                    repositoryName: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    catalogData: {
+                        shape: "S1b"
+                    }
+                }
+            }
+        },
+        GetRepositoryPolicy: {
+            input: {
+                type: "structure",
+                required: [ "repositoryName" ],
+                members: {
+                    registryId: {},
+                    repositoryName: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    registryId: {},
+                    repositoryName: {},
+                    policyText: {}
+                }
+            }
+        },
+        InitiateLayerUpload: {
+            input: {
+                type: "structure",
+                required: [ "repositoryName" ],
+                members: {
+                    registryId: {},
+                    repositoryName: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    uploadId: {},
+                    partSize: {
+                        type: "long"
+                    }
+                }
+            }
+        },
+        PutImage: {
+            input: {
+                type: "structure",
+                required: [ "repositoryName", "imageManifest" ],
+                members: {
+                    registryId: {},
+                    repositoryName: {},
+                    imageManifest: {},
+                    imageManifestMediaType: {},
+                    imageTag: {},
+                    imageDigest: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    image: {
+                        type: "structure",
+                        members: {
+                            registryId: {},
+                            repositoryName: {},
+                            imageId: {
+                                shape: "Sk"
+                            },
+                            imageManifest: {},
+                            imageManifestMediaType: {}
+                        }
+                    }
+                }
+            }
+        },
+        PutRegistryCatalogData: {
+            input: {
+                type: "structure",
+                members: {
+                    displayName: {}
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "registryCatalogData" ],
+                members: {
+                    registryCatalogData: {
+                        shape: "S2k"
+                    }
+                }
+            }
+        },
+        PutRepositoryCatalogData: {
+            input: {
+                type: "structure",
+                required: [ "repositoryName", "catalogData" ],
+                members: {
+                    registryId: {},
+                    repositoryName: {},
+                    catalogData: {
+                        shape: "Sx"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    catalogData: {
+                        shape: "S1b"
+                    }
+                }
+            }
+        },
+        SetRepositoryPolicy: {
+            input: {
+                type: "structure",
+                required: [ "repositoryName", "policyText" ],
+                members: {
+                    registryId: {},
+                    repositoryName: {},
+                    policyText: {},
+                    force: {
+                        type: "boolean"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    registryId: {},
+                    repositoryName: {},
+                    policyText: {}
+                }
+            }
+        },
+        UploadLayerPart: {
+            input: {
+                type: "structure",
+                required: [ "repositoryName", "uploadId", "partFirstByte", "partLastByte", "layerPartBlob" ],
+                members: {
+                    registryId: {},
+                    repositoryName: {},
+                    uploadId: {},
+                    partFirstByte: {
+                        type: "long"
+                    },
+                    partLastByte: {
+                        type: "long"
+                    },
+                    layerPartBlob: {
+                        type: "blob"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    registryId: {},
+                    repositoryName: {},
+                    uploadId: {},
+                    lastByteReceived: {
+                        type: "long"
+                    }
+                }
+            }
+        }
+    },
+    shapes: {
+        Sj: {
+            type: "list",
+            member: {
+                shape: "Sk"
+            }
+        },
+        Sk: {
+            type: "structure",
+            members: {
+                imageDigest: {},
+                imageTag: {}
+            }
+        },
+        Sx: {
+            type: "structure",
+            members: {
+                description: {},
+                architectures: {
+                    shape: "Sz"
+                },
+                operatingSystems: {
+                    shape: "S11"
+                },
+                logoImageBlob: {
+                    type: "blob"
+                },
+                aboutText: {},
+                usageText: {}
+            }
+        },
+        Sz: {
+            type: "list",
+            member: {}
+        },
+        S11: {
+            type: "list",
+            member: {}
+        },
+        S17: {
+            type: "structure",
+            members: {
+                repositoryArn: {},
+                registryId: {},
+                repositoryName: {},
+                repositoryUri: {},
+                createdAt: {
+                    type: "timestamp"
+                }
+            }
+        },
+        S1b: {
+            type: "structure",
+            members: {
+                description: {},
+                architectures: {
+                    shape: "Sz"
+                },
+                operatingSystems: {
+                    shape: "S11"
+                },
+                logoUrl: {},
+                aboutText: {},
+                usageText: {},
+                marketplaceCertified: {
+                    type: "boolean"
+                }
+            }
+        },
+        S2k: {
+            type: "structure",
+            members: {
+                displayName: {}
+            }
+        }
+    },
+    paginators: {
+        DescribeImageTags: {
+            input_token: "nextToken",
+            limit_key: "maxResults",
+            output_token: "nextToken",
+            result_key: "imageTagDetails"
+        },
+        DescribeImages: {
+            input_token: "nextToken",
+            limit_key: "maxResults",
+            output_token: "nextToken",
+            result_key: "imageDetails"
+        },
+        DescribeRegistries: {
+            input_token: "nextToken",
+            limit_key: "maxResults",
+            output_token: "nextToken",
+            result_key: "registries"
+        },
+        DescribeRepositories: {
+            input_token: "nextToken",
+            limit_key: "maxResults",
+            output_token: "nextToken",
+            result_key: "repositories"
+        }
+    }
+};
+
+AWS.apiLoader.services["lookoutvision"] = {};
+
+AWS.LookoutVision = AWS.Service.defineService("lookoutvision", [ "2020-11-20" ]);
+
+AWS.apiLoader.services["lookoutvision"]["2020-11-20"] = {
+    version: "2.0",
+    metadata: {
+        apiVersion: "2020-11-20",
+        endpointPrefix: "lookoutvision",
+        jsonVersion: "1.1",
+        protocol: "rest-json",
+        serviceFullName: "Amazon Lookout for Vision",
+        serviceId: "LookoutVision",
+        signatureVersion: "v4",
+        signingName: "lookoutvision",
+        uid: "lookoutvision-2020-11-20"
+    },
+    operations: {
+        CreateDataset: {
+            http: {
+                requestUri: "/2020-11-20/projects/{projectName}/datasets",
+                responseCode: 202
+            },
+            input: {
+                type: "structure",
+                required: [ "ProjectName", "DatasetType" ],
+                members: {
+                    ProjectName: {
+                        location: "uri",
+                        locationName: "projectName"
+                    },
+                    DatasetType: {},
+                    DatasetSource: {
+                        type: "structure",
+                        members: {
+                            GroundTruthManifest: {
+                                type: "structure",
+                                members: {
+                                    S3Object: {
+                                        type: "structure",
+                                        required: [ "Bucket", "Key" ],
+                                        members: {
+                                            Bucket: {},
+                                            Key: {},
+                                            VersionId: {}
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    ClientToken: {
+                        idempotencyToken: true,
+                        location: "header",
+                        locationName: "X-Amzn-Client-Token"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    DatasetMetadata: {
+                        shape: "Sc"
+                    }
+                }
+            }
+        },
+        CreateModel: {
+            http: {
+                requestUri: "/2020-11-20/projects/{projectName}/models",
+                responseCode: 202
+            },
+            input: {
+                type: "structure",
+                required: [ "ProjectName", "OutputConfig" ],
+                members: {
+                    ProjectName: {
+                        location: "uri",
+                        locationName: "projectName"
+                    },
+                    Description: {},
+                    ClientToken: {
+                        idempotencyToken: true,
+                        location: "header",
+                        locationName: "X-Amzn-Client-Token"
+                    },
+                    OutputConfig: {
+                        shape: "Si"
+                    },
+                    KmsKeyId: {},
+                    Tags: {
+                        shape: "Sm"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    ModelMetadata: {
+                        shape: "Sr"
+                    }
+                }
+            }
+        },
+        CreateProject: {
+            http: {
+                requestUri: "/2020-11-20/projects"
+            },
+            input: {
+                type: "structure",
+                required: [ "ProjectName" ],
+                members: {
+                    ProjectName: {},
+                    ClientToken: {
+                        idempotencyToken: true,
+                        location: "header",
+                        locationName: "X-Amzn-Client-Token"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    ProjectMetadata: {
+                        shape: "S10"
+                    }
+                }
+            }
+        },
+        DeleteDataset: {
+            http: {
+                method: "DELETE",
+                requestUri: "/2020-11-20/projects/{projectName}/datasets/{datasetType}",
+                responseCode: 202
+            },
+            input: {
+                type: "structure",
+                required: [ "ProjectName", "DatasetType" ],
+                members: {
+                    ProjectName: {
+                        location: "uri",
+                        locationName: "projectName"
+                    },
+                    DatasetType: {
+                        location: "uri",
+                        locationName: "datasetType"
+                    },
+                    ClientToken: {
+                        idempotencyToken: true,
+                        location: "header",
+                        locationName: "X-Amzn-Client-Token"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {}
+            }
+        },
+        DeleteModel: {
+            http: {
+                method: "DELETE",
+                requestUri: "/2020-11-20/projects/{projectName}/models/{modelVersion}",
+                responseCode: 202
+            },
+            input: {
+                type: "structure",
+                required: [ "ProjectName", "ModelVersion" ],
+                members: {
+                    ProjectName: {
+                        location: "uri",
+                        locationName: "projectName"
+                    },
+                    ModelVersion: {
+                        location: "uri",
+                        locationName: "modelVersion"
+                    },
+                    ClientToken: {
+                        idempotencyToken: true,
+                        location: "header",
+                        locationName: "X-Amzn-Client-Token"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    ModelArn: {}
+                }
+            }
+        },
+        DeleteProject: {
+            http: {
+                method: "DELETE",
+                requestUri: "/2020-11-20/projects/{projectName}"
+            },
+            input: {
+                type: "structure",
+                required: [ "ProjectName" ],
+                members: {
+                    ProjectName: {
+                        location: "uri",
+                        locationName: "projectName"
+                    },
+                    ClientToken: {
+                        idempotencyToken: true,
+                        location: "header",
+                        locationName: "X-Amzn-Client-Token"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    ProjectArn: {}
+                }
+            }
+        },
+        DescribeDataset: {
+            http: {
+                method: "GET",
+                requestUri: "/2020-11-20/projects/{projectName}/datasets/{datasetType}"
+            },
+            input: {
+                type: "structure",
+                required: [ "ProjectName", "DatasetType" ],
+                members: {
+                    ProjectName: {
+                        location: "uri",
+                        locationName: "projectName"
+                    },
+                    DatasetType: {
+                        location: "uri",
+                        locationName: "datasetType"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    DatasetDescription: {
+                        type: "structure",
+                        members: {
+                            ProjectName: {},
+                            DatasetType: {},
+                            CreationTimestamp: {
+                                type: "timestamp"
+                            },
+                            LastUpdatedTimestamp: {
+                                type: "timestamp"
+                            },
+                            Status: {},
+                            StatusMessage: {},
+                            ImageStats: {
+                                type: "structure",
+                                members: {
+                                    Total: {
+                                        type: "integer"
+                                    },
+                                    Labeled: {
+                                        type: "integer"
+                                    },
+                                    Normal: {
+                                        type: "integer"
+                                    },
+                                    Anomaly: {
+                                        type: "integer"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        DescribeModel: {
+            http: {
+                method: "GET",
+                requestUri: "/2020-11-20/projects/{projectName}/models/{modelVersion}"
+            },
+            input: {
+                type: "structure",
+                required: [ "ProjectName", "ModelVersion" ],
+                members: {
+                    ProjectName: {
+                        location: "uri",
+                        locationName: "projectName"
+                    },
+                    ModelVersion: {
+                        location: "uri",
+                        locationName: "modelVersion"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    ModelDescription: {
+                        type: "structure",
+                        members: {
+                            ModelVersion: {},
+                            ModelArn: {},
+                            CreationTimestamp: {
+                                type: "timestamp"
+                            },
+                            Description: {},
+                            Status: {},
+                            StatusMessage: {},
+                            Performance: {
+                                shape: "Sw"
+                            },
+                            OutputConfig: {
+                                shape: "Si"
+                            },
+                            EvaluationManifest: {
+                                shape: "S1g"
+                            },
+                            EvaluationResult: {
+                                shape: "S1g"
+                            },
+                            EvaluationEndTimestamp: {
+                                type: "timestamp"
+                            },
+                            KmsKeyId: {}
+                        }
+                    }
+                }
+            }
+        },
+        DescribeProject: {
+            http: {
+                method: "GET",
+                requestUri: "/2020-11-20/projects/{projectName}"
+            },
+            input: {
+                type: "structure",
+                required: [ "ProjectName" ],
+                members: {
+                    ProjectName: {
+                        location: "uri",
+                        locationName: "projectName"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    ProjectDescription: {
+                        type: "structure",
+                        members: {
+                            ProjectArn: {},
+                            ProjectName: {},
+                            CreationTimestamp: {
+                                type: "timestamp"
+                            },
+                            Datasets: {
+                                type: "list",
+                                member: {
+                                    shape: "Sc"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        DetectAnomalies: {
+            http: {
+                requestUri: "/2020-11-20/projects/{projectName}/models/{modelVersion}/detect"
+            },
+            input: {
+                type: "structure",
+                required: [ "ProjectName", "ModelVersion", "Body", "ContentType" ],
+                members: {
+                    ProjectName: {
+                        location: "uri",
+                        locationName: "projectName"
+                    },
+                    ModelVersion: {
+                        location: "uri",
+                        locationName: "modelVersion"
+                    },
+                    Body: {
+                        type: "blob",
+                        requiresLength: true,
+                        streaming: true
+                    },
+                    ContentType: {
+                        location: "header",
+                        locationName: "content-type"
+                    }
+                },
+                payload: "Body"
+            },
+            output: {
+                type: "structure",
+                members: {
+                    DetectAnomalyResult: {
+                        type: "structure",
+                        members: {
+                            Source: {
+                                type: "structure",
+                                members: {
+                                    Type: {}
+                                }
+                            },
+                            IsAnomalous: {
+                                type: "boolean"
+                            },
+                            Confidence: {
+                                type: "float"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        ListDatasetEntries: {
+            http: {
+                method: "GET",
+                requestUri: "/2020-11-20/projects/{projectName}/datasets/{datasetType}/entries"
+            },
+            input: {
+                type: "structure",
+                required: [ "ProjectName", "DatasetType" ],
+                members: {
+                    ProjectName: {
+                        location: "uri",
+                        locationName: "projectName"
+                    },
+                    DatasetType: {
+                        location: "uri",
+                        locationName: "datasetType"
+                    },
+                    Labeled: {
+                        location: "querystring",
+                        locationName: "labeled",
+                        type: "boolean"
+                    },
+                    AnomalyClass: {
+                        location: "querystring",
+                        locationName: "anomalyClass"
+                    },
+                    BeforeCreationDate: {
+                        location: "querystring",
+                        locationName: "createdBefore",
+                        type: "timestamp"
+                    },
+                    AfterCreationDate: {
+                        location: "querystring",
+                        locationName: "createdAfter",
+                        type: "timestamp"
+                    },
+                    NextToken: {
+                        location: "querystring",
+                        locationName: "nextToken"
+                    },
+                    MaxResults: {
+                        location: "querystring",
+                        locationName: "maxResults",
+                        type: "integer"
+                    },
+                    SourceRefContains: {
+                        location: "querystring",
+                        locationName: "sourceRefContains"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    DatasetEntries: {
+                        type: "list",
+                        member: {}
+                    },
+                    NextToken: {}
+                }
+            }
+        },
+        ListModels: {
+            http: {
+                method: "GET",
+                requestUri: "/2020-11-20/projects/{projectName}/models"
+            },
+            input: {
+                type: "structure",
+                required: [ "ProjectName" ],
+                members: {
+                    ProjectName: {
+                        location: "uri",
+                        locationName: "projectName"
+                    },
+                    NextToken: {
+                        location: "querystring",
+                        locationName: "nextToken"
+                    },
+                    MaxResults: {
+                        location: "querystring",
+                        locationName: "maxResults",
+                        type: "integer"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    Models: {
+                        type: "list",
+                        member: {
+                            shape: "Sr"
+                        }
+                    },
+                    NextToken: {}
+                }
+            }
+        },
+        ListProjects: {
+            http: {
+                method: "GET",
+                requestUri: "/2020-11-20/projects"
+            },
+            input: {
+                type: "structure",
+                members: {
+                    NextToken: {
+                        location: "querystring",
+                        locationName: "nextToken"
+                    },
+                    MaxResults: {
+                        location: "querystring",
+                        locationName: "maxResults",
+                        type: "integer"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    Projects: {
+                        type: "list",
+                        member: {
+                            shape: "S10"
+                        }
+                    },
+                    NextToken: {}
+                }
+            }
+        },
+        ListTagsForResource: {
+            http: {
+                method: "GET",
+                requestUri: "/2020-11-20/tags/{resourceArn}"
+            },
+            input: {
+                type: "structure",
+                required: [ "ResourceArn" ],
+                members: {
+                    ResourceArn: {
+                        location: "uri",
+                        locationName: "resourceArn"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    Tags: {
+                        shape: "Sm"
+                    }
+                }
+            }
+        },
+        StartModel: {
+            http: {
+                requestUri: "/2020-11-20/projects/{projectName}/models/{modelVersion}/start",
+                responseCode: 202
+            },
+            input: {
+                type: "structure",
+                required: [ "ProjectName", "ModelVersion", "MinInferenceUnits" ],
+                members: {
+                    ProjectName: {
+                        location: "uri",
+                        locationName: "projectName"
+                    },
+                    ModelVersion: {
+                        location: "uri",
+                        locationName: "modelVersion"
+                    },
+                    MinInferenceUnits: {
+                        type: "integer"
+                    },
+                    ClientToken: {
+                        idempotencyToken: true,
+                        location: "header",
+                        locationName: "X-Amzn-Client-Token"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    Status: {}
+                }
+            }
+        },
+        StopModel: {
+            http: {
+                requestUri: "/2020-11-20/projects/{projectName}/models/{modelVersion}/stop",
+                responseCode: 202
+            },
+            input: {
+                type: "structure",
+                required: [ "ProjectName", "ModelVersion" ],
+                members: {
+                    ProjectName: {
+                        location: "uri",
+                        locationName: "projectName"
+                    },
+                    ModelVersion: {
+                        location: "uri",
+                        locationName: "modelVersion"
+                    },
+                    ClientToken: {
+                        idempotencyToken: true,
+                        location: "header",
+                        locationName: "X-Amzn-Client-Token"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    Status: {}
+                }
+            }
+        },
+        TagResource: {
+            http: {
+                requestUri: "/2020-11-20/tags/{resourceArn}"
+            },
+            input: {
+                type: "structure",
+                required: [ "ResourceArn", "Tags" ],
+                members: {
+                    ResourceArn: {
+                        location: "uri",
+                        locationName: "resourceArn"
+                    },
+                    Tags: {
+                        shape: "Sm"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {}
+            }
+        },
+        UntagResource: {
+            http: {
+                method: "DELETE",
+                requestUri: "/2020-11-20/tags/{resourceArn}"
+            },
+            input: {
+                type: "structure",
+                required: [ "ResourceArn", "TagKeys" ],
+                members: {
+                    ResourceArn: {
+                        location: "uri",
+                        locationName: "resourceArn"
+                    },
+                    TagKeys: {
+                        location: "querystring",
+                        locationName: "tagKeys",
+                        type: "list",
+                        member: {}
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {}
+            }
+        },
+        UpdateDatasetEntries: {
+            http: {
+                method: "PATCH",
+                requestUri: "/2020-11-20/projects/{projectName}/datasets/{datasetType}/entries",
+                responseCode: 202
+            },
+            input: {
+                type: "structure",
+                required: [ "ProjectName", "DatasetType", "Changes" ],
+                members: {
+                    ProjectName: {
+                        location: "uri",
+                        locationName: "projectName"
+                    },
+                    DatasetType: {
+                        location: "uri",
+                        locationName: "datasetType"
+                    },
+                    Changes: {
+                        type: "blob"
+                    },
+                    ClientToken: {
+                        idempotencyToken: true,
+                        location: "header",
+                        locationName: "X-Amzn-Client-Token"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    Status: {}
+                }
+            }
+        }
+    },
+    shapes: {
+        Sc: {
+            type: "structure",
+            members: {
+                DatasetType: {},
+                CreationTimestamp: {
+                    type: "timestamp"
+                },
+                Status: {},
+                StatusMessage: {}
+            }
+        },
+        Si: {
+            type: "structure",
+            required: [ "S3Location" ],
+            members: {
+                S3Location: {
+                    type: "structure",
+                    required: [ "Bucket" ],
+                    members: {
+                        Bucket: {},
+                        Prefix: {}
+                    }
+                }
+            }
+        },
+        Sm: {
+            type: "list",
+            member: {
+                type: "structure",
+                required: [ "Key", "Value" ],
+                members: {
+                    Key: {},
+                    Value: {}
+                }
+            }
+        },
+        Sr: {
+            type: "structure",
+            members: {
+                CreationTimestamp: {
+                    type: "timestamp"
+                },
+                ModelVersion: {},
+                ModelArn: {},
+                Description: {},
+                Status: {},
+                StatusMessage: {},
+                Performance: {
+                    shape: "Sw"
+                }
+            }
+        },
+        Sw: {
+            type: "structure",
+            members: {
+                F1Score: {
+                    type: "float"
+                },
+                Recall: {
+                    type: "float"
+                },
+                Precision: {
+                    type: "float"
+                }
+            }
+        },
+        S10: {
+            type: "structure",
+            members: {
+                ProjectArn: {},
+                ProjectName: {},
+                CreationTimestamp: {
+                    type: "timestamp"
+                }
+            }
+        },
+        S1g: {
+            type: "structure",
+            required: [ "Bucket", "Key" ],
+            members: {
+                Bucket: {},
+                Key: {}
+            }
+        }
+    },
+    paginators: {
+        ListDatasetEntries: {
+            input_token: "NextToken",
+            output_token: "NextToken",
+            limit_key: "MaxResults",
+            result_key: "DatasetEntries"
+        },
+        ListModels: {
+            input_token: "NextToken",
+            output_token: "NextToken",
+            limit_key: "MaxResults",
+            result_key: "Models"
+        },
+        ListProjects: {
+            input_token: "NextToken",
+            output_token: "NextToken",
+            limit_key: "MaxResults",
+            result_key: "Projects"
+        }
+    }
+};
+
+AWS.apiLoader.services["sagemakerfeaturestoreruntime"] = {};
+
+AWS.SageMakerFeatureStoreRuntime = AWS.Service.defineService("sagemakerfeaturestoreruntime", [ "2020-07-01" ]);
+
+AWS.apiLoader.services["sagemakerfeaturestoreruntime"]["2020-07-01"] = {
+    version: "2.0",
+    metadata: {
+        apiVersion: "2020-07-01",
+        endpointPrefix: "featurestore-runtime.sagemaker",
+        jsonVersion: "1.1",
+        protocol: "rest-json",
+        serviceFullName: "Amazon SageMaker Feature Store Runtime",
+        serviceId: "SageMaker FeatureStore Runtime",
+        signatureVersion: "v4",
+        signingName: "sagemaker",
+        uid: "sagemaker-featurestore-runtime-2020-07-01"
+    },
+    operations: {
+        DeleteRecord: {
+            http: {
+                method: "DELETE",
+                requestUri: "/FeatureGroup/{FeatureGroupName}"
+            },
+            input: {
+                type: "structure",
+                required: [ "FeatureGroupName", "RecordIdentifierValueAsString", "EventTime" ],
+                members: {
+                    FeatureGroupName: {
+                        location: "uri",
+                        locationName: "FeatureGroupName"
+                    },
+                    RecordIdentifierValueAsString: {
+                        location: "querystring",
+                        locationName: "RecordIdentifierValueAsString"
+                    },
+                    EventTime: {
+                        location: "querystring",
+                        locationName: "EventTime"
+                    }
+                }
+            }
+        },
+        GetRecord: {
+            http: {
+                method: "GET",
+                requestUri: "/FeatureGroup/{FeatureGroupName}"
+            },
+            input: {
+                type: "structure",
+                required: [ "FeatureGroupName", "RecordIdentifierValueAsString" ],
+                members: {
+                    FeatureGroupName: {
+                        location: "uri",
+                        locationName: "FeatureGroupName"
+                    },
+                    RecordIdentifierValueAsString: {
+                        location: "querystring",
+                        locationName: "RecordIdentifierValueAsString"
+                    },
+                    FeatureNames: {
+                        location: "querystring",
+                        locationName: "FeatureName",
+                        type: "list",
+                        member: {}
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    Record: {
+                        shape: "S8"
+                    }
+                }
+            }
+        },
+        PutRecord: {
+            http: {
+                method: "PUT",
+                requestUri: "/FeatureGroup/{FeatureGroupName}"
+            },
+            input: {
+                type: "structure",
+                required: [ "FeatureGroupName", "Record" ],
+                members: {
+                    FeatureGroupName: {
+                        location: "uri",
+                        locationName: "FeatureGroupName"
+                    },
+                    Record: {
+                        shape: "S8"
+                    }
+                }
+            }
+        }
+    },
+    shapes: {
+        S8: {
+            type: "list",
+            member: {
+                type: "structure",
+                required: [ "FeatureName", "ValueAsString" ],
+                members: {
+                    FeatureName: {},
+                    ValueAsString: {}
+                }
+            }
+        }
+    },
+    paginators: {}
+};
+
+AWS.apiLoader.services["customerprofiles"] = {};
+
+AWS.CustomerProfiles = AWS.Service.defineService("customerprofiles", [ "2020-08-15" ]);
+
+AWS.apiLoader.services["customerprofiles"]["2020-08-15"] = {
+    version: "2.0",
+    metadata: {
+        apiVersion: "2020-08-15",
+        endpointPrefix: "profile",
+        jsonVersion: "1.1",
+        protocol: "rest-json",
+        serviceAbbreviation: "Customer Profiles",
+        serviceFullName: "Amazon Connect Customer Profiles",
+        serviceId: "Customer Profiles",
+        signatureVersion: "v4",
+        signingName: "profile",
+        uid: "customer-profiles-2020-08-15"
+    },
+    operations: {
+        AddProfileKey: {
+            http: {
+                requestUri: "/domains/{DomainName}/profiles/keys"
+            },
+            input: {
+                type: "structure",
+                required: [ "ProfileId", "KeyName", "Values", "DomainName" ],
+                members: {
+                    ProfileId: {},
+                    KeyName: {},
+                    Values: {
+                        shape: "S4"
+                    },
+                    DomainName: {
+                        location: "uri",
+                        locationName: "DomainName"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    KeyName: {},
+                    Values: {
+                        shape: "S4"
+                    }
+                }
+            }
+        },
+        CreateDomain: {
+            http: {
+                requestUri: "/domains/{DomainName}"
+            },
+            input: {
+                type: "structure",
+                required: [ "DomainName", "DefaultExpirationDays" ],
+                members: {
+                    DomainName: {
+                        location: "uri",
+                        locationName: "DomainName"
+                    },
+                    DefaultExpirationDays: {
+                        type: "integer"
+                    },
+                    DefaultEncryptionKey: {},
+                    DeadLetterQueueUrl: {},
+                    Tags: {
+                        shape: "Sb"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "DomainName", "DefaultExpirationDays", "CreatedAt", "LastUpdatedAt" ],
+                members: {
+                    DomainName: {},
+                    DefaultExpirationDays: {
+                        type: "integer"
+                    },
+                    DefaultEncryptionKey: {},
+                    DeadLetterQueueUrl: {},
+                    CreatedAt: {
+                        type: "timestamp"
+                    },
+                    LastUpdatedAt: {
+                        type: "timestamp"
+                    },
+                    Tags: {
+                        shape: "Sb"
+                    }
+                }
+            }
+        },
+        CreateProfile: {
+            http: {
+                requestUri: "/domains/{DomainName}/profiles"
+            },
+            input: {
+                type: "structure",
+                required: [ "DomainName" ],
+                members: {
+                    DomainName: {
+                        location: "uri",
+                        locationName: "DomainName"
+                    },
+                    AccountNumber: {},
+                    AdditionalInformation: {},
+                    PartyType: {},
+                    BusinessName: {},
+                    FirstName: {},
+                    MiddleName: {},
+                    LastName: {},
+                    BirthDate: {},
+                    Gender: {},
+                    PhoneNumber: {},
+                    MobilePhoneNumber: {},
+                    HomePhoneNumber: {},
+                    BusinessPhoneNumber: {},
+                    EmailAddress: {},
+                    PersonalEmailAddress: {},
+                    BusinessEmailAddress: {},
+                    Address: {
+                        shape: "Sk"
+                    },
+                    ShippingAddress: {
+                        shape: "Sk"
+                    },
+                    MailingAddress: {
+                        shape: "Sk"
+                    },
+                    BillingAddress: {
+                        shape: "Sk"
+                    },
+                    Attributes: {
+                        shape: "Sl"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "ProfileId" ],
+                members: {
+                    ProfileId: {}
+                }
+            }
+        },
+        DeleteDomain: {
+            http: {
+                method: "DELETE",
+                requestUri: "/domains/{DomainName}"
+            },
+            input: {
+                type: "structure",
+                required: [ "DomainName" ],
+                members: {
+                    DomainName: {
+                        location: "uri",
+                        locationName: "DomainName"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "Message" ],
+                members: {
+                    Message: {}
+                }
+            }
+        },
+        DeleteIntegration: {
+            http: {
+                requestUri: "/domains/{DomainName}/integrations/delete"
+            },
+            input: {
+                type: "structure",
+                required: [ "DomainName", "Uri" ],
+                members: {
+                    DomainName: {
+                        location: "uri",
+                        locationName: "DomainName"
+                    },
+                    Uri: {}
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "Message" ],
+                members: {
+                    Message: {}
+                }
+            }
+        },
+        DeleteProfile: {
+            http: {
+                requestUri: "/domains/{DomainName}/profiles/delete"
+            },
+            input: {
+                type: "structure",
+                required: [ "ProfileId", "DomainName" ],
+                members: {
+                    ProfileId: {},
+                    DomainName: {
+                        location: "uri",
+                        locationName: "DomainName"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    Message: {}
+                }
+            }
+        },
+        DeleteProfileKey: {
+            http: {
+                requestUri: "/domains/{DomainName}/profiles/keys/delete"
+            },
+            input: {
+                type: "structure",
+                required: [ "ProfileId", "KeyName", "Values", "DomainName" ],
+                members: {
+                    ProfileId: {},
+                    KeyName: {},
+                    Values: {
+                        shape: "S4"
+                    },
+                    DomainName: {
+                        location: "uri",
+                        locationName: "DomainName"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    Message: {}
+                }
+            }
+        },
+        DeleteProfileObject: {
+            http: {
+                requestUri: "/domains/{DomainName}/profiles/objects/delete"
+            },
+            input: {
+                type: "structure",
+                required: [ "ProfileId", "ProfileObjectUniqueKey", "ObjectTypeName", "DomainName" ],
+                members: {
+                    ProfileId: {},
+                    ProfileObjectUniqueKey: {},
+                    ObjectTypeName: {},
+                    DomainName: {
+                        location: "uri",
+                        locationName: "DomainName"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    Message: {}
+                }
+            }
+        },
+        DeleteProfileObjectType: {
+            http: {
+                method: "DELETE",
+                requestUri: "/domains/{DomainName}/object-types/{ObjectTypeName}"
+            },
+            input: {
+                type: "structure",
+                required: [ "DomainName", "ObjectTypeName" ],
+                members: {
+                    DomainName: {
+                        location: "uri",
+                        locationName: "DomainName"
+                    },
+                    ObjectTypeName: {
+                        location: "uri",
+                        locationName: "ObjectTypeName"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "Message" ],
+                members: {
+                    Message: {}
+                }
+            }
+        },
+        GetDomain: {
+            http: {
+                method: "GET",
+                requestUri: "/domains/{DomainName}"
+            },
+            input: {
+                type: "structure",
+                required: [ "DomainName" ],
+                members: {
+                    DomainName: {
+                        location: "uri",
+                        locationName: "DomainName"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "DomainName", "CreatedAt", "LastUpdatedAt" ],
+                members: {
+                    DomainName: {},
+                    DefaultExpirationDays: {
+                        type: "integer"
+                    },
+                    DefaultEncryptionKey: {},
+                    DeadLetterQueueUrl: {},
+                    Stats: {
+                        type: "structure",
+                        members: {
+                            ProfileCount: {
+                                type: "long"
+                            },
+                            MeteringProfileCount: {
+                                type: "long"
+                            },
+                            ObjectCount: {
+                                type: "long"
+                            },
+                            TotalSize: {
+                                type: "long"
+                            }
+                        }
+                    },
+                    CreatedAt: {
+                        type: "timestamp"
+                    },
+                    LastUpdatedAt: {
+                        type: "timestamp"
+                    },
+                    Tags: {
+                        shape: "Sb"
+                    }
+                }
+            }
+        },
+        GetIntegration: {
+            http: {
+                requestUri: "/domains/{DomainName}/integrations"
+            },
+            input: {
+                type: "structure",
+                required: [ "DomainName", "Uri" ],
+                members: {
+                    DomainName: {
+                        location: "uri",
+                        locationName: "DomainName"
+                    },
+                    Uri: {}
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "DomainName", "Uri", "ObjectTypeName", "CreatedAt", "LastUpdatedAt" ],
+                members: {
+                    DomainName: {},
+                    Uri: {},
+                    ObjectTypeName: {},
+                    CreatedAt: {
+                        type: "timestamp"
+                    },
+                    LastUpdatedAt: {
+                        type: "timestamp"
+                    },
+                    Tags: {
+                        shape: "Sb"
+                    }
+                }
+            }
+        },
+        GetProfileObjectType: {
+            http: {
+                method: "GET",
+                requestUri: "/domains/{DomainName}/object-types/{ObjectTypeName}"
+            },
+            input: {
+                type: "structure",
+                required: [ "DomainName", "ObjectTypeName" ],
+                members: {
+                    DomainName: {
+                        location: "uri",
+                        locationName: "DomainName"
+                    },
+                    ObjectTypeName: {
+                        location: "uri",
+                        locationName: "ObjectTypeName"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "ObjectTypeName", "Description" ],
+                members: {
+                    ObjectTypeName: {},
+                    Description: {},
+                    TemplateId: {},
+                    ExpirationDays: {
+                        type: "integer"
+                    },
+                    EncryptionKey: {},
+                    AllowProfileCreation: {
+                        type: "boolean"
+                    },
+                    Fields: {
+                        shape: "S1b"
+                    },
+                    Keys: {
+                        shape: "S1e"
+                    },
+                    CreatedAt: {
+                        type: "timestamp"
+                    },
+                    LastUpdatedAt: {
+                        type: "timestamp"
+                    },
+                    Tags: {
+                        shape: "Sb"
+                    }
+                }
+            }
+        },
+        GetProfileObjectTypeTemplate: {
+            http: {
+                method: "GET",
+                requestUri: "/templates/{TemplateId}"
+            },
+            input: {
+                type: "structure",
+                required: [ "TemplateId" ],
+                members: {
+                    TemplateId: {
+                        location: "uri",
+                        locationName: "TemplateId"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    TemplateId: {},
+                    SourceName: {},
+                    SourceObject: {},
+                    AllowProfileCreation: {
+                        type: "boolean"
+                    },
+                    Fields: {
+                        shape: "S1b"
+                    },
+                    Keys: {
+                        shape: "S1e"
+                    }
+                }
+            }
+        },
+        ListAccountIntegrations: {
+            http: {
+                requestUri: "/integrations"
+            },
+            input: {
+                type: "structure",
+                required: [ "Uri" ],
+                members: {
+                    Uri: {},
+                    NextToken: {
+                        location: "querystring",
+                        locationName: "next-token"
+                    },
+                    MaxResults: {
+                        location: "querystring",
+                        locationName: "max-results",
+                        type: "integer"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    Items: {
+                        shape: "S1q"
+                    },
+                    NextToken: {}
+                }
+            }
+        },
+        ListDomains: {
+            http: {
+                method: "GET",
+                requestUri: "/domains"
+            },
+            input: {
+                type: "structure",
+                members: {
+                    NextToken: {
+                        location: "querystring",
+                        locationName: "next-token"
+                    },
+                    MaxResults: {
+                        location: "querystring",
+                        locationName: "max-results",
+                        type: "integer"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    Items: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            required: [ "DomainName", "CreatedAt", "LastUpdatedAt" ],
+                            members: {
+                                DomainName: {},
+                                CreatedAt: {
+                                    type: "timestamp"
+                                },
+                                LastUpdatedAt: {
+                                    type: "timestamp"
+                                },
+                                Tags: {
+                                    shape: "Sb"
+                                }
+                            }
+                        }
+                    },
+                    NextToken: {}
+                }
+            }
+        },
+        ListIntegrations: {
+            http: {
+                method: "GET",
+                requestUri: "/domains/{DomainName}/integrations"
+            },
+            input: {
+                type: "structure",
+                required: [ "DomainName" ],
+                members: {
+                    DomainName: {
+                        location: "uri",
+                        locationName: "DomainName"
+                    },
+                    NextToken: {
+                        location: "querystring",
+                        locationName: "next-token"
+                    },
+                    MaxResults: {
+                        location: "querystring",
+                        locationName: "max-results",
+                        type: "integer"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    Items: {
+                        shape: "S1q"
+                    },
+                    NextToken: {}
+                }
+            }
+        },
+        ListProfileObjectTypeTemplates: {
+            http: {
+                method: "GET",
+                requestUri: "/templates"
+            },
+            input: {
+                type: "structure",
+                members: {
+                    NextToken: {
+                        location: "querystring",
+                        locationName: "next-token"
+                    },
+                    MaxResults: {
+                        location: "querystring",
+                        locationName: "max-results",
+                        type: "integer"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    Items: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            members: {
+                                TemplateId: {},
+                                SourceName: {},
+                                SourceObject: {}
+                            }
+                        }
+                    },
+                    NextToken: {}
+                }
+            }
+        },
+        ListProfileObjectTypes: {
+            http: {
+                method: "GET",
+                requestUri: "/domains/{DomainName}/object-types"
+            },
+            input: {
+                type: "structure",
+                required: [ "DomainName" ],
+                members: {
+                    DomainName: {
+                        location: "uri",
+                        locationName: "DomainName"
+                    },
+                    NextToken: {
+                        location: "querystring",
+                        locationName: "next-token"
+                    },
+                    MaxResults: {
+                        location: "querystring",
+                        locationName: "max-results",
+                        type: "integer"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    Items: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            required: [ "ObjectTypeName", "Description" ],
+                            members: {
+                                ObjectTypeName: {},
+                                Description: {},
+                                CreatedAt: {
+                                    type: "timestamp"
+                                },
+                                LastUpdatedAt: {
+                                    type: "timestamp"
+                                },
+                                Tags: {
+                                    shape: "Sb"
+                                }
+                            }
+                        }
+                    },
+                    NextToken: {}
+                }
+            }
+        },
+        ListProfileObjects: {
+            http: {
+                requestUri: "/domains/{DomainName}/profiles/objects"
+            },
+            input: {
+                type: "structure",
+                required: [ "DomainName", "ObjectTypeName", "ProfileId" ],
+                members: {
+                    NextToken: {
+                        location: "querystring",
+                        locationName: "next-token"
+                    },
+                    MaxResults: {
+                        location: "querystring",
+                        locationName: "max-results",
+                        type: "integer"
+                    },
+                    DomainName: {
+                        location: "uri",
+                        locationName: "DomainName"
+                    },
+                    ObjectTypeName: {},
+                    ProfileId: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    Items: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            members: {
+                                ObjectTypeName: {},
+                                ProfileObjectUniqueKey: {},
+                                Object: {}
+                            }
+                        }
+                    },
+                    NextToken: {}
+                }
+            }
+        },
+        ListTagsForResource: {
+            http: {
+                method: "GET",
+                requestUri: "/tags/{resourceArn}"
+            },
+            input: {
+                type: "structure",
+                required: [ "resourceArn" ],
+                members: {
+                    resourceArn: {
+                        location: "uri",
+                        locationName: "resourceArn"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    tags: {
+                        shape: "Sb"
+                    }
+                }
+            }
+        },
+        PutIntegration: {
+            http: {
+                method: "PUT",
+                requestUri: "/domains/{DomainName}/integrations"
+            },
+            input: {
+                type: "structure",
+                required: [ "DomainName", "Uri", "ObjectTypeName" ],
+                members: {
+                    DomainName: {
+                        location: "uri",
+                        locationName: "DomainName"
+                    },
+                    Uri: {},
+                    ObjectTypeName: {},
+                    Tags: {
+                        shape: "Sb"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "DomainName", "Uri", "ObjectTypeName", "CreatedAt", "LastUpdatedAt" ],
+                members: {
+                    DomainName: {},
+                    Uri: {},
+                    ObjectTypeName: {},
+                    CreatedAt: {
+                        type: "timestamp"
+                    },
+                    LastUpdatedAt: {
+                        type: "timestamp"
+                    },
+                    Tags: {
+                        shape: "Sb"
+                    }
+                }
+            }
+        },
+        PutProfileObject: {
+            http: {
+                method: "PUT",
+                requestUri: "/domains/{DomainName}/profiles/objects"
+            },
+            input: {
+                type: "structure",
+                required: [ "ObjectTypeName", "Object", "DomainName" ],
+                members: {
+                    ObjectTypeName: {},
+                    Object: {},
+                    DomainName: {
+                        location: "uri",
+                        locationName: "DomainName"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    ProfileObjectUniqueKey: {}
+                }
+            }
+        },
+        PutProfileObjectType: {
+            http: {
+                method: "PUT",
+                requestUri: "/domains/{DomainName}/object-types/{ObjectTypeName}"
+            },
+            input: {
+                type: "structure",
+                required: [ "DomainName", "ObjectTypeName", "Description" ],
+                members: {
+                    DomainName: {
+                        location: "uri",
+                        locationName: "DomainName"
+                    },
+                    ObjectTypeName: {
+                        location: "uri",
+                        locationName: "ObjectTypeName"
+                    },
+                    Description: {},
+                    TemplateId: {},
+                    ExpirationDays: {
+                        type: "integer"
+                    },
+                    EncryptionKey: {},
+                    AllowProfileCreation: {
+                        type: "boolean"
+                    },
+                    Fields: {
+                        shape: "S1b"
+                    },
+                    Keys: {
+                        shape: "S1e"
+                    },
+                    Tags: {
+                        shape: "Sb"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "ObjectTypeName", "Description" ],
+                members: {
+                    ObjectTypeName: {},
+                    Description: {},
+                    TemplateId: {},
+                    ExpirationDays: {
+                        type: "integer"
+                    },
+                    EncryptionKey: {},
+                    AllowProfileCreation: {
+                        type: "boolean"
+                    },
+                    Fields: {
+                        shape: "S1b"
+                    },
+                    Keys: {
+                        shape: "S1e"
+                    },
+                    CreatedAt: {
+                        type: "timestamp"
+                    },
+                    LastUpdatedAt: {
+                        type: "timestamp"
+                    },
+                    Tags: {
+                        shape: "Sb"
+                    }
+                }
+            }
+        },
+        SearchProfiles: {
+            http: {
+                requestUri: "/domains/{DomainName}/profiles/search"
+            },
+            input: {
+                type: "structure",
+                required: [ "DomainName", "KeyName", "Values" ],
+                members: {
+                    NextToken: {
+                        location: "querystring",
+                        locationName: "next-token"
+                    },
+                    MaxResults: {
+                        location: "querystring",
+                        locationName: "max-results",
+                        type: "integer"
+                    },
+                    DomainName: {
+                        location: "uri",
+                        locationName: "DomainName"
+                    },
+                    KeyName: {},
+                    Values: {
+                        shape: "S4"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    Items: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            members: {
+                                ProfileId: {},
+                                AccountNumber: {},
+                                AdditionalInformation: {},
+                                PartyType: {},
+                                BusinessName: {},
+                                FirstName: {},
+                                MiddleName: {},
+                                LastName: {},
+                                BirthDate: {},
+                                Gender: {},
+                                PhoneNumber: {},
+                                MobilePhoneNumber: {},
+                                HomePhoneNumber: {},
+                                BusinessPhoneNumber: {},
+                                EmailAddress: {},
+                                PersonalEmailAddress: {},
+                                BusinessEmailAddress: {},
+                                Address: {
+                                    shape: "Sk"
+                                },
+                                ShippingAddress: {
+                                    shape: "Sk"
+                                },
+                                MailingAddress: {
+                                    shape: "Sk"
+                                },
+                                BillingAddress: {
+                                    shape: "Sk"
+                                },
+                                Attributes: {
+                                    shape: "Sl"
+                                }
+                            }
+                        }
+                    },
+                    NextToken: {}
+                }
+            }
+        },
+        TagResource: {
+            http: {
+                requestUri: "/tags/{resourceArn}"
+            },
+            input: {
+                type: "structure",
+                required: [ "resourceArn", "tags" ],
+                members: {
+                    resourceArn: {
+                        location: "uri",
+                        locationName: "resourceArn"
+                    },
+                    tags: {
+                        shape: "Sb"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {}
+            }
+        },
+        UntagResource: {
+            http: {
+                method: "DELETE",
+                requestUri: "/tags/{resourceArn}"
+            },
+            input: {
+                type: "structure",
+                required: [ "resourceArn", "tagKeys" ],
+                members: {
+                    resourceArn: {
+                        location: "uri",
+                        locationName: "resourceArn"
+                    },
+                    tagKeys: {
+                        location: "querystring",
+                        locationName: "tagKeys",
+                        type: "list",
+                        member: {}
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {}
+            }
+        },
+        UpdateDomain: {
+            http: {
+                method: "PUT",
+                requestUri: "/domains/{DomainName}"
+            },
+            input: {
+                type: "structure",
+                required: [ "DomainName" ],
+                members: {
+                    DomainName: {
+                        location: "uri",
+                        locationName: "DomainName"
+                    },
+                    DefaultExpirationDays: {
+                        type: "integer"
+                    },
+                    DefaultEncryptionKey: {},
+                    DeadLetterQueueUrl: {},
+                    Tags: {
+                        shape: "Sb"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "DomainName", "CreatedAt", "LastUpdatedAt" ],
+                members: {
+                    DomainName: {},
+                    DefaultExpirationDays: {
+                        type: "integer"
+                    },
+                    DefaultEncryptionKey: {},
+                    DeadLetterQueueUrl: {},
+                    CreatedAt: {
+                        type: "timestamp"
+                    },
+                    LastUpdatedAt: {
+                        type: "timestamp"
+                    },
+                    Tags: {
+                        shape: "Sb"
+                    }
+                }
+            }
+        },
+        UpdateProfile: {
+            http: {
+                method: "PUT",
+                requestUri: "/domains/{DomainName}/profiles"
+            },
+            input: {
+                type: "structure",
+                required: [ "DomainName", "ProfileId" ],
+                members: {
+                    DomainName: {
+                        location: "uri",
+                        locationName: "DomainName"
+                    },
+                    ProfileId: {},
+                    AdditionalInformation: {},
+                    AccountNumber: {},
+                    PartyType: {},
+                    BusinessName: {},
+                    FirstName: {},
+                    MiddleName: {},
+                    LastName: {},
+                    BirthDate: {},
+                    Gender: {},
+                    PhoneNumber: {},
+                    MobilePhoneNumber: {},
+                    HomePhoneNumber: {},
+                    BusinessPhoneNumber: {},
+                    EmailAddress: {},
+                    PersonalEmailAddress: {},
+                    BusinessEmailAddress: {},
+                    Address: {
+                        shape: "S2y"
+                    },
+                    ShippingAddress: {
+                        shape: "S2y"
+                    },
+                    MailingAddress: {
+                        shape: "S2y"
+                    },
+                    BillingAddress: {
+                        shape: "S2y"
+                    },
+                    Attributes: {
+                        type: "map",
+                        key: {},
+                        value: {}
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "ProfileId" ],
+                members: {
+                    ProfileId: {}
+                }
+            }
+        }
+    },
+    shapes: {
+        S4: {
+            type: "list",
+            member: {}
+        },
+        Sb: {
+            type: "map",
+            key: {},
+            value: {}
+        },
+        Sk: {
+            type: "structure",
+            members: {
+                Address1: {},
+                Address2: {},
+                Address3: {},
+                Address4: {},
+                City: {},
+                County: {},
+                State: {},
+                Province: {},
+                Country: {},
+                PostalCode: {}
+            }
+        },
+        Sl: {
+            type: "map",
+            key: {},
+            value: {}
+        },
+        S1b: {
+            type: "map",
+            key: {},
+            value: {
+                type: "structure",
+                members: {
+                    Source: {},
+                    Target: {},
+                    ContentType: {}
+                }
+            }
+        },
+        S1e: {
+            type: "map",
+            key: {},
+            value: {
+                type: "list",
+                member: {
+                    type: "structure",
+                    members: {
+                        StandardIdentifiers: {
+                            type: "list",
+                            member: {}
+                        },
+                        FieldNames: {
+                            type: "list",
+                            member: {}
+                        }
+                    }
+                }
+            }
+        },
+        S1q: {
+            type: "list",
+            member: {
+                type: "structure",
+                required: [ "DomainName", "Uri", "ObjectTypeName", "CreatedAt", "LastUpdatedAt" ],
+                members: {
+                    DomainName: {},
+                    Uri: {},
+                    ObjectTypeName: {},
+                    CreatedAt: {
+                        type: "timestamp"
+                    },
+                    LastUpdatedAt: {
+                        type: "timestamp"
+                    },
+                    Tags: {
+                        shape: "Sb"
+                    }
+                }
+            }
+        },
+        S2y: {
+            type: "structure",
+            members: {
+                Address1: {},
+                Address2: {},
+                Address3: {},
+                Address4: {},
+                City: {},
+                County: {},
+                State: {},
+                Province: {},
+                Country: {},
+                PostalCode: {}
+            }
+        }
+    },
+    paginators: {}
+};
+
+AWS.apiLoader.services["auditmanager"] = {};
+
+AWS.AuditManager = AWS.Service.defineService("auditmanager", [ "2017-07-25" ]);
+
+AWS.apiLoader.services["auditmanager"]["2017-07-25"] = {
+    version: "2.0",
+    metadata: {
+        apiVersion: "2017-07-25",
+        endpointPrefix: "auditmanager",
+        jsonVersion: "1.1",
+        protocol: "rest-json",
+        serviceFullName: "AWS Audit Manager",
+        serviceId: "AuditManager",
+        signatureVersion: "v4",
+        signingName: "auditmanager",
+        uid: "auditmanager-2017-07-25"
+    },
+    operations: {
+        AssociateAssessmentReportEvidenceFolder: {
+            http: {
+                method: "PUT",
+                requestUri: "/assessments/{assessmentId}/associateToAssessmentReport"
+            },
+            input: {
+                type: "structure",
+                required: [ "assessmentId", "evidenceFolderId" ],
+                members: {
+                    assessmentId: {
+                        location: "uri",
+                        locationName: "assessmentId"
+                    },
+                    evidenceFolderId: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {}
+            }
+        },
+        BatchAssociateAssessmentReportEvidence: {
+            http: {
+                method: "PUT",
+                requestUri: "/assessments/{assessmentId}/batchAssociateToAssessmentReport"
+            },
+            input: {
+                type: "structure",
+                required: [ "assessmentId", "evidenceFolderId", "evidenceIds" ],
+                members: {
+                    assessmentId: {
+                        location: "uri",
+                        locationName: "assessmentId"
+                    },
+                    evidenceFolderId: {},
+                    evidenceIds: {
+                        shape: "S5"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    evidenceIds: {
+                        shape: "S5"
+                    },
+                    errors: {
+                        shape: "S7"
+                    }
+                }
+            }
+        },
+        BatchCreateDelegationByAssessment: {
+            http: {
+                requestUri: "/assessments/{assessmentId}/delegations"
+            },
+            input: {
+                type: "structure",
+                required: [ "createDelegationRequests", "assessmentId" ],
+                members: {
+                    createDelegationRequests: {
+                        type: "list",
+                        member: {
+                            shape: "Sd"
+                        }
+                    },
+                    assessmentId: {
+                        location: "uri",
+                        locationName: "assessmentId"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    delegations: {
+                        shape: "Sj"
+                    },
+                    errors: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            members: {
+                                createDelegationRequest: {
+                                    shape: "Sd"
+                                },
+                                errorCode: {},
+                                errorMessage: {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        BatchDeleteDelegationByAssessment: {
+            http: {
+                method: "PUT",
+                requestUri: "/assessments/{assessmentId}/delegations"
+            },
+            input: {
+                type: "structure",
+                required: [ "delegationIds", "assessmentId" ],
+                members: {
+                    delegationIds: {
+                        type: "list",
+                        member: {}
+                    },
+                    assessmentId: {
+                        location: "uri",
+                        locationName: "assessmentId"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    errors: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            members: {
+                                delegationId: {},
+                                errorCode: {},
+                                errorMessage: {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        BatchDisassociateAssessmentReportEvidence: {
+            http: {
+                method: "PUT",
+                requestUri: "/assessments/{assessmentId}/batchDisassociateFromAssessmentReport"
+            },
+            input: {
+                type: "structure",
+                required: [ "assessmentId", "evidenceFolderId", "evidenceIds" ],
+                members: {
+                    assessmentId: {
+                        location: "uri",
+                        locationName: "assessmentId"
+                    },
+                    evidenceFolderId: {},
+                    evidenceIds: {
+                        shape: "S5"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    evidenceIds: {
+                        shape: "S5"
+                    },
+                    errors: {
+                        shape: "S7"
+                    }
+                }
+            }
+        },
+        BatchImportEvidenceToAssessmentControl: {
+            http: {
+                requestUri: "/assessments/{assessmentId}/controlSets/{controlSetId}/controls/{controlId}/evidence"
+            },
+            input: {
+                type: "structure",
+                required: [ "assessmentId", "controlSetId", "controlId", "manualEvidence" ],
+                members: {
+                    assessmentId: {
+                        location: "uri",
+                        locationName: "assessmentId"
+                    },
+                    controlSetId: {
+                        location: "uri",
+                        locationName: "controlSetId"
+                    },
+                    controlId: {
+                        location: "uri",
+                        locationName: "controlId"
+                    },
+                    manualEvidence: {
+                        type: "list",
+                        member: {
+                            shape: "S10"
+                        }
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    errors: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            members: {
+                                manualEvidence: {
+                                    shape: "S10"
+                                },
+                                errorCode: {},
+                                errorMessage: {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        CreateAssessment: {
+            http: {
+                requestUri: "/assessments"
+            },
+            input: {
+                type: "structure",
+                required: [ "name", "assessmentReportsDestination", "scope", "roles", "frameworkId" ],
+                members: {
+                    name: {},
+                    description: {},
+                    assessmentReportsDestination: {
+                        shape: "S17"
+                    },
+                    scope: {
+                        shape: "S19"
+                    },
+                    roles: {
+                        shape: "S1i"
+                    },
+                    frameworkId: {},
+                    tags: {
+                        shape: "S1k"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    assessment: {
+                        shape: "S1o"
+                    }
+                }
+            }
+        },
+        CreateAssessmentFramework: {
+            http: {
+                requestUri: "/assessmentFrameworks"
+            },
+            input: {
+                type: "structure",
+                required: [ "name", "controlSets" ],
+                members: {
+                    name: {},
+                    description: {},
+                    complianceType: {},
+                    controlSets: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            members: {
+                                name: {},
+                                controls: {
+                                    shape: "S2j"
+                                }
+                            }
+                        }
+                    },
+                    tags: {
+                        shape: "S1k"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    framework: {
+                        shape: "S2m"
+                    }
+                }
+            }
+        },
+        CreateAssessmentReport: {
+            http: {
+                requestUri: "/assessments/{assessmentId}/reports"
+            },
+            input: {
+                type: "structure",
+                required: [ "name", "assessmentId" ],
+                members: {
+                    name: {},
+                    description: {},
+                    assessmentId: {
+                        location: "uri",
+                        locationName: "assessmentId"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    assessmentReport: {
+                        type: "structure",
+                        members: {
+                            id: {},
+                            name: {},
+                            description: {},
+                            awsAccountId: {},
+                            assessmentId: {},
+                            assessmentName: {},
+                            author: {},
+                            status: {},
+                            creationTime: {
+                                type: "timestamp"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        CreateControl: {
+            http: {
+                requestUri: "/controls"
+            },
+            input: {
+                type: "structure",
+                required: [ "name", "controlMappingSources" ],
+                members: {
+                    name: {},
+                    description: {},
+                    testingInformation: {},
+                    actionPlanTitle: {},
+                    actionPlanInstructions: {},
+                    controlMappingSources: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            members: {
+                                sourceName: {},
+                                sourceDescription: {},
+                                sourceSetUpOption: {},
+                                sourceType: {},
+                                sourceKeyword: {
+                                    shape: "S33"
+                                },
+                                sourceFrequency: {},
+                                troubleshootingText: {}
+                            }
+                        }
+                    },
+                    tags: {
+                        shape: "S1k"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    control: {
+                        shape: "S2s"
+                    }
+                }
+            }
+        },
+        DeleteAssessment: {
+            http: {
+                method: "DELETE",
+                requestUri: "/assessments/{assessmentId}"
+            },
+            input: {
+                type: "structure",
+                required: [ "assessmentId" ],
+                members: {
+                    assessmentId: {
+                        location: "uri",
+                        locationName: "assessmentId"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {}
+            }
+        },
+        DeleteAssessmentFramework: {
+            http: {
+                method: "DELETE",
+                requestUri: "/assessmentFrameworks/{frameworkId}"
+            },
+            input: {
+                type: "structure",
+                required: [ "frameworkId" ],
+                members: {
+                    frameworkId: {
+                        location: "uri",
+                        locationName: "frameworkId"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {}
+            }
+        },
+        DeleteAssessmentReport: {
+            http: {
+                method: "DELETE",
+                requestUri: "/assessments/{assessmentId}/reports/{assessmentReportId}"
+            },
+            input: {
+                type: "structure",
+                required: [ "assessmentId", "assessmentReportId" ],
+                members: {
+                    assessmentId: {
+                        location: "uri",
+                        locationName: "assessmentId"
+                    },
+                    assessmentReportId: {
+                        location: "uri",
+                        locationName: "assessmentReportId"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {}
+            }
+        },
+        DeleteControl: {
+            http: {
+                method: "DELETE",
+                requestUri: "/controls/{controlId}"
+            },
+            input: {
+                type: "structure",
+                required: [ "controlId" ],
+                members: {
+                    controlId: {
+                        location: "uri",
+                        locationName: "controlId"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {}
+            }
+        },
+        DeregisterAccount: {
+            http: {
+                requestUri: "/account/deregisterAccount"
+            },
+            input: {
+                type: "structure",
+                members: {}
+            },
+            output: {
+                type: "structure",
+                members: {
+                    status: {}
+                }
+            }
+        },
+        DeregisterOrganizationAdminAccount: {
+            http: {
+                requestUri: "/account/deregisterOrganizationAdminAccount"
+            },
+            input: {
+                type: "structure",
+                members: {
+                    adminAccountId: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {}
+            }
+        },
+        DisassociateAssessmentReportEvidenceFolder: {
+            http: {
+                method: "PUT",
+                requestUri: "/assessments/{assessmentId}/disassociateFromAssessmentReport"
+            },
+            input: {
+                type: "structure",
+                required: [ "assessmentId", "evidenceFolderId" ],
+                members: {
+                    assessmentId: {
+                        location: "uri",
+                        locationName: "assessmentId"
+                    },
+                    evidenceFolderId: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {}
+            }
+        },
+        GetAccountStatus: {
+            http: {
+                method: "GET",
+                requestUri: "/account/status"
+            },
+            input: {
+                type: "structure",
+                members: {}
+            },
+            output: {
+                type: "structure",
+                members: {
+                    status: {}
+                }
+            }
+        },
+        GetAssessment: {
+            http: {
+                method: "GET",
+                requestUri: "/assessments/{assessmentId}"
+            },
+            input: {
+                type: "structure",
+                required: [ "assessmentId" ],
+                members: {
+                    assessmentId: {
+                        location: "uri",
+                        locationName: "assessmentId"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    assessment: {
+                        shape: "S1o"
+                    }
+                }
+            }
+        },
+        GetAssessmentFramework: {
+            http: {
+                method: "GET",
+                requestUri: "/assessmentFrameworks/{frameworkId}"
+            },
+            input: {
+                type: "structure",
+                required: [ "frameworkId" ],
+                members: {
+                    frameworkId: {
+                        location: "uri",
+                        locationName: "frameworkId"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    framework: {
+                        shape: "S2m"
+                    }
+                }
+            }
+        },
+        GetAssessmentReportUrl: {
+            http: {
+                method: "GET",
+                requestUri: "/assessments/{assessmentId}/reports/{assessmentReportId}/url"
+            },
+            input: {
+                type: "structure",
+                required: [ "assessmentReportId", "assessmentId" ],
+                members: {
+                    assessmentReportId: {
+                        location: "uri",
+                        locationName: "assessmentReportId"
+                    },
+                    assessmentId: {
+                        location: "uri",
+                        locationName: "assessmentId"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    preSignedUrl: {
+                        type: "structure",
+                        members: {
+                            hyperlinkName: {},
+                            link: {}
+                        }
+                    }
+                }
+            }
+        },
+        GetChangeLogs: {
+            http: {
+                method: "GET",
+                requestUri: "/assessments/{assessmentId}/changelogs"
+            },
+            input: {
+                type: "structure",
+                required: [ "assessmentId" ],
+                members: {
+                    assessmentId: {
+                        location: "uri",
+                        locationName: "assessmentId"
+                    },
+                    controlSetId: {
+                        location: "querystring",
+                        locationName: "controlSetId"
+                    },
+                    controlId: {
+                        location: "querystring",
+                        locationName: "controlId"
+                    },
+                    nextToken: {
+                        location: "querystring",
+                        locationName: "nextToken"
+                    },
+                    maxResults: {
+                        location: "querystring",
+                        locationName: "maxResults",
+                        type: "integer"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    changeLogs: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            members: {
+                                objectType: {},
+                                objectName: {},
+                                action: {},
+                                createdAt: {
+                                    type: "timestamp"
+                                },
+                                createdBy: {}
+                            }
+                        }
+                    },
+                    nextToken: {}
+                }
+            }
+        },
+        GetControl: {
+            http: {
+                method: "GET",
+                requestUri: "/controls/{controlId}"
+            },
+            input: {
+                type: "structure",
+                required: [ "controlId" ],
+                members: {
+                    controlId: {
+                        location: "uri",
+                        locationName: "controlId"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    control: {
+                        shape: "S2s"
+                    }
+                }
+            }
+        },
+        GetDelegations: {
+            http: {
+                method: "GET",
+                requestUri: "/delegations"
+            },
+            input: {
+                type: "structure",
+                members: {
+                    nextToken: {
+                        location: "querystring",
+                        locationName: "nextToken"
+                    },
+                    maxResults: {
+                        location: "querystring",
+                        locationName: "maxResults",
+                        type: "integer"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    delegations: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            members: {
+                                id: {},
+                                assessmentName: {},
+                                assessmentId: {},
+                                status: {},
+                                roleArn: {},
+                                creationTime: {
+                                    type: "timestamp"
+                                },
+                                controlSetName: {}
+                            }
+                        }
+                    },
+                    nextToken: {}
+                }
+            }
+        },
+        GetEvidence: {
+            http: {
+                method: "GET",
+                requestUri: "/assessments/{assessmentId}/controlSets/{controlSetId}/evidenceFolders/{evidenceFolderId}/evidence/{evidenceId}"
+            },
+            input: {
+                type: "structure",
+                required: [ "assessmentId", "controlSetId", "evidenceFolderId", "evidenceId" ],
+                members: {
+                    assessmentId: {
+                        location: "uri",
+                        locationName: "assessmentId"
+                    },
+                    controlSetId: {
+                        location: "uri",
+                        locationName: "controlSetId"
+                    },
+                    evidenceFolderId: {
+                        location: "uri",
+                        locationName: "evidenceFolderId"
+                    },
+                    evidenceId: {
+                        location: "uri",
+                        locationName: "evidenceId"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    evidence: {
+                        shape: "S4p"
+                    }
+                }
+            }
+        },
+        GetEvidenceByEvidenceFolder: {
+            http: {
+                method: "GET",
+                requestUri: "/assessments/{assessmentId}/controlSets/{controlSetId}/evidenceFolders/{evidenceFolderId}/evidence"
+            },
+            input: {
+                type: "structure",
+                required: [ "assessmentId", "controlSetId", "evidenceFolderId" ],
+                members: {
+                    assessmentId: {
+                        location: "uri",
+                        locationName: "assessmentId"
+                    },
+                    controlSetId: {
+                        location: "uri",
+                        locationName: "controlSetId"
+                    },
+                    evidenceFolderId: {
+                        location: "uri",
+                        locationName: "evidenceFolderId"
+                    },
+                    nextToken: {
+                        location: "querystring",
+                        locationName: "nextToken"
+                    },
+                    maxResults: {
+                        location: "querystring",
+                        locationName: "maxResults",
+                        type: "integer"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    evidence: {
+                        type: "list",
+                        member: {
+                            shape: "S4p"
+                        }
+                    },
+                    nextToken: {}
+                }
+            }
+        },
+        GetEvidenceFolder: {
+            http: {
+                method: "GET",
+                requestUri: "/assessments/{assessmentId}/controlSets/{controlSetId}/evidenceFolders/{evidenceFolderId}"
+            },
+            input: {
+                type: "structure",
+                required: [ "assessmentId", "controlSetId", "evidenceFolderId" ],
+                members: {
+                    assessmentId: {
+                        location: "uri",
+                        locationName: "assessmentId"
+                    },
+                    controlSetId: {
+                        location: "uri",
+                        locationName: "controlSetId"
+                    },
+                    evidenceFolderId: {
+                        location: "uri",
+                        locationName: "evidenceFolderId"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    evidenceFolder: {
+                        shape: "S53"
+                    }
+                }
+            }
+        },
+        GetEvidenceFoldersByAssessment: {
+            http: {
+                method: "GET",
+                requestUri: "/assessments/{assessmentId}/evidenceFolders"
+            },
+            input: {
+                type: "structure",
+                required: [ "assessmentId" ],
+                members: {
+                    assessmentId: {
+                        location: "uri",
+                        locationName: "assessmentId"
+                    },
+                    nextToken: {
+                        location: "querystring",
+                        locationName: "nextToken"
+                    },
+                    maxResults: {
+                        location: "querystring",
+                        locationName: "maxResults",
+                        type: "integer"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    evidenceFolders: {
+                        shape: "S57"
+                    },
+                    nextToken: {}
+                }
+            }
+        },
+        GetEvidenceFoldersByAssessmentControl: {
+            http: {
+                method: "GET",
+                requestUri: "/assessments/{assessmentId}/evidenceFolders-by-assessment-control/{controlSetId}/{controlId}"
+            },
+            input: {
+                type: "structure",
+                required: [ "assessmentId", "controlSetId", "controlId" ],
+                members: {
+                    assessmentId: {
+                        location: "uri",
+                        locationName: "assessmentId"
+                    },
+                    controlSetId: {
+                        location: "uri",
+                        locationName: "controlSetId"
+                    },
+                    controlId: {
+                        location: "uri",
+                        locationName: "controlId"
+                    },
+                    nextToken: {
+                        location: "querystring",
+                        locationName: "nextToken"
+                    },
+                    maxResults: {
+                        location: "querystring",
+                        locationName: "maxResults",
+                        type: "integer"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    evidenceFolders: {
+                        shape: "S57"
+                    },
+                    nextToken: {}
+                }
+            }
+        },
+        GetOrganizationAdminAccount: {
+            http: {
+                method: "GET",
+                requestUri: "/account/organizationAdminAccount"
+            },
+            input: {
+                type: "structure",
+                members: {}
+            },
+            output: {
+                type: "structure",
+                members: {
+                    adminAccountId: {},
+                    organizationId: {}
+                }
+            }
+        },
+        GetServicesInScope: {
+            http: {
+                method: "GET",
+                requestUri: "/services"
+            },
+            input: {
+                type: "structure",
+                members: {}
+            },
+            output: {
+                type: "structure",
+                members: {
+                    serviceMetadata: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            members: {
+                                name: {},
+                                displayName: {},
+                                description: {},
+                                category: {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        GetSettings: {
+            http: {
+                method: "GET",
+                requestUri: "/settings/{attribute}"
+            },
+            input: {
+                type: "structure",
+                required: [ "attribute" ],
+                members: {
+                    attribute: {
+                        location: "uri",
+                        locationName: "attribute"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    settings: {
+                        shape: "S5k"
+                    }
+                }
+            }
+        },
+        ListAssessmentFrameworks: {
+            http: {
+                method: "GET",
+                requestUri: "/assessmentFrameworks"
+            },
+            input: {
+                type: "structure",
+                required: [ "frameworkType" ],
+                members: {
+                    frameworkType: {
+                        location: "querystring",
+                        locationName: "frameworkType"
+                    },
+                    nextToken: {
+                        location: "querystring",
+                        locationName: "nextToken"
+                    },
+                    maxResults: {
+                        location: "querystring",
+                        locationName: "maxResults",
+                        type: "integer"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    frameworkMetadataList: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            members: {
+                                arn: {},
+                                id: {},
+                                type: {},
+                                name: {},
+                                description: {},
+                                logo: {},
+                                complianceType: {},
+                                controlsCount: {
+                                    type: "integer"
+                                },
+                                controlSetsCount: {
+                                    type: "integer"
+                                },
+                                createdAt: {
+                                    type: "timestamp"
+                                },
+                                lastUpdatedAt: {
+                                    type: "timestamp"
+                                }
+                            }
+                        }
+                    },
+                    nextToken: {}
+                }
+            }
+        },
+        ListAssessmentReports: {
+            http: {
+                method: "GET",
+                requestUri: "/assessmentReports"
+            },
+            input: {
+                type: "structure",
+                members: {
+                    nextToken: {
+                        location: "querystring",
+                        locationName: "nextToken"
+                    },
+                    maxResults: {
+                        location: "querystring",
+                        locationName: "maxResults",
+                        type: "integer"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    assessmentReports: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            members: {
+                                id: {},
+                                name: {},
+                                description: {},
+                                assessmentId: {},
+                                assessmentName: {},
+                                author: {},
+                                status: {},
+                                creationTime: {
+                                    type: "timestamp"
+                                }
+                            }
+                        }
+                    },
+                    nextToken: {}
+                }
+            }
+        },
+        ListAssessments: {
+            http: {
+                method: "GET",
+                requestUri: "/assessments"
+            },
+            input: {
+                type: "structure",
+                members: {
+                    nextToken: {
+                        location: "querystring",
+                        locationName: "nextToken"
+                    },
+                    maxResults: {
+                        location: "querystring",
+                        locationName: "maxResults",
+                        type: "integer"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    assessmentMetadata: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            members: {
+                                name: {},
+                                id: {},
+                                complianceType: {},
+                                status: {},
+                                roles: {
+                                    shape: "S1i"
+                                },
+                                delegations: {
+                                    shape: "Sj"
+                                },
+                                creationTime: {
+                                    type: "timestamp"
+                                },
+                                lastUpdated: {
+                                    type: "timestamp"
+                                }
+                            }
+                        }
+                    },
+                    nextToken: {}
+                }
+            }
+        },
+        ListControls: {
+            http: {
+                method: "GET",
+                requestUri: "/controls"
+            },
+            input: {
+                type: "structure",
+                required: [ "controlType" ],
+                members: {
+                    controlType: {
+                        location: "querystring",
+                        locationName: "controlType"
+                    },
+                    nextToken: {
+                        location: "querystring",
+                        locationName: "nextToken"
+                    },
+                    maxResults: {
+                        location: "querystring",
+                        locationName: "maxResults",
+                        type: "integer"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    controlMetadataList: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            members: {
+                                arn: {},
+                                id: {},
+                                name: {},
+                                controlSources: {},
+                                createdAt: {
+                                    type: "timestamp"
+                                },
+                                lastUpdatedAt: {
+                                    type: "timestamp"
+                                }
+                            }
+                        }
+                    },
+                    nextToken: {}
+                }
+            }
+        },
+        ListKeywordsForDataSource: {
+            http: {
+                method: "GET",
+                requestUri: "/dataSourceKeywords"
+            },
+            input: {
+                type: "structure",
+                required: [ "source" ],
+                members: {
+                    source: {
+                        location: "querystring",
+                        locationName: "source"
+                    },
+                    nextToken: {
+                        location: "querystring",
+                        locationName: "nextToken"
+                    },
+                    maxResults: {
+                        location: "querystring",
+                        locationName: "maxResults",
+                        type: "integer"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    keywords: {
+                        type: "list",
+                        member: {}
+                    },
+                    nextToken: {}
+                }
+            }
+        },
+        ListNotifications: {
+            http: {
+                method: "GET",
+                requestUri: "/notifications"
+            },
+            input: {
+                type: "structure",
+                members: {
+                    nextToken: {
+                        location: "querystring",
+                        locationName: "nextToken"
+                    },
+                    maxResults: {
+                        location: "querystring",
+                        locationName: "maxResults",
+                        type: "integer"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    notifications: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            members: {
+                                id: {},
+                                assessmentId: {},
+                                assessmentName: {},
+                                controlSetId: {},
+                                controlSetName: {},
+                                description: {},
+                                eventTime: {
+                                    type: "timestamp"
+                                },
+                                source: {}
+                            }
+                        }
+                    },
+                    nextToken: {}
+                }
+            }
+        },
+        ListTagsForResource: {
+            http: {
+                method: "GET",
+                requestUri: "/tags/{resourceArn}"
+            },
+            input: {
+                type: "structure",
+                required: [ "resourceArn" ],
+                members: {
+                    resourceArn: {
+                        location: "uri",
+                        locationName: "resourceArn"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    tags: {
+                        shape: "S1k"
+                    }
+                }
+            }
+        },
+        RegisterAccount: {
+            http: {
+                requestUri: "/account/registerAccount"
+            },
+            input: {
+                type: "structure",
+                members: {
+                    kmsKey: {},
+                    delegatedAdminAccount: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    status: {}
+                }
+            }
+        },
+        RegisterOrganizationAdminAccount: {
+            http: {
+                requestUri: "/account/registerOrganizationAdminAccount"
+            },
+            input: {
+                type: "structure",
+                required: [ "adminAccountId" ],
+                members: {
+                    adminAccountId: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    adminAccountId: {},
+                    organizationId: {}
+                }
+            }
+        },
+        TagResource: {
+            http: {
+                requestUri: "/tags/{resourceArn}"
+            },
+            input: {
+                type: "structure",
+                required: [ "resourceArn", "tags" ],
+                members: {
+                    resourceArn: {
+                        location: "uri",
+                        locationName: "resourceArn"
+                    },
+                    tags: {
+                        shape: "S1k"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {}
+            }
+        },
+        UntagResource: {
+            http: {
+                method: "DELETE",
+                requestUri: "/tags/{resourceArn}"
+            },
+            input: {
+                type: "structure",
+                required: [ "resourceArn", "tagKeys" ],
+                members: {
+                    resourceArn: {
+                        location: "uri",
+                        locationName: "resourceArn"
+                    },
+                    tagKeys: {
+                        location: "querystring",
+                        locationName: "tagKeys",
+                        type: "list",
+                        member: {}
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {}
+            }
+        },
+        UpdateAssessment: {
+            http: {
+                method: "PUT",
+                requestUri: "/assessments/{assessmentId}"
+            },
+            input: {
+                type: "structure",
+                required: [ "assessmentId", "scope" ],
+                members: {
+                    assessmentId: {
+                        location: "uri",
+                        locationName: "assessmentId"
+                    },
+                    assessmentName: {},
+                    assessmentDescription: {},
+                    scope: {
+                        shape: "S19"
+                    },
+                    assessmentReportsDestination: {
+                        shape: "S17"
+                    },
+                    roles: {
+                        shape: "S1i"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    assessment: {
+                        shape: "S1o"
+                    }
+                }
+            }
+        },
+        UpdateAssessmentControl: {
+            http: {
+                method: "PUT",
+                requestUri: "/assessments/{assessmentId}/controlSets/{controlSetId}/controls/{controlId}"
+            },
+            input: {
+                type: "structure",
+                required: [ "assessmentId", "controlSetId", "controlId" ],
+                members: {
+                    assessmentId: {
+                        location: "uri",
+                        locationName: "assessmentId"
+                    },
+                    controlSetId: {
+                        location: "uri",
+                        locationName: "controlSetId"
+                    },
+                    controlId: {
+                        location: "uri",
+                        locationName: "controlId"
+                    },
+                    controlStatus: {},
+                    commentBody: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    control: {
+                        shape: "S22"
+                    }
+                }
+            }
+        },
+        UpdateAssessmentControlSetStatus: {
+            http: {
+                method: "PUT",
+                requestUri: "/assessments/{assessmentId}/controlSets/{controlSetId}/status"
+            },
+            input: {
+                type: "structure",
+                required: [ "assessmentId", "controlSetId", "status", "comment" ],
+                members: {
+                    assessmentId: {
+                        location: "uri",
+                        locationName: "assessmentId"
+                    },
+                    controlSetId: {
+                        location: "uri",
+                        locationName: "controlSetId"
+                    },
+                    status: {},
+                    comment: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    controlSet: {
+                        shape: "S1y"
+                    }
+                }
+            }
+        },
+        UpdateAssessmentFramework: {
+            http: {
+                method: "PUT",
+                requestUri: "/assessmentFrameworks/{frameworkId}"
+            },
+            input: {
+                type: "structure",
+                required: [ "frameworkId", "name", "controlSets" ],
+                members: {
+                    frameworkId: {
+                        location: "uri",
+                        locationName: "frameworkId"
+                    },
+                    name: {},
+                    description: {},
+                    complianceType: {},
+                    controlSets: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            members: {
+                                id: {},
+                                name: {},
+                                controls: {
+                                    shape: "S2j"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    framework: {
+                        shape: "S2m"
+                    }
+                }
+            }
+        },
+        UpdateAssessmentStatus: {
+            http: {
+                method: "PUT",
+                requestUri: "/assessments/{assessmentId}/status"
+            },
+            input: {
+                type: "structure",
+                required: [ "assessmentId", "status" ],
+                members: {
+                    assessmentId: {
+                        location: "uri",
+                        locationName: "assessmentId"
+                    },
+                    status: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    assessment: {
+                        shape: "S1o"
+                    }
+                }
+            }
+        },
+        UpdateControl: {
+            http: {
+                method: "PUT",
+                requestUri: "/controls/{controlId}"
+            },
+            input: {
+                type: "structure",
+                required: [ "controlId", "name", "controlMappingSources" ],
+                members: {
+                    controlId: {
+                        location: "uri",
+                        locationName: "controlId"
+                    },
+                    name: {},
+                    description: {},
+                    testingInformation: {},
+                    actionPlanTitle: {},
+                    actionPlanInstructions: {},
+                    controlMappingSources: {
+                        shape: "S2x"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    control: {
+                        shape: "S2s"
+                    }
+                }
+            }
+        },
+        UpdateSettings: {
+            http: {
+                method: "PUT",
+                requestUri: "/settings"
+            },
+            input: {
+                type: "structure",
+                members: {
+                    snsTopic: {},
+                    defaultAssessmentReportsDestination: {
+                        shape: "S17"
+                    },
+                    defaultProcessOwners: {
+                        shape: "S1i"
+                    },
+                    kmsKey: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    settings: {
+                        shape: "S5k"
+                    }
+                }
+            }
+        },
+        ValidateAssessmentReportIntegrity: {
+            http: {
+                requestUri: "/assessmentReports/integrity"
+            },
+            input: {
+                type: "structure",
+                required: [ "s3RelativePath" ],
+                members: {
+                    s3RelativePath: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    signatureValid: {
+                        type: "boolean"
+                    },
+                    signatureAlgorithm: {},
+                    signatureDateTime: {},
+                    signatureKeyId: {},
+                    validationErrors: {
+                        type: "list",
+                        member: {}
+                    }
+                }
+            }
+        }
+    },
+    shapes: {
+        S5: {
+            type: "list",
+            member: {}
+        },
+        S7: {
+            type: "list",
+            member: {
+                type: "structure",
+                members: {
+                    evidenceId: {},
+                    errorCode: {},
+                    errorMessage: {}
+                }
+            }
+        },
+        Sd: {
+            type: "structure",
+            members: {
+                comment: {},
+                controlSetId: {},
+                roleArn: {},
+                roleType: {}
+            }
+        },
+        Sj: {
+            type: "list",
+            member: {
+                type: "structure",
+                members: {
+                    id: {},
+                    assessmentName: {},
+                    assessmentId: {},
+                    status: {},
+                    roleArn: {},
+                    roleType: {},
+                    creationTime: {
+                        type: "timestamp"
+                    },
+                    lastUpdated: {
+                        type: "timestamp"
+                    },
+                    controlSetId: {},
+                    comment: {},
+                    createdBy: {}
+                }
+            }
+        },
+        S10: {
+            type: "structure",
+            members: {
+                s3ResourcePath: {}
+            }
+        },
+        S17: {
+            type: "structure",
+            members: {
+                destinationType: {},
+                destination: {}
+            }
+        },
+        S19: {
+            type: "structure",
+            members: {
+                awsAccounts: {
+                    type: "list",
+                    member: {
+                        shape: "S1b"
+                    }
+                },
+                awsServices: {
+                    type: "list",
+                    member: {
+                        type: "structure",
+                        members: {
+                            serviceName: {}
+                        }
+                    }
+                }
+            }
+        },
+        S1b: {
+            type: "structure",
+            members: {
+                id: {},
+                emailAddress: {},
+                name: {}
+            }
+        },
+        S1i: {
+            type: "list",
+            member: {
+                type: "structure",
+                members: {
+                    roleType: {},
+                    roleArn: {}
+                }
+            }
+        },
+        S1k: {
+            type: "map",
+            key: {},
+            value: {}
+        },
+        S1o: {
+            type: "structure",
+            members: {
+                arn: {},
+                awsAccount: {
+                    shape: "S1b"
+                },
+                metadata: {
+                    type: "structure",
+                    members: {
+                        name: {},
+                        id: {},
+                        description: {},
+                        complianceType: {},
+                        status: {},
+                        assessmentReportsDestination: {
+                            shape: "S17"
+                        },
+                        scope: {
+                            shape: "S19"
+                        },
+                        roles: {
+                            shape: "S1i"
+                        },
+                        delegations: {
+                            shape: "Sj"
+                        },
+                        creationTime: {
+                            type: "timestamp"
+                        },
+                        lastUpdated: {
+                            type: "timestamp"
+                        }
+                    }
+                },
+                framework: {
+                    type: "structure",
+                    members: {
+                        id: {},
+                        arn: {},
+                        metadata: {
+                            type: "structure",
+                            members: {
+                                name: {},
+                                description: {},
+                                logo: {},
+                                complianceType: {}
+                            }
+                        },
+                        controlSets: {
+                            type: "list",
+                            member: {
+                                shape: "S1y"
+                            }
+                        }
+                    }
+                },
+                tags: {
+                    shape: "S1k"
+                }
+            }
+        },
+        S1y: {
+            type: "structure",
+            members: {
+                id: {},
+                description: {},
+                status: {},
+                roles: {
+                    shape: "S1i"
+                },
+                controls: {
+                    type: "list",
+                    member: {
+                        shape: "S22"
+                    }
+                },
+                delegations: {
+                    shape: "Sj"
+                },
+                systemEvidenceCount: {
+                    type: "integer"
+                },
+                manualEvidenceCount: {
+                    type: "integer"
+                }
+            }
+        },
+        S22: {
+            type: "structure",
+            members: {
+                id: {},
+                name: {},
+                description: {},
+                status: {},
+                response: {},
+                comments: {
+                    type: "list",
+                    member: {
+                        type: "structure",
+                        members: {
+                            authorName: {},
+                            commentBody: {},
+                            postedDate: {
+                                type: "timestamp"
+                            }
+                        }
+                    }
+                },
+                evidenceSources: {
+                    type: "list",
+                    member: {}
+                },
+                evidenceCount: {
+                    type: "integer"
+                },
+                assessmentReportEvidenceCount: {
+                    type: "integer"
+                }
+            }
+        },
+        S2j: {
+            type: "list",
+            member: {
+                type: "structure",
+                members: {
+                    id: {}
+                }
+            }
+        },
+        S2m: {
+            type: "structure",
+            members: {
+                arn: {},
+                id: {},
+                name: {},
+                type: {},
+                complianceType: {},
+                description: {},
+                logo: {},
+                controlSources: {},
+                controlSets: {
+                    type: "list",
+                    member: {
+                        type: "structure",
+                        members: {
+                            id: {},
+                            name: {},
+                            controls: {
+                                type: "list",
+                                member: {
+                                    shape: "S2s"
+                                }
+                            }
+                        }
+                    }
+                },
+                createdAt: {
+                    type: "timestamp"
+                },
+                lastUpdatedAt: {
+                    type: "timestamp"
+                },
+                createdBy: {},
+                lastUpdatedBy: {},
+                tags: {
+                    shape: "S1k"
+                }
+            }
+        },
+        S2s: {
+            type: "structure",
+            members: {
+                arn: {},
+                id: {},
+                type: {},
+                name: {},
+                description: {},
+                testingInformation: {},
+                actionPlanTitle: {},
+                actionPlanInstructions: {},
+                controlSources: {},
+                controlMappingSources: {
+                    shape: "S2x"
+                },
+                createdAt: {
+                    type: "timestamp"
+                },
+                lastUpdatedAt: {
+                    type: "timestamp"
+                },
+                createdBy: {},
+                lastUpdatedBy: {},
+                tags: {
+                    shape: "S1k"
+                }
+            }
+        },
+        S2x: {
+            type: "list",
+            member: {
+                type: "structure",
+                members: {
+                    sourceId: {},
+                    sourceName: {},
+                    sourceDescription: {},
+                    sourceSetUpOption: {},
+                    sourceType: {},
+                    sourceKeyword: {
+                        shape: "S33"
+                    },
+                    sourceFrequency: {},
+                    troubleshootingText: {}
+                }
+            }
+        },
+        S33: {
+            type: "structure",
+            members: {
+                keywordInputType: {},
+                keywordValue: {}
+            }
+        },
+        S4p: {
+            type: "structure",
+            members: {
+                dataSource: {},
+                evidenceAwsAccountId: {},
+                time: {
+                    type: "timestamp"
+                },
+                eventSource: {},
+                eventName: {},
+                evidenceByType: {},
+                resourcesIncluded: {
+                    type: "list",
+                    member: {
+                        type: "structure",
+                        members: {
+                            arn: {},
+                            value: {}
+                        }
+                    }
+                },
+                attributes: {
+                    type: "map",
+                    key: {},
+                    value: {}
+                },
+                iamId: {},
+                complianceCheck: {},
+                awsOrganization: {},
+                awsAccountId: {},
+                evidenceFolderId: {},
+                id: {},
+                assessmentReportSelection: {}
+            }
+        },
+        S53: {
+            type: "structure",
+            members: {
+                name: {},
+                date: {
+                    type: "timestamp"
+                },
+                assessmentId: {},
+                controlSetId: {},
+                controlId: {},
+                id: {},
+                dataSource: {},
+                author: {},
+                totalEvidence: {
+                    type: "integer"
+                },
+                assessmentReportSelectionCount: {
+                    type: "integer"
+                },
+                controlName: {},
+                evidenceResourcesIncludedCount: {
+                    type: "integer"
+                },
+                evidenceByTypeConfigurationDataCount: {
+                    type: "integer"
+                },
+                evidenceByTypeManualCount: {
+                    type: "integer"
+                },
+                evidenceByTypeComplianceCheckCount: {
+                    type: "integer"
+                },
+                evidenceByTypeComplianceCheckIssuesCount: {
+                    type: "integer"
+                },
+                evidenceByTypeUserActivityCount: {
+                    type: "integer"
+                },
+                evidenceAwsServiceSourceCount: {
+                    type: "integer"
+                }
+            }
+        },
+        S57: {
+            type: "list",
+            member: {
+                shape: "S53"
+            }
+        },
+        S5k: {
+            type: "structure",
+            members: {
+                isAwsOrgEnabled: {
+                    type: "boolean"
+                },
+                snsTopic: {},
+                defaultAssessmentReportsDestination: {
+                    shape: "S17"
+                },
+                defaultProcessOwners: {
+                    shape: "S1i"
+                },
+                kmsKey: {}
+            }
+        }
+    },
+    paginators: {
+        GetChangeLogs: {
+            input_token: "nextToken",
+            output_token: "nextToken",
+            limit_key: "maxResults"
+        },
+        GetDelegations: {
+            input_token: "nextToken",
+            output_token: "nextToken",
+            limit_key: "maxResults"
+        },
+        GetEvidenceByEvidenceFolder: {
+            input_token: "nextToken",
+            output_token: "nextToken",
+            limit_key: "maxResults"
+        },
+        GetEvidenceFoldersByAssessment: {
+            input_token: "nextToken",
+            output_token: "nextToken",
+            limit_key: "maxResults"
+        },
+        GetEvidenceFoldersByAssessmentControl: {
+            input_token: "nextToken",
+            output_token: "nextToken",
+            limit_key: "maxResults"
+        },
+        ListAssessmentFrameworks: {
+            input_token: "nextToken",
+            output_token: "nextToken",
+            limit_key: "maxResults"
+        },
+        ListAssessmentReports: {
+            input_token: "nextToken",
+            output_token: "nextToken",
+            limit_key: "maxResults"
+        },
+        ListAssessments: {
+            input_token: "nextToken",
+            output_token: "nextToken",
+            limit_key: "maxResults"
+        },
+        ListControls: {
+            input_token: "nextToken",
+            output_token: "nextToken",
+            limit_key: "maxResults"
+        },
+        ListKeywordsForDataSource: {
+            input_token: "nextToken",
+            output_token: "nextToken",
+            limit_key: "maxResults"
+        },
+        ListNotifications: {
+            input_token: "nextToken",
+            output_token: "nextToken",
+            limit_key: "maxResults"
+        }
+    }
+};
+
+AWS.apiLoader.services["emrcontainers"] = {};
+
+AWS.EMRcontainers = AWS.Service.defineService("emrcontainers", [ "2020-10-01" ]);
+
+AWS.apiLoader.services["emrcontainers"]["2020-10-01"] = {
+    version: "2.0",
+    metadata: {
+        apiVersion: "2020-10-01",
+        endpointPrefix: "emr-containers",
+        jsonVersion: "1.1",
+        protocol: "rest-json",
+        serviceFullName: "Amazon EMR Containers",
+        serviceId: "EMR containers",
+        signatureVersion: "v4",
+        signingName: "emr-containers",
+        uid: "emr-containers-2020-10-01"
+    },
+    operations: {
+        CancelJobRun: {
+            http: {
+                method: "DELETE",
+                requestUri: "/virtualclusters/{virtualClusterId}/jobruns/{jobRunId}"
+            },
+            input: {
+                type: "structure",
+                required: [ "id", "virtualClusterId" ],
+                members: {
+                    id: {
+                        location: "uri",
+                        locationName: "jobRunId"
+                    },
+                    virtualClusterId: {
+                        location: "uri",
+                        locationName: "virtualClusterId"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    id: {},
+                    virtualClusterId: {}
+                }
+            }
+        },
+        CreateManagedEndpoint: {
+            http: {
+                requestUri: "/virtualclusters/{virtualClusterId}/endpoints"
+            },
+            input: {
+                type: "structure",
+                required: [ "name", "virtualClusterId", "type", "releaseLabel", "executionRoleArn", "certificateArn", "clientToken" ],
+                members: {
+                    name: {},
+                    virtualClusterId: {
+                        location: "uri",
+                        locationName: "virtualClusterId"
+                    },
+                    type: {},
+                    releaseLabel: {},
+                    executionRoleArn: {},
+                    certificateArn: {},
+                    configurationOverrides: {
+                        shape: "Sa"
+                    },
+                    clientToken: {
+                        idempotencyToken: true
+                    },
+                    tags: {
+                        shape: "Sn"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    id: {},
+                    name: {},
+                    arn: {},
+                    virtualClusterId: {}
+                }
+            }
+        },
+        CreateVirtualCluster: {
+            http: {
+                requestUri: "/virtualclusters"
+            },
+            input: {
+                type: "structure",
+                required: [ "name", "containerProvider", "clientToken" ],
+                members: {
+                    name: {},
+                    containerProvider: {
+                        shape: "St"
+                    },
+                    clientToken: {
+                        idempotencyToken: true
+                    },
+                    tags: {
+                        shape: "Sn"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    id: {},
+                    name: {},
+                    arn: {}
+                }
+            }
+        },
+        DeleteManagedEndpoint: {
+            http: {
+                method: "DELETE",
+                requestUri: "/virtualclusters/{virtualClusterId}/endpoints/{endpointId}"
+            },
+            input: {
+                type: "structure",
+                required: [ "id", "virtualClusterId" ],
+                members: {
+                    id: {
+                        location: "uri",
+                        locationName: "endpointId"
+                    },
+                    virtualClusterId: {
+                        location: "uri",
+                        locationName: "virtualClusterId"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    id: {},
+                    virtualClusterId: {}
+                }
+            }
+        },
+        DeleteVirtualCluster: {
+            http: {
+                method: "DELETE",
+                requestUri: "/virtualclusters/{virtualClusterId}"
+            },
+            input: {
+                type: "structure",
+                required: [ "id" ],
+                members: {
+                    id: {
+                        location: "uri",
+                        locationName: "virtualClusterId"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    id: {}
+                }
+            }
+        },
+        DescribeJobRun: {
+            http: {
+                method: "GET",
+                requestUri: "/virtualclusters/{virtualClusterId}/jobruns/{jobRunId}"
+            },
+            input: {
+                type: "structure",
+                required: [ "id", "virtualClusterId" ],
+                members: {
+                    id: {
+                        location: "uri",
+                        locationName: "jobRunId"
+                    },
+                    virtualClusterId: {
+                        location: "uri",
+                        locationName: "virtualClusterId"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    jobRun: {
+                        shape: "S15"
+                    }
+                }
+            }
+        },
+        DescribeManagedEndpoint: {
+            http: {
+                method: "GET",
+                requestUri: "/virtualclusters/{virtualClusterId}/endpoints/{endpointId}"
+            },
+            input: {
+                type: "structure",
+                required: [ "id", "virtualClusterId" ],
+                members: {
+                    id: {
+                        location: "uri",
+                        locationName: "endpointId"
+                    },
+                    virtualClusterId: {
+                        location: "uri",
+                        locationName: "virtualClusterId"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    endpoint: {
+                        shape: "S1j"
+                    }
+                }
+            }
+        },
+        DescribeVirtualCluster: {
+            http: {
+                method: "GET",
+                requestUri: "/virtualclusters/{virtualClusterId}"
+            },
+            input: {
+                type: "structure",
+                required: [ "id" ],
+                members: {
+                    id: {
+                        location: "uri",
+                        locationName: "virtualClusterId"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    virtualCluster: {
+                        shape: "S1o"
+                    }
+                }
+            }
+        },
+        ListJobRuns: {
+            http: {
+                method: "GET",
+                requestUri: "/virtualclusters/{virtualClusterId}/jobruns"
+            },
+            input: {
+                type: "structure",
+                required: [ "virtualClusterId" ],
+                members: {
+                    virtualClusterId: {
+                        location: "uri",
+                        locationName: "virtualClusterId"
+                    },
+                    createdBefore: {
+                        shape: "S1e",
+                        location: "querystring",
+                        locationName: "createdBefore"
+                    },
+                    createdAfter: {
+                        shape: "S1e",
+                        location: "querystring",
+                        locationName: "createdAfter"
+                    },
+                    name: {
+                        location: "querystring",
+                        locationName: "name"
+                    },
+                    states: {
+                        location: "querystring",
+                        locationName: "states",
+                        type: "list",
+                        member: {}
+                    },
+                    maxResults: {
+                        location: "querystring",
+                        locationName: "maxResults",
+                        type: "integer"
+                    },
+                    nextToken: {
+                        location: "querystring",
+                        locationName: "nextToken"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    jobRuns: {
+                        type: "list",
+                        member: {
+                            shape: "S15"
+                        }
+                    },
+                    nextToken: {}
+                }
+            }
+        },
+        ListManagedEndpoints: {
+            http: {
+                method: "GET",
+                requestUri: "/virtualclusters/{virtualClusterId}/endpoints"
+            },
+            input: {
+                type: "structure",
+                required: [ "virtualClusterId" ],
+                members: {
+                    virtualClusterId: {
+                        location: "uri",
+                        locationName: "virtualClusterId"
+                    },
+                    createdBefore: {
+                        shape: "S1e",
+                        location: "querystring",
+                        locationName: "createdBefore"
+                    },
+                    createdAfter: {
+                        shape: "S1e",
+                        location: "querystring",
+                        locationName: "createdAfter"
+                    },
+                    types: {
+                        location: "querystring",
+                        locationName: "types",
+                        type: "list",
+                        member: {}
+                    },
+                    states: {
+                        location: "querystring",
+                        locationName: "states",
+                        type: "list",
+                        member: {}
+                    },
+                    maxResults: {
+                        location: "querystring",
+                        locationName: "maxResults",
+                        type: "integer"
+                    },
+                    nextToken: {
+                        location: "querystring",
+                        locationName: "nextToken"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    endpoints: {
+                        type: "list",
+                        member: {
+                            shape: "S1j"
+                        }
+                    },
+                    nextToken: {}
+                }
+            }
+        },
+        ListTagsForResource: {
+            http: {
+                method: "GET",
+                requestUri: "/tags/{resourceArn}"
+            },
+            input: {
+                type: "structure",
+                required: [ "resourceArn" ],
+                members: {
+                    resourceArn: {
+                        location: "uri",
+                        locationName: "resourceArn"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    tags: {
+                        shape: "Sn"
+                    }
+                }
+            }
+        },
+        ListVirtualClusters: {
+            http: {
+                method: "GET",
+                requestUri: "/virtualclusters"
+            },
+            input: {
+                type: "structure",
+                members: {
+                    containerProviderId: {
+                        location: "querystring",
+                        locationName: "containerProviderId"
+                    },
+                    containerProviderType: {
+                        location: "querystring",
+                        locationName: "containerProviderType"
+                    },
+                    createdAfter: {
+                        shape: "S1e",
+                        location: "querystring",
+                        locationName: "createdAfter"
+                    },
+                    createdBefore: {
+                        shape: "S1e",
+                        location: "querystring",
+                        locationName: "createdBefore"
+                    },
+                    states: {
+                        location: "querystring",
+                        locationName: "states",
+                        type: "list",
+                        member: {}
+                    },
+                    maxResults: {
+                        location: "querystring",
+                        locationName: "maxResults",
+                        type: "integer"
+                    },
+                    nextToken: {
+                        location: "querystring",
+                        locationName: "nextToken"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    virtualClusters: {
+                        type: "list",
+                        member: {
+                            shape: "S1o"
+                        }
+                    },
+                    nextToken: {}
+                }
+            }
+        },
+        StartJobRun: {
+            http: {
+                requestUri: "/virtualclusters/{virtualClusterId}/jobruns"
+            },
+            input: {
+                type: "structure",
+                required: [ "virtualClusterId", "clientToken", "executionRoleArn", "releaseLabel", "jobDriver" ],
+                members: {
+                    name: {},
+                    virtualClusterId: {
+                        location: "uri",
+                        locationName: "virtualClusterId"
+                    },
+                    clientToken: {
+                        idempotencyToken: true
+                    },
+                    executionRoleArn: {},
+                    releaseLabel: {},
+                    jobDriver: {
+                        shape: "S18"
+                    },
+                    configurationOverrides: {
+                        shape: "Sa"
+                    },
+                    tags: {
+                        shape: "Sn"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    id: {},
+                    name: {},
+                    arn: {},
+                    virtualClusterId: {}
+                }
+            }
+        },
+        TagResource: {
+            http: {
+                requestUri: "/tags/{resourceArn}"
+            },
+            input: {
+                type: "structure",
+                required: [ "resourceArn", "tags" ],
+                members: {
+                    resourceArn: {
+                        location: "uri",
+                        locationName: "resourceArn"
+                    },
+                    tags: {
+                        shape: "Sn"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {}
+            }
+        },
+        UntagResource: {
+            http: {
+                method: "DELETE",
+                requestUri: "/tags/{resourceArn}"
+            },
+            input: {
+                type: "structure",
+                required: [ "resourceArn", "tagKeys" ],
+                members: {
+                    resourceArn: {
+                        location: "uri",
+                        locationName: "resourceArn"
+                    },
+                    tagKeys: {
+                        location: "querystring",
+                        locationName: "tagKeys",
+                        type: "list",
+                        member: {}
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {}
+            }
+        }
+    },
+    shapes: {
+        Sa: {
+            type: "structure",
+            members: {
+                applicationConfiguration: {
+                    shape: "Sb"
+                },
+                monitoringConfiguration: {
+                    type: "structure",
+                    members: {
+                        persistentAppUI: {},
+                        cloudWatchMonitoringConfiguration: {
+                            type: "structure",
+                            required: [ "logGroupName" ],
+                            members: {
+                                logGroupName: {},
+                                logStreamNamePrefix: {}
+                            }
+                        },
+                        s3MonitoringConfiguration: {
+                            type: "structure",
+                            required: [ "logUri" ],
+                            members: {
+                                logUri: {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        Sb: {
+            type: "list",
+            member: {
+                type: "structure",
+                required: [ "classification" ],
+                members: {
+                    classification: {},
+                    properties: {
+                        type: "map",
+                        key: {},
+                        value: {},
+                        sensitive: true
+                    },
+                    configurations: {
+                        shape: "Sb"
+                    }
+                }
+            }
+        },
+        Sn: {
+            type: "map",
+            key: {},
+            value: {}
+        },
+        St: {
+            type: "structure",
+            required: [ "type", "id" ],
+            members: {
+                type: {},
+                id: {},
+                info: {
+                    type: "structure",
+                    members: {
+                        eksInfo: {
+                            type: "structure",
+                            members: {
+                                namespace: {}
+                            }
+                        }
+                    },
+                    union: true
+                }
+            }
+        },
+        S15: {
+            type: "structure",
+            members: {
+                id: {},
+                name: {},
+                virtualClusterId: {},
+                arn: {},
+                state: {},
+                clientToken: {},
+                executionRoleArn: {},
+                releaseLabel: {},
+                configurationOverrides: {
+                    shape: "Sa"
+                },
+                jobDriver: {
+                    shape: "S18"
+                },
+                createdAt: {
+                    shape: "S1e"
+                },
+                createdBy: {},
+                finishedAt: {
+                    shape: "S1e"
+                },
+                stateDetails: {},
+                failureReason: {},
+                tags: {
+                    shape: "Sn"
+                }
+            }
+        },
+        S18: {
+            type: "structure",
+            members: {
+                sparkSubmitJobDriver: {
+                    type: "structure",
+                    required: [ "entryPoint" ],
+                    members: {
+                        entryPoint: {
+                            type: "string",
+                            sensitive: true
+                        },
+                        entryPointArguments: {
+                            type: "list",
+                            member: {
+                                type: "string",
+                                sensitive: true
+                            }
+                        },
+                        sparkSubmitParameters: {
+                            type: "string",
+                            sensitive: true
+                        }
+                    }
+                }
+            }
+        },
+        S1e: {
+            type: "timestamp",
+            timestampFormat: "iso8601"
+        },
+        S1j: {
+            type: "structure",
+            members: {
+                id: {},
+                name: {},
+                arn: {},
+                virtualClusterId: {},
+                type: {},
+                state: {},
+                releaseLabel: {},
+                executionRoleArn: {},
+                certificateArn: {},
+                configurationOverrides: {
+                    shape: "Sa"
+                },
+                serverUrl: {},
+                createdAt: {
+                    shape: "S1e"
+                },
+                securityGroup: {},
+                subnetIds: {
+                    type: "list",
+                    member: {}
+                },
+                tags: {
+                    shape: "Sn"
+                }
+            }
+        },
+        S1o: {
+            type: "structure",
+            members: {
+                id: {},
+                name: {},
+                arn: {},
+                state: {},
+                containerProvider: {
+                    shape: "St"
+                },
+                createdAt: {
+                    shape: "S1e"
+                },
+                tags: {
+                    shape: "Sn"
+                }
+            }
+        }
+    },
+    paginators: {
+        ListJobRuns: {
+            input_token: "nextToken",
+            output_token: "nextToken",
+            limit_key: "maxResults",
+            result_key: "jobRuns"
+        },
+        ListManagedEndpoints: {
+            input_token: "nextToken",
+            output_token: "nextToken",
+            limit_key: "maxResults",
+            result_key: "endpoints"
+        },
+        ListVirtualClusters: {
+            input_token: "nextToken",
+            output_token: "nextToken",
+            limit_key: "maxResults",
+            result_key: "virtualClusters"
+        }
+    }
+};
+
+AWS.apiLoader.services["healthlake"] = {};
+
+AWS.HealthLake = AWS.Service.defineService("healthlake", [ "2017-07-01" ]);
+
+AWS.apiLoader.services["healthlake"]["2017-07-01"] = {
+    version: "2.0",
+    metadata: {
+        apiVersion: "2017-07-01",
+        endpointPrefix: "healthlake",
+        jsonVersion: "1.0",
+        protocol: "json",
+        serviceAbbreviation: "HealthLake",
+        serviceFullName: "Amazon HealthLake",
+        serviceId: "HealthLake",
+        signatureVersion: "v4",
+        signingName: "healthlake",
+        targetPrefix: "HealthLake",
+        uid: "healthlake-2017-07-01"
+    },
+    operations: {
+        CreateFHIRDatastore: {
+            input: {
+                type: "structure",
+                required: [ "DatastoreTypeVersion" ],
+                members: {
+                    DatastoreName: {},
+                    DatastoreTypeVersion: {},
+                    PreloadDataConfig: {
+                        shape: "S4"
+                    },
+                    ClientToken: {
+                        idempotencyToken: true
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "DatastoreId", "DatastoreArn", "DatastoreStatus", "DatastoreEndpoint" ],
+                members: {
+                    DatastoreId: {},
+                    DatastoreArn: {},
+                    DatastoreStatus: {},
+                    DatastoreEndpoint: {}
+                }
+            }
+        },
+        DeleteFHIRDatastore: {
+            input: {
+                type: "structure",
+                members: {
+                    DatastoreId: {}
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "DatastoreId", "DatastoreArn", "DatastoreStatus", "DatastoreEndpoint" ],
+                members: {
+                    DatastoreId: {},
+                    DatastoreArn: {},
+                    DatastoreStatus: {},
+                    DatastoreEndpoint: {}
+                }
+            }
+        },
+        DescribeFHIRDatastore: {
+            input: {
+                type: "structure",
+                members: {
+                    DatastoreId: {}
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "DatastoreProperties" ],
+                members: {
+                    DatastoreProperties: {
+                        shape: "Sg"
+                    }
+                }
+            }
+        },
+        DescribeFHIRExportJob: {
+            input: {
+                type: "structure",
+                required: [ "DatastoreId", "JobId" ],
+                members: {
+                    DatastoreId: {},
+                    JobId: {}
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "ExportJobProperties" ],
+                members: {
+                    ExportJobProperties: {
+                        type: "structure",
+                        required: [ "JobId", "JobStatus", "SubmitTime", "DatastoreId", "OutputDataConfig" ],
+                        members: {
+                            JobId: {},
+                            JobName: {},
+                            JobStatus: {},
+                            SubmitTime: {
+                                type: "timestamp"
+                            },
+                            EndTime: {
+                                type: "timestamp"
+                            },
+                            DatastoreId: {},
+                            OutputDataConfig: {
+                                shape: "Sp"
+                            },
+                            DataAccessRoleArn: {},
+                            Message: {}
+                        }
+                    }
+                }
+            }
+        },
+        DescribeFHIRImportJob: {
+            input: {
+                type: "structure",
+                required: [ "DatastoreId", "JobId" ],
+                members: {
+                    DatastoreId: {},
+                    JobId: {}
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "ImportJobProperties" ],
+                members: {
+                    ImportJobProperties: {
+                        type: "structure",
+                        required: [ "JobId", "JobStatus", "SubmitTime", "DatastoreId", "InputDataConfig" ],
+                        members: {
+                            JobId: {},
+                            JobName: {},
+                            JobStatus: {},
+                            SubmitTime: {
+                                type: "timestamp"
+                            },
+                            EndTime: {
+                                type: "timestamp"
+                            },
+                            DatastoreId: {},
+                            InputDataConfig: {
+                                shape: "Sw"
+                            },
+                            DataAccessRoleArn: {},
+                            Message: {}
+                        }
+                    }
+                }
+            }
+        },
+        ListFHIRDatastores: {
+            input: {
+                type: "structure",
+                members: {
+                    Filter: {
+                        type: "structure",
+                        members: {
+                            DatastoreName: {},
+                            DatastoreStatus: {},
+                            CreatedBefore: {
+                                type: "timestamp"
+                            },
+                            CreatedAfter: {
+                                type: "timestamp"
+                            }
+                        }
+                    },
+                    NextToken: {},
+                    MaxResults: {
+                        type: "integer"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "DatastorePropertiesList" ],
+                members: {
+                    DatastorePropertiesList: {
+                        type: "list",
+                        member: {
+                            shape: "Sg"
+                        }
+                    },
+                    NextToken: {}
+                }
+            }
+        },
+        StartFHIRExportJob: {
+            input: {
+                type: "structure",
+                required: [ "OutputDataConfig", "DatastoreId", "DataAccessRoleArn", "ClientToken" ],
+                members: {
+                    JobName: {},
+                    OutputDataConfig: {
+                        shape: "Sp"
+                    },
+                    DatastoreId: {},
+                    DataAccessRoleArn: {},
+                    ClientToken: {
+                        idempotencyToken: true
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "JobId", "JobStatus" ],
+                members: {
+                    JobId: {},
+                    JobStatus: {},
+                    DatastoreId: {}
+                }
+            }
+        },
+        StartFHIRImportJob: {
+            input: {
+                type: "structure",
+                required: [ "InputDataConfig", "DatastoreId", "DataAccessRoleArn", "ClientToken" ],
+                members: {
+                    JobName: {},
+                    InputDataConfig: {
+                        shape: "Sw"
+                    },
+                    DatastoreId: {},
+                    DataAccessRoleArn: {},
+                    ClientToken: {
+                        idempotencyToken: true
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "JobId", "JobStatus" ],
+                members: {
+                    JobId: {},
+                    JobStatus: {},
+                    DatastoreId: {}
+                }
+            }
+        }
+    },
+    shapes: {
+        S4: {
+            type: "structure",
+            required: [ "PreloadDataType" ],
+            members: {
+                PreloadDataType: {}
+            }
+        },
+        Sg: {
+            type: "structure",
+            required: [ "DatastoreId", "DatastoreArn", "DatastoreStatus", "DatastoreTypeVersion", "DatastoreEndpoint" ],
+            members: {
+                DatastoreId: {},
+                DatastoreArn: {},
+                DatastoreName: {},
+                DatastoreStatus: {},
+                CreatedAt: {
+                    type: "timestamp"
+                },
+                DatastoreTypeVersion: {},
+                DatastoreEndpoint: {},
+                PreloadDataConfig: {
+                    shape: "S4"
+                }
+            }
+        },
+        Sp: {
+            type: "structure",
+            members: {
+                S3Uri: {}
+            },
+            union: true
+        },
+        Sw: {
+            type: "structure",
+            members: {
+                S3Uri: {}
+            },
+            union: true
+        }
+    },
+    paginators: {
+        ListFHIRDatastores: {
+            input_token: "NextToken",
+            output_token: "NextToken",
+            limit_key: "MaxResults"
+        }
+    }
+};
+
+AWS.apiLoader.services["sagemakeredge"] = {};
+
+AWS.SagemakerEdge = AWS.Service.defineService("sagemakeredge", [ "2020-09-23" ]);
+
+AWS.apiLoader.services["sagemakeredge"]["2020-09-23"] = {
+    version: "2.0",
+    metadata: {
+        apiVersion: "2020-09-23",
+        endpointPrefix: "edge.sagemaker",
+        jsonVersion: "1.1",
+        protocol: "rest-json",
+        serviceFullName: "Amazon Sagemaker Edge Manager",
+        serviceId: "Sagemaker Edge",
+        signatureVersion: "v4",
+        signingName: "sagemaker",
+        uid: "sagemaker-edge-2020-09-23"
+    },
+    operations: {
+        GetDeviceRegistration: {
+            http: {
+                requestUri: "/GetDeviceRegistration"
+            },
+            input: {
+                type: "structure",
+                required: [ "DeviceName", "DeviceFleetName" ],
+                members: {
+                    DeviceName: {},
+                    DeviceFleetName: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    DeviceRegistration: {},
+                    CacheTTL: {}
+                }
+            }
+        },
+        SendHeartbeat: {
+            http: {
+                requestUri: "/SendHeartbeat"
+            },
+            input: {
+                type: "structure",
+                required: [ "AgentVersion", "DeviceName", "DeviceFleetName" ],
+                members: {
+                    AgentMetrics: {
+                        shape: "S8"
+                    },
+                    Models: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            members: {
+                                ModelName: {},
+                                ModelVersion: {},
+                                LatestSampleTime: {
+                                    type: "timestamp"
+                                },
+                                LatestInference: {
+                                    type: "timestamp"
+                                },
+                                ModelMetrics: {
+                                    shape: "S8"
+                                }
+                            }
+                        }
+                    },
+                    AgentVersion: {},
+                    DeviceName: {},
+                    DeviceFleetName: {}
+                }
+            }
+        }
+    },
+    shapes: {
+        S8: {
+            type: "list",
+            member: {
+                type: "structure",
+                members: {
+                    Dimension: {},
+                    MetricName: {},
+                    Value: {
+                        type: "double"
+                    },
+                    Timestamp: {
+                        type: "timestamp"
+                    }
+                }
+            }
+        }
+    },
+    paginators: {}
+};
+
+AWS.apiLoader.services["amp"] = {};
+
+AWS.Amp = AWS.Service.defineService("amp", [ "2020-08-01" ]);
+
+AWS.apiLoader.services["amp"]["2020-08-01"] = {
+    version: "2.0",
+    metadata: {
+        apiVersion: "2020-08-01",
+        endpointPrefix: "aps",
+        jsonVersion: "1.1",
+        protocol: "rest-json",
+        serviceFullName: "Amazon Prometheus Service",
+        serviceId: "amp",
+        signatureVersion: "v4",
+        signingName: "aps",
+        uid: "amp-2020-08-01"
+    },
+    operations: {
+        CreateWorkspace: {
+            http: {
+                requestUri: "/workspaces",
+                responseCode: 202
+            },
+            input: {
+                type: "structure",
+                members: {
+                    alias: {},
+                    clientToken: {
+                        idempotencyToken: true
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "arn", "status", "workspaceId" ],
+                members: {
+                    arn: {},
+                    status: {
+                        shape: "S6"
+                    },
+                    workspaceId: {}
+                }
+            },
+            idempotent: true
+        },
+        DeleteWorkspace: {
+            http: {
+                method: "DELETE",
+                requestUri: "/workspaces/{workspaceId}",
+                responseCode: 202
+            },
+            input: {
+                type: "structure",
+                required: [ "workspaceId" ],
+                members: {
+                    clientToken: {
+                        idempotencyToken: true,
+                        location: "querystring",
+                        locationName: "clientToken"
+                    },
+                    workspaceId: {
+                        location: "uri",
+                        locationName: "workspaceId"
+                    }
+                }
+            },
+            idempotent: true
+        },
+        DescribeWorkspace: {
+            http: {
+                method: "GET",
+                requestUri: "/workspaces/{workspaceId}",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                required: [ "workspaceId" ],
+                members: {
+                    workspaceId: {
+                        location: "uri",
+                        locationName: "workspaceId"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "workspace" ],
+                members: {
+                    workspace: {
+                        type: "structure",
+                        required: [ "arn", "createdAt", "status", "workspaceId" ],
+                        members: {
+                            alias: {},
+                            arn: {},
+                            createdAt: {
+                                type: "timestamp"
+                            },
+                            prometheusEndpoint: {},
+                            status: {
+                                shape: "S6"
+                            },
+                            workspaceId: {}
+                        }
+                    }
+                }
+            }
+        },
+        ListWorkspaces: {
+            http: {
+                method: "GET",
+                requestUri: "/workspaces",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                members: {
+                    alias: {
+                        location: "querystring",
+                        locationName: "alias"
+                    },
+                    maxResults: {
+                        location: "querystring",
+                        locationName: "maxResults",
+                        type: "integer"
+                    },
+                    nextToken: {
+                        location: "querystring",
+                        locationName: "nextToken"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "workspaces" ],
+                members: {
+                    nextToken: {},
+                    workspaces: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            required: [ "arn", "createdAt", "status", "workspaceId" ],
+                            members: {
+                                alias: {},
+                                arn: {},
+                                createdAt: {
+                                    type: "timestamp"
+                                },
+                                status: {
+                                    shape: "S6"
+                                },
+                                workspaceId: {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        UpdateWorkspaceAlias: {
+            http: {
+                requestUri: "/workspaces/{workspaceId}/alias",
+                responseCode: 204
+            },
+            input: {
+                type: "structure",
+                required: [ "workspaceId" ],
+                members: {
+                    alias: {},
+                    clientToken: {
+                        idempotencyToken: true
+                    },
+                    workspaceId: {
+                        location: "uri",
+                        locationName: "workspaceId"
+                    }
+                }
+            },
+            idempotent: true
+        }
+    },
+    shapes: {
+        S6: {
+            type: "structure",
+            required: [ "statusCode" ],
+            members: {
+                statusCode: {}
+            }
+        }
+    },
+    paginators: {
+        ListWorkspaces: {
+            input_token: "nextToken",
+            output_token: "nextToken",
+            limit_key: "maxResults",
+            result_key: "workspaces"
+        }
+    }
+};
+
+AWS.apiLoader.services["greengrassv2"] = {};
+
+AWS.GreengrassV2 = AWS.Service.defineService("greengrassv2", [ "2020-11-30" ]);
+
+AWS.apiLoader.services["greengrassv2"]["2020-11-30"] = {
+    version: "2.0",
+    metadata: {
+        apiVersion: "2020-11-30",
+        endpointPrefix: "greengrass",
+        jsonVersion: "1.1",
+        protocol: "rest-json",
+        serviceAbbreviation: "AWS GreengrassV2",
+        serviceFullName: "AWS IoT Greengrass V2",
+        serviceId: "GreengrassV2",
+        signatureVersion: "v4",
+        uid: "greengrassv2-2020-11-30"
+    },
+    operations: {
+        CancelDeployment: {
+            http: {
+                requestUri: "/greengrass/v2/deployments/{deploymentId}/cancel"
+            },
+            input: {
+                type: "structure",
+                required: [ "deploymentId" ],
+                members: {
+                    deploymentId: {
+                        location: "uri",
+                        locationName: "deploymentId"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    message: {}
+                }
+            }
+        },
+        CreateComponentVersion: {
+            http: {
+                requestUri: "/greengrass/v2/createComponentVersion",
+                responseCode: 201
+            },
+            input: {
+                type: "structure",
+                members: {
+                    inlineRecipe: {
+                        type: "blob"
+                    },
+                    lambdaFunction: {
+                        type: "structure",
+                        required: [ "lambdaArn" ],
+                        members: {
+                            lambdaArn: {},
+                            componentName: {},
+                            componentVersion: {},
+                            componentPlatforms: {
+                                shape: "Sa"
+                            },
+                            componentDependencies: {
+                                type: "map",
+                                key: {},
+                                value: {
+                                    type: "structure",
+                                    members: {
+                                        versionRequirement: {},
+                                        dependencyType: {}
+                                    }
+                                }
+                            },
+                            componentLambdaParameters: {
+                                type: "structure",
+                                members: {
+                                    eventSources: {
+                                        type: "list",
+                                        member: {
+                                            type: "structure",
+                                            required: [ "topic", "type" ],
+                                            members: {
+                                                topic: {},
+                                                type: {}
+                                            }
+                                        }
+                                    },
+                                    maxQueueSize: {
+                                        type: "integer"
+                                    },
+                                    maxInstancesCount: {
+                                        type: "integer"
+                                    },
+                                    maxIdleTimeInSeconds: {
+                                        type: "integer"
+                                    },
+                                    timeoutInSeconds: {
+                                        type: "integer"
+                                    },
+                                    statusTimeoutInSeconds: {
+                                        type: "integer"
+                                    },
+                                    pinned: {
+                                        type: "boolean"
+                                    },
+                                    inputPayloadEncodingType: {},
+                                    execArgs: {
+                                        type: "list",
+                                        member: {}
+                                    },
+                                    environmentVariables: {
+                                        type: "map",
+                                        key: {},
+                                        value: {}
+                                    },
+                                    linuxProcessParams: {
+                                        type: "structure",
+                                        members: {
+                                            isolationMode: {},
+                                            containerParams: {
+                                                type: "structure",
+                                                members: {
+                                                    memorySizeInKB: {
+                                                        type: "integer"
+                                                    },
+                                                    mountROSysfs: {
+                                                        type: "boolean"
+                                                    },
+                                                    volumes: {
+                                                        type: "list",
+                                                        member: {
+                                                            type: "structure",
+                                                            required: [ "sourcePath", "destinationPath" ],
+                                                            members: {
+                                                                sourcePath: {},
+                                                                destinationPath: {},
+                                                                permission: {},
+                                                                addGroupOwner: {
+                                                                    type: "boolean"
+                                                                }
+                                                            }
+                                                        }
+                                                    },
+                                                    devices: {
+                                                        type: "list",
+                                                        member: {
+                                                            type: "structure",
+                                                            required: [ "path" ],
+                                                            members: {
+                                                                path: {},
+                                                                permission: {},
+                                                                addGroupOwner: {
+                                                                    type: "boolean"
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    tags: {
+                        shape: "S11"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "componentName", "componentVersion", "creationTimestamp", "status" ],
+                members: {
+                    arn: {},
+                    componentName: {},
+                    componentVersion: {},
+                    creationTimestamp: {
+                        type: "timestamp"
+                    },
+                    status: {
+                        shape: "S17"
+                    }
+                }
+            }
+        },
+        CreateDeployment: {
+            http: {
+                requestUri: "/greengrass/v2/deployments",
+                responseCode: 201
+            },
+            input: {
+                type: "structure",
+                required: [ "targetArn" ],
+                members: {
+                    targetArn: {},
+                    deploymentName: {},
+                    components: {
+                        shape: "S1c"
+                    },
+                    iotJobConfiguration: {
+                        shape: "S1j"
+                    },
+                    deploymentPolicies: {
+                        shape: "S20"
+                    },
+                    tags: {
+                        shape: "S11"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    deploymentId: {},
+                    iotJobId: {},
+                    iotJobArn: {}
+                }
+            }
+        },
+        DeleteComponent: {
+            http: {
+                method: "DELETE",
+                requestUri: "/greengrass/v2/components/{arn}",
+                responseCode: 204
+            },
+            input: {
+                type: "structure",
+                required: [ "arn" ],
+                members: {
+                    arn: {
+                        location: "uri",
+                        locationName: "arn"
+                    }
+                }
+            }
+        },
+        DeleteCoreDevice: {
+            http: {
+                method: "DELETE",
+                requestUri: "/greengrass/v2/coreDevices/{coreDeviceThingName}",
+                responseCode: 204
+            },
+            input: {
+                type: "structure",
+                required: [ "coreDeviceThingName" ],
+                members: {
+                    coreDeviceThingName: {
+                        location: "uri",
+                        locationName: "coreDeviceThingName"
+                    }
+                }
+            }
+        },
+        DescribeComponent: {
+            http: {
+                method: "GET",
+                requestUri: "/greengrass/v2/components/{arn}/metadata"
+            },
+            input: {
+                type: "structure",
+                required: [ "arn" ],
+                members: {
+                    arn: {
+                        location: "uri",
+                        locationName: "arn"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    arn: {},
+                    componentName: {},
+                    componentVersion: {},
+                    creationTimestamp: {
+                        type: "timestamp"
+                    },
+                    publisher: {},
+                    description: {},
+                    status: {
+                        shape: "S17"
+                    },
+                    platforms: {
+                        shape: "Sa"
+                    },
+                    tags: {
+                        shape: "S11"
+                    }
+                }
+            }
+        },
+        GetComponent: {
+            http: {
+                method: "GET",
+                requestUri: "/greengrass/v2/components/{arn}"
+            },
+            input: {
+                type: "structure",
+                required: [ "arn" ],
+                members: {
+                    recipeOutputFormat: {
+                        location: "querystring",
+                        locationName: "recipeOutputFormat"
+                    },
+                    arn: {
+                        location: "uri",
+                        locationName: "arn"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "recipeOutputFormat", "recipe" ],
+                members: {
+                    recipeOutputFormat: {},
+                    recipe: {
+                        type: "blob"
+                    },
+                    tags: {
+                        shape: "S11"
+                    }
+                }
+            }
+        },
+        GetComponentVersionArtifact: {
+            http: {
+                method: "GET",
+                requestUri: "/greengrass/v2/components/{arn}/artifacts/{artifactName+}"
+            },
+            input: {
+                type: "structure",
+                required: [ "arn", "artifactName" ],
+                members: {
+                    arn: {
+                        location: "uri",
+                        locationName: "arn"
+                    },
+                    artifactName: {
+                        location: "uri",
+                        locationName: "artifactName"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "preSignedUrl" ],
+                members: {
+                    preSignedUrl: {}
+                }
+            }
+        },
+        GetCoreDevice: {
+            http: {
+                method: "GET",
+                requestUri: "/greengrass/v2/coreDevices/{coreDeviceThingName}"
+            },
+            input: {
+                type: "structure",
+                required: [ "coreDeviceThingName" ],
+                members: {
+                    coreDeviceThingName: {
+                        location: "uri",
+                        locationName: "coreDeviceThingName"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    coreDeviceThingName: {},
+                    coreVersion: {},
+                    platform: {},
+                    architecture: {},
+                    status: {},
+                    lastStatusUpdateTimestamp: {
+                        type: "timestamp"
+                    },
+                    tags: {
+                        shape: "S11"
+                    }
+                }
+            }
+        },
+        GetDeployment: {
+            http: {
+                method: "GET",
+                requestUri: "/greengrass/v2/deployments/{deploymentId}"
+            },
+            input: {
+                type: "structure",
+                required: [ "deploymentId" ],
+                members: {
+                    deploymentId: {
+                        location: "uri",
+                        locationName: "deploymentId"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    targetArn: {},
+                    revisionId: {},
+                    deploymentId: {},
+                    deploymentName: {},
+                    deploymentStatus: {},
+                    iotJobId: {},
+                    iotJobArn: {},
+                    components: {
+                        shape: "S1c"
+                    },
+                    deploymentPolicies: {
+                        shape: "S20"
+                    },
+                    iotJobConfiguration: {
+                        shape: "S1j"
+                    },
+                    creationTimestamp: {
+                        type: "timestamp"
+                    },
+                    isLatestForTarget: {
+                        type: "boolean"
+                    },
+                    tags: {
+                        shape: "S11"
+                    }
+                }
+            }
+        },
+        ListComponentVersions: {
+            http: {
+                method: "GET",
+                requestUri: "/greengrass/v2/components/{arn}/versions"
+            },
+            input: {
+                type: "structure",
+                required: [ "arn" ],
+                members: {
+                    arn: {
+                        location: "uri",
+                        locationName: "arn"
+                    },
+                    maxResults: {
+                        location: "querystring",
+                        locationName: "maxResults",
+                        type: "integer"
+                    },
+                    nextToken: {
+                        location: "querystring",
+                        locationName: "nextToken"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    componentVersions: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            members: {
+                                componentName: {},
+                                componentVersion: {},
+                                arn: {}
+                            }
+                        }
+                    },
+                    nextToken: {}
+                }
+            }
+        },
+        ListComponents: {
+            http: {
+                method: "GET",
+                requestUri: "/greengrass/v2/components"
+            },
+            input: {
+                type: "structure",
+                members: {
+                    scope: {
+                        location: "querystring",
+                        locationName: "scope"
+                    },
+                    maxResults: {
+                        location: "querystring",
+                        locationName: "maxResults",
+                        type: "integer"
+                    },
+                    nextToken: {
+                        location: "querystring",
+                        locationName: "nextToken"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    components: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            members: {
+                                arn: {},
+                                componentName: {},
+                                latestVersion: {
+                                    type: "structure",
+                                    members: {
+                                        arn: {},
+                                        componentVersion: {},
+                                        creationTimestamp: {
+                                            type: "timestamp"
+                                        },
+                                        description: {},
+                                        publisher: {},
+                                        platforms: {
+                                            shape: "Sa"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    nextToken: {}
+                }
+            }
+        },
+        ListCoreDevices: {
+            http: {
+                method: "GET",
+                requestUri: "/greengrass/v2/coreDevices"
+            },
+            input: {
+                type: "structure",
+                members: {
+                    thingGroupArn: {
+                        location: "querystring",
+                        locationName: "thingGroupArn"
+                    },
+                    status: {
+                        location: "querystring",
+                        locationName: "status"
+                    },
+                    maxResults: {
+                        location: "querystring",
+                        locationName: "maxResults",
+                        type: "integer"
+                    },
+                    nextToken: {
+                        location: "querystring",
+                        locationName: "nextToken"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    coreDevices: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            members: {
+                                coreDeviceThingName: {},
+                                status: {},
+                                lastStatusUpdateTimestamp: {
+                                    type: "timestamp"
+                                }
+                            }
+                        }
+                    },
+                    nextToken: {}
+                }
+            }
+        },
+        ListDeployments: {
+            http: {
+                method: "GET",
+                requestUri: "/greengrass/v2/deployments"
+            },
+            input: {
+                type: "structure",
+                members: {
+                    targetArn: {
+                        location: "querystring",
+                        locationName: "targetArn"
+                    },
+                    historyFilter: {
+                        location: "querystring",
+                        locationName: "historyFilter"
+                    },
+                    maxResults: {
+                        location: "querystring",
+                        locationName: "maxResults",
+                        type: "integer"
+                    },
+                    nextToken: {
+                        location: "querystring",
+                        locationName: "nextToken"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    deployments: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            members: {
+                                targetArn: {},
+                                revisionId: {},
+                                deploymentId: {},
+                                deploymentName: {},
+                                creationTimestamp: {
+                                    type: "timestamp"
+                                },
+                                deploymentStatus: {},
+                                isLatestForTarget: {
+                                    type: "boolean"
+                                }
+                            }
+                        }
+                    },
+                    nextToken: {}
+                }
+            }
+        },
+        ListEffectiveDeployments: {
+            http: {
+                method: "GET",
+                requestUri: "/greengrass/v2/coreDevices/{coreDeviceThingName}/effectiveDeployments"
+            },
+            input: {
+                type: "structure",
+                required: [ "coreDeviceThingName" ],
+                members: {
+                    coreDeviceThingName: {
+                        location: "uri",
+                        locationName: "coreDeviceThingName"
+                    },
+                    maxResults: {
+                        location: "querystring",
+                        locationName: "maxResults",
+                        type: "integer"
+                    },
+                    nextToken: {
+                        location: "querystring",
+                        locationName: "nextToken"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    effectiveDeployments: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            required: [ "deploymentId", "deploymentName", "targetArn", "coreDeviceExecutionStatus", "creationTimestamp", "modifiedTimestamp" ],
+                            members: {
+                                deploymentId: {},
+                                deploymentName: {},
+                                iotJobId: {},
+                                iotJobArn: {},
+                                description: {},
+                                targetArn: {},
+                                coreDeviceExecutionStatus: {},
+                                reason: {},
+                                creationTimestamp: {
+                                    type: "timestamp"
+                                },
+                                modifiedTimestamp: {
+                                    type: "timestamp"
+                                }
+                            }
+                        }
+                    },
+                    nextToken: {}
+                }
+            }
+        },
+        ListInstalledComponents: {
+            http: {
+                method: "GET",
+                requestUri: "/greengrass/v2/coreDevices/{coreDeviceThingName}/installedComponents"
+            },
+            input: {
+                type: "structure",
+                required: [ "coreDeviceThingName" ],
+                members: {
+                    coreDeviceThingName: {
+                        location: "uri",
+                        locationName: "coreDeviceThingName"
+                    },
+                    maxResults: {
+                        location: "querystring",
+                        locationName: "maxResults",
+                        type: "integer"
+                    },
+                    nextToken: {
+                        location: "querystring",
+                        locationName: "nextToken"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    installedComponents: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            members: {
+                                componentName: {},
+                                componentVersion: {},
+                                lifecycleState: {},
+                                lifecycleStateDetails: {},
+                                isRoot: {
+                                    type: "boolean"
+                                }
+                            }
+                        }
+                    },
+                    nextToken: {}
+                }
+            }
+        },
+        ListTagsForResource: {
+            http: {
+                method: "GET",
+                requestUri: "/tags/{resourceArn}"
+            },
+            input: {
+                type: "structure",
+                required: [ "resourceArn" ],
+                members: {
+                    resourceArn: {
+                        location: "uri",
+                        locationName: "resourceArn"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    tags: {
+                        shape: "S11"
+                    }
+                }
+            }
+        },
+        ResolveComponentCandidates: {
+            http: {
+                requestUri: "/greengrass/v2/resolveComponentCandidates"
+            },
+            input: {
+                type: "structure",
+                required: [ "platform", "componentCandidates" ],
+                members: {
+                    platform: {
+                        shape: "Sb"
+                    },
+                    componentCandidates: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            members: {
+                                componentName: {},
+                                componentVersion: {},
+                                versionRequirements: {
+                                    type: "map",
+                                    key: {},
+                                    value: {}
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    resolvedComponentVersions: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            members: {
+                                arn: {},
+                                componentName: {},
+                                componentVersion: {},
+                                recipe: {
+                                    type: "blob"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        TagResource: {
+            http: {
+                requestUri: "/tags/{resourceArn}"
+            },
+            input: {
+                type: "structure",
+                required: [ "resourceArn", "tags" ],
+                members: {
+                    resourceArn: {
+                        location: "uri",
+                        locationName: "resourceArn"
+                    },
+                    tags: {
+                        shape: "S11"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {}
+            }
+        },
+        UntagResource: {
+            http: {
+                method: "DELETE",
+                requestUri: "/tags/{resourceArn}"
+            },
+            input: {
+                type: "structure",
+                required: [ "resourceArn", "tagKeys" ],
+                members: {
+                    resourceArn: {
+                        location: "uri",
+                        locationName: "resourceArn"
+                    },
+                    tagKeys: {
+                        location: "querystring",
+                        locationName: "tagKeys",
+                        type: "list",
+                        member: {}
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {}
+            }
+        }
+    },
+    shapes: {
+        Sa: {
+            type: "list",
+            member: {
+                shape: "Sb"
+            }
+        },
+        Sb: {
+            type: "structure",
+            members: {
+                name: {},
+                attributes: {
+                    type: "map",
+                    key: {},
+                    value: {}
+                }
+            }
+        },
+        S11: {
+            type: "map",
+            key: {},
+            value: {}
+        },
+        S17: {
+            type: "structure",
+            members: {
+                componentState: {},
+                message: {},
+                errors: {
+                    type: "map",
+                    key: {},
+                    value: {}
+                }
+            }
+        },
+        S1c: {
+            type: "map",
+            key: {},
+            value: {
+                type: "structure",
+                members: {
+                    componentVersion: {},
+                    configurationUpdate: {
+                        type: "structure",
+                        members: {
+                            merge: {},
+                            reset: {
+                                type: "list",
+                                member: {}
+                            }
+                        }
+                    },
+                    runWith: {
+                        type: "structure",
+                        members: {
+                            posixUser: {}
+                        }
+                    }
+                }
+            }
+        },
+        S1j: {
+            type: "structure",
+            members: {
+                jobExecutionsRolloutConfig: {
+                    type: "structure",
+                    members: {
+                        exponentialRate: {
+                            type: "structure",
+                            required: [ "baseRatePerMinute", "incrementFactor", "rateIncreaseCriteria" ],
+                            members: {
+                                baseRatePerMinute: {
+                                    type: "integer"
+                                },
+                                incrementFactor: {
+                                    type: "double"
+                                },
+                                rateIncreaseCriteria: {
+                                    type: "structure",
+                                    members: {
+                                        numberOfNotifiedThings: {
+                                            type: "integer"
+                                        },
+                                        numberOfSucceededThings: {
+                                            type: "integer"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        maximumPerMinute: {
+                            type: "integer"
+                        }
+                    }
+                },
+                abortConfig: {
+                    type: "structure",
+                    required: [ "criteriaList" ],
+                    members: {
+                        criteriaList: {
+                            type: "list",
+                            member: {
+                                type: "structure",
+                                required: [ "failureType", "action", "thresholdPercentage", "minNumberOfExecutedThings" ],
+                                members: {
+                                    failureType: {},
+                                    action: {},
+                                    thresholdPercentage: {
+                                        type: "double"
+                                    },
+                                    minNumberOfExecutedThings: {
+                                        type: "integer"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                timeoutConfig: {
+                    type: "structure",
+                    members: {
+                        inProgressTimeoutInMinutes: {
+                            type: "long"
+                        }
+                    }
+                }
+            }
+        },
+        S20: {
+            type: "structure",
+            members: {
+                failureHandlingPolicy: {},
+                componentUpdatePolicy: {
+                    type: "structure",
+                    members: {
+                        timeoutInSeconds: {
+                            type: "integer"
+                        },
+                        action: {}
+                    }
+                },
+                configurationValidationPolicy: {
+                    type: "structure",
+                    members: {
+                        timeoutInSeconds: {
+                            type: "integer"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    paginators: {
+        ListComponentVersions: {
+            input_token: "nextToken",
+            output_token: "nextToken",
+            limit_key: "maxResults",
+            result_key: "componentVersions"
+        },
+        ListComponents: {
+            input_token: "nextToken",
+            output_token: "nextToken",
+            limit_key: "maxResults",
+            result_key: "components"
+        },
+        ListCoreDevices: {
+            input_token: "nextToken",
+            output_token: "nextToken",
+            limit_key: "maxResults",
+            result_key: "coreDevices"
+        },
+        ListDeployments: {
+            input_token: "nextToken",
+            output_token: "nextToken",
+            limit_key: "maxResults",
+            result_key: "deployments"
+        },
+        ListEffectiveDeployments: {
+            input_token: "nextToken",
+            output_token: "nextToken",
+            limit_key: "maxResults",
+            result_key: "effectiveDeployments"
+        },
+        ListInstalledComponents: {
+            input_token: "nextToken",
+            output_token: "nextToken",
+            limit_key: "maxResults",
+            result_key: "installedComponents"
+        }
+    }
+};
+
+AWS.apiLoader.services["iotdeviceadvisor"] = {};
+
+AWS.IotDeviceAdvisor = AWS.Service.defineService("iotdeviceadvisor", [ "2020-09-18" ]);
+
+AWS.apiLoader.services["iotdeviceadvisor"]["2020-09-18"] = {
+    version: "2.0",
+    metadata: {
+        apiVersion: "2020-09-18",
+        endpointPrefix: "api.iotdeviceadvisor",
+        jsonVersion: "1.1",
+        protocol: "rest-json",
+        serviceAbbreviation: "AWSIoTDeviceAdvisor",
+        serviceFullName: "AWS IoT Core Device Advisor",
+        serviceId: "IotDeviceAdvisor",
+        signatureVersion: "v4",
+        signingName: "iotdeviceadvisor",
+        uid: "iotdeviceadvisor-2020-09-18"
+    },
+    operations: {
+        CreateSuiteDefinition: {
+            http: {
+                requestUri: "/suiteDefinitions"
+            },
+            input: {
+                type: "structure",
+                members: {
+                    suiteDefinitionConfiguration: {
+                        shape: "S2"
+                    },
+                    tags: {
+                        shape: "S9"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    suiteDefinitionId: {},
+                    suiteDefinitionArn: {},
+                    suiteDefinitionName: {},
+                    createdAt: {
+                        type: "timestamp"
+                    }
+                }
+            }
+        },
+        DeleteSuiteDefinition: {
+            http: {
+                method: "DELETE",
+                requestUri: "/suiteDefinitions/{suiteDefinitionId}"
+            },
+            input: {
+                type: "structure",
+                required: [ "suiteDefinitionId" ],
+                members: {
+                    suiteDefinitionId: {
+                        location: "uri",
+                        locationName: "suiteDefinitionId"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {}
+            }
+        },
+        GetSuiteDefinition: {
+            http: {
+                method: "GET",
+                requestUri: "/suiteDefinitions/{suiteDefinitionId}"
+            },
+            input: {
+                type: "structure",
+                required: [ "suiteDefinitionId" ],
+                members: {
+                    suiteDefinitionId: {
+                        location: "uri",
+                        locationName: "suiteDefinitionId"
+                    },
+                    suiteDefinitionVersion: {
+                        location: "querystring",
+                        locationName: "suiteDefinitionVersion"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    suiteDefinitionId: {},
+                    suiteDefinitionArn: {},
+                    suiteDefinitionVersion: {},
+                    latestVersion: {},
+                    suiteDefinitionConfiguration: {
+                        shape: "S2"
+                    },
+                    createdAt: {
+                        type: "timestamp"
+                    },
+                    lastModifiedAt: {
+                        type: "timestamp"
+                    },
+                    tags: {
+                        shape: "S9"
+                    }
+                }
+            }
+        },
+        GetSuiteRun: {
+            http: {
+                method: "GET",
+                requestUri: "/suiteDefinitions/{suiteDefinitionId}/suiteRuns/{suiteRunId}"
+            },
+            input: {
+                type: "structure",
+                required: [ "suiteDefinitionId", "suiteRunId" ],
+                members: {
+                    suiteDefinitionId: {
+                        location: "uri",
+                        locationName: "suiteDefinitionId"
+                    },
+                    suiteRunId: {
+                        location: "uri",
+                        locationName: "suiteRunId"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    suiteDefinitionId: {},
+                    suiteDefinitionVersion: {},
+                    suiteRunId: {},
+                    suiteRunArn: {},
+                    suiteRunConfiguration: {
+                        shape: "Sm"
+                    },
+                    testResult: {
+                        type: "structure",
+                        members: {
+                            groups: {
+                                type: "list",
+                                member: {
+                                    type: "structure",
+                                    members: {
+                                        groupId: {},
+                                        groupName: {},
+                                        tests: {
+                                            type: "list",
+                                            member: {
+                                                type: "structure",
+                                                members: {
+                                                    testCaseRunId: {},
+                                                    testCaseDefinitionId: {},
+                                                    testCaseDefinitionName: {},
+                                                    status: {},
+                                                    startTime: {
+                                                        type: "timestamp"
+                                                    },
+                                                    endTime: {
+                                                        type: "timestamp"
+                                                    },
+                                                    logUrl: {},
+                                                    warnings: {},
+                                                    failure: {}
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    startTime: {
+                        type: "timestamp"
+                    },
+                    endTime: {
+                        type: "timestamp"
+                    },
+                    status: {},
+                    errorReason: {},
+                    tags: {
+                        shape: "S9"
+                    }
+                }
+            }
+        },
+        GetSuiteRunReport: {
+            http: {
+                method: "GET",
+                requestUri: "/suiteDefinitions/{suiteDefinitionId}/suiteRuns/{suiteRunId}/report"
+            },
+            input: {
+                type: "structure",
+                required: [ "suiteDefinitionId", "suiteRunId" ],
+                members: {
+                    suiteDefinitionId: {
+                        location: "uri",
+                        locationName: "suiteDefinitionId"
+                    },
+                    suiteRunId: {
+                        location: "uri",
+                        locationName: "suiteRunId"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    qualificationReportDownloadUrl: {}
+                }
+            }
+        },
+        ListSuiteDefinitions: {
+            http: {
+                method: "GET",
+                requestUri: "/suiteDefinitions"
+            },
+            input: {
+                type: "structure",
+                members: {
+                    maxResults: {
+                        location: "querystring",
+                        locationName: "maxResults",
+                        type: "integer"
+                    },
+                    nextToken: {
+                        location: "querystring",
+                        locationName: "nextToken"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    suiteDefinitionInformationList: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            members: {
+                                suiteDefinitionId: {},
+                                suiteDefinitionName: {},
+                                defaultDevices: {
+                                    shape: "S4"
+                                },
+                                intendedForQualification: {
+                                    type: "boolean"
+                                },
+                                createdAt: {
+                                    type: "timestamp"
+                                }
+                            }
+                        }
+                    },
+                    nextToken: {}
+                }
+            }
+        },
+        ListSuiteRuns: {
+            http: {
+                method: "GET",
+                requestUri: "/suiteRuns"
+            },
+            input: {
+                type: "structure",
+                members: {
+                    suiteDefinitionId: {
+                        location: "querystring",
+                        locationName: "suiteDefinitionId"
+                    },
+                    suiteDefinitionVersion: {
+                        location: "querystring",
+                        locationName: "suiteDefinitionVersion"
+                    },
+                    maxResults: {
+                        location: "querystring",
+                        locationName: "maxResults",
+                        type: "integer"
+                    },
+                    nextToken: {
+                        location: "querystring",
+                        locationName: "nextToken"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    suiteRunsList: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            members: {
+                                suiteDefinitionId: {},
+                                suiteDefinitionVersion: {},
+                                suiteDefinitionName: {},
+                                suiteRunId: {},
+                                createdAt: {
+                                    type: "timestamp"
+                                },
+                                startedAt: {
+                                    type: "timestamp"
+                                },
+                                endAt: {
+                                    type: "timestamp"
+                                },
+                                status: {},
+                                passed: {
+                                    type: "integer"
+                                },
+                                failed: {
+                                    type: "integer"
+                                }
+                            }
+                        }
+                    },
+                    nextToken: {}
+                }
+            }
+        },
+        ListTagsForResource: {
+            http: {
+                method: "GET",
+                requestUri: "/tags/{resourceArn}"
+            },
+            input: {
+                type: "structure",
+                required: [ "resourceArn" ],
+                members: {
+                    resourceArn: {
+                        location: "uri",
+                        locationName: "resourceArn"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    tags: {
+                        shape: "S9"
+                    }
+                }
+            }
+        },
+        ListTestCases: {
+            http: {
+                method: "GET",
+                requestUri: "/testCases"
+            },
+            input: {
+                type: "structure",
+                members: {
+                    intendedForQualification: {
+                        location: "querystring",
+                        locationName: "intendedForQualification",
+                        type: "boolean"
+                    },
+                    maxResults: {
+                        location: "querystring",
+                        locationName: "maxResults",
+                        type: "integer"
+                    },
+                    nextToken: {
+                        location: "querystring",
+                        locationName: "nextToken"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    categories: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            members: {
+                                name: {},
+                                tests: {
+                                    type: "list",
+                                    member: {
+                                        type: "structure",
+                                        members: {
+                                            name: {},
+                                            configuration: {
+                                                shape: "S1p"
+                                            },
+                                            test: {
+                                                type: "structure",
+                                                members: {
+                                                    id: {},
+                                                    testCaseVersion: {}
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    rootGroupConfiguration: {
+                        shape: "S1p"
+                    },
+                    groupConfiguration: {
+                        shape: "S1p"
+                    },
+                    nextToken: {}
+                }
+            }
+        },
+        StartSuiteRun: {
+            http: {
+                requestUri: "/suiteDefinitions/{suiteDefinitionId}/suiteRuns"
+            },
+            input: {
+                type: "structure",
+                required: [ "suiteDefinitionId" ],
+                members: {
+                    suiteDefinitionId: {
+                        location: "uri",
+                        locationName: "suiteDefinitionId"
+                    },
+                    suiteDefinitionVersion: {},
+                    suiteRunConfiguration: {
+                        shape: "Sm"
+                    },
+                    tags: {
+                        shape: "S9"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    suiteRunId: {},
+                    suiteRunArn: {},
+                    createdAt: {
+                        type: "timestamp"
+                    }
+                }
+            }
+        },
+        TagResource: {
+            http: {
+                requestUri: "/tags/{resourceArn}"
+            },
+            input: {
+                type: "structure",
+                required: [ "resourceArn", "tags" ],
+                members: {
+                    resourceArn: {
+                        location: "uri",
+                        locationName: "resourceArn"
+                    },
+                    tags: {
+                        shape: "S9"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {}
+            }
+        },
+        UntagResource: {
+            http: {
+                method: "DELETE",
+                requestUri: "/tags/{resourceArn}"
+            },
+            input: {
+                type: "structure",
+                required: [ "resourceArn", "tagKeys" ],
+                members: {
+                    resourceArn: {
+                        location: "uri",
+                        locationName: "resourceArn"
+                    },
+                    tagKeys: {
+                        location: "querystring",
+                        locationName: "tagKeys",
+                        type: "list",
+                        member: {}
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {}
+            }
+        },
+        UpdateSuiteDefinition: {
+            http: {
+                method: "PATCH",
+                requestUri: "/suiteDefinitions/{suiteDefinitionId}"
+            },
+            input: {
+                type: "structure",
+                required: [ "suiteDefinitionId" ],
+                members: {
+                    suiteDefinitionId: {
+                        location: "uri",
+                        locationName: "suiteDefinitionId"
+                    },
+                    suiteDefinitionConfiguration: {
+                        shape: "S2"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    suiteDefinitionId: {},
+                    suiteDefinitionArn: {},
+                    suiteDefinitionName: {},
+                    suiteDefinitionVersion: {},
+                    createdAt: {
+                        type: "timestamp"
+                    },
+                    lastUpdatedAt: {
+                        type: "timestamp"
+                    }
+                }
+            }
+        }
+    },
+    shapes: {
+        S2: {
+            type: "structure",
+            members: {
+                suiteDefinitionName: {},
+                devices: {
+                    shape: "S4"
+                },
+                intendedForQualification: {
+                    type: "boolean"
+                },
+                rootGroup: {},
+                devicePermissionRoleArn: {}
+            }
+        },
+        S4: {
+            type: "list",
+            member: {
+                shape: "S5"
+            }
+        },
+        S5: {
+            type: "structure",
+            members: {
+                thingArn: {},
+                certificateArn: {}
+            }
+        },
+        S9: {
+            type: "map",
+            key: {},
+            value: {}
+        },
+        Sm: {
+            type: "structure",
+            members: {
+                primaryDevice: {
+                    shape: "S5"
+                },
+                secondaryDevice: {
+                    shape: "S5"
+                },
+                selectedTestList: {
+                    type: "list",
+                    member: {}
+                }
+            }
+        },
+        S1p: {
+            type: "map",
+            key: {},
+            value: {}
+        }
+    },
+    paginators: {
+        ListSuiteDefinitions: {
+            input_token: "nextToken",
+            output_token: "nextToken",
+            limit_key: "maxResults"
+        },
+        ListSuiteRuns: {
+            input_token: "nextToken",
+            output_token: "nextToken",
+            limit_key: "maxResults"
+        },
+        ListTestCases: {
+            input_token: "nextToken",
+            output_token: "nextToken",
+            limit_key: "maxResults"
+        }
+    }
+};
+
+AWS.apiLoader.services["iotfleethub"] = {};
+
+AWS.IoTFleetHub = AWS.Service.defineService("iotfleethub", [ "2020-11-03" ]);
+
+AWS.apiLoader.services["iotfleethub"]["2020-11-03"] = {
+    version: "2.0",
+    metadata: {
+        apiVersion: "2020-11-03",
+        endpointPrefix: "api.fleethub.iot",
+        jsonVersion: "1.1",
+        protocol: "rest-json",
+        serviceFullName: "AWS IoT Fleet Hub",
+        serviceId: "IoTFleetHub",
+        signatureVersion: "v4",
+        signingName: "iotfleethub",
+        uid: "iotfleethub-2020-11-03"
+    },
+    operations: {
+        CreateApplication: {
+            http: {
+                requestUri: "/applications",
+                responseCode: 201
+            },
+            input: {
+                type: "structure",
+                required: [ "applicationName", "roleArn" ],
+                members: {
+                    applicationName: {},
+                    applicationDescription: {},
+                    clientToken: {
+                        idempotencyToken: true
+                    },
+                    roleArn: {},
+                    tags: {
+                        shape: "S6"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "applicationId", "applicationArn" ],
+                members: {
+                    applicationId: {},
+                    applicationArn: {}
+                }
+            }
+        },
+        DeleteApplication: {
+            http: {
+                method: "DELETE",
+                requestUri: "/applications/{applicationId}",
+                responseCode: 204
+            },
+            input: {
+                type: "structure",
+                required: [ "applicationId" ],
+                members: {
+                    applicationId: {
+                        location: "uri",
+                        locationName: "applicationId"
+                    },
+                    clientToken: {
+                        idempotencyToken: true,
+                        location: "querystring",
+                        locationName: "clientToken"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {}
+            }
+        },
+        DescribeApplication: {
+            http: {
+                method: "GET",
+                requestUri: "/applications/{applicationId}",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                required: [ "applicationId" ],
+                members: {
+                    applicationId: {
+                        location: "uri",
+                        locationName: "applicationId"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "applicationId", "applicationArn", "applicationName", "applicationUrl", "applicationState", "applicationCreationDate", "applicationLastUpdateDate", "roleArn" ],
+                members: {
+                    applicationId: {},
+                    applicationArn: {},
+                    applicationName: {},
+                    applicationDescription: {},
+                    applicationUrl: {},
+                    applicationState: {},
+                    applicationCreationDate: {
+                        type: "long"
+                    },
+                    applicationLastUpdateDate: {
+                        type: "long"
+                    },
+                    roleArn: {},
+                    ssoClientId: {},
+                    errorMessage: {},
+                    tags: {
+                        shape: "S6"
+                    }
+                }
+            }
+        },
+        ListApplications: {
+            http: {
+                method: "GET",
+                requestUri: "/applications",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                members: {
+                    nextToken: {
+                        location: "querystring",
+                        locationName: "nextToken"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    applicationSummaries: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            required: [ "applicationId", "applicationName", "applicationUrl" ],
+                            members: {
+                                applicationId: {},
+                                applicationName: {},
+                                applicationDescription: {},
+                                applicationUrl: {},
+                                applicationCreationDate: {
+                                    type: "long"
+                                },
+                                applicationLastUpdateDate: {
+                                    type: "long"
+                                },
+                                applicationState: {}
+                            }
+                        }
+                    },
+                    nextToken: {}
+                }
+            }
+        },
+        ListTagsForResource: {
+            http: {
+                method: "GET",
+                requestUri: "/tags/{resourceArn}"
+            },
+            input: {
+                type: "structure",
+                required: [ "resourceArn" ],
+                members: {
+                    resourceArn: {
+                        location: "uri",
+                        locationName: "resourceArn"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    tags: {
+                        shape: "S6"
+                    }
+                }
+            }
+        },
+        TagResource: {
+            http: {
+                requestUri: "/tags/{resourceArn}"
+            },
+            input: {
+                type: "structure",
+                required: [ "resourceArn", "tags" ],
+                members: {
+                    resourceArn: {
+                        location: "uri",
+                        locationName: "resourceArn"
+                    },
+                    tags: {
+                        shape: "S6"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {}
+            }
+        },
+        UntagResource: {
+            http: {
+                method: "DELETE",
+                requestUri: "/tags/{resourceArn}"
+            },
+            input: {
+                type: "structure",
+                required: [ "resourceArn", "tagKeys" ],
+                members: {
+                    resourceArn: {
+                        location: "uri",
+                        locationName: "resourceArn"
+                    },
+                    tagKeys: {
+                        location: "querystring",
+                        locationName: "tagKeys",
+                        type: "list",
+                        member: {}
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {}
+            }
+        },
+        UpdateApplication: {
+            http: {
+                method: "PATCH",
+                requestUri: "/applications/{applicationId}",
+                responseCode: 202
+            },
+            input: {
+                type: "structure",
+                required: [ "applicationId" ],
+                members: {
+                    applicationId: {
+                        location: "uri",
+                        locationName: "applicationId"
+                    },
+                    applicationName: {},
+                    applicationDescription: {},
+                    clientToken: {
+                        idempotencyToken: true
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {}
+            }
+        }
+    },
+    shapes: {
+        S6: {
+            type: "map",
+            key: {},
+            value: {}
+        }
+    },
+    paginators: {
+        ListApplications: {
+            input_token: "nextToken",
+            output_token: "nextToken",
+            result_key: "applicationSummaries"
+        }
+    }
+};
+
+AWS.apiLoader.services["iotwireless"] = {};
+
+AWS.IoTWireless = AWS.Service.defineService("iotwireless", [ "2020-11-22" ]);
+
+AWS.apiLoader.services["iotwireless"]["2020-11-22"] = {
+    version: "2.0",
+    metadata: {
+        apiVersion: "2020-11-22",
+        endpointPrefix: "api.iotwireless",
+        protocol: "rest-json",
+        serviceFullName: "AWS IoT Wireless",
+        serviceId: "IoT Wireless",
+        signatureVersion: "v4",
+        signingName: "iotwireless",
+        uid: "iotwireless-2020-11-22"
+    },
+    operations: {
+        AssociateAwsAccountWithPartnerAccount: {
+            http: {
+                requestUri: "/partner-accounts"
+            },
+            input: {
+                type: "structure",
+                required: [ "Sidewalk" ],
+                members: {
+                    Sidewalk: {
+                        shape: "S2"
+                    },
+                    ClientRequestToken: {
+                        idempotencyToken: true
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    Sidewalk: {
+                        shape: "S2"
+                    }
+                }
+            }
+        },
+        AssociateWirelessDeviceWithThing: {
+            http: {
+                method: "PUT",
+                requestUri: "/wireless-devices/{Id}/thing",
+                responseCode: 204
+            },
+            input: {
+                type: "structure",
+                required: [ "Id", "ThingArn" ],
+                members: {
+                    Id: {
+                        location: "uri",
+                        locationName: "Id"
+                    },
+                    ThingArn: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {}
+            }
+        },
+        AssociateWirelessGatewayWithCertificate: {
+            http: {
+                method: "PUT",
+                requestUri: "/wireless-gateways/{Id}/certificate"
+            },
+            input: {
+                type: "structure",
+                required: [ "Id", "IotCertificateId" ],
+                members: {
+                    Id: {
+                        location: "uri",
+                        locationName: "Id"
+                    },
+                    IotCertificateId: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    IotCertificateId: {}
+                }
+            }
+        },
+        AssociateWirelessGatewayWithThing: {
+            http: {
+                method: "PUT",
+                requestUri: "/wireless-gateways/{Id}/thing",
+                responseCode: 204
+            },
+            input: {
+                type: "structure",
+                required: [ "Id", "ThingArn" ],
+                members: {
+                    Id: {
+                        location: "uri",
+                        locationName: "Id"
+                    },
+                    ThingArn: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {}
+            }
+        },
+        CreateDestination: {
+            http: {
+                requestUri: "/destinations",
+                responseCode: 201
+            },
+            input: {
+                type: "structure",
+                required: [ "Name", "ExpressionType", "Expression", "RoleArn" ],
+                members: {
+                    Name: {},
+                    ExpressionType: {},
+                    Expression: {},
+                    Description: {},
+                    RoleArn: {},
+                    Tags: {
+                        shape: "Sn"
+                    },
+                    ClientRequestToken: {
+                        idempotencyToken: true
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    Arn: {},
+                    Name: {}
+                }
+            }
+        },
+        CreateDeviceProfile: {
+            http: {
+                requestUri: "/device-profiles",
+                responseCode: 201
+            },
+            input: {
+                type: "structure",
+                members: {
+                    Name: {},
+                    LoRaWAN: {
+                        shape: "Sv"
+                    },
+                    Tags: {
+                        shape: "Sn"
+                    },
+                    ClientRequestToken: {
+                        idempotencyToken: true
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    Arn: {},
+                    Id: {}
+                }
+            }
+        },
+        CreateServiceProfile: {
+            http: {
+                requestUri: "/service-profiles",
+                responseCode: 201
+            },
+            input: {
+                type: "structure",
+                members: {
+                    Name: {},
+                    LoRaWAN: {
+                        type: "structure",
+                        members: {
+                            AddGwMetadata: {
+                                type: "boolean"
+                            }
+                        }
+                    },
+                    Tags: {
+                        shape: "Sn"
+                    },
+                    ClientRequestToken: {
+                        idempotencyToken: true
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    Arn: {},
+                    Id: {}
+                }
+            }
+        },
+        CreateWirelessDevice: {
+            http: {
+                requestUri: "/wireless-devices",
+                responseCode: 201
+            },
+            input: {
+                type: "structure",
+                required: [ "Type", "DestinationName" ],
+                members: {
+                    Type: {},
+                    Name: {},
+                    Description: {},
+                    DestinationName: {},
+                    ClientRequestToken: {
+                        idempotencyToken: true
+                    },
+                    LoRaWAN: {
+                        shape: "S1t"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    Arn: {},
+                    Id: {}
+                }
+            }
+        },
+        CreateWirelessGateway: {
+            http: {
+                requestUri: "/wireless-gateways",
+                responseCode: 201
+            },
+            input: {
+                type: "structure",
+                required: [ "LoRaWAN" ],
+                members: {
+                    Name: {},
+                    Description: {},
+                    LoRaWAN: {
+                        shape: "S2f"
+                    },
+                    Tags: {
+                        shape: "Sn"
+                    },
+                    ClientRequestToken: {
+                        idempotencyToken: true
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    Arn: {},
+                    Id: {}
+                }
+            }
+        },
+        CreateWirelessGatewayTask: {
+            http: {
+                requestUri: "/wireless-gateways/{Id}/tasks",
+                responseCode: 201
+            },
+            input: {
+                type: "structure",
+                required: [ "Id", "WirelessGatewayTaskDefinitionId" ],
+                members: {
+                    Id: {
+                        location: "uri",
+                        locationName: "Id"
+                    },
+                    WirelessGatewayTaskDefinitionId: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    WirelessGatewayTaskDefinitionId: {},
+                    Status: {}
+                }
+            }
+        },
+        CreateWirelessGatewayTaskDefinition: {
+            http: {
+                requestUri: "/wireless-gateway-task-definitions",
+                responseCode: 201
+            },
+            input: {
+                type: "structure",
+                required: [ "AutoCreateTasks" ],
+                members: {
+                    AutoCreateTasks: {
+                        type: "boolean"
+                    },
+                    Name: {},
+                    Update: {
+                        shape: "S2q"
+                    },
+                    ClientRequestToken: {
+                        idempotencyToken: true
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    Id: {}
+                }
+            }
+        },
+        DeleteDestination: {
+            http: {
+                method: "DELETE",
+                requestUri: "/destinations/{Name}",
+                responseCode: 204
+            },
+            input: {
+                type: "structure",
+                required: [ "Name" ],
+                members: {
+                    Name: {
+                        location: "uri",
+                        locationName: "Name"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {}
+            }
+        },
+        DeleteDeviceProfile: {
+            http: {
+                method: "DELETE",
+                requestUri: "/device-profiles/{Id}",
+                responseCode: 204
+            },
+            input: {
+                type: "structure",
+                required: [ "Id" ],
+                members: {
+                    Id: {
+                        location: "uri",
+                        locationName: "Id"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {}
+            }
+        },
+        DeleteServiceProfile: {
+            http: {
+                method: "DELETE",
+                requestUri: "/service-profiles/{Id}",
+                responseCode: 204
+            },
+            input: {
+                type: "structure",
+                required: [ "Id" ],
+                members: {
+                    Id: {
+                        location: "uri",
+                        locationName: "Id"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {}
+            }
+        },
+        DeleteWirelessDevice: {
+            http: {
+                method: "DELETE",
+                requestUri: "/wireless-devices/{Id}",
+                responseCode: 204
+            },
+            input: {
+                type: "structure",
+                required: [ "Id" ],
+                members: {
+                    Id: {
+                        location: "uri",
+                        locationName: "Id"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {}
+            }
+        },
+        DeleteWirelessGateway: {
+            http: {
+                method: "DELETE",
+                requestUri: "/wireless-gateways/{Id}",
+                responseCode: 204
+            },
+            input: {
+                type: "structure",
+                required: [ "Id" ],
+                members: {
+                    Id: {
+                        location: "uri",
+                        locationName: "Id"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {}
+            }
+        },
+        DeleteWirelessGatewayTask: {
+            http: {
+                method: "DELETE",
+                requestUri: "/wireless-gateways/{Id}/tasks",
+                responseCode: 204
+            },
+            input: {
+                type: "structure",
+                required: [ "Id" ],
+                members: {
+                    Id: {
+                        location: "uri",
+                        locationName: "Id"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {}
+            }
+        },
+        DeleteWirelessGatewayTaskDefinition: {
+            http: {
+                method: "DELETE",
+                requestUri: "/wireless-gateway-task-definitions/{Id}",
+                responseCode: 204
+            },
+            input: {
+                type: "structure",
+                required: [ "Id" ],
+                members: {
+                    Id: {
+                        location: "uri",
+                        locationName: "Id"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {}
+            }
+        },
+        DisassociateAwsAccountFromPartnerAccount: {
+            http: {
+                method: "DELETE",
+                requestUri: "/partner-accounts/{PartnerAccountId}",
+                responseCode: 204
+            },
+            input: {
+                type: "structure",
+                required: [ "PartnerAccountId", "PartnerType" ],
+                members: {
+                    PartnerAccountId: {
+                        location: "uri",
+                        locationName: "PartnerAccountId"
+                    },
+                    PartnerType: {
+                        location: "querystring",
+                        locationName: "partnerType"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {}
+            }
+        },
+        DisassociateWirelessDeviceFromThing: {
+            http: {
+                method: "DELETE",
+                requestUri: "/wireless-devices/{Id}/thing",
+                responseCode: 204
+            },
+            input: {
+                type: "structure",
+                required: [ "Id" ],
+                members: {
+                    Id: {
+                        location: "uri",
+                        locationName: "Id"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {}
+            }
+        },
+        DisassociateWirelessGatewayFromCertificate: {
+            http: {
+                method: "DELETE",
+                requestUri: "/wireless-gateways/{Id}/certificate",
+                responseCode: 204
+            },
+            input: {
+                type: "structure",
+                required: [ "Id" ],
+                members: {
+                    Id: {
+                        location: "uri",
+                        locationName: "Id"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {}
+            }
+        },
+        DisassociateWirelessGatewayFromThing: {
+            http: {
+                method: "DELETE",
+                requestUri: "/wireless-gateways/{Id}/thing",
+                responseCode: 204
+            },
+            input: {
+                type: "structure",
+                required: [ "Id" ],
+                members: {
+                    Id: {
+                        location: "uri",
+                        locationName: "Id"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {}
+            }
+        },
+        GetDestination: {
+            http: {
+                method: "GET",
+                requestUri: "/destinations/{Name}"
+            },
+            input: {
+                type: "structure",
+                required: [ "Name" ],
+                members: {
+                    Name: {
+                        location: "uri",
+                        locationName: "Name"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    Arn: {},
+                    Name: {},
+                    Expression: {},
+                    ExpressionType: {},
+                    Description: {},
+                    RoleArn: {}
+                }
+            }
+        },
+        GetDeviceProfile: {
+            http: {
+                method: "GET",
+                requestUri: "/device-profiles/{Id}"
+            },
+            input: {
+                type: "structure",
+                required: [ "Id" ],
+                members: {
+                    Id: {
+                        location: "uri",
+                        locationName: "Id"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    Arn: {},
+                    Name: {},
+                    Id: {},
+                    LoRaWAN: {
+                        shape: "Sv"
+                    }
+                }
+            }
+        },
+        GetPartnerAccount: {
+            http: {
+                method: "GET",
+                requestUri: "/partner-accounts/{PartnerAccountId}"
+            },
+            input: {
+                type: "structure",
+                required: [ "PartnerAccountId", "PartnerType" ],
+                members: {
+                    PartnerAccountId: {
+                        location: "uri",
+                        locationName: "PartnerAccountId"
+                    },
+                    PartnerType: {
+                        location: "querystring",
+                        locationName: "partnerType"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    Sidewalk: {
+                        shape: "S3u"
+                    },
+                    AccountLinked: {
+                        type: "boolean"
+                    }
+                }
+            }
+        },
+        GetServiceEndpoint: {
+            http: {
+                method: "GET",
+                requestUri: "/service-endpoint"
+            },
+            input: {
+                type: "structure",
+                members: {
+                    ServiceType: {
+                        location: "querystring",
+                        locationName: "serviceType"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    ServiceType: {},
+                    ServiceEndpoint: {},
+                    ServerTrust: {}
+                }
+            }
+        },
+        GetServiceProfile: {
+            http: {
+                method: "GET",
+                requestUri: "/service-profiles/{Id}"
+            },
+            input: {
+                type: "structure",
+                required: [ "Id" ],
+                members: {
+                    Id: {
+                        location: "uri",
+                        locationName: "Id"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    Arn: {},
+                    Name: {},
+                    Id: {},
+                    LoRaWAN: {
+                        type: "structure",
+                        members: {
+                            UlRate: {
+                                type: "integer"
+                            },
+                            UlBucketSize: {
+                                type: "integer"
+                            },
+                            UlRatePolicy: {},
+                            DlRate: {
+                                type: "integer"
+                            },
+                            DlBucketSize: {
+                                type: "integer"
+                            },
+                            DlRatePolicy: {},
+                            AddGwMetadata: {
+                                type: "boolean"
+                            },
+                            DevStatusReqFreq: {
+                                type: "integer"
+                            },
+                            ReportDevStatusBattery: {
+                                type: "boolean"
+                            },
+                            ReportDevStatusMargin: {
+                                type: "boolean"
+                            },
+                            DrMin: {
+                                type: "integer"
+                            },
+                            DrMax: {
+                                type: "integer"
+                            },
+                            ChannelMask: {},
+                            PrAllowed: {
+                                type: "boolean"
+                            },
+                            HrAllowed: {
+                                type: "boolean"
+                            },
+                            RaAllowed: {
+                                type: "boolean"
+                            },
+                            NwkGeoLoc: {
+                                type: "boolean"
+                            },
+                            TargetPer: {
+                                type: "integer"
+                            },
+                            MinGwDiversity: {
+                                type: "integer"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        GetWirelessDevice: {
+            http: {
+                method: "GET",
+                requestUri: "/wireless-devices/{Identifier}"
+            },
+            input: {
+                type: "structure",
+                required: [ "Identifier", "IdentifierType" ],
+                members: {
+                    Identifier: {
+                        location: "uri",
+                        locationName: "Identifier"
+                    },
+                    IdentifierType: {
+                        location: "querystring",
+                        locationName: "identifierType"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    Type: {},
+                    Name: {},
+                    Description: {},
+                    DestinationName: {},
+                    Id: {},
+                    Arn: {},
+                    ThingName: {},
+                    ThingArn: {},
+                    LoRaWAN: {
+                        shape: "S1t"
+                    }
+                }
+            }
+        },
+        GetWirelessDeviceStatistics: {
+            http: {
+                method: "GET",
+                requestUri: "/wireless-devices/{Id}/statistics",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                required: [ "WirelessDeviceId" ],
+                members: {
+                    WirelessDeviceId: {
+                        location: "uri",
+                        locationName: "Id"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    WirelessDeviceId: {},
+                    LastUplinkReceivedAt: {},
+                    LoRaWAN: {
+                        type: "structure",
+                        members: {
+                            DevEui: {},
+                            FPort: {
+                                type: "integer"
+                            },
+                            DataRate: {
+                                type: "integer"
+                            },
+                            Frequency: {
+                                type: "integer"
+                            },
+                            Timestamp: {},
+                            Gateways: {
+                                type: "list",
+                                member: {
+                                    type: "structure",
+                                    members: {
+                                        GatewayEui: {},
+                                        Snr: {
+                                            type: "double"
+                                        },
+                                        Rssi: {
+                                            type: "double"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        GetWirelessGateway: {
+            http: {
+                method: "GET",
+                requestUri: "/wireless-gateways/{Identifier}"
+            },
+            input: {
+                type: "structure",
+                required: [ "Identifier", "IdentifierType" ],
+                members: {
+                    Identifier: {
+                        location: "uri",
+                        locationName: "Identifier"
+                    },
+                    IdentifierType: {
+                        location: "querystring",
+                        locationName: "identifierType"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    Name: {},
+                    Id: {},
+                    Description: {},
+                    LoRaWAN: {
+                        shape: "S2f"
+                    },
+                    Arn: {},
+                    ThingName: {},
+                    ThingArn: {}
+                }
+            }
+        },
+        GetWirelessGatewayCertificate: {
+            http: {
+                method: "GET",
+                requestUri: "/wireless-gateways/{Id}/certificate"
+            },
+            input: {
+                type: "structure",
+                required: [ "Id" ],
+                members: {
+                    Id: {
+                        location: "uri",
+                        locationName: "Id"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    IotCertificateId: {},
+                    LoRaWANNetworkServerCertificateId: {}
+                }
+            }
+        },
+        GetWirelessGatewayFirmwareInformation: {
+            http: {
+                method: "GET",
+                requestUri: "/wireless-gateways/{Id}/firmware-information"
+            },
+            input: {
+                type: "structure",
+                required: [ "Id" ],
+                members: {
+                    Id: {
+                        location: "uri",
+                        locationName: "Id"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    LoRaWAN: {
+                        type: "structure",
+                        members: {
+                            CurrentVersion: {
+                                shape: "S2v"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        GetWirelessGatewayStatistics: {
+            http: {
+                method: "GET",
+                requestUri: "/wireless-gateways/{Id}/statistics",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                required: [ "WirelessGatewayId" ],
+                members: {
+                    WirelessGatewayId: {
+                        location: "uri",
+                        locationName: "Id"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    WirelessGatewayId: {},
+                    LastUplinkReceivedAt: {}
+                }
+            }
+        },
+        GetWirelessGatewayTask: {
+            http: {
+                method: "GET",
+                requestUri: "/wireless-gateways/{Id}/tasks"
+            },
+            input: {
+                type: "structure",
+                required: [ "Id" ],
+                members: {
+                    Id: {
+                        location: "uri",
+                        locationName: "Id"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    WirelessGatewayId: {},
+                    WirelessGatewayTaskDefinitionId: {},
+                    LastUplinkReceivedAt: {},
+                    TaskCreatedAt: {},
+                    Status: {}
+                }
+            }
+        },
+        GetWirelessGatewayTaskDefinition: {
+            http: {
+                method: "GET",
+                requestUri: "/wireless-gateway-task-definitions/{Id}"
+            },
+            input: {
+                type: "structure",
+                required: [ "Id" ],
+                members: {
+                    Id: {
+                        location: "uri",
+                        locationName: "Id"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    AutoCreateTasks: {
+                        type: "boolean"
+                    },
+                    Name: {},
+                    Update: {
+                        shape: "S2q"
+                    }
+                }
+            }
+        },
+        ListDestinations: {
+            http: {
+                method: "GET",
+                requestUri: "/destinations"
+            },
+            input: {
+                type: "structure",
+                members: {
+                    MaxResults: {
+                        location: "querystring",
+                        locationName: "maxResults",
+                        type: "integer"
+                    },
+                    NextToken: {
+                        location: "querystring",
+                        locationName: "nextToken"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    NextToken: {},
+                    DestinationList: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            members: {
+                                Arn: {},
+                                Name: {},
+                                ExpressionType: {},
+                                Expression: {},
+                                Description: {},
+                                RoleArn: {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        ListDeviceProfiles: {
+            http: {
+                method: "GET",
+                requestUri: "/device-profiles"
+            },
+            input: {
+                type: "structure",
+                members: {
+                    NextToken: {
+                        location: "querystring",
+                        locationName: "nextToken"
+                    },
+                    MaxResults: {
+                        location: "querystring",
+                        locationName: "maxResults",
+                        type: "integer"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    NextToken: {},
+                    DeviceProfileList: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            members: {
+                                Arn: {},
+                                Name: {},
+                                Id: {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        ListPartnerAccounts: {
+            http: {
+                method: "GET",
+                requestUri: "/partner-accounts"
+            },
+            input: {
+                type: "structure",
+                members: {
+                    NextToken: {
+                        location: "querystring",
+                        locationName: "nextToken"
+                    },
+                    MaxResults: {
+                        location: "querystring",
+                        locationName: "maxResults",
+                        type: "integer"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    NextToken: {},
+                    Sidewalk: {
+                        type: "list",
+                        member: {
+                            shape: "S3u"
+                        }
+                    }
+                }
+            }
+        },
+        ListServiceProfiles: {
+            http: {
+                method: "GET",
+                requestUri: "/service-profiles"
+            },
+            input: {
+                type: "structure",
+                members: {
+                    NextToken: {
+                        location: "querystring",
+                        locationName: "nextToken"
+                    },
+                    MaxResults: {
+                        location: "querystring",
+                        locationName: "maxResults",
+                        type: "integer"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    NextToken: {},
+                    ServiceProfileList: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            members: {
+                                Arn: {},
+                                Name: {},
+                                Id: {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        ListTagsForResource: {
+            http: {
+                method: "GET",
+                requestUri: "/tags"
+            },
+            input: {
+                type: "structure",
+                required: [ "ResourceArn" ],
+                members: {
+                    ResourceArn: {
+                        location: "querystring",
+                        locationName: "resourceArn"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    Tags: {
+                        shape: "Sn"
+                    }
+                }
+            }
+        },
+        ListWirelessDevices: {
+            http: {
+                method: "GET",
+                requestUri: "/wireless-devices"
+            },
+            input: {
+                type: "structure",
+                members: {
+                    MaxResults: {
+                        location: "querystring",
+                        locationName: "maxResults",
+                        type: "integer"
+                    },
+                    NextToken: {
+                        location: "querystring",
+                        locationName: "nextToken"
+                    },
+                    DestinationName: {
+                        location: "querystring",
+                        locationName: "destinationName"
+                    },
+                    DeviceProfileId: {
+                        location: "querystring",
+                        locationName: "deviceProfileId"
+                    },
+                    ServiceProfileId: {
+                        location: "querystring",
+                        locationName: "serviceProfileId"
+                    },
+                    WirelessDeviceType: {
+                        location: "querystring",
+                        locationName: "wirelessDeviceType"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    NextToken: {},
+                    WirelessDeviceList: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            members: {
+                                Arn: {},
+                                Id: {},
+                                Type: {},
+                                Name: {},
+                                DestinationName: {},
+                                LastUplinkReceivedAt: {},
+                                LoRaWAN: {
+                                    type: "structure",
+                                    members: {
+                                        DevEui: {}
+                                    }
+                                },
+                                Sidewalk: {
+                                    type: "structure",
+                                    members: {
+                                        AmazonId: {}
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        ListWirelessGatewayTaskDefinitions: {
+            http: {
+                method: "GET",
+                requestUri: "/wireless-gateway-task-definitions"
+            },
+            input: {
+                type: "structure",
+                members: {
+                    MaxResults: {
+                        location: "querystring",
+                        locationName: "maxResults",
+                        type: "integer"
+                    },
+                    NextToken: {
+                        location: "querystring",
+                        locationName: "nextToken"
+                    },
+                    TaskDefinitionType: {
+                        location: "querystring",
+                        locationName: "taskDefinitionType"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    NextToken: {},
+                    TaskDefinitions: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            members: {
+                                Id: {},
+                                LoRaWAN: {
+                                    type: "structure",
+                                    members: {
+                                        CurrentVersion: {
+                                            shape: "S2v"
+                                        },
+                                        UpdateVersion: {
+                                            shape: "S2v"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        ListWirelessGateways: {
+            http: {
+                method: "GET",
+                requestUri: "/wireless-gateways"
+            },
+            input: {
+                type: "structure",
+                members: {
+                    NextToken: {
+                        location: "querystring",
+                        locationName: "nextToken"
+                    },
+                    MaxResults: {
+                        location: "querystring",
+                        locationName: "maxResults",
+                        type: "integer"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    NextToken: {},
+                    WirelessGatewayList: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            members: {
+                                Arn: {},
+                                Id: {},
+                                Name: {},
+                                Description: {},
+                                LoRaWAN: {
+                                    shape: "S2f"
+                                },
+                                LastUplinkReceivedAt: {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        SendDataToWirelessDevice: {
+            http: {
+                requestUri: "/wireless-devices/{Id}/data",
+                responseCode: 202
+            },
+            input: {
+                type: "structure",
+                required: [ "Id", "TransmitMode", "PayloadData" ],
+                members: {
+                    Id: {
+                        location: "uri",
+                        locationName: "Id"
+                    },
+                    TransmitMode: {
+                        type: "integer"
+                    },
+                    PayloadData: {},
+                    WirelessMetadata: {
+                        type: "structure",
+                        members: {
+                            LoRaWAN: {
+                                type: "structure",
+                                members: {
+                                    FPort: {
+                                        type: "integer"
+                                    }
+                                }
+                            },
+                            Sidewalk: {
+                                type: "structure",
+                                members: {
+                                    Seq: {
+                                        type: "integer"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    MessageId: {}
+                }
+            }
+        },
+        TagResource: {
+            http: {
+                requestUri: "/tags",
+                responseCode: 204
+            },
+            input: {
+                type: "structure",
+                required: [ "ResourceArn", "Tags" ],
+                members: {
+                    ResourceArn: {
+                        location: "querystring",
+                        locationName: "resourceArn"
+                    },
+                    Tags: {
+                        shape: "Sn"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {}
+            }
+        },
+        TestWirelessDevice: {
+            http: {
+                requestUri: "/wireless-devices/{Id}/test",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                required: [ "Id" ],
+                members: {
+                    Id: {
+                        location: "uri",
+                        locationName: "Id"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    Result: {}
+                }
+            }
+        },
+        UntagResource: {
+            http: {
+                method: "DELETE",
+                requestUri: "/tags",
+                responseCode: 204
+            },
+            input: {
+                type: "structure",
+                required: [ "ResourceArn", "TagKeys" ],
+                members: {
+                    ResourceArn: {
+                        location: "querystring",
+                        locationName: "resourceArn"
+                    },
+                    TagKeys: {
+                        location: "querystring",
+                        locationName: "tagKeys",
+                        type: "list",
+                        member: {}
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {}
+            }
+        },
+        UpdateDestination: {
+            http: {
+                method: "PATCH",
+                requestUri: "/destinations/{Name}",
+                responseCode: 204
+            },
+            input: {
+                type: "structure",
+                required: [ "Name" ],
+                members: {
+                    Name: {
+                        location: "uri",
+                        locationName: "Name"
+                    },
+                    ExpressionType: {},
+                    Expression: {},
+                    Description: {},
+                    RoleArn: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {}
+            }
+        },
+        UpdatePartnerAccount: {
+            http: {
+                method: "PATCH",
+                requestUri: "/partner-accounts/{PartnerAccountId}",
+                responseCode: 204
+            },
+            input: {
+                type: "structure",
+                required: [ "Sidewalk", "PartnerAccountId", "PartnerType" ],
+                members: {
+                    Sidewalk: {
+                        type: "structure",
+                        members: {
+                            AppServerPrivateKey: {
+                                shape: "S4"
+                            }
+                        }
+                    },
+                    PartnerAccountId: {
+                        location: "uri",
+                        locationName: "PartnerAccountId"
+                    },
+                    PartnerType: {
+                        location: "querystring",
+                        locationName: "partnerType"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {}
+            }
+        },
+        UpdateWirelessDevice: {
+            http: {
+                method: "PATCH",
+                requestUri: "/wireless-devices/{Id}",
+                responseCode: 204
+            },
+            input: {
+                type: "structure",
+                required: [ "Id" ],
+                members: {
+                    Id: {
+                        location: "uri",
+                        locationName: "Id"
+                    },
+                    DestinationName: {},
+                    Name: {},
+                    Description: {},
+                    LoRaWAN: {
+                        type: "structure",
+                        members: {
+                            DeviceProfileId: {},
+                            ServiceProfileId: {}
+                        }
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {}
+            }
+        },
+        UpdateWirelessGateway: {
+            http: {
+                method: "PATCH",
+                requestUri: "/wireless-gateways/{Id}",
+                responseCode: 204
+            },
+            input: {
+                type: "structure",
+                required: [ "Id" ],
+                members: {
+                    Id: {
+                        location: "uri",
+                        locationName: "Id"
+                    },
+                    Name: {},
+                    Description: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {}
+            }
+        }
+    },
+    shapes: {
+        S2: {
+            type: "structure",
+            members: {
+                AmazonId: {},
+                AppServerPrivateKey: {
+                    shape: "S4"
+                }
+            }
+        },
+        S4: {
+            type: "string",
+            sensitive: true
+        },
+        Sn: {
+            type: "list",
+            member: {
+                type: "structure",
+                required: [ "Key", "Value" ],
+                members: {
+                    Key: {},
+                    Value: {}
+                }
+            }
+        },
+        Sv: {
+            type: "structure",
+            members: {
+                SupportsClassB: {
+                    type: "boolean"
+                },
+                ClassBTimeout: {
+                    type: "integer"
+                },
+                PingSlotPeriod: {
+                    type: "integer"
+                },
+                PingSlotDr: {
+                    type: "integer"
+                },
+                PingSlotFreq: {
+                    type: "integer"
+                },
+                SupportsClassC: {
+                    type: "boolean"
+                },
+                ClassCTimeout: {
+                    type: "integer"
+                },
+                MacVersion: {},
+                RegParamsRevision: {},
+                RxDelay1: {
+                    type: "integer"
+                },
+                RxDrOffset1: {
+                    type: "integer"
+                },
+                RxDataRate2: {
+                    type: "integer"
+                },
+                RxFreq2: {
+                    type: "integer"
+                },
+                FactoryPresetFreqsList: {
+                    type: "list",
+                    member: {
+                        type: "integer"
+                    }
+                },
+                MaxEirp: {
+                    type: "integer"
+                },
+                MaxDutyCycle: {
+                    type: "integer"
+                },
+                RfRegion: {},
+                SupportsJoin: {
+                    type: "boolean"
+                },
+                Supports32BitFCnt: {
+                    type: "boolean"
+                }
+            }
+        },
+        S1t: {
+            type: "structure",
+            members: {
+                DevEui: {},
+                DeviceProfileId: {},
+                ServiceProfileId: {},
+                OtaaV1_1: {
+                    type: "structure",
+                    members: {
+                        AppKey: {},
+                        NwkKey: {},
+                        JoinEui: {}
+                    }
+                },
+                OtaaV1_0_x: {
+                    type: "structure",
+                    members: {
+                        AppKey: {},
+                        AppEui: {}
+                    }
+                },
+                AbpV1_1: {
+                    type: "structure",
+                    members: {
+                        DevAddr: {},
+                        SessionKeys: {
+                            type: "structure",
+                            members: {
+                                FNwkSIntKey: {},
+                                SNwkSIntKey: {},
+                                NwkSEncKey: {},
+                                AppSKey: {}
+                            }
+                        }
+                    }
+                },
+                AbpV1_0_x: {
+                    type: "structure",
+                    members: {
+                        DevAddr: {},
+                        SessionKeys: {
+                            type: "structure",
+                            members: {
+                                NwkSKey: {},
+                                AppSKey: {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        S2f: {
+            type: "structure",
+            members: {
+                GatewayEui: {},
+                RfRegion: {}
+            }
+        },
+        S2q: {
+            type: "structure",
+            members: {
+                UpdateDataSource: {},
+                UpdateDataRole: {},
+                LoRaWAN: {
+                    type: "structure",
+                    members: {
+                        UpdateSignature: {},
+                        SigKeyCrc: {
+                            type: "long"
+                        },
+                        CurrentVersion: {
+                            shape: "S2v"
+                        },
+                        UpdateVersion: {
+                            shape: "S2v"
+                        }
+                    }
+                }
+            }
+        },
+        S2v: {
+            type: "structure",
+            members: {
+                PackageVersion: {},
+                Model: {},
+                Station: {}
+            }
+        },
+        S3u: {
+            type: "structure",
+            members: {
+                AmazonId: {},
+                Fingerprint: {
+                    type: "string",
+                    sensitive: true
+                }
+            }
+        }
+    },
+    paginators: {
+        ListDestinations: {
+            input_token: "NextToken",
+            output_token: "NextToken",
+            limit_key: "MaxResults"
+        },
+        ListDeviceProfiles: {
+            input_token: "NextToken",
+            output_token: "NextToken",
+            limit_key: "MaxResults"
+        },
+        ListServiceProfiles: {
+            input_token: "NextToken",
+            output_token: "NextToken",
+            limit_key: "MaxResults"
+        },
+        ListWirelessDevices: {
+            input_token: "NextToken",
+            output_token: "NextToken",
+            limit_key: "MaxResults"
+        },
+        ListWirelessGateways: {
+            input_token: "NextToken",
+            output_token: "NextToken",
+            limit_key: "MaxResults"
+        }
+    }
+};
+
+AWS.apiLoader.services["location"] = {};
+
+AWS.Location = AWS.Service.defineService("location", [ "2020-11-19" ]);
+
+AWS.apiLoader.services["location"]["2020-11-19"] = {
+    version: "2.0",
+    metadata: {
+        apiVersion: "2020-11-19",
+        endpointPrefix: "geo",
+        jsonVersion: "1.1",
+        protocol: "rest-json",
+        serviceFullName: "Amazon Location Service",
+        serviceId: "Location",
+        signatureVersion: "v4",
+        signingName: "geo",
+        uid: "location-2020-11-19"
+    },
+    operations: {
+        AssociateTrackerConsumer: {
+            http: {
+                requestUri: "/tracking/v0/trackers/{TrackerName}/consumers",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                required: [ "ConsumerArn", "TrackerName" ],
+                members: {
+                    ConsumerArn: {},
+                    TrackerName: {
+                        location: "uri",
+                        locationName: "TrackerName"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {}
+            },
+            endpoint: {
+                hostPrefix: "tracking."
+            }
+        },
+        BatchDeleteGeofence: {
+            http: {
+                requestUri: "/geofencing/v0/collections/{CollectionName}/delete-geofences",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                required: [ "CollectionName", "GeofenceIds" ],
+                members: {
+                    CollectionName: {
+                        location: "uri",
+                        locationName: "CollectionName"
+                    },
+                    GeofenceIds: {
+                        type: "list",
+                        member: {}
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "Errors" ],
+                members: {
+                    Errors: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            required: [ "Error", "GeofenceId" ],
+                            members: {
+                                Error: {
+                                    shape: "Sb"
+                                },
+                                GeofenceId: {}
+                            }
+                        }
+                    }
+                }
+            },
+            endpoint: {
+                hostPrefix: "geofencing."
+            }
+        },
+        BatchEvaluateGeofences: {
+            http: {
+                requestUri: "/geofencing/v0/collections/{CollectionName}/positions",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                required: [ "CollectionName", "DevicePositionUpdates" ],
+                members: {
+                    CollectionName: {
+                        location: "uri",
+                        locationName: "CollectionName"
+                    },
+                    DevicePositionUpdates: {
+                        type: "list",
+                        member: {
+                            shape: "Sg"
+                        }
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "Errors" ],
+                members: {
+                    Errors: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            required: [ "DeviceId", "Error", "SampleTime" ],
+                            members: {
+                                DeviceId: {},
+                                Error: {
+                                    shape: "Sb"
+                                },
+                                SampleTime: {
+                                    shape: "Sj"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            endpoint: {
+                hostPrefix: "geofencing."
+            }
+        },
+        BatchGetDevicePosition: {
+            http: {
+                requestUri: "/tracking/v0/trackers/{TrackerName}/get-positions",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                required: [ "DeviceIds", "TrackerName" ],
+                members: {
+                    DeviceIds: {
+                        type: "list",
+                        member: {}
+                    },
+                    TrackerName: {
+                        location: "uri",
+                        locationName: "TrackerName"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "DevicePositions", "Errors" ],
+                members: {
+                    DevicePositions: {
+                        shape: "Sr"
+                    },
+                    Errors: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            required: [ "DeviceId", "Error" ],
+                            members: {
+                                DeviceId: {},
+                                Error: {
+                                    shape: "Sb"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            endpoint: {
+                hostPrefix: "tracking."
+            }
+        },
+        BatchPutGeofence: {
+            http: {
+                requestUri: "/geofencing/v0/collections/{CollectionName}/put-geofences",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                required: [ "CollectionName", "Entries" ],
+                members: {
+                    CollectionName: {
+                        location: "uri",
+                        locationName: "CollectionName"
+                    },
+                    Entries: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            required: [ "GeofenceId", "Geometry" ],
+                            members: {
+                                GeofenceId: {},
+                                Geometry: {
+                                    shape: "Sy"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "Errors", "Successes" ],
+                members: {
+                    Errors: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            required: [ "Error", "GeofenceId" ],
+                            members: {
+                                Error: {
+                                    shape: "Sb"
+                                },
+                                GeofenceId: {}
+                            }
+                        }
+                    },
+                    Successes: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            required: [ "CreateTime", "GeofenceId", "UpdateTime" ],
+                            members: {
+                                CreateTime: {
+                                    shape: "Sj"
+                                },
+                                GeofenceId: {},
+                                UpdateTime: {
+                                    shape: "Sj"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            endpoint: {
+                hostPrefix: "geofencing."
+            }
+        },
+        BatchUpdateDevicePosition: {
+            http: {
+                requestUri: "/tracking/v0/trackers/{TrackerName}/positions",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                required: [ "TrackerName", "Updates" ],
+                members: {
+                    TrackerName: {
+                        location: "uri",
+                        locationName: "TrackerName"
+                    },
+                    Updates: {
+                        type: "list",
+                        member: {
+                            shape: "Sg"
+                        }
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "Errors" ],
+                members: {
+                    Errors: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            required: [ "DeviceId", "Error", "SampleTime" ],
+                            members: {
+                                DeviceId: {},
+                                Error: {
+                                    shape: "Sb"
+                                },
+                                SampleTime: {
+                                    shape: "Sj"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            endpoint: {
+                hostPrefix: "tracking."
+            }
+        },
+        CreateGeofenceCollection: {
+            http: {
+                requestUri: "/geofencing/v0/collections",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                required: [ "CollectionName", "PricingPlan" ],
+                members: {
+                    CollectionName: {},
+                    Description: {},
+                    PricingPlan: {}
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "CollectionArn", "CollectionName", "CreateTime" ],
+                members: {
+                    CollectionArn: {},
+                    CollectionName: {},
+                    CreateTime: {
+                        shape: "Sj"
+                    }
+                }
+            },
+            endpoint: {
+                hostPrefix: "geofencing."
+            },
+            idempotent: true
+        },
+        CreateMap: {
+            http: {
+                requestUri: "/maps/v0/maps",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                required: [ "Configuration", "MapName", "PricingPlan" ],
+                members: {
+                    Configuration: {
+                        shape: "S1g"
+                    },
+                    Description: {},
+                    MapName: {},
+                    PricingPlan: {}
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "CreateTime", "MapArn", "MapName" ],
+                members: {
+                    CreateTime: {
+                        shape: "Sj"
+                    },
+                    MapArn: {},
+                    MapName: {}
+                }
+            },
+            endpoint: {
+                hostPrefix: "maps."
+            },
+            idempotent: true
+        },
+        CreatePlaceIndex: {
+            http: {
+                requestUri: "/places/v0/indexes",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                required: [ "DataSource", "IndexName", "PricingPlan" ],
+                members: {
+                    DataSource: {},
+                    DataSourceConfiguration: {
+                        shape: "S1k"
+                    },
+                    Description: {},
+                    IndexName: {},
+                    PricingPlan: {}
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "CreateTime", "IndexArn", "IndexName" ],
+                members: {
+                    CreateTime: {
+                        shape: "Sj"
+                    },
+                    IndexArn: {},
+                    IndexName: {}
+                }
+            },
+            endpoint: {
+                hostPrefix: "places."
+            },
+            idempotent: true
+        },
+        CreateTracker: {
+            http: {
+                requestUri: "/tracking/v0/trackers",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                required: [ "PricingPlan", "TrackerName" ],
+                members: {
+                    Description: {},
+                    PricingPlan: {},
+                    TrackerName: {}
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "CreateTime", "TrackerArn", "TrackerName" ],
+                members: {
+                    CreateTime: {
+                        shape: "Sj"
+                    },
+                    TrackerArn: {},
+                    TrackerName: {}
+                }
+            },
+            endpoint: {
+                hostPrefix: "tracking."
+            },
+            idempotent: true
+        },
+        DeleteGeofenceCollection: {
+            http: {
+                method: "DELETE",
+                requestUri: "/geofencing/v0/collections/{CollectionName}",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                required: [ "CollectionName" ],
+                members: {
+                    CollectionName: {
+                        location: "uri",
+                        locationName: "CollectionName"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {}
+            },
+            endpoint: {
+                hostPrefix: "geofencing."
+            },
+            idempotent: true
+        },
+        DeleteMap: {
+            http: {
+                method: "DELETE",
+                requestUri: "/maps/v0/maps/{MapName}",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                required: [ "MapName" ],
+                members: {
+                    MapName: {
+                        location: "uri",
+                        locationName: "MapName"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {}
+            },
+            endpoint: {
+                hostPrefix: "maps."
+            },
+            idempotent: true
+        },
+        DeletePlaceIndex: {
+            http: {
+                method: "DELETE",
+                requestUri: "/places/v0/indexes/{IndexName}",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                required: [ "IndexName" ],
+                members: {
+                    IndexName: {
+                        location: "uri",
+                        locationName: "IndexName"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {}
+            },
+            endpoint: {
+                hostPrefix: "places."
+            },
+            idempotent: true
+        },
+        DeleteTracker: {
+            http: {
+                method: "DELETE",
+                requestUri: "/tracking/v0/trackers/{TrackerName}",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                required: [ "TrackerName" ],
+                members: {
+                    TrackerName: {
+                        location: "uri",
+                        locationName: "TrackerName"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {}
+            },
+            endpoint: {
+                hostPrefix: "tracking."
+            },
+            idempotent: true
+        },
+        DescribeGeofenceCollection: {
+            http: {
+                method: "GET",
+                requestUri: "/geofencing/v0/collections/{CollectionName}",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                required: [ "CollectionName" ],
+                members: {
+                    CollectionName: {
+                        location: "uri",
+                        locationName: "CollectionName"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "CollectionArn", "CollectionName", "CreateTime", "Description", "UpdateTime" ],
+                members: {
+                    CollectionArn: {},
+                    CollectionName: {},
+                    CreateTime: {
+                        shape: "Sj"
+                    },
+                    Description: {},
+                    UpdateTime: {
+                        shape: "Sj"
+                    }
+                }
+            },
+            endpoint: {
+                hostPrefix: "geofencing."
+            }
+        },
+        DescribeMap: {
+            http: {
+                method: "GET",
+                requestUri: "/maps/v0/maps/{MapName}",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                required: [ "MapName" ],
+                members: {
+                    MapName: {
+                        location: "uri",
+                        locationName: "MapName"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "Configuration", "CreateTime", "DataSource", "Description", "MapArn", "MapName", "UpdateTime" ],
+                members: {
+                    Configuration: {
+                        shape: "S1g"
+                    },
+                    CreateTime: {
+                        shape: "Sj"
+                    },
+                    DataSource: {},
+                    Description: {},
+                    MapArn: {},
+                    MapName: {},
+                    UpdateTime: {
+                        shape: "Sj"
+                    }
+                }
+            },
+            endpoint: {
+                hostPrefix: "maps."
+            }
+        },
+        DescribePlaceIndex: {
+            http: {
+                method: "GET",
+                requestUri: "/places/v0/indexes/{IndexName}",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                required: [ "IndexName" ],
+                members: {
+                    IndexName: {
+                        location: "uri",
+                        locationName: "IndexName"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "CreateTime", "DataSource", "DataSourceConfiguration", "Description", "IndexArn", "IndexName", "UpdateTime" ],
+                members: {
+                    CreateTime: {
+                        shape: "Sj"
+                    },
+                    DataSource: {},
+                    DataSourceConfiguration: {
+                        shape: "S1k"
+                    },
+                    Description: {},
+                    IndexArn: {},
+                    IndexName: {},
+                    UpdateTime: {
+                        shape: "Sj"
+                    }
+                }
+            },
+            endpoint: {
+                hostPrefix: "places."
+            }
+        },
+        DescribeTracker: {
+            http: {
+                method: "GET",
+                requestUri: "/tracking/v0/trackers/{TrackerName}",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                required: [ "TrackerName" ],
+                members: {
+                    TrackerName: {
+                        location: "uri",
+                        locationName: "TrackerName"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "CreateTime", "Description", "TrackerArn", "TrackerName", "UpdateTime" ],
+                members: {
+                    CreateTime: {
+                        shape: "Sj"
+                    },
+                    Description: {},
+                    TrackerArn: {},
+                    TrackerName: {},
+                    UpdateTime: {
+                        shape: "Sj"
+                    }
+                }
+            },
+            endpoint: {
+                hostPrefix: "tracking."
+            }
+        },
+        DisassociateTrackerConsumer: {
+            http: {
+                method: "DELETE",
+                requestUri: "/tracking/v0/trackers/{TrackerName}/consumers/{ConsumerArn}",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                required: [ "ConsumerArn", "TrackerName" ],
+                members: {
+                    ConsumerArn: {
+                        location: "uri",
+                        locationName: "ConsumerArn"
+                    },
+                    TrackerName: {
+                        location: "uri",
+                        locationName: "TrackerName"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {}
+            },
+            endpoint: {
+                hostPrefix: "tracking."
+            }
+        },
+        GetDevicePosition: {
+            http: {
+                method: "GET",
+                requestUri: "/tracking/v0/trackers/{TrackerName}/devices/{DeviceId}/positions/latest",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                required: [ "DeviceId", "TrackerName" ],
+                members: {
+                    DeviceId: {
+                        location: "uri",
+                        locationName: "DeviceId"
+                    },
+                    TrackerName: {
+                        location: "uri",
+                        locationName: "TrackerName"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "Position", "ReceivedTime", "SampleTime" ],
+                members: {
+                    DeviceId: {},
+                    Position: {
+                        shape: "Sh"
+                    },
+                    ReceivedTime: {
+                        shape: "Sj"
+                    },
+                    SampleTime: {
+                        shape: "Sj"
+                    }
+                }
+            },
+            endpoint: {
+                hostPrefix: "tracking."
+            }
+        },
+        GetDevicePositionHistory: {
+            http: {
+                requestUri: "/tracking/v0/trackers/{TrackerName}/devices/{DeviceId}/list-positions",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                required: [ "DeviceId", "TrackerName" ],
+                members: {
+                    DeviceId: {
+                        location: "uri",
+                        locationName: "DeviceId"
+                    },
+                    EndTimeExclusive: {
+                        shape: "Sj"
+                    },
+                    NextToken: {},
+                    StartTimeInclusive: {
+                        shape: "Sj"
+                    },
+                    TrackerName: {
+                        location: "uri",
+                        locationName: "TrackerName"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "DevicePositions" ],
+                members: {
+                    DevicePositions: {
+                        shape: "Sr"
+                    },
+                    NextToken: {}
+                }
+            },
+            endpoint: {
+                hostPrefix: "tracking."
+            }
+        },
+        GetGeofence: {
+            http: {
+                method: "GET",
+                requestUri: "/geofencing/v0/collections/{CollectionName}/geofences/{GeofenceId}",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                required: [ "CollectionName", "GeofenceId" ],
+                members: {
+                    CollectionName: {
+                        location: "uri",
+                        locationName: "CollectionName"
+                    },
+                    GeofenceId: {
+                        location: "uri",
+                        locationName: "GeofenceId"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "CreateTime", "GeofenceId", "Geometry", "Status", "UpdateTime" ],
+                members: {
+                    CreateTime: {
+                        shape: "Sj"
+                    },
+                    GeofenceId: {},
+                    Geometry: {
+                        shape: "Sy"
+                    },
+                    Status: {},
+                    UpdateTime: {
+                        shape: "Sj"
+                    }
+                }
+            },
+            endpoint: {
+                hostPrefix: "geofencing."
+            }
+        },
+        GetMapGlyphs: {
+            http: {
+                method: "GET",
+                requestUri: "/maps/v0/maps/{MapName}/glyphs/{FontStack}/{FontUnicodeRange}",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                required: [ "FontStack", "FontUnicodeRange", "MapName" ],
+                members: {
+                    FontStack: {
+                        location: "uri",
+                        locationName: "FontStack"
+                    },
+                    FontUnicodeRange: {
+                        location: "uri",
+                        locationName: "FontUnicodeRange"
+                    },
+                    MapName: {
+                        location: "uri",
+                        locationName: "MapName"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    Blob: {
+                        type: "blob"
+                    },
+                    ContentType: {
+                        location: "header",
+                        locationName: "Content-Type"
+                    }
+                },
+                payload: "Blob"
+            },
+            endpoint: {
+                hostPrefix: "maps."
+            }
+        },
+        GetMapSprites: {
+            http: {
+                method: "GET",
+                requestUri: "/maps/v0/maps/{MapName}/sprites/{FileName}",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                required: [ "FileName", "MapName" ],
+                members: {
+                    FileName: {
+                        location: "uri",
+                        locationName: "FileName"
+                    },
+                    MapName: {
+                        location: "uri",
+                        locationName: "MapName"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    Blob: {
+                        type: "blob"
+                    },
+                    ContentType: {
+                        location: "header",
+                        locationName: "Content-Type"
+                    }
+                },
+                payload: "Blob"
+            },
+            endpoint: {
+                hostPrefix: "maps."
+            }
+        },
+        GetMapStyleDescriptor: {
+            http: {
+                method: "GET",
+                requestUri: "/maps/v0/maps/{MapName}/style-descriptor",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                required: [ "MapName" ],
+                members: {
+                    MapName: {
+                        location: "uri",
+                        locationName: "MapName"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    Blob: {
+                        type: "blob"
+                    },
+                    ContentType: {
+                        location: "header",
+                        locationName: "Content-Type"
+                    }
+                },
+                payload: "Blob"
+            },
+            endpoint: {
+                hostPrefix: "maps."
+            }
+        },
+        GetMapTile: {
+            http: {
+                method: "GET",
+                requestUri: "/maps/v0/maps/{MapName}/tiles/{Z}/{X}/{Y}",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                required: [ "MapName", "X", "Y", "Z" ],
+                members: {
+                    MapName: {
+                        location: "uri",
+                        locationName: "MapName"
+                    },
+                    X: {
+                        location: "uri",
+                        locationName: "X"
+                    },
+                    Y: {
+                        location: "uri",
+                        locationName: "Y"
+                    },
+                    Z: {
+                        location: "uri",
+                        locationName: "Z"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    Blob: {
+                        type: "blob"
+                    },
+                    ContentType: {
+                        location: "header",
+                        locationName: "Content-Type"
+                    }
+                },
+                payload: "Blob"
+            },
+            endpoint: {
+                hostPrefix: "maps."
+            }
+        },
+        ListGeofenceCollections: {
+            http: {
+                requestUri: "/geofencing/v0/list-collections",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                members: {
+                    MaxResults: {
+                        type: "integer"
+                    },
+                    NextToken: {}
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "Entries" ],
+                members: {
+                    Entries: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            required: [ "CollectionName", "CreateTime", "Description", "UpdateTime" ],
+                            members: {
+                                CollectionName: {},
+                                CreateTime: {
+                                    shape: "Sj"
+                                },
+                                Description: {},
+                                UpdateTime: {
+                                    shape: "Sj"
+                                }
+                            }
+                        }
+                    },
+                    NextToken: {}
+                }
+            },
+            endpoint: {
+                hostPrefix: "geofencing."
+            }
+        },
+        ListGeofences: {
+            http: {
+                requestUri: "/geofencing/v0/collections/{CollectionName}/list-geofences",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                required: [ "CollectionName" ],
+                members: {
+                    CollectionName: {
+                        location: "uri",
+                        locationName: "CollectionName"
+                    },
+                    NextToken: {}
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "Entries" ],
+                members: {
+                    Entries: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            required: [ "CreateTime", "GeofenceId", "Geometry", "Status", "UpdateTime" ],
+                            members: {
+                                CreateTime: {
+                                    shape: "Sj"
+                                },
+                                GeofenceId: {},
+                                Geometry: {
+                                    shape: "Sy"
+                                },
+                                Status: {},
+                                UpdateTime: {
+                                    shape: "Sj"
+                                }
+                            }
+                        }
+                    },
+                    NextToken: {}
+                }
+            },
+            endpoint: {
+                hostPrefix: "geofencing."
+            }
+        },
+        ListMaps: {
+            http: {
+                requestUri: "/maps/v0/list-maps",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                members: {
+                    MaxResults: {
+                        type: "integer"
+                    },
+                    NextToken: {}
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "Entries" ],
+                members: {
+                    Entries: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            required: [ "CreateTime", "DataSource", "Description", "MapName", "UpdateTime" ],
+                            members: {
+                                CreateTime: {
+                                    shape: "Sj"
+                                },
+                                DataSource: {},
+                                Description: {},
+                                MapName: {},
+                                UpdateTime: {
+                                    shape: "Sj"
+                                }
+                            }
+                        }
+                    },
+                    NextToken: {}
+                }
+            },
+            endpoint: {
+                hostPrefix: "maps."
+            }
+        },
+        ListPlaceIndexes: {
+            http: {
+                requestUri: "/places/v0/list-indexes",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                members: {
+                    MaxResults: {
+                        type: "integer"
+                    },
+                    NextToken: {}
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "Entries" ],
+                members: {
+                    Entries: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            required: [ "CreateTime", "DataSource", "Description", "IndexName", "UpdateTime" ],
+                            members: {
+                                CreateTime: {
+                                    shape: "Sj"
+                                },
+                                DataSource: {},
+                                Description: {},
+                                IndexName: {},
+                                UpdateTime: {
+                                    shape: "Sj"
+                                }
+                            }
+                        }
+                    },
+                    NextToken: {}
+                }
+            },
+            endpoint: {
+                hostPrefix: "places."
+            }
+        },
+        ListTrackerConsumers: {
+            http: {
+                requestUri: "/tracking/v0/trackers/{TrackerName}/list-consumers",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                required: [ "TrackerName" ],
+                members: {
+                    MaxResults: {
+                        type: "integer"
+                    },
+                    NextToken: {},
+                    TrackerName: {
+                        location: "uri",
+                        locationName: "TrackerName"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "ConsumerArns" ],
+                members: {
+                    ConsumerArns: {
+                        type: "list",
+                        member: {}
+                    },
+                    NextToken: {}
+                }
+            },
+            endpoint: {
+                hostPrefix: "tracking."
+            }
+        },
+        ListTrackers: {
+            http: {
+                requestUri: "/tracking/v0/list-trackers",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                members: {
+                    MaxResults: {
+                        type: "integer"
+                    },
+                    NextToken: {}
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "Entries" ],
+                members: {
+                    Entries: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            required: [ "CreateTime", "Description", "TrackerName", "UpdateTime" ],
+                            members: {
+                                CreateTime: {
+                                    shape: "Sj"
+                                },
+                                Description: {},
+                                TrackerName: {},
+                                UpdateTime: {
+                                    shape: "Sj"
+                                }
+                            }
+                        }
+                    },
+                    NextToken: {}
+                }
+            },
+            endpoint: {
+                hostPrefix: "tracking."
+            }
+        },
+        PutGeofence: {
+            http: {
+                method: "PUT",
+                requestUri: "/geofencing/v0/collections/{CollectionName}/geofences/{GeofenceId}",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                required: [ "CollectionName", "GeofenceId", "Geometry" ],
+                members: {
+                    CollectionName: {
+                        location: "uri",
+                        locationName: "CollectionName"
+                    },
+                    GeofenceId: {
+                        location: "uri",
+                        locationName: "GeofenceId"
+                    },
+                    Geometry: {
+                        shape: "Sy"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "CreateTime", "GeofenceId", "UpdateTime" ],
+                members: {
+                    CreateTime: {
+                        shape: "Sj"
+                    },
+                    GeofenceId: {},
+                    UpdateTime: {
+                        shape: "Sj"
+                    }
+                }
+            },
+            endpoint: {
+                hostPrefix: "geofencing."
+            }
+        },
+        SearchPlaceIndexForPosition: {
+            http: {
+                requestUri: "/places/v0/indexes/{IndexName}/search/position",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                required: [ "IndexName", "Position" ],
+                members: {
+                    IndexName: {
+                        location: "uri",
+                        locationName: "IndexName"
+                    },
+                    MaxResults: {
+                        type: "integer"
+                    },
+                    Position: {
+                        shape: "Sh"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "Results", "Summary" ],
+                members: {
+                    Results: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            required: [ "Place" ],
+                            members: {
+                                Place: {
+                                    shape: "S3r"
+                                }
+                            }
+                        }
+                    },
+                    Summary: {
+                        type: "structure",
+                        required: [ "DataSource", "Position" ],
+                        members: {
+                            DataSource: {},
+                            MaxResults: {
+                                type: "integer"
+                            },
+                            Position: {
+                                shape: "Sh"
+                            }
+                        }
+                    }
+                }
+            },
+            endpoint: {
+                hostPrefix: "places."
+            }
+        },
+        SearchPlaceIndexForText: {
+            http: {
+                requestUri: "/places/v0/indexes/{IndexName}/search/text",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                required: [ "IndexName", "Text" ],
+                members: {
+                    BiasPosition: {
+                        shape: "Sh"
+                    },
+                    FilterBBox: {
+                        shape: "S3v"
+                    },
+                    FilterCountries: {
+                        shape: "S3w"
+                    },
+                    IndexName: {
+                        location: "uri",
+                        locationName: "IndexName"
+                    },
+                    MaxResults: {
+                        type: "integer"
+                    },
+                    Text: {
+                        type: "string",
+                        sensitive: true
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "Results", "Summary" ],
+                members: {
+                    Results: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            required: [ "Place" ],
+                            members: {
+                                Place: {
+                                    shape: "S3r"
+                                }
+                            }
+                        }
+                    },
+                    Summary: {
+                        type: "structure",
+                        required: [ "DataSource", "Text" ],
+                        members: {
+                            BiasPosition: {
+                                shape: "Sh"
+                            },
+                            DataSource: {},
+                            FilterBBox: {
+                                shape: "S3v"
+                            },
+                            FilterCountries: {
+                                shape: "S3w"
+                            },
+                            MaxResults: {
+                                type: "integer"
+                            },
+                            ResultBBox: {
+                                shape: "S3v"
+                            },
+                            Text: {
+                                type: "string",
+                                sensitive: true
+                            }
+                        }
+                    }
+                }
+            },
+            endpoint: {
+                hostPrefix: "places."
+            }
+        }
+    },
+    shapes: {
+        Sb: {
+            type: "structure",
+            members: {
+                Code: {},
+                Message: {}
+            }
+        },
+        Sg: {
+            type: "structure",
+            required: [ "DeviceId", "Position", "SampleTime" ],
+            members: {
+                DeviceId: {},
+                Position: {
+                    shape: "Sh"
+                },
+                SampleTime: {
+                    shape: "Sj"
+                }
+            }
+        },
+        Sh: {
+            type: "list",
+            member: {
+                type: "double"
+            },
+            sensitive: true
+        },
+        Sj: {
+            type: "timestamp",
+            timestampFormat: "iso8601"
+        },
+        Sr: {
+            type: "list",
+            member: {
+                type: "structure",
+                required: [ "Position", "ReceivedTime", "SampleTime" ],
+                members: {
+                    DeviceId: {},
+                    Position: {
+                        shape: "Sh"
+                    },
+                    ReceivedTime: {
+                        shape: "Sj"
+                    },
+                    SampleTime: {
+                        shape: "Sj"
+                    }
+                }
+            }
+        },
+        Sy: {
+            type: "structure",
+            members: {
+                Polygon: {
+                    type: "list",
+                    member: {
+                        type: "list",
+                        member: {
+                            shape: "Sh"
+                        }
+                    }
+                }
+            }
+        },
+        S1g: {
+            type: "structure",
+            required: [ "Style" ],
+            members: {
+                Style: {}
+            }
+        },
+        S1k: {
+            type: "structure",
+            members: {
+                IntendedUse: {}
+            }
+        },
+        S3r: {
+            type: "structure",
+            required: [ "Geometry" ],
+            members: {
+                AddressNumber: {},
+                Country: {},
+                Geometry: {
+                    type: "structure",
+                    members: {
+                        Point: {
+                            shape: "Sh"
+                        }
+                    }
+                },
+                Label: {},
+                Municipality: {},
+                Neighborhood: {},
+                PostalCode: {},
+                Region: {},
+                Street: {},
+                SubRegion: {}
+            }
+        },
+        S3v: {
+            type: "list",
+            member: {
+                type: "double"
+            },
+            sensitive: true
+        },
+        S3w: {
+            type: "list",
+            member: {}
+        }
+    },
+    paginators: {
+        GetDevicePositionHistory: {
+            input_token: "NextToken",
+            output_token: "NextToken",
+            result_key: "DevicePositions"
+        },
+        ListGeofenceCollections: {
+            input_token: "NextToken",
+            output_token: "NextToken",
+            limit_key: "MaxResults",
+            result_key: "Entries"
+        },
+        ListGeofences: {
+            input_token: "NextToken",
+            output_token: "NextToken",
+            result_key: "Entries"
+        },
+        ListMaps: {
+            input_token: "NextToken",
+            output_token: "NextToken",
+            limit_key: "MaxResults",
+            result_key: "Entries"
+        },
+        ListPlaceIndexes: {
+            input_token: "NextToken",
+            output_token: "NextToken",
+            limit_key: "MaxResults",
+            result_key: "Entries"
+        },
+        ListTrackerConsumers: {
+            input_token: "NextToken",
+            output_token: "NextToken",
+            limit_key: "MaxResults",
+            result_key: "ConsumerArns"
+        },
+        ListTrackers: {
+            input_token: "NextToken",
+            output_token: "NextToken",
+            limit_key: "MaxResults",
+            result_key: "Entries"
+        }
+    }
+};
+
+AWS.apiLoader.services["wellarchitected"] = {};
+
+AWS.WellArchitected = AWS.Service.defineService("wellarchitected", [ "2020-03-31" ]);
+
+AWS.apiLoader.services["wellarchitected"]["2020-03-31"] = {
+    version: "2.0",
+    metadata: {
+        apiVersion: "2020-03-31",
+        endpointPrefix: "wellarchitected",
+        jsonVersion: "1.1",
+        protocol: "rest-json",
+        serviceAbbreviation: "Well-Architected",
+        serviceFullName: "AWS Well-Architected Tool",
+        serviceId: "WellArchitected",
+        signatureVersion: "v4",
+        signingName: "wellarchitected",
+        uid: "wellarchitected-2020-03-31"
+    },
+    operations: {
+        AssociateLenses: {
+            http: {
+                method: "PATCH",
+                requestUri: "/workloads/{WorkloadId}/associateLenses"
+            },
+            input: {
+                type: "structure",
+                required: [ "WorkloadId", "LensAliases" ],
+                members: {
+                    WorkloadId: {
+                        location: "uri",
+                        locationName: "WorkloadId"
+                    },
+                    LensAliases: {
+                        shape: "S3"
+                    }
+                }
+            }
+        },
+        CreateMilestone: {
+            http: {
+                requestUri: "/workloads/{WorkloadId}/milestones"
+            },
+            input: {
+                type: "structure",
+                required: [ "WorkloadId", "MilestoneName", "ClientRequestToken" ],
+                members: {
+                    WorkloadId: {
+                        location: "uri",
+                        locationName: "WorkloadId"
+                    },
+                    MilestoneName: {},
+                    ClientRequestToken: {
+                        idempotencyToken: true
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    WorkloadId: {},
+                    MilestoneNumber: {
+                        type: "integer"
+                    }
+                }
+            }
+        },
+        CreateWorkload: {
+            http: {
+                requestUri: "/workloads"
+            },
+            input: {
+                type: "structure",
+                required: [ "WorkloadName", "Description", "Environment", "ReviewOwner", "Lenses", "ClientRequestToken" ],
+                members: {
+                    WorkloadName: {},
+                    Description: {},
+                    Environment: {},
+                    AccountIds: {
+                        shape: "Se"
+                    },
+                    AwsRegions: {
+                        shape: "Sg"
+                    },
+                    NonAwsRegions: {
+                        shape: "Si"
+                    },
+                    PillarPriorities: {
+                        shape: "Sk"
+                    },
+                    ArchitecturalDesign: {},
+                    ReviewOwner: {},
+                    IndustryType: {},
+                    Industry: {},
+                    Lenses: {
+                        shape: "Sq"
+                    },
+                    Notes: {},
+                    ClientRequestToken: {
+                        idempotencyToken: true
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    WorkloadId: {},
+                    WorkloadArn: {}
+                }
+            }
+        },
+        CreateWorkloadShare: {
+            http: {
+                requestUri: "/workloads/{WorkloadId}/shares"
+            },
+            input: {
+                type: "structure",
+                required: [ "WorkloadId", "SharedWith", "PermissionType", "ClientRequestToken" ],
+                members: {
+                    WorkloadId: {
+                        location: "uri",
+                        locationName: "WorkloadId"
+                    },
+                    SharedWith: {},
+                    PermissionType: {},
+                    ClientRequestToken: {
+                        idempotencyToken: true
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    WorkloadId: {},
+                    ShareId: {}
+                }
+            }
+        },
+        DeleteWorkload: {
+            http: {
+                method: "DELETE",
+                requestUri: "/workloads/{WorkloadId}"
+            },
+            input: {
+                type: "structure",
+                required: [ "WorkloadId", "ClientRequestToken" ],
+                members: {
+                    WorkloadId: {
+                        location: "uri",
+                        locationName: "WorkloadId"
+                    },
+                    ClientRequestToken: {
+                        idempotencyToken: true,
+                        location: "querystring",
+                        locationName: "ClientRequestToken"
+                    }
+                }
+            }
+        },
+        DeleteWorkloadShare: {
+            http: {
+                method: "DELETE",
+                requestUri: "/workloads/{WorkloadId}/shares/{ShareId}"
+            },
+            input: {
+                type: "structure",
+                required: [ "ShareId", "WorkloadId", "ClientRequestToken" ],
+                members: {
+                    ShareId: {
+                        location: "uri",
+                        locationName: "ShareId"
+                    },
+                    WorkloadId: {
+                        location: "uri",
+                        locationName: "WorkloadId"
+                    },
+                    ClientRequestToken: {
+                        idempotencyToken: true,
+                        location: "querystring",
+                        locationName: "ClientRequestToken"
+                    }
+                }
+            }
+        },
+        DisassociateLenses: {
+            http: {
+                method: "PATCH",
+                requestUri: "/workloads/{WorkloadId}/disassociateLenses"
+            },
+            input: {
+                type: "structure",
+                required: [ "WorkloadId", "LensAliases" ],
+                members: {
+                    WorkloadId: {
+                        location: "uri",
+                        locationName: "WorkloadId"
+                    },
+                    LensAliases: {
+                        shape: "S3"
+                    }
+                }
+            }
+        },
+        GetAnswer: {
+            http: {
+                method: "GET",
+                requestUri: "/workloads/{WorkloadId}/lensReviews/{LensAlias}/answers/{QuestionId}"
+            },
+            input: {
+                type: "structure",
+                required: [ "WorkloadId", "LensAlias", "QuestionId" ],
+                members: {
+                    WorkloadId: {
+                        location: "uri",
+                        locationName: "WorkloadId"
+                    },
+                    LensAlias: {
+                        location: "uri",
+                        locationName: "LensAlias"
+                    },
+                    QuestionId: {
+                        location: "uri",
+                        locationName: "QuestionId"
+                    },
+                    MilestoneNumber: {
+                        location: "querystring",
+                        locationName: "MilestoneNumber",
+                        type: "integer"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    WorkloadId: {},
+                    MilestoneNumber: {
+                        type: "integer"
+                    },
+                    LensAlias: {},
+                    Answer: {
+                        shape: "S15"
+                    }
+                }
+            }
+        },
+        GetLensReview: {
+            http: {
+                method: "GET",
+                requestUri: "/workloads/{WorkloadId}/lensReviews/{LensAlias}"
+            },
+            input: {
+                type: "structure",
+                required: [ "WorkloadId", "LensAlias" ],
+                members: {
+                    WorkloadId: {
+                        location: "uri",
+                        locationName: "WorkloadId"
+                    },
+                    LensAlias: {
+                        location: "uri",
+                        locationName: "LensAlias"
+                    },
+                    MilestoneNumber: {
+                        location: "querystring",
+                        locationName: "MilestoneNumber",
+                        type: "integer"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    WorkloadId: {},
+                    MilestoneNumber: {
+                        type: "integer"
+                    },
+                    LensReview: {
+                        shape: "S1k"
+                    }
+                }
+            }
+        },
+        GetLensReviewReport: {
+            http: {
+                method: "GET",
+                requestUri: "/workloads/{WorkloadId}/lensReviews/{LensAlias}/report"
+            },
+            input: {
+                type: "structure",
+                required: [ "WorkloadId", "LensAlias" ],
+                members: {
+                    WorkloadId: {
+                        location: "uri",
+                        locationName: "WorkloadId"
+                    },
+                    LensAlias: {
+                        location: "uri",
+                        locationName: "LensAlias"
+                    },
+                    MilestoneNumber: {
+                        location: "querystring",
+                        locationName: "MilestoneNumber",
+                        type: "integer"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    WorkloadId: {},
+                    MilestoneNumber: {
+                        type: "integer"
+                    },
+                    LensReviewReport: {
+                        type: "structure",
+                        members: {
+                            LensAlias: {},
+                            Base64String: {}
+                        }
+                    }
+                }
+            }
+        },
+        GetLensVersionDifference: {
+            http: {
+                method: "GET",
+                requestUri: "/lenses/{LensAlias}/versionDifference"
+            },
+            input: {
+                type: "structure",
+                required: [ "LensAlias", "BaseLensVersion" ],
+                members: {
+                    LensAlias: {
+                        location: "uri",
+                        locationName: "LensAlias"
+                    },
+                    BaseLensVersion: {
+                        location: "querystring",
+                        locationName: "BaseLensVersion"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    LensAlias: {},
+                    BaseLensVersion: {},
+                    LatestLensVersion: {},
+                    VersionDifferences: {
+                        type: "structure",
+                        members: {
+                            PillarDifferences: {
+                                type: "list",
+                                member: {
+                                    type: "structure",
+                                    members: {
+                                        PillarId: {},
+                                        DifferenceStatus: {},
+                                        QuestionDifferences: {
+                                            type: "list",
+                                            member: {
+                                                type: "structure",
+                                                members: {
+                                                    QuestionId: {},
+                                                    QuestionTitle: {},
+                                                    DifferenceStatus: {}
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        GetMilestone: {
+            http: {
+                method: "GET",
+                requestUri: "/workloads/{WorkloadId}/milestones/{MilestoneNumber}"
+            },
+            input: {
+                type: "structure",
+                required: [ "WorkloadId", "MilestoneNumber" ],
+                members: {
+                    WorkloadId: {
+                        location: "uri",
+                        locationName: "WorkloadId"
+                    },
+                    MilestoneNumber: {
+                        location: "uri",
+                        locationName: "MilestoneNumber",
+                        type: "integer"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    WorkloadId: {},
+                    Milestone: {
+                        type: "structure",
+                        members: {
+                            MilestoneNumber: {
+                                type: "integer"
+                            },
+                            MilestoneName: {},
+                            RecordedAt: {
+                                type: "timestamp"
+                            },
+                            Workload: {
+                                shape: "S2a"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        GetWorkload: {
+            http: {
+                method: "GET",
+                requestUri: "/workloads/{WorkloadId}"
+            },
+            input: {
+                type: "structure",
+                required: [ "WorkloadId" ],
+                members: {
+                    WorkloadId: {
+                        location: "uri",
+                        locationName: "WorkloadId"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    Workload: {
+                        shape: "S2a"
+                    }
+                }
+            }
+        },
+        ListAnswers: {
+            http: {
+                method: "GET",
+                requestUri: "/workloads/{WorkloadId}/lensReviews/{LensAlias}/answers"
+            },
+            input: {
+                type: "structure",
+                required: [ "WorkloadId", "LensAlias" ],
+                members: {
+                    WorkloadId: {
+                        location: "uri",
+                        locationName: "WorkloadId"
+                    },
+                    LensAlias: {
+                        location: "uri",
+                        locationName: "LensAlias"
+                    },
+                    PillarId: {
+                        location: "querystring",
+                        locationName: "PillarId"
+                    },
+                    MilestoneNumber: {
+                        location: "querystring",
+                        locationName: "MilestoneNumber",
+                        type: "integer"
+                    },
+                    NextToken: {
+                        location: "querystring",
+                        locationName: "NextToken"
+                    },
+                    MaxResults: {
+                        location: "querystring",
+                        locationName: "MaxResults",
+                        type: "integer"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    WorkloadId: {},
+                    MilestoneNumber: {
+                        type: "integer"
+                    },
+                    LensAlias: {},
+                    AnswerSummaries: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            members: {
+                                QuestionId: {},
+                                PillarId: {},
+                                QuestionTitle: {},
+                                Choices: {
+                                    shape: "S1a"
+                                },
+                                SelectedChoices: {
+                                    shape: "S1f"
+                                },
+                                IsApplicable: {
+                                    type: "boolean"
+                                },
+                                Risk: {}
+                            }
+                        }
+                    },
+                    NextToken: {}
+                }
+            }
+        },
+        ListLensReviewImprovements: {
+            http: {
+                method: "GET",
+                requestUri: "/workloads/{WorkloadId}/lensReviews/{LensAlias}/improvements"
+            },
+            input: {
+                type: "structure",
+                required: [ "WorkloadId", "LensAlias" ],
+                members: {
+                    WorkloadId: {
+                        location: "uri",
+                        locationName: "WorkloadId"
+                    },
+                    LensAlias: {
+                        location: "uri",
+                        locationName: "LensAlias"
+                    },
+                    PillarId: {
+                        location: "querystring",
+                        locationName: "PillarId"
+                    },
+                    MilestoneNumber: {
+                        location: "querystring",
+                        locationName: "MilestoneNumber",
+                        type: "integer"
+                    },
+                    NextToken: {
+                        location: "querystring",
+                        locationName: "NextToken"
+                    },
+                    MaxResults: {
+                        location: "querystring",
+                        locationName: "MaxResults",
+                        type: "integer"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    WorkloadId: {},
+                    MilestoneNumber: {
+                        type: "integer"
+                    },
+                    LensAlias: {},
+                    ImprovementSummaries: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            members: {
+                                QuestionId: {},
+                                PillarId: {},
+                                QuestionTitle: {},
+                                Risk: {},
+                                ImprovementPlanUrl: {}
+                            }
+                        }
+                    },
+                    NextToken: {}
+                }
+            }
+        },
+        ListLensReviews: {
+            http: {
+                method: "GET",
+                requestUri: "/workloads/{WorkloadId}/lensReviews"
+            },
+            input: {
+                type: "structure",
+                required: [ "WorkloadId" ],
+                members: {
+                    WorkloadId: {
+                        location: "uri",
+                        locationName: "WorkloadId"
+                    },
+                    MilestoneNumber: {
+                        location: "querystring",
+                        locationName: "MilestoneNumber",
+                        type: "integer"
+                    },
+                    NextToken: {
+                        location: "querystring",
+                        locationName: "NextToken"
+                    },
+                    MaxResults: {
+                        location: "querystring",
+                        locationName: "MaxResults",
+                        type: "integer"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    WorkloadId: {},
+                    MilestoneNumber: {
+                        type: "integer"
+                    },
+                    LensReviewSummaries: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            members: {
+                                LensAlias: {},
+                                LensVersion: {},
+                                LensName: {},
+                                LensStatus: {},
+                                UpdatedAt: {
+                                    type: "timestamp"
+                                },
+                                RiskCounts: {
+                                    shape: "S1r"
+                                }
+                            }
+                        }
+                    },
+                    NextToken: {}
+                }
+            }
+        },
+        ListLenses: {
+            http: {
+                method: "GET",
+                requestUri: "/lenses"
+            },
+            input: {
+                type: "structure",
+                members: {
+                    NextToken: {
+                        location: "querystring",
+                        locationName: "NextToken"
+                    },
+                    MaxResults: {
+                        location: "querystring",
+                        locationName: "MaxResults",
+                        type: "integer"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    LensSummaries: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            members: {
+                                LensAlias: {},
+                                LensVersion: {},
+                                LensName: {},
+                                Description: {}
+                            }
+                        }
+                    },
+                    NextToken: {}
+                }
+            }
+        },
+        ListMilestones: {
+            http: {
+                requestUri: "/workloads/{WorkloadId}/milestonesSummaries"
+            },
+            input: {
+                type: "structure",
+                required: [ "WorkloadId" ],
+                members: {
+                    WorkloadId: {
+                        location: "uri",
+                        locationName: "WorkloadId"
+                    },
+                    NextToken: {},
+                    MaxResults: {
+                        type: "integer"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    WorkloadId: {},
+                    MilestoneSummaries: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            members: {
+                                MilestoneNumber: {
+                                    type: "integer"
+                                },
+                                MilestoneName: {},
+                                RecordedAt: {
+                                    type: "timestamp"
+                                },
+                                WorkloadSummary: {
+                                    shape: "S34"
+                                }
+                            }
+                        }
+                    },
+                    NextToken: {}
+                }
+            }
+        },
+        ListNotifications: {
+            http: {
+                requestUri: "/notifications"
+            },
+            input: {
+                type: "structure",
+                members: {
+                    WorkloadId: {},
+                    NextToken: {},
+                    MaxResults: {
+                        type: "integer"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    NotificationSummaries: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            members: {
+                                Type: {},
+                                LensUpgradeSummary: {
+                                    type: "structure",
+                                    members: {
+                                        WorkloadId: {},
+                                        WorkloadName: {},
+                                        LensAlias: {},
+                                        CurrentLensVersion: {},
+                                        LatestLensVersion: {}
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    NextToken: {}
+                }
+            }
+        },
+        ListShareInvitations: {
+            http: {
+                method: "GET",
+                requestUri: "/shareInvitations"
+            },
+            input: {
+                type: "structure",
+                members: {
+                    WorkloadNamePrefix: {
+                        location: "querystring",
+                        locationName: "WorkloadNamePrefix"
+                    },
+                    NextToken: {
+                        location: "querystring",
+                        locationName: "NextToken"
+                    },
+                    MaxResults: {
+                        location: "querystring",
+                        locationName: "MaxResults",
+                        type: "integer"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    ShareInvitationSummaries: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            members: {
+                                ShareInvitationId: {},
+                                SharedBy: {},
+                                SharedWith: {},
+                                PermissionType: {},
+                                WorkloadName: {},
+                                WorkloadId: {}
+                            }
+                        }
+                    },
+                    NextToken: {}
+                }
+            }
+        },
+        ListWorkloadShares: {
+            http: {
+                method: "GET",
+                requestUri: "/workloads/{WorkloadId}/shares"
+            },
+            input: {
+                type: "structure",
+                required: [ "WorkloadId" ],
+                members: {
+                    WorkloadId: {
+                        location: "uri",
+                        locationName: "WorkloadId"
+                    },
+                    SharedWithPrefix: {
+                        location: "querystring",
+                        locationName: "SharedWithPrefix"
+                    },
+                    NextToken: {
+                        location: "querystring",
+                        locationName: "NextToken"
+                    },
+                    MaxResults: {
+                        location: "querystring",
+                        locationName: "MaxResults",
+                        type: "integer"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    WorkloadId: {},
+                    WorkloadShareSummaries: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            members: {
+                                ShareId: {},
+                                SharedWith: {},
+                                PermissionType: {},
+                                Status: {}
+                            }
+                        }
+                    },
+                    NextToken: {}
+                }
+            }
+        },
+        ListWorkloads: {
+            http: {
+                requestUri: "/workloadsSummaries"
+            },
+            input: {
+                type: "structure",
+                members: {
+                    WorkloadNamePrefix: {},
+                    NextToken: {},
+                    MaxResults: {
+                        type: "integer"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    WorkloadSummaries: {
+                        type: "list",
+                        member: {
+                            shape: "S34"
+                        }
+                    },
+                    NextToken: {}
+                }
+            }
+        },
+        UpdateAnswer: {
+            http: {
+                method: "PATCH",
+                requestUri: "/workloads/{WorkloadId}/lensReviews/{LensAlias}/answers/{QuestionId}"
+            },
+            input: {
+                type: "structure",
+                required: [ "WorkloadId", "LensAlias", "QuestionId" ],
+                members: {
+                    WorkloadId: {
+                        location: "uri",
+                        locationName: "WorkloadId"
+                    },
+                    LensAlias: {
+                        location: "uri",
+                        locationName: "LensAlias"
+                    },
+                    QuestionId: {
+                        location: "uri",
+                        locationName: "QuestionId"
+                    },
+                    SelectedChoices: {
+                        shape: "S1f"
+                    },
+                    Notes: {},
+                    IsApplicable: {
+                        type: "boolean"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    WorkloadId: {},
+                    LensAlias: {},
+                    Answer: {
+                        shape: "S15"
+                    }
+                }
+            }
+        },
+        UpdateLensReview: {
+            http: {
+                method: "PATCH",
+                requestUri: "/workloads/{WorkloadId}/lensReviews/{LensAlias}"
+            },
+            input: {
+                type: "structure",
+                required: [ "WorkloadId", "LensAlias" ],
+                members: {
+                    WorkloadId: {
+                        location: "uri",
+                        locationName: "WorkloadId"
+                    },
+                    LensAlias: {
+                        location: "uri",
+                        locationName: "LensAlias"
+                    },
+                    LensNotes: {},
+                    PillarNotes: {
+                        type: "map",
+                        key: {},
+                        value: {}
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    WorkloadId: {},
+                    LensReview: {
+                        shape: "S1k"
+                    }
+                }
+            }
+        },
+        UpdateShareInvitation: {
+            http: {
+                method: "PATCH",
+                requestUri: "/shareInvitations/{ShareInvitationId}"
+            },
+            input: {
+                type: "structure",
+                required: [ "ShareInvitationId", "ShareInvitationAction" ],
+                members: {
+                    ShareInvitationId: {
+                        location: "uri",
+                        locationName: "ShareInvitationId"
+                    },
+                    ShareInvitationAction: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    ShareInvitation: {
+                        type: "structure",
+                        members: {
+                            ShareInvitationId: {},
+                            WorkloadId: {}
+                        }
+                    }
+                }
+            }
+        },
+        UpdateWorkload: {
+            http: {
+                method: "PATCH",
+                requestUri: "/workloads/{WorkloadId}"
+            },
+            input: {
+                type: "structure",
+                required: [ "WorkloadId" ],
+                members: {
+                    WorkloadId: {
+                        location: "uri",
+                        locationName: "WorkloadId"
+                    },
+                    WorkloadName: {},
+                    Description: {},
+                    Environment: {},
+                    AccountIds: {
+                        shape: "Se"
+                    },
+                    AwsRegions: {
+                        shape: "Sg"
+                    },
+                    NonAwsRegions: {
+                        shape: "Si"
+                    },
+                    PillarPriorities: {
+                        shape: "Sk"
+                    },
+                    ArchitecturalDesign: {},
+                    ReviewOwner: {},
+                    IsReviewOwnerUpdateAcknowledged: {
+                        type: "boolean"
+                    },
+                    IndustryType: {},
+                    Industry: {},
+                    Notes: {},
+                    ImprovementStatus: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    Workload: {
+                        shape: "S2a"
+                    }
+                }
+            }
+        },
+        UpdateWorkloadShare: {
+            http: {
+                method: "PATCH",
+                requestUri: "/workloads/{WorkloadId}/shares/{ShareId}"
+            },
+            input: {
+                type: "structure",
+                required: [ "ShareId", "WorkloadId", "PermissionType" ],
+                members: {
+                    ShareId: {
+                        location: "uri",
+                        locationName: "ShareId"
+                    },
+                    WorkloadId: {
+                        location: "uri",
+                        locationName: "WorkloadId"
+                    },
+                    PermissionType: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    WorkloadId: {},
+                    WorkloadShare: {
+                        type: "structure",
+                        members: {
+                            ShareId: {},
+                            SharedBy: {},
+                            SharedWith: {},
+                            PermissionType: {},
+                            Status: {},
+                            WorkloadName: {},
+                            WorkloadId: {}
+                        }
+                    }
+                }
+            }
+        },
+        UpgradeLensReview: {
+            http: {
+                method: "PUT",
+                requestUri: "/workloads/{WorkloadId}/lensReviews/{LensAlias}/upgrade"
+            },
+            input: {
+                type: "structure",
+                required: [ "WorkloadId", "LensAlias", "MilestoneName" ],
+                members: {
+                    WorkloadId: {
+                        location: "uri",
+                        locationName: "WorkloadId"
+                    },
+                    LensAlias: {
+                        location: "uri",
+                        locationName: "LensAlias"
+                    },
+                    MilestoneName: {},
+                    ClientRequestToken: {}
+                }
+            }
+        }
+    },
+    shapes: {
+        S3: {
+            type: "list",
+            member: {}
+        },
+        Se: {
+            type: "list",
+            member: {}
+        },
+        Sg: {
+            type: "list",
+            member: {}
+        },
+        Si: {
+            type: "list",
+            member: {}
+        },
+        Sk: {
+            type: "list",
+            member: {}
+        },
+        Sq: {
+            type: "list",
+            member: {}
+        },
+        S15: {
+            type: "structure",
+            members: {
+                QuestionId: {},
+                PillarId: {},
+                QuestionTitle: {},
+                QuestionDescription: {},
+                ImprovementPlanUrl: {},
+                HelpfulResourceUrl: {},
+                Choices: {
+                    shape: "S1a"
+                },
+                SelectedChoices: {
+                    shape: "S1f"
+                },
+                IsApplicable: {
+                    type: "boolean"
+                },
+                Risk: {},
+                Notes: {}
+            }
+        },
+        S1a: {
+            type: "list",
+            member: {
+                type: "structure",
+                members: {
+                    ChoiceId: {},
+                    Title: {},
+                    Description: {}
+                }
+            }
+        },
+        S1f: {
+            type: "list",
+            member: {}
+        },
+        S1k: {
+            type: "structure",
+            members: {
+                LensAlias: {},
+                LensVersion: {},
+                LensName: {},
+                LensStatus: {},
+                PillarReviewSummaries: {
+                    type: "list",
+                    member: {
+                        type: "structure",
+                        members: {
+                            PillarId: {},
+                            PillarName: {},
+                            Notes: {},
+                            RiskCounts: {
+                                shape: "S1r"
+                            }
+                        }
+                    }
+                },
+                UpdatedAt: {
+                    type: "timestamp"
+                },
+                Notes: {},
+                RiskCounts: {
+                    shape: "S1r"
+                },
+                NextToken: {}
+            }
+        },
+        S1r: {
+            type: "map",
+            key: {},
+            value: {
+                type: "integer"
+            }
+        },
+        S2a: {
+            type: "structure",
+            members: {
+                WorkloadId: {},
+                WorkloadArn: {},
+                WorkloadName: {},
+                Description: {},
+                Environment: {},
+                UpdatedAt: {
+                    type: "timestamp"
+                },
+                AccountIds: {
+                    shape: "Se"
+                },
+                AwsRegions: {
+                    shape: "Sg"
+                },
+                NonAwsRegions: {
+                    shape: "Si"
+                },
+                ArchitecturalDesign: {},
+                ReviewOwner: {},
+                ReviewRestrictionDate: {
+                    type: "timestamp"
+                },
+                IsReviewOwnerUpdateAcknowledged: {
+                    type: "boolean"
+                },
+                IndustryType: {},
+                Industry: {},
+                Notes: {},
+                ImprovementStatus: {},
+                RiskCounts: {
+                    shape: "S1r"
+                },
+                PillarPriorities: {
+                    shape: "Sk"
+                },
+                Lenses: {
+                    shape: "Sq"
+                },
+                Owner: {},
+                ShareInvitationId: {}
+            }
+        },
+        S34: {
+            type: "structure",
+            members: {
+                WorkloadId: {},
+                WorkloadArn: {},
+                WorkloadName: {},
+                Owner: {},
+                UpdatedAt: {
+                    type: "timestamp"
+                },
+                Lenses: {
+                    shape: "Sq"
+                },
+                RiskCounts: {
+                    shape: "S1r"
+                },
+                ImprovementStatus: {}
+            }
+        }
+    },
+    paginators: {
+        ListAnswers: {
+            input_token: "NextToken",
+            output_token: "NextToken",
+            limit_key: "MaxResults"
+        },
+        ListLensReviewImprovements: {
+            input_token: "NextToken",
+            output_token: "NextToken",
+            limit_key: "MaxResults"
+        },
+        ListLensReviews: {
+            input_token: "NextToken",
+            output_token: "NextToken",
+            limit_key: "MaxResults"
+        },
+        ListLenses: {
+            input_token: "NextToken",
+            output_token: "NextToken",
+            limit_key: "MaxResults"
+        },
+        ListMilestones: {
+            input_token: "NextToken",
+            output_token: "NextToken",
+            limit_key: "MaxResults"
+        },
+        ListNotifications: {
+            input_token: "NextToken",
+            output_token: "NextToken",
+            limit_key: "MaxResults"
+        },
+        ListShareInvitations: {
+            input_token: "NextToken",
+            output_token: "NextToken",
+            limit_key: "MaxResults"
+        },
+        ListWorkloadShares: {
+            input_token: "NextToken",
+            output_token: "NextToken",
+            limit_key: "MaxResults"
+        },
+        ListWorkloads: {
+            input_token: "NextToken",
+            output_token: "NextToken",
+            limit_key: "MaxResults"
+        }
+    }
+};
+
+AWS.apiLoader.services["lexmodelsv2"] = {};
+
+AWS.LexModelsV2 = AWS.Service.defineService("lexmodelsv2", [ "2020-08-07" ]);
+
+_xamzrequire = function e(t, n, r) {
+    function s(o, u) {
+        if (!n[o]) {
+            if (!t[o]) {
+                var a = typeof _xamzrequire == "function" && _xamzrequire;
+                if (!u && a) return a(o, !0);
+                if (i) return i(o, !0);
+                var f = new Error("Cannot find module '" + o + "'");
+                throw f.code = "MODULE_NOT_FOUND", f;
+            }
+            var l = n[o] = {
+                exports: {}
+            };
+            t[o][0].call(l.exports, function(e) {
+                var n = t[o][1][e];
+                return s(n ? n : e);
+            }, l, l.exports, e, t, n, r);
+        }
+        return n[o].exports;
+    }
+    var i = typeof _xamzrequire == "function" && _xamzrequire;
+    for (var o = 0; o < r.length; o++) s(r[o]);
+    return s;
+}({
+    99: [ function(require, module, exports) {
+        var AWS = require("../core");
+        AWS.util.update(AWS.LexModelsV2.prototype, {
+            setupRequestListeners: function setupRequestListeners(request) {
+                request.addListener("build", this.modifyContentType);
+            },
+            modifyContentType: function modifyContentType(request) {
+                if (request.httpRequest.headers["Content-Type"] === "application/json") {
+                    request.httpRequest.headers["Content-Type"] = "application/x-amz-json-1.1";
+                }
+            }
+        });
+    }, {
+        "../core": 39
+    } ]
+}, {}, [ 99 ]);
+
+AWS.apiLoader.services["lexmodelsv2"]["2020-08-07"] = {
+    version: "2.0",
+    metadata: {
+        apiVersion: "2020-08-07",
+        endpointPrefix: "models-v2-lex",
+        jsonVersion: "1.1",
+        protocol: "rest-json",
+        serviceAbbreviation: "Lex Models V2",
+        serviceFullName: "Amazon Lex Model Building V2",
+        serviceId: "Lex Models V2",
+        signatureVersion: "v4",
+        signingName: "lex",
+        uid: "models.lex.v2-2020-08-07"
+    },
+    operations: {
+        BuildBotLocale: {
+            http: {
+                requestUri: "/bots/{botId}/botversions/{botVersion}/botlocales/{localeId}/",
+                responseCode: 202
+            },
+            input: {
+                type: "structure",
+                required: [ "botId", "botVersion", "localeId" ],
+                members: {
+                    botId: {
+                        location: "uri",
+                        locationName: "botId"
+                    },
+                    botVersion: {
+                        location: "uri",
+                        locationName: "botVersion"
+                    },
+                    localeId: {
+                        location: "uri",
+                        locationName: "localeId"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    botId: {},
+                    botVersion: {},
+                    localeId: {},
+                    botLocaleStatus: {},
+                    lastBuildSubmittedDateTime: {
+                        type: "timestamp"
+                    }
+                }
+            }
+        },
+        CreateBot: {
+            http: {
+                method: "PUT",
+                requestUri: "/bots/",
+                responseCode: 202
+            },
+            input: {
+                type: "structure",
+                required: [ "botName", "roleArn", "dataPrivacy", "idleSessionTTLInSeconds" ],
+                members: {
+                    botName: {},
+                    description: {},
+                    roleArn: {},
+                    dataPrivacy: {
+                        shape: "Sc"
+                    },
+                    idleSessionTTLInSeconds: {
+                        type: "integer"
+                    },
+                    botTags: {
+                        shape: "Sf"
+                    },
+                    testBotAliasTags: {
+                        shape: "Sf"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    botId: {},
+                    botName: {},
+                    description: {},
+                    roleArn: {},
+                    dataPrivacy: {
+                        shape: "Sc"
+                    },
+                    idleSessionTTLInSeconds: {
+                        type: "integer"
+                    },
+                    botStatus: {},
+                    creationDateTime: {
+                        type: "timestamp"
+                    },
+                    botTags: {
+                        shape: "Sf"
+                    },
+                    testBotAliasTags: {
+                        shape: "Sf"
+                    }
+                }
+            }
+        },
+        CreateBotAlias: {
+            http: {
+                method: "PUT",
+                requestUri: "/bots/{botId}/botaliases/",
+                responseCode: 202
+            },
+            input: {
+                type: "structure",
+                required: [ "botAliasName", "botId" ],
+                members: {
+                    botAliasName: {},
+                    description: {},
+                    botVersion: {},
+                    botAliasLocaleSettings: {
+                        shape: "Sm"
+                    },
+                    conversationLogSettings: {
+                        shape: "St"
+                    },
+                    sentimentAnalysisSettings: {
+                        shape: "S16"
+                    },
+                    botId: {
+                        location: "uri",
+                        locationName: "botId"
+                    },
+                    tags: {
+                        shape: "Sf"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    botAliasId: {},
+                    botAliasName: {},
+                    description: {},
+                    botVersion: {},
+                    botAliasLocaleSettings: {
+                        shape: "Sm"
+                    },
+                    conversationLogSettings: {
+                        shape: "St"
+                    },
+                    sentimentAnalysisSettings: {
+                        shape: "S16"
+                    },
+                    botAliasStatus: {},
+                    botId: {},
+                    creationDateTime: {
+                        type: "timestamp"
+                    },
+                    tags: {
+                        shape: "Sf"
+                    }
+                }
+            }
+        },
+        CreateBotLocale: {
+            http: {
+                method: "PUT",
+                requestUri: "/bots/{botId}/botversions/{botVersion}/botlocales/",
+                responseCode: 202
+            },
+            input: {
+                type: "structure",
+                required: [ "botId", "botVersion", "localeId", "nluIntentConfidenceThreshold" ],
+                members: {
+                    botId: {
+                        location: "uri",
+                        locationName: "botId"
+                    },
+                    botVersion: {
+                        location: "uri",
+                        locationName: "botVersion"
+                    },
+                    localeId: {},
+                    description: {},
+                    nluIntentConfidenceThreshold: {
+                        type: "double"
+                    },
+                    voiceSettings: {
+                        shape: "S1c"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    botId: {},
+                    botVersion: {},
+                    localeName: {},
+                    localeId: {},
+                    description: {},
+                    nluIntentConfidenceThreshold: {
+                        type: "double"
+                    },
+                    voiceSettings: {
+                        shape: "S1c"
+                    },
+                    botLocaleStatus: {},
+                    creationDateTime: {
+                        type: "timestamp"
+                    }
+                }
+            }
+        },
+        CreateBotVersion: {
+            http: {
+                method: "PUT",
+                requestUri: "/bots/{botId}/botversions/",
+                responseCode: 202
+            },
+            input: {
+                type: "structure",
+                required: [ "botId", "botVersionLocaleSpecification" ],
+                members: {
+                    botId: {
+                        location: "uri",
+                        locationName: "botId"
+                    },
+                    description: {},
+                    botVersionLocaleSpecification: {
+                        shape: "S1h"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    botId: {},
+                    description: {},
+                    botVersion: {},
+                    botVersionLocaleSpecification: {
+                        shape: "S1h"
+                    },
+                    botStatus: {},
+                    creationDateTime: {
+                        type: "timestamp"
+                    }
+                }
+            }
+        },
+        CreateIntent: {
+            http: {
+                method: "PUT",
+                requestUri: "/bots/{botId}/botversions/{botVersion}/botlocales/{localeId}/intents/",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                required: [ "intentName", "botId", "botVersion", "localeId" ],
+                members: {
+                    intentName: {},
+                    description: {},
+                    parentIntentSignature: {},
+                    sampleUtterances: {
+                        shape: "S1n"
+                    },
+                    dialogCodeHook: {
+                        shape: "S1q"
+                    },
+                    fulfillmentCodeHook: {
+                        shape: "S1r"
+                    },
+                    intentConfirmationSetting: {
+                        shape: "S1s"
+                    },
+                    intentClosingSetting: {
+                        shape: "S2e"
+                    },
+                    inputContexts: {
+                        shape: "S2f"
+                    },
+                    outputContexts: {
+                        shape: "S2h"
+                    },
+                    kendraConfiguration: {
+                        shape: "S2l"
+                    },
+                    botId: {
+                        location: "uri",
+                        locationName: "botId"
+                    },
+                    botVersion: {
+                        location: "uri",
+                        locationName: "botVersion"
+                    },
+                    localeId: {
+                        location: "uri",
+                        locationName: "localeId"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    intentId: {},
+                    intentName: {},
+                    description: {},
+                    parentIntentSignature: {},
+                    sampleUtterances: {
+                        shape: "S1n"
+                    },
+                    dialogCodeHook: {
+                        shape: "S1q"
+                    },
+                    fulfillmentCodeHook: {
+                        shape: "S1r"
+                    },
+                    intentConfirmationSetting: {
+                        shape: "S1s"
+                    },
+                    intentClosingSetting: {
+                        shape: "S2e"
+                    },
+                    inputContexts: {
+                        shape: "S2f"
+                    },
+                    outputContexts: {
+                        shape: "S2h"
+                    },
+                    kendraConfiguration: {
+                        shape: "S2l"
+                    },
+                    botId: {},
+                    botVersion: {},
+                    localeId: {},
+                    creationDateTime: {
+                        type: "timestamp"
+                    }
+                }
+            }
+        },
+        CreateSlot: {
+            http: {
+                method: "PUT",
+                requestUri: "/bots/{botId}/botversions/{botVersion}/botlocales/{localeId}/intents/{intentId}/slots/",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                required: [ "slotName", "slotTypeId", "valueElicitationSetting", "botId", "botVersion", "localeId", "intentId" ],
+                members: {
+                    slotName: {},
+                    description: {},
+                    slotTypeId: {},
+                    valueElicitationSetting: {
+                        shape: "S2r"
+                    },
+                    obfuscationSetting: {
+                        shape: "S31"
+                    },
+                    botId: {
+                        location: "uri",
+                        locationName: "botId"
+                    },
+                    botVersion: {
+                        location: "uri",
+                        locationName: "botVersion"
+                    },
+                    localeId: {
+                        location: "uri",
+                        locationName: "localeId"
+                    },
+                    intentId: {
+                        location: "uri",
+                        locationName: "intentId"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    slotId: {},
+                    slotName: {},
+                    description: {},
+                    slotTypeId: {},
+                    valueElicitationSetting: {
+                        shape: "S2r"
+                    },
+                    obfuscationSetting: {
+                        shape: "S31"
+                    },
+                    botId: {},
+                    botVersion: {},
+                    localeId: {},
+                    intentId: {},
+                    creationDateTime: {
+                        type: "timestamp"
+                    }
+                }
+            }
+        },
+        CreateSlotType: {
+            http: {
+                method: "PUT",
+                requestUri: "/bots/{botId}/botversions/{botVersion}/botlocales/{localeId}/slottypes/",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                required: [ "slotTypeName", "valueSelectionSetting", "botId", "botVersion", "localeId" ],
+                members: {
+                    slotTypeName: {},
+                    description: {},
+                    slotTypeValues: {
+                        shape: "S35"
+                    },
+                    valueSelectionSetting: {
+                        shape: "S3a"
+                    },
+                    parentSlotTypeSignature: {},
+                    botId: {
+                        location: "uri",
+                        locationName: "botId"
+                    },
+                    botVersion: {
+                        location: "uri",
+                        locationName: "botVersion"
+                    },
+                    localeId: {
+                        location: "uri",
+                        locationName: "localeId"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    slotTypeId: {},
+                    slotTypeName: {},
+                    description: {},
+                    slotTypeValues: {
+                        shape: "S35"
+                    },
+                    valueSelectionSetting: {
+                        shape: "S3a"
+                    },
+                    parentSlotTypeSignature: {},
+                    botId: {},
+                    botVersion: {},
+                    localeId: {},
+                    creationDateTime: {
+                        type: "timestamp"
+                    }
+                }
+            }
+        },
+        DeleteBot: {
+            http: {
+                method: "DELETE",
+                requestUri: "/bots/{botId}/",
+                responseCode: 202
+            },
+            input: {
+                type: "structure",
+                required: [ "botId" ],
+                members: {
+                    botId: {
+                        location: "uri",
+                        locationName: "botId"
+                    },
+                    skipResourceInUseCheck: {
+                        location: "querystring",
+                        locationName: "skipResourceInUseCheck",
+                        type: "boolean"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    botId: {},
+                    botStatus: {}
+                }
+            }
+        },
+        DeleteBotAlias: {
+            http: {
+                method: "DELETE",
+                requestUri: "/bots/{botId}/botaliases/{botAliasId}/",
+                responseCode: 202
+            },
+            input: {
+                type: "structure",
+                required: [ "botAliasId", "botId" ],
+                members: {
+                    botAliasId: {
+                        location: "uri",
+                        locationName: "botAliasId"
+                    },
+                    botId: {
+                        location: "uri",
+                        locationName: "botId"
+                    },
+                    skipResourceInUseCheck: {
+                        location: "querystring",
+                        locationName: "skipResourceInUseCheck",
+                        type: "boolean"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    botAliasId: {},
+                    botId: {},
+                    botAliasStatus: {}
+                }
+            }
+        },
+        DeleteBotLocale: {
+            http: {
+                method: "DELETE",
+                requestUri: "/bots/{botId}/botversions/{botVersion}/botlocales/{localeId}/",
+                responseCode: 202
+            },
+            input: {
+                type: "structure",
+                required: [ "botId", "botVersion", "localeId" ],
+                members: {
+                    botId: {
+                        location: "uri",
+                        locationName: "botId"
+                    },
+                    botVersion: {
+                        location: "uri",
+                        locationName: "botVersion"
+                    },
+                    localeId: {
+                        location: "uri",
+                        locationName: "localeId"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    botId: {},
+                    botVersion: {},
+                    localeId: {},
+                    botLocaleStatus: {}
+                }
+            }
+        },
+        DeleteBotVersion: {
+            http: {
+                method: "DELETE",
+                requestUri: "/bots/{botId}/botversions/{botVersion}/",
+                responseCode: 202
+            },
+            input: {
+                type: "structure",
+                required: [ "botId", "botVersion" ],
+                members: {
+                    botId: {
+                        location: "uri",
+                        locationName: "botId"
+                    },
+                    botVersion: {
+                        location: "uri",
+                        locationName: "botVersion"
+                    },
+                    skipResourceInUseCheck: {
+                        location: "querystring",
+                        locationName: "skipResourceInUseCheck",
+                        type: "boolean"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    botId: {},
+                    botVersion: {},
+                    botStatus: {}
+                }
+            }
+        },
+        DeleteIntent: {
+            http: {
+                method: "DELETE",
+                requestUri: "/bots/{botId}/botversions/{botVersion}/botlocales/{localeId}/intents/{intentId}/",
+                responseCode: 204
+            },
+            input: {
+                type: "structure",
+                required: [ "intentId", "botId", "botVersion", "localeId" ],
+                members: {
+                    intentId: {
+                        location: "uri",
+                        locationName: "intentId"
+                    },
+                    botId: {
+                        location: "uri",
+                        locationName: "botId"
+                    },
+                    botVersion: {
+                        location: "uri",
+                        locationName: "botVersion"
+                    },
+                    localeId: {
+                        location: "uri",
+                        locationName: "localeId"
+                    }
+                }
+            }
+        },
+        DeleteSlot: {
+            http: {
+                method: "DELETE",
+                requestUri: "/bots/{botId}/botversions/{botVersion}/botlocales/{localeId}/intents/{intentId}/slots/{slotId}/",
+                responseCode: 204
+            },
+            input: {
+                type: "structure",
+                required: [ "slotId", "botId", "botVersion", "localeId", "intentId" ],
+                members: {
+                    slotId: {
+                        location: "uri",
+                        locationName: "slotId"
+                    },
+                    botId: {
+                        location: "uri",
+                        locationName: "botId"
+                    },
+                    botVersion: {
+                        location: "uri",
+                        locationName: "botVersion"
+                    },
+                    localeId: {
+                        location: "uri",
+                        locationName: "localeId"
+                    },
+                    intentId: {
+                        location: "uri",
+                        locationName: "intentId"
+                    }
+                }
+            }
+        },
+        DeleteSlotType: {
+            http: {
+                method: "DELETE",
+                requestUri: "/bots/{botId}/botversions/{botVersion}/botlocales/{localeId}/slottypes/{slotTypeId}/",
+                responseCode: 204
+            },
+            input: {
+                type: "structure",
+                required: [ "slotTypeId", "botId", "botVersion", "localeId" ],
+                members: {
+                    slotTypeId: {
+                        location: "uri",
+                        locationName: "slotTypeId"
+                    },
+                    botId: {
+                        location: "uri",
+                        locationName: "botId"
+                    },
+                    botVersion: {
+                        location: "uri",
+                        locationName: "botVersion"
+                    },
+                    localeId: {
+                        location: "uri",
+                        locationName: "localeId"
+                    },
+                    skipResourceInUseCheck: {
+                        location: "querystring",
+                        locationName: "skipResourceInUseCheck",
+                        type: "boolean"
+                    }
+                }
+            }
+        },
+        DescribeBot: {
+            http: {
+                method: "GET",
+                requestUri: "/bots/{botId}/",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                required: [ "botId" ],
+                members: {
+                    botId: {
+                        location: "uri",
+                        locationName: "botId"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    botId: {},
+                    botName: {},
+                    description: {},
+                    roleArn: {},
+                    dataPrivacy: {
+                        shape: "Sc"
+                    },
+                    idleSessionTTLInSeconds: {
+                        type: "integer"
+                    },
+                    botStatus: {},
+                    creationDateTime: {
+                        type: "timestamp"
+                    },
+                    lastUpdatedDateTime: {
+                        type: "timestamp"
+                    }
+                }
+            }
+        },
+        DescribeBotAlias: {
+            http: {
+                method: "GET",
+                requestUri: "/bots/{botId}/botaliases/{botAliasId}/",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                required: [ "botAliasId", "botId" ],
+                members: {
+                    botAliasId: {
+                        location: "uri",
+                        locationName: "botAliasId"
+                    },
+                    botId: {
+                        location: "uri",
+                        locationName: "botId"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    botAliasId: {},
+                    botAliasName: {},
+                    description: {},
+                    botVersion: {},
+                    botAliasLocaleSettings: {
+                        shape: "Sm"
+                    },
+                    conversationLogSettings: {
+                        shape: "St"
+                    },
+                    sentimentAnalysisSettings: {
+                        shape: "S16"
+                    },
+                    botAliasHistoryEvents: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            members: {
+                                botVersion: {},
+                                startDate: {
+                                    type: "timestamp"
+                                },
+                                endDate: {
+                                    type: "timestamp"
+                                }
+                            }
+                        }
+                    },
+                    botAliasStatus: {},
+                    botId: {},
+                    creationDateTime: {
+                        type: "timestamp"
+                    },
+                    lastUpdatedDateTime: {
+                        type: "timestamp"
+                    }
+                }
+            }
+        },
+        DescribeBotLocale: {
+            http: {
+                method: "GET",
+                requestUri: "/bots/{botId}/botversions/{botVersion}/botlocales/{localeId}/",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                required: [ "botId", "botVersion", "localeId" ],
+                members: {
+                    botId: {
+                        location: "uri",
+                        locationName: "botId"
+                    },
+                    botVersion: {
+                        location: "uri",
+                        locationName: "botVersion"
+                    },
+                    localeId: {
+                        location: "uri",
+                        locationName: "localeId"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    botId: {},
+                    botVersion: {},
+                    localeId: {},
+                    localeName: {},
+                    description: {},
+                    nluIntentConfidenceThreshold: {
+                        type: "double"
+                    },
+                    voiceSettings: {
+                        shape: "S1c"
+                    },
+                    intentsCount: {
+                        type: "integer"
+                    },
+                    slotTypesCount: {
+                        type: "integer"
+                    },
+                    botLocaleStatus: {},
+                    failureReasons: {
+                        shape: "S41"
+                    },
+                    creationDateTime: {
+                        type: "timestamp"
+                    },
+                    lastUpdatedDateTime: {
+                        type: "timestamp"
+                    },
+                    lastBuildSubmittedDateTime: {
+                        type: "timestamp"
+                    },
+                    botLocaleHistoryEvents: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            required: [ "event", "eventDate" ],
+                            members: {
+                                event: {},
+                                eventDate: {
+                                    type: "timestamp"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        DescribeBotVersion: {
+            http: {
+                method: "GET",
+                requestUri: "/bots/{botId}/botversions/{botVersion}/",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                required: [ "botId", "botVersion" ],
+                members: {
+                    botId: {
+                        location: "uri",
+                        locationName: "botId"
+                    },
+                    botVersion: {
+                        location: "uri",
+                        locationName: "botVersion"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    botId: {},
+                    botName: {},
+                    botVersion: {},
+                    description: {},
+                    roleArn: {},
+                    dataPrivacy: {
+                        shape: "Sc"
+                    },
+                    idleSessionTTLInSeconds: {
+                        type: "integer"
+                    },
+                    botStatus: {},
+                    failureReasons: {
+                        shape: "S41"
+                    },
+                    creationDateTime: {
+                        type: "timestamp"
+                    }
+                }
+            }
+        },
+        DescribeIntent: {
+            http: {
+                method: "GET",
+                requestUri: "/bots/{botId}/botversions/{botVersion}/botlocales/{localeId}/intents/{intentId}/",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                required: [ "intentId", "botId", "botVersion", "localeId" ],
+                members: {
+                    intentId: {
+                        location: "uri",
+                        locationName: "intentId"
+                    },
+                    botId: {
+                        location: "uri",
+                        locationName: "botId"
+                    },
+                    botVersion: {
+                        location: "uri",
+                        locationName: "botVersion"
+                    },
+                    localeId: {
+                        location: "uri",
+                        locationName: "localeId"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    intentId: {},
+                    intentName: {},
+                    description: {},
+                    parentIntentSignature: {},
+                    sampleUtterances: {
+                        shape: "S1n"
+                    },
+                    dialogCodeHook: {
+                        shape: "S1q"
+                    },
+                    fulfillmentCodeHook: {
+                        shape: "S1r"
+                    },
+                    slotPriorities: {
+                        shape: "S4a"
+                    },
+                    intentConfirmationSetting: {
+                        shape: "S1s"
+                    },
+                    intentClosingSetting: {
+                        shape: "S2e"
+                    },
+                    inputContexts: {
+                        shape: "S2f"
+                    },
+                    outputContexts: {
+                        shape: "S2h"
+                    },
+                    kendraConfiguration: {
+                        shape: "S2l"
+                    },
+                    botId: {},
+                    botVersion: {},
+                    localeId: {},
+                    creationDateTime: {
+                        type: "timestamp"
+                    },
+                    lastUpdatedDateTime: {
+                        type: "timestamp"
+                    }
+                }
+            }
+        },
+        DescribeSlot: {
+            http: {
+                method: "GET",
+                requestUri: "/bots/{botId}/botversions/{botVersion}/botlocales/{localeId}/intents/{intentId}/slots/{slotId}/",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                required: [ "slotId", "botId", "botVersion", "localeId", "intentId" ],
+                members: {
+                    slotId: {
+                        location: "uri",
+                        locationName: "slotId"
+                    },
+                    botId: {
+                        location: "uri",
+                        locationName: "botId"
+                    },
+                    botVersion: {
+                        location: "uri",
+                        locationName: "botVersion"
+                    },
+                    localeId: {
+                        location: "uri",
+                        locationName: "localeId"
+                    },
+                    intentId: {
+                        location: "uri",
+                        locationName: "intentId"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    slotId: {},
+                    slotName: {},
+                    description: {},
+                    slotTypeId: {},
+                    valueElicitationSetting: {
+                        shape: "S2r"
+                    },
+                    obfuscationSetting: {
+                        shape: "S31"
+                    },
+                    botId: {},
+                    botVersion: {},
+                    localeId: {},
+                    intentId: {},
+                    creationDateTime: {
+                        type: "timestamp"
+                    },
+                    lastUpdatedDateTime: {
+                        type: "timestamp"
+                    }
+                }
+            }
+        },
+        DescribeSlotType: {
+            http: {
+                method: "GET",
+                requestUri: "/bots/{botId}/botversions/{botVersion}/botlocales/{localeId}/slottypes/{slotTypeId}/",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                required: [ "slotTypeId", "botId", "botVersion", "localeId" ],
+                members: {
+                    slotTypeId: {
+                        location: "uri",
+                        locationName: "slotTypeId"
+                    },
+                    botId: {
+                        location: "uri",
+                        locationName: "botId"
+                    },
+                    botVersion: {
+                        location: "uri",
+                        locationName: "botVersion"
+                    },
+                    localeId: {
+                        location: "uri",
+                        locationName: "localeId"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    slotTypeId: {},
+                    slotTypeName: {},
+                    description: {},
+                    slotTypeValues: {
+                        shape: "S35"
+                    },
+                    valueSelectionSetting: {
+                        shape: "S3a"
+                    },
+                    parentSlotTypeSignature: {},
+                    botId: {},
+                    botVersion: {},
+                    localeId: {},
+                    creationDateTime: {
+                        type: "timestamp"
+                    },
+                    lastUpdatedDateTime: {
+                        type: "timestamp"
+                    }
+                }
+            }
+        },
+        ListBotAliases: {
+            http: {
+                requestUri: "/bots/{botId}/botaliases/",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                required: [ "botId" ],
+                members: {
+                    botId: {
+                        location: "uri",
+                        locationName: "botId"
+                    },
+                    maxResults: {
+                        type: "integer"
+                    },
+                    nextToken: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    botAliasSummaries: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            members: {
+                                botAliasId: {},
+                                botAliasName: {},
+                                description: {},
+                                botVersion: {},
+                                botAliasStatus: {},
+                                creationDateTime: {
+                                    type: "timestamp"
+                                },
+                                lastUpdatedDateTime: {
+                                    type: "timestamp"
+                                }
+                            }
+                        }
+                    },
+                    nextToken: {},
+                    botId: {}
+                }
+            }
+        },
+        ListBotLocales: {
+            http: {
+                requestUri: "/bots/{botId}/botversions/{botVersion}/botlocales/",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                required: [ "botId", "botVersion" ],
+                members: {
+                    botId: {
+                        location: "uri",
+                        locationName: "botId"
+                    },
+                    botVersion: {
+                        location: "uri",
+                        locationName: "botVersion"
+                    },
+                    sortBy: {
+                        type: "structure",
+                        required: [ "attribute", "order" ],
+                        members: {
+                            attribute: {},
+                            order: {}
+                        }
+                    },
+                    filters: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            required: [ "name", "values", "operator" ],
+                            members: {
+                                name: {},
+                                values: {
+                                    shape: "S4u"
+                                },
+                                operator: {}
+                            }
+                        }
+                    },
+                    maxResults: {
+                        type: "integer"
+                    },
+                    nextToken: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    botId: {},
+                    botVersion: {},
+                    nextToken: {},
+                    botLocaleSummaries: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            members: {
+                                localeId: {},
+                                localeName: {},
+                                description: {},
+                                botLocaleStatus: {},
+                                lastUpdatedDateTime: {
+                                    type: "timestamp"
+                                },
+                                lastBuildSubmittedDateTime: {
+                                    type: "timestamp"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        ListBotVersions: {
+            http: {
+                requestUri: "/bots/{botId}/botversions/",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                required: [ "botId" ],
+                members: {
+                    botId: {
+                        location: "uri",
+                        locationName: "botId"
+                    },
+                    sortBy: {
+                        type: "structure",
+                        required: [ "attribute", "order" ],
+                        members: {
+                            attribute: {},
+                            order: {}
+                        }
+                    },
+                    maxResults: {
+                        type: "integer"
+                    },
+                    nextToken: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    botId: {},
+                    botVersionSummaries: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            members: {
+                                botName: {},
+                                botVersion: {},
+                                description: {},
+                                botStatus: {},
+                                creationDateTime: {
+                                    type: "timestamp"
+                                }
+                            }
+                        }
+                    },
+                    nextToken: {}
+                }
+            }
+        },
+        ListBots: {
+            http: {
+                requestUri: "/bots/",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                members: {
+                    sortBy: {
+                        type: "structure",
+                        required: [ "attribute", "order" ],
+                        members: {
+                            attribute: {},
+                            order: {}
+                        }
+                    },
+                    filters: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            required: [ "name", "values", "operator" ],
+                            members: {
+                                name: {},
+                                values: {
+                                    shape: "S4u"
+                                },
+                                operator: {}
+                            }
+                        }
+                    },
+                    maxResults: {
+                        type: "integer"
+                    },
+                    nextToken: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    botSummaries: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            members: {
+                                botId: {},
+                                botName: {},
+                                description: {},
+                                botStatus: {},
+                                latestBotVersion: {},
+                                lastUpdatedDateTime: {
+                                    type: "timestamp"
+                                }
+                            }
+                        }
+                    },
+                    nextToken: {}
+                }
+            }
+        },
+        ListBuiltInIntents: {
+            http: {
+                requestUri: "/builtins/locales/{localeId}/intents/",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                required: [ "localeId" ],
+                members: {
+                    localeId: {
+                        location: "uri",
+                        locationName: "localeId"
+                    },
+                    sortBy: {
+                        type: "structure",
+                        required: [ "attribute", "order" ],
+                        members: {
+                            attribute: {},
+                            order: {}
+                        }
+                    },
+                    maxResults: {
+                        type: "integer"
+                    },
+                    nextToken: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    builtInIntentSummaries: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            members: {
+                                intentSignature: {},
+                                description: {}
+                            }
+                        }
+                    },
+                    nextToken: {},
+                    localeId: {}
+                }
+            }
+        },
+        ListBuiltInSlotTypes: {
+            http: {
+                requestUri: "/builtins/locales/{localeId}/slottypes/",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                required: [ "localeId" ],
+                members: {
+                    localeId: {
+                        location: "uri",
+                        locationName: "localeId"
+                    },
+                    sortBy: {
+                        type: "structure",
+                        required: [ "attribute", "order" ],
+                        members: {
+                            attribute: {},
+                            order: {}
+                        }
+                    },
+                    maxResults: {
+                        type: "integer"
+                    },
+                    nextToken: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    builtInSlotTypeSummaries: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            members: {
+                                slotTypeSignature: {},
+                                description: {}
+                            }
+                        }
+                    },
+                    nextToken: {},
+                    localeId: {}
+                }
+            }
+        },
+        ListIntents: {
+            http: {
+                requestUri: "/bots/{botId}/botversions/{botVersion}/botlocales/{localeId}/intents/",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                required: [ "botId", "botVersion", "localeId" ],
+                members: {
+                    botId: {
+                        location: "uri",
+                        locationName: "botId"
+                    },
+                    botVersion: {
+                        location: "uri",
+                        locationName: "botVersion"
+                    },
+                    localeId: {
+                        location: "uri",
+                        locationName: "localeId"
+                    },
+                    sortBy: {
+                        type: "structure",
+                        required: [ "attribute", "order" ],
+                        members: {
+                            attribute: {},
+                            order: {}
+                        }
+                    },
+                    filters: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            required: [ "name", "values", "operator" ],
+                            members: {
+                                name: {},
+                                values: {
+                                    shape: "S4u"
+                                },
+                                operator: {}
+                            }
+                        }
+                    },
+                    maxResults: {
+                        type: "integer"
+                    },
+                    nextToken: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    botId: {},
+                    botVersion: {},
+                    localeId: {},
+                    intentSummaries: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            members: {
+                                intentId: {},
+                                intentName: {},
+                                description: {},
+                                parentIntentSignature: {},
+                                inputContexts: {
+                                    shape: "S2f"
+                                },
+                                outputContexts: {
+                                    shape: "S2h"
+                                },
+                                lastUpdatedDateTime: {
+                                    type: "timestamp"
+                                }
+                            }
+                        }
+                    },
+                    nextToken: {}
+                }
+            }
+        },
+        ListSlotTypes: {
+            http: {
+                requestUri: "/bots/{botId}/botversions/{botVersion}/botlocales/{localeId}/slottypes/",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                required: [ "botId", "botVersion", "localeId" ],
+                members: {
+                    botId: {
+                        location: "uri",
+                        locationName: "botId"
+                    },
+                    botVersion: {
+                        location: "uri",
+                        locationName: "botVersion"
+                    },
+                    localeId: {
+                        location: "uri",
+                        locationName: "localeId"
+                    },
+                    sortBy: {
+                        type: "structure",
+                        required: [ "attribute", "order" ],
+                        members: {
+                            attribute: {},
+                            order: {}
+                        }
+                    },
+                    filters: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            required: [ "name", "values", "operator" ],
+                            members: {
+                                name: {},
+                                values: {
+                                    shape: "S4u"
+                                },
+                                operator: {}
+                            }
+                        }
+                    },
+                    maxResults: {
+                        type: "integer"
+                    },
+                    nextToken: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    botId: {},
+                    botVersion: {},
+                    localeId: {},
+                    slotTypeSummaries: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            members: {
+                                slotTypeId: {},
+                                slotTypeName: {},
+                                description: {},
+                                parentSlotTypeSignature: {},
+                                lastUpdatedDateTime: {
+                                    type: "timestamp"
+                                }
+                            }
+                        }
+                    },
+                    nextToken: {}
+                }
+            }
+        },
+        ListSlots: {
+            http: {
+                requestUri: "/bots/{botId}/botversions/{botVersion}/botlocales/{localeId}/intents/{intentId}/slots/",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                required: [ "botId", "botVersion", "localeId", "intentId" ],
+                members: {
+                    botId: {
+                        location: "uri",
+                        locationName: "botId"
+                    },
+                    botVersion: {
+                        location: "uri",
+                        locationName: "botVersion"
+                    },
+                    localeId: {
+                        location: "uri",
+                        locationName: "localeId"
+                    },
+                    intentId: {
+                        location: "uri",
+                        locationName: "intentId"
+                    },
+                    sortBy: {
+                        type: "structure",
+                        required: [ "attribute", "order" ],
+                        members: {
+                            attribute: {},
+                            order: {}
+                        }
+                    },
+                    filters: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            required: [ "name", "values", "operator" ],
+                            members: {
+                                name: {},
+                                values: {
+                                    shape: "S4u"
+                                },
+                                operator: {}
+                            }
+                        }
+                    },
+                    maxResults: {
+                        type: "integer"
+                    },
+                    nextToken: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    botId: {},
+                    botVersion: {},
+                    localeId: {},
+                    intentId: {},
+                    slotSummaries: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            members: {
+                                slotId: {},
+                                slotName: {},
+                                description: {},
+                                slotConstraint: {},
+                                slotTypeId: {},
+                                valueElicitationPromptSpecification: {
+                                    shape: "S1t"
+                                },
+                                lastUpdatedDateTime: {
+                                    type: "timestamp"
+                                }
+                            }
+                        }
+                    },
+                    nextToken: {}
+                }
+            }
+        },
+        ListTagsForResource: {
+            http: {
+                method: "GET",
+                requestUri: "/tags/{resourceARN}",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                required: [ "resourceARN" ],
+                members: {
+                    resourceARN: {
+                        location: "uri",
+                        locationName: "resourceARN"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    tags: {
+                        shape: "Sf"
+                    }
+                }
+            }
+        },
+        TagResource: {
+            http: {
+                requestUri: "/tags/{resourceARN}",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                required: [ "resourceARN", "tags" ],
+                members: {
+                    resourceARN: {
+                        location: "uri",
+                        locationName: "resourceARN"
+                    },
+                    tags: {
+                        shape: "Sf"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {}
+            }
+        },
+        UntagResource: {
+            http: {
+                method: "DELETE",
+                requestUri: "/tags/{resourceARN}",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                required: [ "resourceARN", "tagKeys" ],
+                members: {
+                    resourceARN: {
+                        location: "uri",
+                        locationName: "resourceARN"
+                    },
+                    tagKeys: {
+                        location: "querystring",
+                        locationName: "tagKeys",
+                        type: "list",
+                        member: {}
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {}
+            }
+        },
+        UpdateBot: {
+            http: {
+                method: "PUT",
+                requestUri: "/bots/{botId}/",
+                responseCode: 202
+            },
+            input: {
+                type: "structure",
+                required: [ "botId", "botName", "roleArn", "dataPrivacy", "idleSessionTTLInSeconds" ],
+                members: {
+                    botId: {
+                        location: "uri",
+                        locationName: "botId"
+                    },
+                    botName: {},
+                    description: {},
+                    roleArn: {},
+                    dataPrivacy: {
+                        shape: "Sc"
+                    },
+                    idleSessionTTLInSeconds: {
+                        type: "integer"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    botId: {},
+                    botName: {},
+                    description: {},
+                    roleArn: {},
+                    dataPrivacy: {
+                        shape: "Sc"
+                    },
+                    idleSessionTTLInSeconds: {
+                        type: "integer"
+                    },
+                    botStatus: {},
+                    creationDateTime: {
+                        type: "timestamp"
+                    },
+                    lastUpdatedDateTime: {
+                        type: "timestamp"
+                    }
+                }
+            }
+        },
+        UpdateBotAlias: {
+            http: {
+                method: "PUT",
+                requestUri: "/bots/{botId}/botaliases/{botAliasId}/",
+                responseCode: 202
+            },
+            input: {
+                type: "structure",
+                required: [ "botAliasId", "botAliasName", "botId" ],
+                members: {
+                    botAliasId: {
+                        location: "uri",
+                        locationName: "botAliasId"
+                    },
+                    botAliasName: {},
+                    description: {},
+                    botVersion: {},
+                    botAliasLocaleSettings: {
+                        shape: "Sm"
+                    },
+                    conversationLogSettings: {
+                        shape: "St"
+                    },
+                    sentimentAnalysisSettings: {
+                        shape: "S16"
+                    },
+                    botId: {
+                        location: "uri",
+                        locationName: "botId"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    botAliasId: {},
+                    botAliasName: {},
+                    description: {},
+                    botVersion: {},
+                    botAliasLocaleSettings: {
+                        shape: "Sm"
+                    },
+                    conversationLogSettings: {
+                        shape: "St"
+                    },
+                    sentimentAnalysisSettings: {
+                        shape: "S16"
+                    },
+                    botAliasStatus: {},
+                    botId: {},
+                    creationDateTime: {
+                        type: "timestamp"
+                    },
+                    lastUpdatedDateTime: {
+                        type: "timestamp"
+                    }
+                }
+            }
+        },
+        UpdateBotLocale: {
+            http: {
+                method: "PUT",
+                requestUri: "/bots/{botId}/botversions/{botVersion}/botlocales/{localeId}/",
+                responseCode: 202
+            },
+            input: {
+                type: "structure",
+                required: [ "botId", "botVersion", "localeId", "nluIntentConfidenceThreshold" ],
+                members: {
+                    botId: {
+                        location: "uri",
+                        locationName: "botId"
+                    },
+                    botVersion: {
+                        location: "uri",
+                        locationName: "botVersion"
+                    },
+                    localeId: {
+                        location: "uri",
+                        locationName: "localeId"
+                    },
+                    description: {},
+                    nluIntentConfidenceThreshold: {
+                        type: "double"
+                    },
+                    voiceSettings: {
+                        shape: "S1c"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    botId: {},
+                    botVersion: {},
+                    localeId: {},
+                    localeName: {},
+                    description: {},
+                    nluIntentConfidenceThreshold: {
+                        type: "double"
+                    },
+                    voiceSettings: {
+                        shape: "S1c"
+                    },
+                    botLocaleStatus: {},
+                    failureReasons: {
+                        shape: "S41"
+                    },
+                    creationDateTime: {
+                        type: "timestamp"
+                    },
+                    lastUpdatedDateTime: {
+                        type: "timestamp"
+                    }
+                }
+            }
+        },
+        UpdateIntent: {
+            http: {
+                method: "PUT",
+                requestUri: "/bots/{botId}/botversions/{botVersion}/botlocales/{localeId}/intents/{intentId}/",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                required: [ "intentId", "intentName", "botId", "botVersion", "localeId" ],
+                members: {
+                    intentId: {
+                        location: "uri",
+                        locationName: "intentId"
+                    },
+                    intentName: {},
+                    description: {},
+                    parentIntentSignature: {},
+                    sampleUtterances: {
+                        shape: "S1n"
+                    },
+                    dialogCodeHook: {
+                        shape: "S1q"
+                    },
+                    fulfillmentCodeHook: {
+                        shape: "S1r"
+                    },
+                    slotPriorities: {
+                        shape: "S4a"
+                    },
+                    intentConfirmationSetting: {
+                        shape: "S1s"
+                    },
+                    intentClosingSetting: {
+                        shape: "S2e"
+                    },
+                    inputContexts: {
+                        shape: "S2f"
+                    },
+                    outputContexts: {
+                        shape: "S2h"
+                    },
+                    kendraConfiguration: {
+                        shape: "S2l"
+                    },
+                    botId: {
+                        location: "uri",
+                        locationName: "botId"
+                    },
+                    botVersion: {
+                        location: "uri",
+                        locationName: "botVersion"
+                    },
+                    localeId: {
+                        location: "uri",
+                        locationName: "localeId"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    intentId: {},
+                    intentName: {},
+                    description: {},
+                    parentIntentSignature: {},
+                    sampleUtterances: {
+                        shape: "S1n"
+                    },
+                    dialogCodeHook: {
+                        shape: "S1q"
+                    },
+                    fulfillmentCodeHook: {
+                        shape: "S1r"
+                    },
+                    slotPriorities: {
+                        shape: "S4a"
+                    },
+                    intentConfirmationSetting: {
+                        shape: "S1s"
+                    },
+                    intentClosingSetting: {
+                        shape: "S2e"
+                    },
+                    inputContexts: {
+                        shape: "S2f"
+                    },
+                    outputContexts: {
+                        shape: "S2h"
+                    },
+                    kendraConfiguration: {
+                        shape: "S2l"
+                    },
+                    botId: {},
+                    botVersion: {},
+                    localeId: {},
+                    creationDateTime: {
+                        type: "timestamp"
+                    },
+                    lastUpdatedDateTime: {
+                        type: "timestamp"
+                    }
+                }
+            }
+        },
+        UpdateSlot: {
+            http: {
+                method: "PUT",
+                requestUri: "/bots/{botId}/botversions/{botVersion}/botlocales/{localeId}/intents/{intentId}/slots/{slotId}/",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                required: [ "slotId", "slotName", "slotTypeId", "valueElicitationSetting", "botId", "botVersion", "localeId", "intentId" ],
+                members: {
+                    slotId: {
+                        location: "uri",
+                        locationName: "slotId"
+                    },
+                    slotName: {},
+                    description: {},
+                    slotTypeId: {},
+                    valueElicitationSetting: {
+                        shape: "S2r"
+                    },
+                    obfuscationSetting: {
+                        shape: "S31"
+                    },
+                    botId: {
+                        location: "uri",
+                        locationName: "botId"
+                    },
+                    botVersion: {
+                        location: "uri",
+                        locationName: "botVersion"
+                    },
+                    localeId: {
+                        location: "uri",
+                        locationName: "localeId"
+                    },
+                    intentId: {
+                        location: "uri",
+                        locationName: "intentId"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    slotId: {},
+                    slotName: {},
+                    description: {},
+                    slotTypeId: {},
+                    valueElicitationSetting: {
+                        shape: "S2r"
+                    },
+                    obfuscationSetting: {
+                        shape: "S31"
+                    },
+                    botId: {},
+                    botVersion: {},
+                    localeId: {},
+                    intentId: {},
+                    creationDateTime: {
+                        type: "timestamp"
+                    },
+                    lastUpdatedDateTime: {
+                        type: "timestamp"
+                    }
+                }
+            }
+        },
+        UpdateSlotType: {
+            http: {
+                method: "PUT",
+                requestUri: "/bots/{botId}/botversions/{botVersion}/botlocales/{localeId}/slottypes/{slotTypeId}/",
+                responseCode: 202
+            },
+            input: {
+                type: "structure",
+                required: [ "slotTypeId", "slotTypeName", "valueSelectionSetting", "botId", "botVersion", "localeId" ],
+                members: {
+                    slotTypeId: {
+                        location: "uri",
+                        locationName: "slotTypeId"
+                    },
+                    slotTypeName: {},
+                    description: {},
+                    slotTypeValues: {
+                        shape: "S35"
+                    },
+                    valueSelectionSetting: {
+                        shape: "S3a"
+                    },
+                    parentSlotTypeSignature: {},
+                    botId: {
+                        location: "uri",
+                        locationName: "botId"
+                    },
+                    botVersion: {
+                        location: "uri",
+                        locationName: "botVersion"
+                    },
+                    localeId: {
+                        location: "uri",
+                        locationName: "localeId"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    slotTypeId: {},
+                    slotTypeName: {},
+                    description: {},
+                    slotTypeValues: {
+                        shape: "S35"
+                    },
+                    valueSelectionSetting: {
+                        shape: "S3a"
+                    },
+                    parentSlotTypeSignature: {},
+                    botId: {},
+                    botVersion: {},
+                    localeId: {},
+                    creationDateTime: {
+                        type: "timestamp"
+                    },
+                    lastUpdatedDateTime: {
+                        type: "timestamp"
+                    }
+                }
+            }
+        }
+    },
+    shapes: {
+        Sc: {
+            type: "structure",
+            required: [ "childDirected" ],
+            members: {
+                childDirected: {
+                    type: "boolean"
+                }
+            }
+        },
+        Sf: {
+            type: "map",
+            key: {},
+            value: {}
+        },
+        Sm: {
+            type: "map",
+            key: {},
+            value: {
+                type: "structure",
+                required: [ "enabled" ],
+                members: {
+                    enabled: {
+                        type: "boolean"
+                    },
+                    codeHookSpecification: {
+                        type: "structure",
+                        required: [ "lambdaCodeHook" ],
+                        members: {
+                            lambdaCodeHook: {
+                                type: "structure",
+                                required: [ "lambdaARN", "codeHookInterfaceVersion" ],
+                                members: {
+                                    lambdaARN: {},
+                                    codeHookInterfaceVersion: {}
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        St: {
+            type: "structure",
+            members: {
+                textLogSettings: {
+                    type: "list",
+                    member: {
+                        type: "structure",
+                        required: [ "enabled", "destination" ],
+                        members: {
+                            enabled: {
+                                type: "boolean"
+                            },
+                            destination: {
+                                type: "structure",
+                                required: [ "cloudWatch" ],
+                                members: {
+                                    cloudWatch: {
+                                        type: "structure",
+                                        required: [ "cloudWatchLogGroupArn", "logPrefix" ],
+                                        members: {
+                                            cloudWatchLogGroupArn: {},
+                                            logPrefix: {}
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                audioLogSettings: {
+                    type: "list",
+                    member: {
+                        type: "structure",
+                        required: [ "enabled", "destination" ],
+                        members: {
+                            enabled: {
+                                type: "boolean"
+                            },
+                            destination: {
+                                type: "structure",
+                                required: [ "s3Bucket" ],
+                                members: {
+                                    s3Bucket: {
+                                        type: "structure",
+                                        required: [ "s3BucketArn", "logPrefix" ],
+                                        members: {
+                                            kmsKeyArn: {},
+                                            s3BucketArn: {},
+                                            logPrefix: {}
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        S16: {
+            type: "structure",
+            required: [ "detectSentiment" ],
+            members: {
+                detectSentiment: {
+                    type: "boolean"
+                }
+            }
+        },
+        S1c: {
+            type: "structure",
+            required: [ "voiceId" ],
+            members: {
+                voiceId: {}
+            }
+        },
+        S1h: {
+            type: "map",
+            key: {},
+            value: {
+                type: "structure",
+                required: [ "sourceBotVersion" ],
+                members: {
+                    sourceBotVersion: {}
+                }
+            }
+        },
+        S1n: {
+            type: "list",
+            member: {
+                type: "structure",
+                required: [ "utterance" ],
+                members: {
+                    utterance: {}
+                }
+            }
+        },
+        S1q: {
+            type: "structure",
+            required: [ "enabled" ],
+            members: {
+                enabled: {
+                    type: "boolean"
+                }
+            }
+        },
+        S1r: {
+            type: "structure",
+            required: [ "enabled" ],
+            members: {
+                enabled: {
+                    type: "boolean"
+                }
+            }
+        },
+        S1s: {
+            type: "structure",
+            required: [ "promptSpecification", "declinationResponse" ],
+            members: {
+                promptSpecification: {
+                    shape: "S1t"
+                },
+                declinationResponse: {
+                    shape: "S2d"
+                }
+            }
+        },
+        S1t: {
+            type: "structure",
+            required: [ "messageGroups", "maxRetries" ],
+            members: {
+                messageGroups: {
+                    shape: "S1u"
+                },
+                maxRetries: {
+                    type: "integer"
+                },
+                allowInterrupt: {
+                    type: "boolean"
+                }
+            }
+        },
+        S1u: {
+            type: "list",
+            member: {
+                type: "structure",
+                required: [ "message" ],
+                members: {
+                    message: {
+                        shape: "S1w"
+                    },
+                    variations: {
+                        type: "list",
+                        member: {
+                            shape: "S1w"
+                        }
+                    }
+                }
+            }
+        },
+        S1w: {
+            type: "structure",
+            members: {
+                plainTextMessage: {
+                    type: "structure",
+                    required: [ "value" ],
+                    members: {
+                        value: {}
+                    }
+                },
+                customPayload: {
+                    type: "structure",
+                    required: [ "value" ],
+                    members: {
+                        value: {}
+                    }
+                },
+                ssmlMessage: {
+                    type: "structure",
+                    required: [ "value" ],
+                    members: {
+                        value: {}
+                    }
+                },
+                imageResponseCard: {
+                    type: "structure",
+                    required: [ "title" ],
+                    members: {
+                        title: {},
+                        subtitle: {},
+                        imageUrl: {},
+                        buttons: {
+                            type: "list",
+                            member: {
+                                type: "structure",
+                                required: [ "text", "value" ],
+                                members: {
+                                    text: {},
+                                    value: {}
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        S2d: {
+            type: "structure",
+            required: [ "messageGroups" ],
+            members: {
+                messageGroups: {
+                    shape: "S1u"
+                },
+                allowInterrupt: {
+                    type: "boolean"
+                }
+            }
+        },
+        S2e: {
+            type: "structure",
+            required: [ "closingResponse" ],
+            members: {
+                closingResponse: {
+                    shape: "S2d"
+                }
+            }
+        },
+        S2f: {
+            type: "list",
+            member: {
+                type: "structure",
+                required: [ "name" ],
+                members: {
+                    name: {}
+                }
+            }
+        },
+        S2h: {
+            type: "list",
+            member: {
+                type: "structure",
+                required: [ "name", "timeToLiveInSeconds", "turnsToLive" ],
+                members: {
+                    name: {},
+                    timeToLiveInSeconds: {
+                        type: "integer"
+                    },
+                    turnsToLive: {
+                        type: "integer"
+                    }
+                }
+            }
+        },
+        S2l: {
+            type: "structure",
+            required: [ "kendraIndex" ],
+            members: {
+                kendraIndex: {},
+                queryFilterStringEnabled: {
+                    type: "boolean"
+                },
+                queryFilterString: {}
+            }
+        },
+        S2r: {
+            type: "structure",
+            required: [ "slotConstraint" ],
+            members: {
+                defaultValueSpecification: {
+                    type: "structure",
+                    required: [ "defaultValueList" ],
+                    members: {
+                        defaultValueList: {
+                            type: "list",
+                            member: {
+                                type: "structure",
+                                required: [ "defaultValue" ],
+                                members: {
+                                    defaultValue: {}
+                                }
+                            }
+                        }
+                    }
+                },
+                slotConstraint: {},
+                promptSpecification: {
+                    shape: "S1t"
+                },
+                sampleUtterances: {
+                    shape: "S1n"
+                },
+                waitAndContinueSpecification: {
+                    type: "structure",
+                    required: [ "waitingResponse", "continueResponse" ],
+                    members: {
+                        waitingResponse: {
+                            shape: "S2d"
+                        },
+                        continueResponse: {
+                            shape: "S2d"
+                        },
+                        stillWaitingResponse: {
+                            type: "structure",
+                            required: [ "messageGroups", "frequencyInSeconds", "timeoutInSeconds" ],
+                            members: {
+                                messageGroups: {
+                                    shape: "S1u"
+                                },
+                                frequencyInSeconds: {
+                                    type: "integer"
+                                },
+                                timeoutInSeconds: {
+                                    type: "integer"
+                                },
+                                allowInterrupt: {
+                                    type: "boolean"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        S31: {
+            type: "structure",
+            required: [ "obfuscationSettingType" ],
+            members: {
+                obfuscationSettingType: {}
+            }
+        },
+        S35: {
+            type: "list",
+            member: {
+                type: "structure",
+                members: {
+                    sampleValue: {
+                        shape: "S37"
+                    },
+                    synonyms: {
+                        type: "list",
+                        member: {
+                            shape: "S37"
+                        }
+                    }
+                }
+            }
+        },
+        S37: {
+            type: "structure",
+            required: [ "value" ],
+            members: {
+                value: {}
+            }
+        },
+        S3a: {
+            type: "structure",
+            required: [ "resolutionStrategy" ],
+            members: {
+                resolutionStrategy: {},
+                regexFilter: {
+                    type: "structure",
+                    required: [ "pattern" ],
+                    members: {
+                        pattern: {}
+                    }
+                }
+            }
+        },
+        S41: {
+            type: "list",
+            member: {}
+        },
+        S4a: {
+            type: "list",
+            member: {
+                type: "structure",
+                required: [ "priority", "slotId" ],
+                members: {
+                    priority: {
+                        type: "integer"
+                    },
+                    slotId: {}
+                }
+            }
+        },
+        S4u: {
+            type: "list",
+            member: {}
+        }
+    },
+    paginators: {
+        ListBotAliases: {
+            input_token: "nextToken",
+            output_token: "nextToken",
+            limit_key: "maxResults"
+        },
+        ListBotLocales: {
+            input_token: "nextToken",
+            output_token: "nextToken",
+            limit_key: "maxResults"
+        },
+        ListBotVersions: {
+            input_token: "nextToken",
+            output_token: "nextToken",
+            limit_key: "maxResults"
+        },
+        ListBots: {
+            input_token: "nextToken",
+            output_token: "nextToken",
+            limit_key: "maxResults"
+        },
+        ListBuiltInIntents: {
+            input_token: "nextToken",
+            output_token: "nextToken",
+            limit_key: "maxResults"
+        },
+        ListBuiltInSlotTypes: {
+            input_token: "nextToken",
+            output_token: "nextToken",
+            limit_key: "maxResults"
+        },
+        ListIntents: {
+            input_token: "nextToken",
+            output_token: "nextToken",
+            limit_key: "maxResults"
+        },
+        ListSlotTypes: {
+            input_token: "nextToken",
+            output_token: "nextToken",
+            limit_key: "maxResults"
+        },
+        ListSlots: {
+            input_token: "nextToken",
+            output_token: "nextToken",
+            limit_key: "maxResults"
+        }
+    }
+};
+

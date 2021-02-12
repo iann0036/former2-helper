@@ -1,6084 +1,3 @@
-
-
-AWS.apiLoader.services["storagegateway"] = {};
-
-AWS.StorageGateway = AWS.Service.defineService("storagegateway", [ "2013-06-30" ]);
-
-AWS.apiLoader.services["storagegateway"]["2013-06-30"] = {
-    version: "2.0",
-    metadata: {
-        apiVersion: "2013-06-30",
-        endpointPrefix: "storagegateway",
-        jsonVersion: "1.1",
-        protocol: "json",
-        serviceFullName: "AWS Storage Gateway",
-        serviceId: "Storage Gateway",
-        signatureVersion: "v4",
-        targetPrefix: "StorageGateway_20130630",
-        uid: "storagegateway-2013-06-30"
-    },
-    operations: {
-        ActivateGateway: {
-            input: {
-                type: "structure",
-                required: [ "ActivationKey", "GatewayName", "GatewayTimezone", "GatewayRegion" ],
-                members: {
-                    ActivationKey: {},
-                    GatewayName: {},
-                    GatewayTimezone: {},
-                    GatewayRegion: {},
-                    GatewayType: {},
-                    TapeDriveType: {},
-                    MediumChangerType: {},
-                    Tags: {
-                        shape: "S9"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    GatewayARN: {}
-                }
-            }
-        },
-        AddCache: {
-            input: {
-                type: "structure",
-                required: [ "GatewayARN", "DiskIds" ],
-                members: {
-                    GatewayARN: {},
-                    DiskIds: {
-                        shape: "Sg"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    GatewayARN: {}
-                }
-            }
-        },
-        AddTagsToResource: {
-            input: {
-                type: "structure",
-                required: [ "ResourceARN", "Tags" ],
-                members: {
-                    ResourceARN: {},
-                    Tags: {
-                        shape: "S9"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    ResourceARN: {}
-                }
-            }
-        },
-        AddUploadBuffer: {
-            input: {
-                type: "structure",
-                required: [ "GatewayARN", "DiskIds" ],
-                members: {
-                    GatewayARN: {},
-                    DiskIds: {
-                        shape: "Sg"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    GatewayARN: {}
-                }
-            }
-        },
-        AddWorkingStorage: {
-            input: {
-                type: "structure",
-                required: [ "GatewayARN", "DiskIds" ],
-                members: {
-                    GatewayARN: {},
-                    DiskIds: {
-                        shape: "Sg"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    GatewayARN: {}
-                }
-            }
-        },
-        AssignTapePool: {
-            input: {
-                type: "structure",
-                required: [ "TapeARN", "PoolId" ],
-                members: {
-                    TapeARN: {},
-                    PoolId: {},
-                    BypassGovernanceRetention: {
-                        type: "boolean"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    TapeARN: {}
-                }
-            }
-        },
-        AttachVolume: {
-            input: {
-                type: "structure",
-                required: [ "GatewayARN", "VolumeARN", "NetworkInterfaceId" ],
-                members: {
-                    GatewayARN: {},
-                    TargetName: {},
-                    VolumeARN: {},
-                    NetworkInterfaceId: {},
-                    DiskId: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    VolumeARN: {},
-                    TargetARN: {}
-                }
-            }
-        },
-        CancelArchival: {
-            input: {
-                type: "structure",
-                required: [ "GatewayARN", "TapeARN" ],
-                members: {
-                    GatewayARN: {},
-                    TapeARN: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    TapeARN: {}
-                }
-            }
-        },
-        CancelRetrieval: {
-            input: {
-                type: "structure",
-                required: [ "GatewayARN", "TapeARN" ],
-                members: {
-                    GatewayARN: {},
-                    TapeARN: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    TapeARN: {}
-                }
-            }
-        },
-        CreateCachediSCSIVolume: {
-            input: {
-                type: "structure",
-                required: [ "GatewayARN", "VolumeSizeInBytes", "TargetName", "NetworkInterfaceId", "ClientToken" ],
-                members: {
-                    GatewayARN: {},
-                    VolumeSizeInBytes: {
-                        type: "long"
-                    },
-                    SnapshotId: {},
-                    TargetName: {},
-                    SourceVolumeARN: {},
-                    NetworkInterfaceId: {},
-                    ClientToken: {},
-                    KMSEncrypted: {
-                        type: "boolean"
-                    },
-                    KMSKey: {},
-                    Tags: {
-                        shape: "S9"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    VolumeARN: {},
-                    TargetARN: {}
-                }
-            }
-        },
-        CreateNFSFileShare: {
-            input: {
-                type: "structure",
-                required: [ "ClientToken", "GatewayARN", "Role", "LocationARN" ],
-                members: {
-                    ClientToken: {},
-                    NFSFileShareDefaults: {
-                        shape: "S1d"
-                    },
-                    GatewayARN: {},
-                    KMSEncrypted: {
-                        type: "boolean"
-                    },
-                    KMSKey: {},
-                    Role: {},
-                    LocationARN: {},
-                    DefaultStorageClass: {},
-                    ObjectACL: {},
-                    ClientList: {
-                        shape: "S1k"
-                    },
-                    Squash: {},
-                    ReadOnly: {
-                        type: "boolean"
-                    },
-                    GuessMIMETypeEnabled: {
-                        type: "boolean"
-                    },
-                    RequesterPays: {
-                        type: "boolean"
-                    },
-                    Tags: {
-                        shape: "S9"
-                    },
-                    FileShareName: {},
-                    CacheAttributes: {
-                        shape: "S1o"
-                    },
-                    NotificationPolicy: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    FileShareARN: {}
-                }
-            }
-        },
-        CreateSMBFileShare: {
-            input: {
-                type: "structure",
-                required: [ "ClientToken", "GatewayARN", "Role", "LocationARN" ],
-                members: {
-                    ClientToken: {},
-                    GatewayARN: {},
-                    KMSEncrypted: {
-                        type: "boolean"
-                    },
-                    KMSKey: {},
-                    Role: {},
-                    LocationARN: {},
-                    DefaultStorageClass: {},
-                    ObjectACL: {},
-                    ReadOnly: {
-                        type: "boolean"
-                    },
-                    GuessMIMETypeEnabled: {
-                        type: "boolean"
-                    },
-                    RequesterPays: {
-                        type: "boolean"
-                    },
-                    SMBACLEnabled: {
-                        type: "boolean"
-                    },
-                    AccessBasedEnumeration: {
-                        type: "boolean"
-                    },
-                    AdminUserList: {
-                        shape: "S1u"
-                    },
-                    ValidUserList: {
-                        shape: "S1u"
-                    },
-                    InvalidUserList: {
-                        shape: "S1u"
-                    },
-                    AuditDestinationARN: {},
-                    Authentication: {},
-                    CaseSensitivity: {},
-                    Tags: {
-                        shape: "S9"
-                    },
-                    FileShareName: {},
-                    CacheAttributes: {
-                        shape: "S1o"
-                    },
-                    NotificationPolicy: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    FileShareARN: {}
-                }
-            }
-        },
-        CreateSnapshot: {
-            input: {
-                type: "structure",
-                required: [ "VolumeARN", "SnapshotDescription" ],
-                members: {
-                    VolumeARN: {},
-                    SnapshotDescription: {},
-                    Tags: {
-                        shape: "S9"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    VolumeARN: {},
-                    SnapshotId: {}
-                }
-            }
-        },
-        CreateSnapshotFromVolumeRecoveryPoint: {
-            input: {
-                type: "structure",
-                required: [ "VolumeARN", "SnapshotDescription" ],
-                members: {
-                    VolumeARN: {},
-                    SnapshotDescription: {},
-                    Tags: {
-                        shape: "S9"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    SnapshotId: {},
-                    VolumeARN: {},
-                    VolumeRecoveryPointTime: {}
-                }
-            }
-        },
-        CreateStorediSCSIVolume: {
-            input: {
-                type: "structure",
-                required: [ "GatewayARN", "DiskId", "PreserveExistingData", "TargetName", "NetworkInterfaceId" ],
-                members: {
-                    GatewayARN: {},
-                    DiskId: {},
-                    SnapshotId: {},
-                    PreserveExistingData: {
-                        type: "boolean"
-                    },
-                    TargetName: {},
-                    NetworkInterfaceId: {},
-                    KMSEncrypted: {
-                        type: "boolean"
-                    },
-                    KMSKey: {},
-                    Tags: {
-                        shape: "S9"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    VolumeARN: {},
-                    VolumeSizeInBytes: {
-                        type: "long"
-                    },
-                    TargetARN: {}
-                }
-            }
-        },
-        CreateTapePool: {
-            input: {
-                type: "structure",
-                required: [ "PoolName", "StorageClass" ],
-                members: {
-                    PoolName: {},
-                    StorageClass: {},
-                    RetentionLockType: {},
-                    RetentionLockTimeInDays: {
-                        type: "integer"
-                    },
-                    Tags: {
-                        shape: "S9"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    PoolARN: {}
-                }
-            }
-        },
-        CreateTapeWithBarcode: {
-            input: {
-                type: "structure",
-                required: [ "GatewayARN", "TapeSizeInBytes", "TapeBarcode" ],
-                members: {
-                    GatewayARN: {},
-                    TapeSizeInBytes: {
-                        type: "long"
-                    },
-                    TapeBarcode: {},
-                    KMSEncrypted: {
-                        type: "boolean"
-                    },
-                    KMSKey: {},
-                    PoolId: {},
-                    Worm: {
-                        type: "boolean"
-                    },
-                    Tags: {
-                        shape: "S9"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    TapeARN: {}
-                }
-            }
-        },
-        CreateTapes: {
-            input: {
-                type: "structure",
-                required: [ "GatewayARN", "TapeSizeInBytes", "ClientToken", "NumTapesToCreate", "TapeBarcodePrefix" ],
-                members: {
-                    GatewayARN: {},
-                    TapeSizeInBytes: {
-                        type: "long"
-                    },
-                    ClientToken: {},
-                    NumTapesToCreate: {
-                        type: "integer"
-                    },
-                    TapeBarcodePrefix: {},
-                    KMSEncrypted: {
-                        type: "boolean"
-                    },
-                    KMSKey: {},
-                    PoolId: {},
-                    Worm: {
-                        type: "boolean"
-                    },
-                    Tags: {
-                        shape: "S9"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    TapeARNs: {
-                        shape: "S2n"
-                    }
-                }
-            }
-        },
-        DeleteAutomaticTapeCreationPolicy: {
-            input: {
-                type: "structure",
-                required: [ "GatewayARN" ],
-                members: {
-                    GatewayARN: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    GatewayARN: {}
-                }
-            }
-        },
-        DeleteBandwidthRateLimit: {
-            input: {
-                type: "structure",
-                required: [ "GatewayARN", "BandwidthType" ],
-                members: {
-                    GatewayARN: {},
-                    BandwidthType: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    GatewayARN: {}
-                }
-            }
-        },
-        DeleteChapCredentials: {
-            input: {
-                type: "structure",
-                required: [ "TargetARN", "InitiatorName" ],
-                members: {
-                    TargetARN: {},
-                    InitiatorName: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    TargetARN: {},
-                    InitiatorName: {}
-                }
-            }
-        },
-        DeleteFileShare: {
-            input: {
-                type: "structure",
-                required: [ "FileShareARN" ],
-                members: {
-                    FileShareARN: {},
-                    ForceDelete: {
-                        type: "boolean"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    FileShareARN: {}
-                }
-            }
-        },
-        DeleteGateway: {
-            input: {
-                type: "structure",
-                required: [ "GatewayARN" ],
-                members: {
-                    GatewayARN: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    GatewayARN: {}
-                }
-            }
-        },
-        DeleteSnapshotSchedule: {
-            input: {
-                type: "structure",
-                required: [ "VolumeARN" ],
-                members: {
-                    VolumeARN: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    VolumeARN: {}
-                }
-            }
-        },
-        DeleteTape: {
-            input: {
-                type: "structure",
-                required: [ "GatewayARN", "TapeARN" ],
-                members: {
-                    GatewayARN: {},
-                    TapeARN: {},
-                    BypassGovernanceRetention: {
-                        type: "boolean"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    TapeARN: {}
-                }
-            }
-        },
-        DeleteTapeArchive: {
-            input: {
-                type: "structure",
-                required: [ "TapeARN" ],
-                members: {
-                    TapeARN: {},
-                    BypassGovernanceRetention: {
-                        type: "boolean"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    TapeARN: {}
-                }
-            }
-        },
-        DeleteTapePool: {
-            input: {
-                type: "structure",
-                required: [ "PoolARN" ],
-                members: {
-                    PoolARN: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    PoolARN: {}
-                }
-            }
-        },
-        DeleteVolume: {
-            input: {
-                type: "structure",
-                required: [ "VolumeARN" ],
-                members: {
-                    VolumeARN: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    VolumeARN: {}
-                }
-            }
-        },
-        DescribeAvailabilityMonitorTest: {
-            input: {
-                type: "structure",
-                required: [ "GatewayARN" ],
-                members: {
-                    GatewayARN: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    GatewayARN: {},
-                    Status: {},
-                    StartTime: {
-                        type: "timestamp"
-                    }
-                }
-            }
-        },
-        DescribeBandwidthRateLimit: {
-            input: {
-                type: "structure",
-                required: [ "GatewayARN" ],
-                members: {
-                    GatewayARN: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    GatewayARN: {},
-                    AverageUploadRateLimitInBitsPerSec: {
-                        type: "long"
-                    },
-                    AverageDownloadRateLimitInBitsPerSec: {
-                        type: "long"
-                    }
-                }
-            }
-        },
-        DescribeBandwidthRateLimitSchedule: {
-            input: {
-                type: "structure",
-                required: [ "GatewayARN" ],
-                members: {
-                    GatewayARN: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    GatewayARN: {},
-                    BandwidthRateLimitIntervals: {
-                        shape: "S3k"
-                    }
-                }
-            }
-        },
-        DescribeCache: {
-            input: {
-                type: "structure",
-                required: [ "GatewayARN" ],
-                members: {
-                    GatewayARN: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    GatewayARN: {},
-                    DiskIds: {
-                        shape: "Sg"
-                    },
-                    CacheAllocatedInBytes: {
-                        type: "long"
-                    },
-                    CacheUsedPercentage: {
-                        type: "double"
-                    },
-                    CacheDirtyPercentage: {
-                        type: "double"
-                    },
-                    CacheHitPercentage: {
-                        type: "double"
-                    },
-                    CacheMissPercentage: {
-                        type: "double"
-                    }
-                }
-            }
-        },
-        DescribeCachediSCSIVolumes: {
-            input: {
-                type: "structure",
-                required: [ "VolumeARNs" ],
-                members: {
-                    VolumeARNs: {
-                        shape: "S3u"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    CachediSCSIVolumes: {
-                        type: "list",
-                        member: {
-                            type: "structure",
-                            members: {
-                                VolumeARN: {},
-                                VolumeId: {},
-                                VolumeType: {},
-                                VolumeStatus: {},
-                                VolumeAttachmentStatus: {},
-                                VolumeSizeInBytes: {
-                                    type: "long"
-                                },
-                                VolumeProgress: {
-                                    type: "double"
-                                },
-                                SourceSnapshotId: {},
-                                VolumeiSCSIAttributes: {
-                                    shape: "S43"
-                                },
-                                CreatedDate: {
-                                    type: "timestamp"
-                                },
-                                VolumeUsedInBytes: {
-                                    type: "long"
-                                },
-                                KMSKey: {},
-                                TargetName: {}
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        DescribeChapCredentials: {
-            input: {
-                type: "structure",
-                required: [ "TargetARN" ],
-                members: {
-                    TargetARN: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    ChapCredentials: {
-                        type: "list",
-                        member: {
-                            type: "structure",
-                            members: {
-                                TargetARN: {},
-                                SecretToAuthenticateInitiator: {
-                                    shape: "S4c"
-                                },
-                                InitiatorName: {},
-                                SecretToAuthenticateTarget: {
-                                    shape: "S4c"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        DescribeGatewayInformation: {
-            input: {
-                type: "structure",
-                required: [ "GatewayARN" ],
-                members: {
-                    GatewayARN: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    GatewayARN: {},
-                    GatewayId: {},
-                    GatewayName: {},
-                    GatewayTimezone: {},
-                    GatewayState: {},
-                    GatewayNetworkInterfaces: {
-                        type: "list",
-                        member: {
-                            type: "structure",
-                            members: {
-                                Ipv4Address: {},
-                                MacAddress: {},
-                                Ipv6Address: {}
-                            }
-                        }
-                    },
-                    GatewayType: {},
-                    NextUpdateAvailabilityDate: {},
-                    LastSoftwareUpdate: {},
-                    Ec2InstanceId: {},
-                    Ec2InstanceRegion: {},
-                    Tags: {
-                        shape: "S9"
-                    },
-                    VPCEndpoint: {},
-                    CloudWatchLogGroupARN: {},
-                    HostEnvironment: {},
-                    EndpointType: {},
-                    SoftwareUpdatesEndDate: {},
-                    DeprecationDate: {}
-                }
-            }
-        },
-        DescribeMaintenanceStartTime: {
-            input: {
-                type: "structure",
-                required: [ "GatewayARN" ],
-                members: {
-                    GatewayARN: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    GatewayARN: {},
-                    HourOfDay: {
-                        type: "integer"
-                    },
-                    MinuteOfHour: {
-                        type: "integer"
-                    },
-                    DayOfWeek: {
-                        type: "integer"
-                    },
-                    DayOfMonth: {
-                        type: "integer"
-                    },
-                    Timezone: {}
-                }
-            }
-        },
-        DescribeNFSFileShares: {
-            input: {
-                type: "structure",
-                required: [ "FileShareARNList" ],
-                members: {
-                    FileShareARNList: {
-                        shape: "S4w"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    NFSFileShareInfoList: {
-                        type: "list",
-                        member: {
-                            type: "structure",
-                            members: {
-                                NFSFileShareDefaults: {
-                                    shape: "S1d"
-                                },
-                                FileShareARN: {},
-                                FileShareId: {},
-                                FileShareStatus: {},
-                                GatewayARN: {},
-                                KMSEncrypted: {
-                                    type: "boolean"
-                                },
-                                KMSKey: {},
-                                Path: {},
-                                Role: {},
-                                LocationARN: {},
-                                DefaultStorageClass: {},
-                                ObjectACL: {},
-                                ClientList: {
-                                    shape: "S1k"
-                                },
-                                Squash: {},
-                                ReadOnly: {
-                                    type: "boolean"
-                                },
-                                GuessMIMETypeEnabled: {
-                                    type: "boolean"
-                                },
-                                RequesterPays: {
-                                    type: "boolean"
-                                },
-                                Tags: {
-                                    shape: "S9"
-                                },
-                                FileShareName: {},
-                                CacheAttributes: {
-                                    shape: "S1o"
-                                },
-                                NotificationPolicy: {}
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        DescribeSMBFileShares: {
-            input: {
-                type: "structure",
-                required: [ "FileShareARNList" ],
-                members: {
-                    FileShareARNList: {
-                        shape: "S4w"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    SMBFileShareInfoList: {
-                        type: "list",
-                        member: {
-                            type: "structure",
-                            members: {
-                                FileShareARN: {},
-                                FileShareId: {},
-                                FileShareStatus: {},
-                                GatewayARN: {},
-                                KMSEncrypted: {
-                                    type: "boolean"
-                                },
-                                KMSKey: {},
-                                Path: {},
-                                Role: {},
-                                LocationARN: {},
-                                DefaultStorageClass: {},
-                                ObjectACL: {},
-                                ReadOnly: {
-                                    type: "boolean"
-                                },
-                                GuessMIMETypeEnabled: {
-                                    type: "boolean"
-                                },
-                                RequesterPays: {
-                                    type: "boolean"
-                                },
-                                SMBACLEnabled: {
-                                    type: "boolean"
-                                },
-                                AccessBasedEnumeration: {
-                                    type: "boolean"
-                                },
-                                AdminUserList: {
-                                    shape: "S1u"
-                                },
-                                ValidUserList: {
-                                    shape: "S1u"
-                                },
-                                InvalidUserList: {
-                                    shape: "S1u"
-                                },
-                                AuditDestinationARN: {},
-                                Authentication: {},
-                                CaseSensitivity: {},
-                                Tags: {
-                                    shape: "S9"
-                                },
-                                FileShareName: {},
-                                CacheAttributes: {
-                                    shape: "S1o"
-                                },
-                                NotificationPolicy: {}
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        DescribeSMBSettings: {
-            input: {
-                type: "structure",
-                required: [ "GatewayARN" ],
-                members: {
-                    GatewayARN: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    GatewayARN: {},
-                    DomainName: {},
-                    ActiveDirectoryStatus: {},
-                    SMBGuestPasswordSet: {
-                        type: "boolean"
-                    },
-                    SMBSecurityStrategy: {},
-                    FileSharesVisible: {
-                        type: "boolean"
-                    }
-                }
-            }
-        },
-        DescribeSnapshotSchedule: {
-            input: {
-                type: "structure",
-                required: [ "VolumeARN" ],
-                members: {
-                    VolumeARN: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    VolumeARN: {},
-                    StartAt: {
-                        type: "integer"
-                    },
-                    RecurrenceInHours: {
-                        type: "integer"
-                    },
-                    Description: {},
-                    Timezone: {},
-                    Tags: {
-                        shape: "S9"
-                    }
-                }
-            }
-        },
-        DescribeStorediSCSIVolumes: {
-            input: {
-                type: "structure",
-                required: [ "VolumeARNs" ],
-                members: {
-                    VolumeARNs: {
-                        shape: "S3u"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    StorediSCSIVolumes: {
-                        type: "list",
-                        member: {
-                            type: "structure",
-                            members: {
-                                VolumeARN: {},
-                                VolumeId: {},
-                                VolumeType: {},
-                                VolumeStatus: {},
-                                VolumeAttachmentStatus: {},
-                                VolumeSizeInBytes: {
-                                    type: "long"
-                                },
-                                VolumeProgress: {
-                                    type: "double"
-                                },
-                                VolumeDiskId: {},
-                                SourceSnapshotId: {},
-                                PreservedExistingData: {
-                                    type: "boolean"
-                                },
-                                VolumeiSCSIAttributes: {
-                                    shape: "S43"
-                                },
-                                CreatedDate: {
-                                    type: "timestamp"
-                                },
-                                VolumeUsedInBytes: {
-                                    type: "long"
-                                },
-                                KMSKey: {},
-                                TargetName: {}
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        DescribeTapeArchives: {
-            input: {
-                type: "structure",
-                members: {
-                    TapeARNs: {
-                        shape: "S2n"
-                    },
-                    Marker: {},
-                    Limit: {
-                        type: "integer"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    TapeArchives: {
-                        type: "list",
-                        member: {
-                            type: "structure",
-                            members: {
-                                TapeARN: {},
-                                TapeBarcode: {},
-                                TapeCreatedDate: {
-                                    type: "timestamp"
-                                },
-                                TapeSizeInBytes: {
-                                    type: "long"
-                                },
-                                CompletionTime: {
-                                    type: "timestamp"
-                                },
-                                RetrievedTo: {},
-                                TapeStatus: {},
-                                TapeUsedInBytes: {
-                                    type: "long"
-                                },
-                                KMSKey: {},
-                                PoolId: {},
-                                Worm: {
-                                    type: "boolean"
-                                },
-                                RetentionStartDate: {
-                                    type: "timestamp"
-                                },
-                                PoolEntryDate: {
-                                    type: "timestamp"
-                                }
-                            }
-                        }
-                    },
-                    Marker: {}
-                }
-            }
-        },
-        DescribeTapeRecoveryPoints: {
-            input: {
-                type: "structure",
-                required: [ "GatewayARN" ],
-                members: {
-                    GatewayARN: {},
-                    Marker: {},
-                    Limit: {
-                        type: "integer"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    GatewayARN: {},
-                    TapeRecoveryPointInfos: {
-                        type: "list",
-                        member: {
-                            type: "structure",
-                            members: {
-                                TapeARN: {},
-                                TapeRecoveryPointTime: {
-                                    type: "timestamp"
-                                },
-                                TapeSizeInBytes: {
-                                    type: "long"
-                                },
-                                TapeStatus: {}
-                            }
-                        }
-                    },
-                    Marker: {}
-                }
-            }
-        },
-        DescribeTapes: {
-            input: {
-                type: "structure",
-                required: [ "GatewayARN" ],
-                members: {
-                    GatewayARN: {},
-                    TapeARNs: {
-                        shape: "S2n"
-                    },
-                    Marker: {},
-                    Limit: {
-                        type: "integer"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    Tapes: {
-                        type: "list",
-                        member: {
-                            type: "structure",
-                            members: {
-                                TapeARN: {},
-                                TapeBarcode: {},
-                                TapeCreatedDate: {
-                                    type: "timestamp"
-                                },
-                                TapeSizeInBytes: {
-                                    type: "long"
-                                },
-                                TapeStatus: {},
-                                VTLDevice: {},
-                                Progress: {
-                                    type: "double"
-                                },
-                                TapeUsedInBytes: {
-                                    type: "long"
-                                },
-                                KMSKey: {},
-                                PoolId: {},
-                                Worm: {
-                                    type: "boolean"
-                                },
-                                RetentionStartDate: {
-                                    type: "timestamp"
-                                },
-                                PoolEntryDate: {
-                                    type: "timestamp"
-                                }
-                            }
-                        }
-                    },
-                    Marker: {}
-                }
-            }
-        },
-        DescribeUploadBuffer: {
-            input: {
-                type: "structure",
-                required: [ "GatewayARN" ],
-                members: {
-                    GatewayARN: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    GatewayARN: {},
-                    DiskIds: {
-                        shape: "Sg"
-                    },
-                    UploadBufferUsedInBytes: {
-                        type: "long"
-                    },
-                    UploadBufferAllocatedInBytes: {
-                        type: "long"
-                    }
-                }
-            }
-        },
-        DescribeVTLDevices: {
-            input: {
-                type: "structure",
-                required: [ "GatewayARN" ],
-                members: {
-                    GatewayARN: {},
-                    VTLDeviceARNs: {
-                        type: "list",
-                        member: {}
-                    },
-                    Marker: {},
-                    Limit: {
-                        type: "integer"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    GatewayARN: {},
-                    VTLDevices: {
-                        type: "list",
-                        member: {
-                            type: "structure",
-                            members: {
-                                VTLDeviceARN: {},
-                                VTLDeviceType: {},
-                                VTLDeviceVendor: {},
-                                VTLDeviceProductIdentifier: {},
-                                DeviceiSCSIAttributes: {
-                                    type: "structure",
-                                    members: {
-                                        TargetARN: {},
-                                        NetworkInterfaceId: {},
-                                        NetworkInterfacePort: {
-                                            type: "integer"
-                                        },
-                                        ChapEnabled: {
-                                            type: "boolean"
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    Marker: {}
-                }
-            }
-        },
-        DescribeWorkingStorage: {
-            input: {
-                type: "structure",
-                required: [ "GatewayARN" ],
-                members: {
-                    GatewayARN: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    GatewayARN: {},
-                    DiskIds: {
-                        shape: "Sg"
-                    },
-                    WorkingStorageUsedInBytes: {
-                        type: "long"
-                    },
-                    WorkingStorageAllocatedInBytes: {
-                        type: "long"
-                    }
-                }
-            }
-        },
-        DetachVolume: {
-            input: {
-                type: "structure",
-                required: [ "VolumeARN" ],
-                members: {
-                    VolumeARN: {},
-                    ForceDetach: {
-                        type: "boolean"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    VolumeARN: {}
-                }
-            }
-        },
-        DisableGateway: {
-            input: {
-                type: "structure",
-                required: [ "GatewayARN" ],
-                members: {
-                    GatewayARN: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    GatewayARN: {}
-                }
-            }
-        },
-        JoinDomain: {
-            input: {
-                type: "structure",
-                required: [ "GatewayARN", "DomainName", "UserName", "Password" ],
-                members: {
-                    GatewayARN: {},
-                    DomainName: {},
-                    OrganizationalUnit: {},
-                    DomainControllers: {
-                        type: "list",
-                        member: {}
-                    },
-                    TimeoutInSeconds: {
-                        type: "integer"
-                    },
-                    UserName: {},
-                    Password: {
-                        type: "string",
-                        sensitive: true
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    GatewayARN: {},
-                    ActiveDirectoryStatus: {}
-                }
-            }
-        },
-        ListAutomaticTapeCreationPolicies: {
-            input: {
-                type: "structure",
-                members: {
-                    GatewayARN: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    AutomaticTapeCreationPolicyInfos: {
-                        type: "list",
-                        member: {
-                            type: "structure",
-                            members: {
-                                AutomaticTapeCreationRules: {
-                                    shape: "S6v"
-                                },
-                                GatewayARN: {}
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        ListFileShares: {
-            input: {
-                type: "structure",
-                members: {
-                    GatewayARN: {},
-                    Limit: {
-                        type: "integer"
-                    },
-                    Marker: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    Marker: {},
-                    NextMarker: {},
-                    FileShareInfoList: {
-                        type: "list",
-                        member: {
-                            type: "structure",
-                            members: {
-                                FileShareType: {},
-                                FileShareARN: {},
-                                FileShareId: {},
-                                FileShareStatus: {},
-                                GatewayARN: {}
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        ListGateways: {
-            input: {
-                type: "structure",
-                members: {
-                    Marker: {},
-                    Limit: {
-                        type: "integer"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    Gateways: {
-                        type: "list",
-                        member: {
-                            type: "structure",
-                            members: {
-                                GatewayId: {},
-                                GatewayARN: {},
-                                GatewayType: {},
-                                GatewayOperationalState: {},
-                                GatewayName: {},
-                                Ec2InstanceId: {},
-                                Ec2InstanceRegion: {}
-                            }
-                        }
-                    },
-                    Marker: {}
-                }
-            }
-        },
-        ListLocalDisks: {
-            input: {
-                type: "structure",
-                required: [ "GatewayARN" ],
-                members: {
-                    GatewayARN: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    GatewayARN: {},
-                    Disks: {
-                        type: "list",
-                        member: {
-                            type: "structure",
-                            members: {
-                                DiskId: {},
-                                DiskPath: {},
-                                DiskNode: {},
-                                DiskStatus: {},
-                                DiskSizeInBytes: {
-                                    type: "long"
-                                },
-                                DiskAllocationType: {},
-                                DiskAllocationResource: {},
-                                DiskAttributeList: {
-                                    type: "list",
-                                    member: {}
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        ListTagsForResource: {
-            input: {
-                type: "structure",
-                required: [ "ResourceARN" ],
-                members: {
-                    ResourceARN: {},
-                    Marker: {},
-                    Limit: {
-                        type: "integer"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    ResourceARN: {},
-                    Marker: {},
-                    Tags: {
-                        shape: "S9"
-                    }
-                }
-            }
-        },
-        ListTapePools: {
-            input: {
-                type: "structure",
-                members: {
-                    PoolARNs: {
-                        type: "list",
-                        member: {}
-                    },
-                    Marker: {},
-                    Limit: {
-                        type: "integer"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    PoolInfos: {
-                        type: "list",
-                        member: {
-                            type: "structure",
-                            members: {
-                                PoolARN: {},
-                                PoolName: {},
-                                StorageClass: {},
-                                RetentionLockType: {},
-                                RetentionLockTimeInDays: {
-                                    type: "integer"
-                                },
-                                PoolStatus: {}
-                            }
-                        }
-                    },
-                    Marker: {}
-                }
-            }
-        },
-        ListTapes: {
-            input: {
-                type: "structure",
-                members: {
-                    TapeARNs: {
-                        shape: "S2n"
-                    },
-                    Marker: {},
-                    Limit: {
-                        type: "integer"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    TapeInfos: {
-                        type: "list",
-                        member: {
-                            type: "structure",
-                            members: {
-                                TapeARN: {},
-                                TapeBarcode: {},
-                                TapeSizeInBytes: {
-                                    type: "long"
-                                },
-                                TapeStatus: {},
-                                GatewayARN: {},
-                                PoolId: {},
-                                RetentionStartDate: {
-                                    type: "timestamp"
-                                },
-                                PoolEntryDate: {
-                                    type: "timestamp"
-                                }
-                            }
-                        }
-                    },
-                    Marker: {}
-                }
-            }
-        },
-        ListVolumeInitiators: {
-            input: {
-                type: "structure",
-                required: [ "VolumeARN" ],
-                members: {
-                    VolumeARN: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    Initiators: {
-                        type: "list",
-                        member: {}
-                    }
-                }
-            }
-        },
-        ListVolumeRecoveryPoints: {
-            input: {
-                type: "structure",
-                required: [ "GatewayARN" ],
-                members: {
-                    GatewayARN: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    GatewayARN: {},
-                    VolumeRecoveryPointInfos: {
-                        type: "list",
-                        member: {
-                            type: "structure",
-                            members: {
-                                VolumeARN: {},
-                                VolumeSizeInBytes: {
-                                    type: "long"
-                                },
-                                VolumeUsageInBytes: {
-                                    type: "long"
-                                },
-                                VolumeRecoveryPointTime: {}
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        ListVolumes: {
-            input: {
-                type: "structure",
-                members: {
-                    GatewayARN: {},
-                    Marker: {},
-                    Limit: {
-                        type: "integer"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    GatewayARN: {},
-                    Marker: {},
-                    VolumeInfos: {
-                        type: "list",
-                        member: {
-                            type: "structure",
-                            members: {
-                                VolumeARN: {},
-                                VolumeId: {},
-                                GatewayARN: {},
-                                GatewayId: {},
-                                VolumeType: {},
-                                VolumeSizeInBytes: {
-                                    type: "long"
-                                },
-                                VolumeAttachmentStatus: {}
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        NotifyWhenUploaded: {
-            input: {
-                type: "structure",
-                required: [ "FileShareARN" ],
-                members: {
-                    FileShareARN: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    FileShareARN: {},
-                    NotificationId: {}
-                }
-            }
-        },
-        RefreshCache: {
-            input: {
-                type: "structure",
-                required: [ "FileShareARN" ],
-                members: {
-                    FileShareARN: {},
-                    FolderList: {
-                        type: "list",
-                        member: {}
-                    },
-                    Recursive: {
-                        type: "boolean"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    FileShareARN: {},
-                    NotificationId: {}
-                }
-            }
-        },
-        RemoveTagsFromResource: {
-            input: {
-                type: "structure",
-                required: [ "ResourceARN", "TagKeys" ],
-                members: {
-                    ResourceARN: {},
-                    TagKeys: {
-                        type: "list",
-                        member: {}
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    ResourceARN: {}
-                }
-            }
-        },
-        ResetCache: {
-            input: {
-                type: "structure",
-                required: [ "GatewayARN" ],
-                members: {
-                    GatewayARN: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    GatewayARN: {}
-                }
-            }
-        },
-        RetrieveTapeArchive: {
-            input: {
-                type: "structure",
-                required: [ "TapeARN", "GatewayARN" ],
-                members: {
-                    TapeARN: {},
-                    GatewayARN: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    TapeARN: {}
-                }
-            }
-        },
-        RetrieveTapeRecoveryPoint: {
-            input: {
-                type: "structure",
-                required: [ "TapeARN", "GatewayARN" ],
-                members: {
-                    TapeARN: {},
-                    GatewayARN: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    TapeARN: {}
-                }
-            }
-        },
-        SetLocalConsolePassword: {
-            input: {
-                type: "structure",
-                required: [ "GatewayARN", "LocalConsolePassword" ],
-                members: {
-                    GatewayARN: {},
-                    LocalConsolePassword: {
-                        type: "string",
-                        sensitive: true
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    GatewayARN: {}
-                }
-            }
-        },
-        SetSMBGuestPassword: {
-            input: {
-                type: "structure",
-                required: [ "GatewayARN", "Password" ],
-                members: {
-                    GatewayARN: {},
-                    Password: {
-                        type: "string",
-                        sensitive: true
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    GatewayARN: {}
-                }
-            }
-        },
-        ShutdownGateway: {
-            input: {
-                type: "structure",
-                required: [ "GatewayARN" ],
-                members: {
-                    GatewayARN: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    GatewayARN: {}
-                }
-            }
-        },
-        StartAvailabilityMonitorTest: {
-            input: {
-                type: "structure",
-                required: [ "GatewayARN" ],
-                members: {
-                    GatewayARN: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    GatewayARN: {}
-                }
-            }
-        },
-        StartGateway: {
-            input: {
-                type: "structure",
-                required: [ "GatewayARN" ],
-                members: {
-                    GatewayARN: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    GatewayARN: {}
-                }
-            }
-        },
-        UpdateAutomaticTapeCreationPolicy: {
-            input: {
-                type: "structure",
-                required: [ "AutomaticTapeCreationRules", "GatewayARN" ],
-                members: {
-                    AutomaticTapeCreationRules: {
-                        shape: "S6v"
-                    },
-                    GatewayARN: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    GatewayARN: {}
-                }
-            }
-        },
-        UpdateBandwidthRateLimit: {
-            input: {
-                type: "structure",
-                required: [ "GatewayARN" ],
-                members: {
-                    GatewayARN: {},
-                    AverageUploadRateLimitInBitsPerSec: {
-                        type: "long"
-                    },
-                    AverageDownloadRateLimitInBitsPerSec: {
-                        type: "long"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    GatewayARN: {}
-                }
-            }
-        },
-        UpdateBandwidthRateLimitSchedule: {
-            input: {
-                type: "structure",
-                required: [ "GatewayARN", "BandwidthRateLimitIntervals" ],
-                members: {
-                    GatewayARN: {},
-                    BandwidthRateLimitIntervals: {
-                        shape: "S3k"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    GatewayARN: {}
-                }
-            }
-        },
-        UpdateChapCredentials: {
-            input: {
-                type: "structure",
-                required: [ "TargetARN", "SecretToAuthenticateInitiator", "InitiatorName" ],
-                members: {
-                    TargetARN: {},
-                    SecretToAuthenticateInitiator: {
-                        shape: "S4c"
-                    },
-                    InitiatorName: {},
-                    SecretToAuthenticateTarget: {
-                        shape: "S4c"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    TargetARN: {},
-                    InitiatorName: {}
-                }
-            }
-        },
-        UpdateGatewayInformation: {
-            input: {
-                type: "structure",
-                required: [ "GatewayARN" ],
-                members: {
-                    GatewayARN: {},
-                    GatewayName: {},
-                    GatewayTimezone: {},
-                    CloudWatchLogGroupARN: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    GatewayARN: {},
-                    GatewayName: {}
-                }
-            }
-        },
-        UpdateGatewaySoftwareNow: {
-            input: {
-                type: "structure",
-                required: [ "GatewayARN" ],
-                members: {
-                    GatewayARN: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    GatewayARN: {}
-                }
-            }
-        },
-        UpdateMaintenanceStartTime: {
-            input: {
-                type: "structure",
-                required: [ "GatewayARN", "HourOfDay", "MinuteOfHour" ],
-                members: {
-                    GatewayARN: {},
-                    HourOfDay: {
-                        type: "integer"
-                    },
-                    MinuteOfHour: {
-                        type: "integer"
-                    },
-                    DayOfWeek: {
-                        type: "integer"
-                    },
-                    DayOfMonth: {
-                        type: "integer"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    GatewayARN: {}
-                }
-            }
-        },
-        UpdateNFSFileShare: {
-            input: {
-                type: "structure",
-                required: [ "FileShareARN" ],
-                members: {
-                    FileShareARN: {},
-                    KMSEncrypted: {
-                        type: "boolean"
-                    },
-                    KMSKey: {},
-                    NFSFileShareDefaults: {
-                        shape: "S1d"
-                    },
-                    DefaultStorageClass: {},
-                    ObjectACL: {},
-                    ClientList: {
-                        shape: "S1k"
-                    },
-                    Squash: {},
-                    ReadOnly: {
-                        type: "boolean"
-                    },
-                    GuessMIMETypeEnabled: {
-                        type: "boolean"
-                    },
-                    RequesterPays: {
-                        type: "boolean"
-                    },
-                    FileShareName: {},
-                    CacheAttributes: {
-                        shape: "S1o"
-                    },
-                    NotificationPolicy: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    FileShareARN: {}
-                }
-            }
-        },
-        UpdateSMBFileShare: {
-            input: {
-                type: "structure",
-                required: [ "FileShareARN" ],
-                members: {
-                    FileShareARN: {},
-                    KMSEncrypted: {
-                        type: "boolean"
-                    },
-                    KMSKey: {},
-                    DefaultStorageClass: {},
-                    ObjectACL: {},
-                    ReadOnly: {
-                        type: "boolean"
-                    },
-                    GuessMIMETypeEnabled: {
-                        type: "boolean"
-                    },
-                    RequesterPays: {
-                        type: "boolean"
-                    },
-                    SMBACLEnabled: {
-                        type: "boolean"
-                    },
-                    AccessBasedEnumeration: {
-                        type: "boolean"
-                    },
-                    AdminUserList: {
-                        shape: "S1u"
-                    },
-                    ValidUserList: {
-                        shape: "S1u"
-                    },
-                    InvalidUserList: {
-                        shape: "S1u"
-                    },
-                    AuditDestinationARN: {},
-                    CaseSensitivity: {},
-                    FileShareName: {},
-                    CacheAttributes: {
-                        shape: "S1o"
-                    },
-                    NotificationPolicy: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    FileShareARN: {}
-                }
-            }
-        },
-        UpdateSMBFileShareVisibility: {
-            input: {
-                type: "structure",
-                required: [ "GatewayARN", "FileSharesVisible" ],
-                members: {
-                    GatewayARN: {},
-                    FileSharesVisible: {
-                        type: "boolean"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    GatewayARN: {}
-                }
-            }
-        },
-        UpdateSMBSecurityStrategy: {
-            input: {
-                type: "structure",
-                required: [ "GatewayARN", "SMBSecurityStrategy" ],
-                members: {
-                    GatewayARN: {},
-                    SMBSecurityStrategy: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    GatewayARN: {}
-                }
-            }
-        },
-        UpdateSnapshotSchedule: {
-            input: {
-                type: "structure",
-                required: [ "VolumeARN", "StartAt", "RecurrenceInHours" ],
-                members: {
-                    VolumeARN: {},
-                    StartAt: {
-                        type: "integer"
-                    },
-                    RecurrenceInHours: {
-                        type: "integer"
-                    },
-                    Description: {},
-                    Tags: {
-                        shape: "S9"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    VolumeARN: {}
-                }
-            }
-        },
-        UpdateVTLDeviceType: {
-            input: {
-                type: "structure",
-                required: [ "VTLDeviceARN", "DeviceType" ],
-                members: {
-                    VTLDeviceARN: {},
-                    DeviceType: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    VTLDeviceARN: {}
-                }
-            }
-        }
-    },
-    shapes: {
-        S9: {
-            type: "list",
-            member: {
-                type: "structure",
-                required: [ "Key", "Value" ],
-                members: {
-                    Key: {},
-                    Value: {}
-                }
-            }
-        },
-        Sg: {
-            type: "list",
-            member: {}
-        },
-        S1d: {
-            type: "structure",
-            members: {
-                FileMode: {},
-                DirectoryMode: {},
-                GroupId: {
-                    type: "long"
-                },
-                OwnerId: {
-                    type: "long"
-                }
-            }
-        },
-        S1k: {
-            type: "list",
-            member: {}
-        },
-        S1o: {
-            type: "structure",
-            members: {
-                CacheStaleTimeoutInSeconds: {
-                    type: "integer"
-                }
-            }
-        },
-        S1u: {
-            type: "list",
-            member: {}
-        },
-        S2n: {
-            type: "list",
-            member: {}
-        },
-        S3k: {
-            type: "list",
-            member: {
-                type: "structure",
-                required: [ "StartHourOfDay", "StartMinuteOfHour", "EndHourOfDay", "EndMinuteOfHour", "DaysOfWeek" ],
-                members: {
-                    StartHourOfDay: {
-                        type: "integer"
-                    },
-                    StartMinuteOfHour: {
-                        type: "integer"
-                    },
-                    EndHourOfDay: {
-                        type: "integer"
-                    },
-                    EndMinuteOfHour: {
-                        type: "integer"
-                    },
-                    DaysOfWeek: {
-                        type: "list",
-                        member: {
-                            type: "integer"
-                        }
-                    },
-                    AverageUploadRateLimitInBitsPerSec: {
-                        type: "long"
-                    },
-                    AverageDownloadRateLimitInBitsPerSec: {
-                        type: "long"
-                    }
-                }
-            }
-        },
-        S3u: {
-            type: "list",
-            member: {}
-        },
-        S43: {
-            type: "structure",
-            members: {
-                TargetARN: {},
-                NetworkInterfaceId: {},
-                NetworkInterfacePort: {
-                    type: "integer"
-                },
-                LunNumber: {
-                    type: "integer"
-                },
-                ChapEnabled: {
-                    type: "boolean"
-                }
-            }
-        },
-        S4c: {
-            type: "string",
-            sensitive: true
-        },
-        S4w: {
-            type: "list",
-            member: {}
-        },
-        S6v: {
-            type: "list",
-            member: {
-                type: "structure",
-                required: [ "TapeBarcodePrefix", "PoolId", "TapeSizeInBytes", "MinimumNumTapes" ],
-                members: {
-                    TapeBarcodePrefix: {},
-                    PoolId: {},
-                    TapeSizeInBytes: {
-                        type: "long"
-                    },
-                    MinimumNumTapes: {
-                        type: "integer"
-                    },
-                    Worm: {
-                        type: "boolean"
-                    }
-                }
-            }
-        }
-    },
-    paginators: {
-        DescribeCachediSCSIVolumes: {
-            result_key: "CachediSCSIVolumes"
-        },
-        DescribeStorediSCSIVolumes: {
-            result_key: "StorediSCSIVolumes"
-        },
-        DescribeTapeArchives: {
-            input_token: "Marker",
-            limit_key: "Limit",
-            output_token: "Marker",
-            result_key: "TapeArchives"
-        },
-        DescribeTapeRecoveryPoints: {
-            input_token: "Marker",
-            limit_key: "Limit",
-            output_token: "Marker",
-            result_key: "TapeRecoveryPointInfos"
-        },
-        DescribeTapes: {
-            input_token: "Marker",
-            limit_key: "Limit",
-            output_token: "Marker",
-            result_key: "Tapes"
-        },
-        DescribeVTLDevices: {
-            input_token: "Marker",
-            limit_key: "Limit",
-            output_token: "Marker",
-            result_key: "VTLDevices"
-        },
-        ListFileShares: {
-            input_token: "Marker",
-            limit_key: "Limit",
-            non_aggregate_keys: [ "Marker" ],
-            output_token: "NextMarker",
-            result_key: "FileShareInfoList"
-        },
-        ListGateways: {
-            input_token: "Marker",
-            limit_key: "Limit",
-            output_token: "Marker",
-            result_key: "Gateways"
-        },
-        ListLocalDisks: {
-            result_key: "Disks"
-        },
-        ListTagsForResource: {
-            input_token: "Marker",
-            limit_key: "Limit",
-            non_aggregate_keys: [ "ResourceARN" ],
-            output_token: "Marker",
-            result_key: "Tags"
-        },
-        ListTapePools: {
-            input_token: "Marker",
-            limit_key: "Limit",
-            output_token: "Marker",
-            result_key: "PoolInfos"
-        },
-        ListTapes: {
-            input_token: "Marker",
-            limit_key: "Limit",
-            output_token: "Marker",
-            result_key: "TapeInfos"
-        },
-        ListVolumeRecoveryPoints: {
-            result_key: "VolumeRecoveryPointInfos"
-        },
-        ListVolumes: {
-            input_token: "Marker",
-            limit_key: "Limit",
-            output_token: "Marker",
-            result_key: "VolumeInfos"
-        }
-    }
-};
-
-AWS.apiLoader.services["stepfunctions"] = {};
-
-AWS.StepFunctions = AWS.Service.defineService("stepfunctions", [ "2016-11-23" ]);
-
-AWS.apiLoader.services["stepfunctions"]["2016-11-23"] = {
-    version: "2.0",
-    metadata: {
-        apiVersion: "2016-11-23",
-        endpointPrefix: "states",
-        jsonVersion: "1.0",
-        protocol: "json",
-        serviceAbbreviation: "AWS SFN",
-        serviceFullName: "AWS Step Functions",
-        serviceId: "SFN",
-        signatureVersion: "v4",
-        targetPrefix: "AWSStepFunctions",
-        uid: "states-2016-11-23"
-    },
-    operations: {
-        CreateActivity: {
-            input: {
-                type: "structure",
-                required: [ "name" ],
-                members: {
-                    name: {},
-                    tags: {
-                        shape: "S3"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                required: [ "activityArn", "creationDate" ],
-                members: {
-                    activityArn: {},
-                    creationDate: {
-                        type: "timestamp"
-                    }
-                }
-            },
-            idempotent: true
-        },
-        CreateStateMachine: {
-            input: {
-                type: "structure",
-                required: [ "name", "definition", "roleArn" ],
-                members: {
-                    name: {},
-                    definition: {
-                        shape: "Sb"
-                    },
-                    roleArn: {},
-                    type: {},
-                    loggingConfiguration: {
-                        shape: "Sd"
-                    },
-                    tags: {
-                        shape: "S3"
-                    },
-                    tracingConfiguration: {
-                        shape: "Sj"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                required: [ "stateMachineArn", "creationDate" ],
-                members: {
-                    stateMachineArn: {},
-                    creationDate: {
-                        type: "timestamp"
-                    }
-                }
-            },
-            idempotent: true
-        },
-        DeleteActivity: {
-            input: {
-                type: "structure",
-                required: [ "activityArn" ],
-                members: {
-                    activityArn: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {}
-            }
-        },
-        DeleteStateMachine: {
-            input: {
-                type: "structure",
-                required: [ "stateMachineArn" ],
-                members: {
-                    stateMachineArn: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {}
-            }
-        },
-        DescribeActivity: {
-            input: {
-                type: "structure",
-                required: [ "activityArn" ],
-                members: {
-                    activityArn: {}
-                }
-            },
-            output: {
-                type: "structure",
-                required: [ "activityArn", "name", "creationDate" ],
-                members: {
-                    activityArn: {},
-                    name: {},
-                    creationDate: {
-                        type: "timestamp"
-                    }
-                }
-            }
-        },
-        DescribeExecution: {
-            input: {
-                type: "structure",
-                required: [ "executionArn" ],
-                members: {
-                    executionArn: {}
-                }
-            },
-            output: {
-                type: "structure",
-                required: [ "executionArn", "stateMachineArn", "status", "startDate" ],
-                members: {
-                    executionArn: {},
-                    stateMachineArn: {},
-                    name: {},
-                    status: {},
-                    startDate: {
-                        type: "timestamp"
-                    },
-                    stopDate: {
-                        type: "timestamp"
-                    },
-                    input: {
-                        shape: "Sv"
-                    },
-                    inputDetails: {
-                        shape: "Sw"
-                    },
-                    output: {
-                        shape: "Sv"
-                    },
-                    outputDetails: {
-                        shape: "Sw"
-                    },
-                    traceHeader: {}
-                }
-            }
-        },
-        DescribeStateMachine: {
-            input: {
-                type: "structure",
-                required: [ "stateMachineArn" ],
-                members: {
-                    stateMachineArn: {}
-                }
-            },
-            output: {
-                type: "structure",
-                required: [ "stateMachineArn", "name", "definition", "roleArn", "type", "creationDate" ],
-                members: {
-                    stateMachineArn: {},
-                    name: {},
-                    status: {},
-                    definition: {
-                        shape: "Sb"
-                    },
-                    roleArn: {},
-                    type: {},
-                    creationDate: {
-                        type: "timestamp"
-                    },
-                    loggingConfiguration: {
-                        shape: "Sd"
-                    },
-                    tracingConfiguration: {
-                        shape: "Sj"
-                    }
-                }
-            }
-        },
-        DescribeStateMachineForExecution: {
-            input: {
-                type: "structure",
-                required: [ "executionArn" ],
-                members: {
-                    executionArn: {}
-                }
-            },
-            output: {
-                type: "structure",
-                required: [ "stateMachineArn", "name", "definition", "roleArn", "updateDate" ],
-                members: {
-                    stateMachineArn: {},
-                    name: {},
-                    definition: {
-                        shape: "Sb"
-                    },
-                    roleArn: {},
-                    updateDate: {
-                        type: "timestamp"
-                    },
-                    loggingConfiguration: {
-                        shape: "Sd"
-                    },
-                    tracingConfiguration: {
-                        shape: "Sj"
-                    }
-                }
-            }
-        },
-        GetActivityTask: {
-            input: {
-                type: "structure",
-                required: [ "activityArn" ],
-                members: {
-                    activityArn: {},
-                    workerName: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    taskToken: {},
-                    input: {
-                        type: "string",
-                        sensitive: true
-                    }
-                }
-            }
-        },
-        GetExecutionHistory: {
-            input: {
-                type: "structure",
-                required: [ "executionArn" ],
-                members: {
-                    executionArn: {},
-                    maxResults: {
-                        type: "integer"
-                    },
-                    reverseOrder: {
-                        type: "boolean"
-                    },
-                    nextToken: {},
-                    includeExecutionData: {
-                        type: "boolean"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                required: [ "events" ],
-                members: {
-                    events: {
-                        type: "list",
-                        member: {
-                            type: "structure",
-                            required: [ "timestamp", "type", "id" ],
-                            members: {
-                                timestamp: {
-                                    type: "timestamp"
-                                },
-                                type: {},
-                                id: {
-                                    type: "long"
-                                },
-                                previousEventId: {
-                                    type: "long"
-                                },
-                                activityFailedEventDetails: {
-                                    type: "structure",
-                                    members: {
-                                        error: {
-                                            shape: "S1j"
-                                        },
-                                        cause: {
-                                            shape: "S1k"
-                                        }
-                                    }
-                                },
-                                activityScheduleFailedEventDetails: {
-                                    type: "structure",
-                                    members: {
-                                        error: {
-                                            shape: "S1j"
-                                        },
-                                        cause: {
-                                            shape: "S1k"
-                                        }
-                                    }
-                                },
-                                activityScheduledEventDetails: {
-                                    type: "structure",
-                                    required: [ "resource" ],
-                                    members: {
-                                        resource: {},
-                                        input: {
-                                            shape: "Sv"
-                                        },
-                                        inputDetails: {
-                                            shape: "S1n"
-                                        },
-                                        timeoutInSeconds: {
-                                            type: "long"
-                                        },
-                                        heartbeatInSeconds: {
-                                            type: "long"
-                                        }
-                                    }
-                                },
-                                activityStartedEventDetails: {
-                                    type: "structure",
-                                    members: {
-                                        workerName: {}
-                                    }
-                                },
-                                activitySucceededEventDetails: {
-                                    type: "structure",
-                                    members: {
-                                        output: {
-                                            shape: "Sv"
-                                        },
-                                        outputDetails: {
-                                            shape: "S1n"
-                                        }
-                                    }
-                                },
-                                activityTimedOutEventDetails: {
-                                    type: "structure",
-                                    members: {
-                                        error: {
-                                            shape: "S1j"
-                                        },
-                                        cause: {
-                                            shape: "S1k"
-                                        }
-                                    }
-                                },
-                                taskFailedEventDetails: {
-                                    type: "structure",
-                                    required: [ "resourceType", "resource" ],
-                                    members: {
-                                        resourceType: {},
-                                        resource: {},
-                                        error: {
-                                            shape: "S1j"
-                                        },
-                                        cause: {
-                                            shape: "S1k"
-                                        }
-                                    }
-                                },
-                                taskScheduledEventDetails: {
-                                    type: "structure",
-                                    required: [ "resourceType", "resource", "region", "parameters" ],
-                                    members: {
-                                        resourceType: {},
-                                        resource: {},
-                                        region: {},
-                                        parameters: {
-                                            type: "string",
-                                            sensitive: true
-                                        },
-                                        timeoutInSeconds: {
-                                            type: "long"
-                                        },
-                                        heartbeatInSeconds: {
-                                            type: "long"
-                                        }
-                                    }
-                                },
-                                taskStartFailedEventDetails: {
-                                    type: "structure",
-                                    required: [ "resourceType", "resource" ],
-                                    members: {
-                                        resourceType: {},
-                                        resource: {},
-                                        error: {
-                                            shape: "S1j"
-                                        },
-                                        cause: {
-                                            shape: "S1k"
-                                        }
-                                    }
-                                },
-                                taskStartedEventDetails: {
-                                    type: "structure",
-                                    required: [ "resourceType", "resource" ],
-                                    members: {
-                                        resourceType: {},
-                                        resource: {}
-                                    }
-                                },
-                                taskSubmitFailedEventDetails: {
-                                    type: "structure",
-                                    required: [ "resourceType", "resource" ],
-                                    members: {
-                                        resourceType: {},
-                                        resource: {},
-                                        error: {
-                                            shape: "S1j"
-                                        },
-                                        cause: {
-                                            shape: "S1k"
-                                        }
-                                    }
-                                },
-                                taskSubmittedEventDetails: {
-                                    type: "structure",
-                                    required: [ "resourceType", "resource" ],
-                                    members: {
-                                        resourceType: {},
-                                        resource: {},
-                                        output: {
-                                            shape: "Sv"
-                                        },
-                                        outputDetails: {
-                                            shape: "S1n"
-                                        }
-                                    }
-                                },
-                                taskSucceededEventDetails: {
-                                    type: "structure",
-                                    required: [ "resourceType", "resource" ],
-                                    members: {
-                                        resourceType: {},
-                                        resource: {},
-                                        output: {
-                                            shape: "Sv"
-                                        },
-                                        outputDetails: {
-                                            shape: "S1n"
-                                        }
-                                    }
-                                },
-                                taskTimedOutEventDetails: {
-                                    type: "structure",
-                                    required: [ "resourceType", "resource" ],
-                                    members: {
-                                        resourceType: {},
-                                        resource: {},
-                                        error: {
-                                            shape: "S1j"
-                                        },
-                                        cause: {
-                                            shape: "S1k"
-                                        }
-                                    }
-                                },
-                                executionFailedEventDetails: {
-                                    type: "structure",
-                                    members: {
-                                        error: {
-                                            shape: "S1j"
-                                        },
-                                        cause: {
-                                            shape: "S1k"
-                                        }
-                                    }
-                                },
-                                executionStartedEventDetails: {
-                                    type: "structure",
-                                    members: {
-                                        input: {
-                                            shape: "Sv"
-                                        },
-                                        inputDetails: {
-                                            shape: "S1n"
-                                        },
-                                        roleArn: {}
-                                    }
-                                },
-                                executionSucceededEventDetails: {
-                                    type: "structure",
-                                    members: {
-                                        output: {
-                                            shape: "Sv"
-                                        },
-                                        outputDetails: {
-                                            shape: "S1n"
-                                        }
-                                    }
-                                },
-                                executionAbortedEventDetails: {
-                                    type: "structure",
-                                    members: {
-                                        error: {
-                                            shape: "S1j"
-                                        },
-                                        cause: {
-                                            shape: "S1k"
-                                        }
-                                    }
-                                },
-                                executionTimedOutEventDetails: {
-                                    type: "structure",
-                                    members: {
-                                        error: {
-                                            shape: "S1j"
-                                        },
-                                        cause: {
-                                            shape: "S1k"
-                                        }
-                                    }
-                                },
-                                mapStateStartedEventDetails: {
-                                    type: "structure",
-                                    members: {
-                                        length: {
-                                            type: "integer"
-                                        }
-                                    }
-                                },
-                                mapIterationStartedEventDetails: {
-                                    shape: "S2a"
-                                },
-                                mapIterationSucceededEventDetails: {
-                                    shape: "S2a"
-                                },
-                                mapIterationFailedEventDetails: {
-                                    shape: "S2a"
-                                },
-                                mapIterationAbortedEventDetails: {
-                                    shape: "S2a"
-                                },
-                                lambdaFunctionFailedEventDetails: {
-                                    type: "structure",
-                                    members: {
-                                        error: {
-                                            shape: "S1j"
-                                        },
-                                        cause: {
-                                            shape: "S1k"
-                                        }
-                                    }
-                                },
-                                lambdaFunctionScheduleFailedEventDetails: {
-                                    type: "structure",
-                                    members: {
-                                        error: {
-                                            shape: "S1j"
-                                        },
-                                        cause: {
-                                            shape: "S1k"
-                                        }
-                                    }
-                                },
-                                lambdaFunctionScheduledEventDetails: {
-                                    type: "structure",
-                                    required: [ "resource" ],
-                                    members: {
-                                        resource: {},
-                                        input: {
-                                            shape: "Sv"
-                                        },
-                                        inputDetails: {
-                                            shape: "S1n"
-                                        },
-                                        timeoutInSeconds: {
-                                            type: "long"
-                                        }
-                                    }
-                                },
-                                lambdaFunctionStartFailedEventDetails: {
-                                    type: "structure",
-                                    members: {
-                                        error: {
-                                            shape: "S1j"
-                                        },
-                                        cause: {
-                                            shape: "S1k"
-                                        }
-                                    }
-                                },
-                                lambdaFunctionSucceededEventDetails: {
-                                    type: "structure",
-                                    members: {
-                                        output: {
-                                            shape: "Sv"
-                                        },
-                                        outputDetails: {
-                                            shape: "S1n"
-                                        }
-                                    }
-                                },
-                                lambdaFunctionTimedOutEventDetails: {
-                                    type: "structure",
-                                    members: {
-                                        error: {
-                                            shape: "S1j"
-                                        },
-                                        cause: {
-                                            shape: "S1k"
-                                        }
-                                    }
-                                },
-                                stateEnteredEventDetails: {
-                                    type: "structure",
-                                    required: [ "name" ],
-                                    members: {
-                                        name: {},
-                                        input: {
-                                            shape: "Sv"
-                                        },
-                                        inputDetails: {
-                                            shape: "S1n"
-                                        }
-                                    }
-                                },
-                                stateExitedEventDetails: {
-                                    type: "structure",
-                                    required: [ "name" ],
-                                    members: {
-                                        name: {},
-                                        output: {
-                                            shape: "Sv"
-                                        },
-                                        outputDetails: {
-                                            shape: "S1n"
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    nextToken: {}
-                }
-            }
-        },
-        ListActivities: {
-            input: {
-                type: "structure",
-                members: {
-                    maxResults: {
-                        type: "integer"
-                    },
-                    nextToken: {}
-                }
-            },
-            output: {
-                type: "structure",
-                required: [ "activities" ],
-                members: {
-                    activities: {
-                        type: "list",
-                        member: {
-                            type: "structure",
-                            required: [ "activityArn", "name", "creationDate" ],
-                            members: {
-                                activityArn: {},
-                                name: {},
-                                creationDate: {
-                                    type: "timestamp"
-                                }
-                            }
-                        }
-                    },
-                    nextToken: {}
-                }
-            }
-        },
-        ListExecutions: {
-            input: {
-                type: "structure",
-                required: [ "stateMachineArn" ],
-                members: {
-                    stateMachineArn: {},
-                    statusFilter: {},
-                    maxResults: {
-                        type: "integer"
-                    },
-                    nextToken: {}
-                }
-            },
-            output: {
-                type: "structure",
-                required: [ "executions" ],
-                members: {
-                    executions: {
-                        type: "list",
-                        member: {
-                            type: "structure",
-                            required: [ "executionArn", "stateMachineArn", "name", "status", "startDate" ],
-                            members: {
-                                executionArn: {},
-                                stateMachineArn: {},
-                                name: {},
-                                status: {},
-                                startDate: {
-                                    type: "timestamp"
-                                },
-                                stopDate: {
-                                    type: "timestamp"
-                                }
-                            }
-                        }
-                    },
-                    nextToken: {}
-                }
-            }
-        },
-        ListStateMachines: {
-            input: {
-                type: "structure",
-                members: {
-                    maxResults: {
-                        type: "integer"
-                    },
-                    nextToken: {}
-                }
-            },
-            output: {
-                type: "structure",
-                required: [ "stateMachines" ],
-                members: {
-                    stateMachines: {
-                        type: "list",
-                        member: {
-                            type: "structure",
-                            required: [ "stateMachineArn", "name", "type", "creationDate" ],
-                            members: {
-                                stateMachineArn: {},
-                                name: {},
-                                type: {},
-                                creationDate: {
-                                    type: "timestamp"
-                                }
-                            }
-                        }
-                    },
-                    nextToken: {}
-                }
-            }
-        },
-        ListTagsForResource: {
-            input: {
-                type: "structure",
-                required: [ "resourceArn" ],
-                members: {
-                    resourceArn: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    tags: {
-                        shape: "S3"
-                    }
-                }
-            }
-        },
-        SendTaskFailure: {
-            input: {
-                type: "structure",
-                required: [ "taskToken" ],
-                members: {
-                    taskToken: {},
-                    error: {
-                        shape: "S1j"
-                    },
-                    cause: {
-                        shape: "S1k"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {}
-            }
-        },
-        SendTaskHeartbeat: {
-            input: {
-                type: "structure",
-                required: [ "taskToken" ],
-                members: {
-                    taskToken: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {}
-            }
-        },
-        SendTaskSuccess: {
-            input: {
-                type: "structure",
-                required: [ "taskToken", "output" ],
-                members: {
-                    taskToken: {},
-                    output: {
-                        shape: "Sv"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {}
-            }
-        },
-        StartExecution: {
-            input: {
-                type: "structure",
-                required: [ "stateMachineArn" ],
-                members: {
-                    stateMachineArn: {},
-                    name: {},
-                    input: {
-                        shape: "Sv"
-                    },
-                    traceHeader: {}
-                }
-            },
-            output: {
-                type: "structure",
-                required: [ "executionArn", "startDate" ],
-                members: {
-                    executionArn: {},
-                    startDate: {
-                        type: "timestamp"
-                    }
-                }
-            },
-            idempotent: true
-        },
-        StartSyncExecution: {
-            input: {
-                type: "structure",
-                required: [ "stateMachineArn" ],
-                members: {
-                    stateMachineArn: {},
-                    name: {},
-                    input: {
-                        shape: "Sv"
-                    },
-                    traceHeader: {}
-                }
-            },
-            output: {
-                type: "structure",
-                required: [ "executionArn", "startDate", "stopDate", "status" ],
-                members: {
-                    executionArn: {},
-                    stateMachineArn: {},
-                    name: {},
-                    startDate: {
-                        type: "timestamp"
-                    },
-                    stopDate: {
-                        type: "timestamp"
-                    },
-                    status: {},
-                    error: {
-                        shape: "S1j"
-                    },
-                    cause: {
-                        shape: "S1k"
-                    },
-                    input: {
-                        shape: "Sv"
-                    },
-                    inputDetails: {
-                        shape: "Sw"
-                    },
-                    output: {
-                        shape: "Sv"
-                    },
-                    outputDetails: {
-                        shape: "Sw"
-                    },
-                    traceHeader: {},
-                    billingDetails: {
-                        type: "structure",
-                        members: {
-                            billedMemoryUsedInMB: {
-                                type: "long"
-                            },
-                            billedDurationInMilliseconds: {
-                                type: "long"
-                            }
-                        }
-                    }
-                }
-            },
-            endpoint: {
-                hostPrefix: "sync-"
-            }
-        },
-        StopExecution: {
-            input: {
-                type: "structure",
-                required: [ "executionArn" ],
-                members: {
-                    executionArn: {},
-                    error: {
-                        shape: "S1j"
-                    },
-                    cause: {
-                        shape: "S1k"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                required: [ "stopDate" ],
-                members: {
-                    stopDate: {
-                        type: "timestamp"
-                    }
-                }
-            }
-        },
-        TagResource: {
-            input: {
-                type: "structure",
-                required: [ "resourceArn", "tags" ],
-                members: {
-                    resourceArn: {},
-                    tags: {
-                        shape: "S3"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {}
-            }
-        },
-        UntagResource: {
-            input: {
-                type: "structure",
-                required: [ "resourceArn", "tagKeys" ],
-                members: {
-                    resourceArn: {},
-                    tagKeys: {
-                        type: "list",
-                        member: {}
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {}
-            }
-        },
-        UpdateStateMachine: {
-            input: {
-                type: "structure",
-                required: [ "stateMachineArn" ],
-                members: {
-                    stateMachineArn: {},
-                    definition: {
-                        shape: "Sb"
-                    },
-                    roleArn: {},
-                    loggingConfiguration: {
-                        shape: "Sd"
-                    },
-                    tracingConfiguration: {
-                        shape: "Sj"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                required: [ "updateDate" ],
-                members: {
-                    updateDate: {
-                        type: "timestamp"
-                    }
-                }
-            },
-            idempotent: true
-        }
-    },
-    shapes: {
-        S3: {
-            type: "list",
-            member: {
-                type: "structure",
-                members: {
-                    key: {},
-                    value: {}
-                }
-            }
-        },
-        Sb: {
-            type: "string",
-            sensitive: true
-        },
-        Sd: {
-            type: "structure",
-            members: {
-                level: {},
-                includeExecutionData: {
-                    type: "boolean"
-                },
-                destinations: {
-                    type: "list",
-                    member: {
-                        type: "structure",
-                        members: {
-                            cloudWatchLogsLogGroup: {
-                                type: "structure",
-                                members: {
-                                    logGroupArn: {}
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        Sj: {
-            type: "structure",
-            members: {
-                enabled: {
-                    type: "boolean"
-                }
-            }
-        },
-        Sv: {
-            type: "string",
-            sensitive: true
-        },
-        Sw: {
-            type: "structure",
-            members: {
-                included: {
-                    type: "boolean"
-                }
-            }
-        },
-        S1j: {
-            type: "string",
-            sensitive: true
-        },
-        S1k: {
-            type: "string",
-            sensitive: true
-        },
-        S1n: {
-            type: "structure",
-            members: {
-                truncated: {
-                    type: "boolean"
-                }
-            }
-        },
-        S2a: {
-            type: "structure",
-            members: {
-                name: {},
-                index: {
-                    type: "integer"
-                }
-            }
-        }
-    },
-    paginators: {
-        GetExecutionHistory: {
-            input_token: "nextToken",
-            limit_key: "maxResults",
-            output_token: "nextToken",
-            result_key: "events"
-        },
-        ListActivities: {
-            input_token: "nextToken",
-            limit_key: "maxResults",
-            output_token: "nextToken",
-            result_key: "activities"
-        },
-        ListExecutions: {
-            input_token: "nextToken",
-            limit_key: "maxResults",
-            output_token: "nextToken",
-            result_key: "executions"
-        },
-        ListStateMachines: {
-            input_token: "nextToken",
-            limit_key: "maxResults",
-            output_token: "nextToken",
-            result_key: "stateMachines"
-        }
-    }
-};
-
-AWS.apiLoader.services["support"] = {};
-
-AWS.Support = AWS.Service.defineService("support", [ "2013-04-15" ]);
-
-AWS.apiLoader.services["support"]["2013-04-15"] = {
-    version: "2.0",
-    metadata: {
-        apiVersion: "2013-04-15",
-        endpointPrefix: "support",
-        jsonVersion: "1.1",
-        protocol: "json",
-        serviceFullName: "AWS Support",
-        serviceId: "Support",
-        signatureVersion: "v4",
-        targetPrefix: "AWSSupport_20130415",
-        uid: "support-2013-04-15"
-    },
-    operations: {
-        AddAttachmentsToSet: {
-            input: {
-                type: "structure",
-                required: [ "attachments" ],
-                members: {
-                    attachmentSetId: {},
-                    attachments: {
-                        type: "list",
-                        member: {
-                            shape: "S4"
-                        }
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    attachmentSetId: {},
-                    expiryTime: {}
-                }
-            }
-        },
-        AddCommunicationToCase: {
-            input: {
-                type: "structure",
-                required: [ "communicationBody" ],
-                members: {
-                    caseId: {},
-                    communicationBody: {},
-                    ccEmailAddresses: {
-                        shape: "Sc"
-                    },
-                    attachmentSetId: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    result: {
-                        type: "boolean"
-                    }
-                }
-            }
-        },
-        CreateCase: {
-            input: {
-                type: "structure",
-                required: [ "subject", "communicationBody" ],
-                members: {
-                    subject: {},
-                    serviceCode: {},
-                    severityCode: {},
-                    categoryCode: {},
-                    communicationBody: {},
-                    ccEmailAddresses: {
-                        shape: "Sc"
-                    },
-                    language: {},
-                    issueType: {},
-                    attachmentSetId: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    caseId: {}
-                }
-            }
-        },
-        DescribeAttachment: {
-            input: {
-                type: "structure",
-                required: [ "attachmentId" ],
-                members: {
-                    attachmentId: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    attachment: {
-                        shape: "S4"
-                    }
-                }
-            }
-        },
-        DescribeCases: {
-            input: {
-                type: "structure",
-                members: {
-                    caseIdList: {
-                        type: "list",
-                        member: {}
-                    },
-                    displayId: {},
-                    afterTime: {},
-                    beforeTime: {},
-                    includeResolvedCases: {
-                        type: "boolean"
-                    },
-                    nextToken: {},
-                    maxResults: {
-                        type: "integer"
-                    },
-                    language: {},
-                    includeCommunications: {
-                        type: "boolean"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    cases: {
-                        type: "list",
-                        member: {
-                            type: "structure",
-                            members: {
-                                caseId: {},
-                                displayId: {},
-                                subject: {},
-                                status: {},
-                                serviceCode: {},
-                                categoryCode: {},
-                                severityCode: {},
-                                submittedBy: {},
-                                timeCreated: {},
-                                recentCommunications: {
-                                    type: "structure",
-                                    members: {
-                                        communications: {
-                                            shape: "S17"
-                                        },
-                                        nextToken: {}
-                                    }
-                                },
-                                ccEmailAddresses: {
-                                    shape: "Sc"
-                                },
-                                language: {}
-                            }
-                        }
-                    },
-                    nextToken: {}
-                }
-            }
-        },
-        DescribeCommunications: {
-            input: {
-                type: "structure",
-                required: [ "caseId" ],
-                members: {
-                    caseId: {},
-                    beforeTime: {},
-                    afterTime: {},
-                    nextToken: {},
-                    maxResults: {
-                        type: "integer"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    communications: {
-                        shape: "S17"
-                    },
-                    nextToken: {}
-                }
-            }
-        },
-        DescribeServices: {
-            input: {
-                type: "structure",
-                members: {
-                    serviceCodeList: {
-                        type: "list",
-                        member: {}
-                    },
-                    language: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    services: {
-                        type: "list",
-                        member: {
-                            type: "structure",
-                            members: {
-                                code: {},
-                                name: {},
-                                categories: {
-                                    type: "list",
-                                    member: {
-                                        type: "structure",
-                                        members: {
-                                            code: {},
-                                            name: {}
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        DescribeSeverityLevels: {
-            input: {
-                type: "structure",
-                members: {
-                    language: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    severityLevels: {
-                        type: "list",
-                        member: {
-                            type: "structure",
-                            members: {
-                                code: {},
-                                name: {}
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        DescribeTrustedAdvisorCheckRefreshStatuses: {
-            input: {
-                type: "structure",
-                required: [ "checkIds" ],
-                members: {
-                    checkIds: {
-                        shape: "S1t"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                required: [ "statuses" ],
-                members: {
-                    statuses: {
-                        type: "list",
-                        member: {
-                            shape: "S1x"
-                        }
-                    }
-                }
-            }
-        },
-        DescribeTrustedAdvisorCheckResult: {
-            input: {
-                type: "structure",
-                required: [ "checkId" ],
-                members: {
-                    checkId: {},
-                    language: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    result: {
-                        type: "structure",
-                        required: [ "checkId", "timestamp", "status", "resourcesSummary", "categorySpecificSummary", "flaggedResources" ],
-                        members: {
-                            checkId: {},
-                            timestamp: {},
-                            status: {},
-                            resourcesSummary: {
-                                shape: "S22"
-                            },
-                            categorySpecificSummary: {
-                                shape: "S23"
-                            },
-                            flaggedResources: {
-                                type: "list",
-                                member: {
-                                    type: "structure",
-                                    required: [ "status", "resourceId", "metadata" ],
-                                    members: {
-                                        status: {},
-                                        region: {},
-                                        resourceId: {},
-                                        isSuppressed: {
-                                            type: "boolean"
-                                        },
-                                        metadata: {
-                                            shape: "S1t"
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        DescribeTrustedAdvisorCheckSummaries: {
-            input: {
-                type: "structure",
-                required: [ "checkIds" ],
-                members: {
-                    checkIds: {
-                        shape: "S1t"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                required: [ "summaries" ],
-                members: {
-                    summaries: {
-                        type: "list",
-                        member: {
-                            type: "structure",
-                            required: [ "checkId", "timestamp", "status", "resourcesSummary", "categorySpecificSummary" ],
-                            members: {
-                                checkId: {},
-                                timestamp: {},
-                                status: {},
-                                hasFlaggedResources: {
-                                    type: "boolean"
-                                },
-                                resourcesSummary: {
-                                    shape: "S22"
-                                },
-                                categorySpecificSummary: {
-                                    shape: "S23"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        DescribeTrustedAdvisorChecks: {
-            input: {
-                type: "structure",
-                required: [ "language" ],
-                members: {
-                    language: {}
-                }
-            },
-            output: {
-                type: "structure",
-                required: [ "checks" ],
-                members: {
-                    checks: {
-                        type: "list",
-                        member: {
-                            type: "structure",
-                            required: [ "id", "name", "description", "category", "metadata" ],
-                            members: {
-                                id: {},
-                                name: {},
-                                description: {},
-                                category: {},
-                                metadata: {
-                                    shape: "S1t"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        RefreshTrustedAdvisorCheck: {
-            input: {
-                type: "structure",
-                required: [ "checkId" ],
-                members: {
-                    checkId: {}
-                }
-            },
-            output: {
-                type: "structure",
-                required: [ "status" ],
-                members: {
-                    status: {
-                        shape: "S1x"
-                    }
-                }
-            }
-        },
-        ResolveCase: {
-            input: {
-                type: "structure",
-                members: {
-                    caseId: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    initialCaseStatus: {},
-                    finalCaseStatus: {}
-                }
-            }
-        }
-    },
-    shapes: {
-        S4: {
-            type: "structure",
-            members: {
-                fileName: {},
-                data: {
-                    type: "blob"
-                }
-            }
-        },
-        Sc: {
-            type: "list",
-            member: {}
-        },
-        S17: {
-            type: "list",
-            member: {
-                type: "structure",
-                members: {
-                    caseId: {},
-                    body: {},
-                    submittedBy: {},
-                    timeCreated: {},
-                    attachmentSet: {
-                        type: "list",
-                        member: {
-                            type: "structure",
-                            members: {
-                                attachmentId: {},
-                                fileName: {}
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        S1t: {
-            type: "list",
-            member: {}
-        },
-        S1x: {
-            type: "structure",
-            required: [ "checkId", "status", "millisUntilNextRefreshable" ],
-            members: {
-                checkId: {},
-                status: {},
-                millisUntilNextRefreshable: {
-                    type: "long"
-                }
-            }
-        },
-        S22: {
-            type: "structure",
-            required: [ "resourcesProcessed", "resourcesFlagged", "resourcesIgnored", "resourcesSuppressed" ],
-            members: {
-                resourcesProcessed: {
-                    type: "long"
-                },
-                resourcesFlagged: {
-                    type: "long"
-                },
-                resourcesIgnored: {
-                    type: "long"
-                },
-                resourcesSuppressed: {
-                    type: "long"
-                }
-            }
-        },
-        S23: {
-            type: "structure",
-            members: {
-                costOptimizing: {
-                    type: "structure",
-                    required: [ "estimatedMonthlySavings", "estimatedPercentMonthlySavings" ],
-                    members: {
-                        estimatedMonthlySavings: {
-                            type: "double"
-                        },
-                        estimatedPercentMonthlySavings: {
-                            type: "double"
-                        }
-                    }
-                }
-            }
-        }
-    },
-    paginators: {
-        DescribeCases: {
-            input_token: "nextToken",
-            limit_key: "maxResults",
-            output_token: "nextToken",
-            result_key: "cases"
-        },
-        DescribeCommunications: {
-            input_token: "nextToken",
-            limit_key: "maxResults",
-            output_token: "nextToken",
-            result_key: "communications"
-        },
-        DescribeServices: {
-            result_key: "services"
-        },
-        DescribeTrustedAdvisorCheckRefreshStatuses: {
-            result_key: "statuses"
-        },
-        DescribeTrustedAdvisorCheckSummaries: {
-            result_key: "summaries"
-        }
-    }
-};
-
-AWS.apiLoader.services["swf"] = {};
-
-AWS.SWF = AWS.Service.defineService("swf", [ "2012-01-25" ]);
-
-_xamzrequire = function e(t, n, r) {
-    function s(o, u) {
-        if (!n[o]) {
-            if (!t[o]) {
-                var a = typeof _xamzrequire == "function" && _xamzrequire;
-                if (!u && a) return a(o, !0);
-                if (i) return i(o, !0);
-                var f = new Error("Cannot find module '" + o + "'");
-                throw f.code = "MODULE_NOT_FOUND", f;
-            }
-            var l = n[o] = {
-                exports: {}
-            };
-            t[o][0].call(l.exports, function(e) {
-                var n = t[o][1][e];
-                return s(n ? n : e);
-            }, l, l.exports, e, t, n, r);
-        }
-        return n[o].exports;
-    }
-    var i = typeof _xamzrequire == "function" && _xamzrequire;
-    for (var o = 0; o < r.length; o++) s(r[o]);
-    return s;
-}({
-    112: [ function(require, module, exports) {
-        var AWS = require("../core");
-        AWS.util.hideProperties(AWS, [ "SimpleWorkflow" ]);
-        AWS.SimpleWorkflow = AWS.SWF;
-    }, {
-        "../core": 39
-    } ]
-}, {}, [ 112 ]);
-
-AWS.apiLoader.services["swf"]["2012-01-25"] = {
-    version: "2.0",
-    metadata: {
-        apiVersion: "2012-01-25",
-        endpointPrefix: "swf",
-        jsonVersion: "1.0",
-        protocol: "json",
-        serviceAbbreviation: "Amazon SWF",
-        serviceFullName: "Amazon Simple Workflow Service",
-        serviceId: "SWF",
-        signatureVersion: "v4",
-        targetPrefix: "SimpleWorkflowService",
-        uid: "swf-2012-01-25"
-    },
-    operations: {
-        CountClosedWorkflowExecutions: {
-            input: {
-                type: "structure",
-                required: [ "domain" ],
-                members: {
-                    domain: {},
-                    startTimeFilter: {
-                        shape: "S3"
-                    },
-                    closeTimeFilter: {
-                        shape: "S3"
-                    },
-                    executionFilter: {
-                        shape: "S5"
-                    },
-                    typeFilter: {
-                        shape: "S7"
-                    },
-                    tagFilter: {
-                        shape: "Sa"
-                    },
-                    closeStatusFilter: {
-                        shape: "Sc"
-                    }
-                }
-            },
-            output: {
-                shape: "Se"
-            }
-        },
-        CountOpenWorkflowExecutions: {
-            input: {
-                type: "structure",
-                required: [ "domain", "startTimeFilter" ],
-                members: {
-                    domain: {},
-                    startTimeFilter: {
-                        shape: "S3"
-                    },
-                    typeFilter: {
-                        shape: "S7"
-                    },
-                    tagFilter: {
-                        shape: "Sa"
-                    },
-                    executionFilter: {
-                        shape: "S5"
-                    }
-                }
-            },
-            output: {
-                shape: "Se"
-            }
-        },
-        CountPendingActivityTasks: {
-            input: {
-                type: "structure",
-                required: [ "domain", "taskList" ],
-                members: {
-                    domain: {},
-                    taskList: {
-                        shape: "Sj"
-                    }
-                }
-            },
-            output: {
-                shape: "Sk"
-            }
-        },
-        CountPendingDecisionTasks: {
-            input: {
-                type: "structure",
-                required: [ "domain", "taskList" ],
-                members: {
-                    domain: {},
-                    taskList: {
-                        shape: "Sj"
-                    }
-                }
-            },
-            output: {
-                shape: "Sk"
-            }
-        },
-        DeprecateActivityType: {
-            input: {
-                type: "structure",
-                required: [ "domain", "activityType" ],
-                members: {
-                    domain: {},
-                    activityType: {
-                        shape: "Sn"
-                    }
-                }
-            }
-        },
-        DeprecateDomain: {
-            input: {
-                type: "structure",
-                required: [ "name" ],
-                members: {
-                    name: {}
-                }
-            }
-        },
-        DeprecateWorkflowType: {
-            input: {
-                type: "structure",
-                required: [ "domain", "workflowType" ],
-                members: {
-                    domain: {},
-                    workflowType: {
-                        shape: "Sr"
-                    }
-                }
-            }
-        },
-        DescribeActivityType: {
-            input: {
-                type: "structure",
-                required: [ "domain", "activityType" ],
-                members: {
-                    domain: {},
-                    activityType: {
-                        shape: "Sn"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                required: [ "typeInfo", "configuration" ],
-                members: {
-                    typeInfo: {
-                        shape: "Su"
-                    },
-                    configuration: {
-                        type: "structure",
-                        members: {
-                            defaultTaskStartToCloseTimeout: {},
-                            defaultTaskHeartbeatTimeout: {},
-                            defaultTaskList: {
-                                shape: "Sj"
-                            },
-                            defaultTaskPriority: {},
-                            defaultTaskScheduleToStartTimeout: {},
-                            defaultTaskScheduleToCloseTimeout: {}
-                        }
-                    }
-                }
-            }
-        },
-        DescribeDomain: {
-            input: {
-                type: "structure",
-                required: [ "name" ],
-                members: {
-                    name: {}
-                }
-            },
-            output: {
-                type: "structure",
-                required: [ "domainInfo", "configuration" ],
-                members: {
-                    domainInfo: {
-                        shape: "S12"
-                    },
-                    configuration: {
-                        type: "structure",
-                        required: [ "workflowExecutionRetentionPeriodInDays" ],
-                        members: {
-                            workflowExecutionRetentionPeriodInDays: {}
-                        }
-                    }
-                }
-            }
-        },
-        DescribeWorkflowExecution: {
-            input: {
-                type: "structure",
-                required: [ "domain", "execution" ],
-                members: {
-                    domain: {},
-                    execution: {
-                        shape: "S17"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                required: [ "executionInfo", "executionConfiguration", "openCounts" ],
-                members: {
-                    executionInfo: {
-                        shape: "S1a"
-                    },
-                    executionConfiguration: {
-                        type: "structure",
-                        required: [ "taskStartToCloseTimeout", "executionStartToCloseTimeout", "taskList", "childPolicy" ],
-                        members: {
-                            taskStartToCloseTimeout: {},
-                            executionStartToCloseTimeout: {},
-                            taskList: {
-                                shape: "Sj"
-                            },
-                            taskPriority: {},
-                            childPolicy: {},
-                            lambdaRole: {}
-                        }
-                    },
-                    openCounts: {
-                        type: "structure",
-                        required: [ "openActivityTasks", "openDecisionTasks", "openTimers", "openChildWorkflowExecutions" ],
-                        members: {
-                            openActivityTasks: {
-                                type: "integer"
-                            },
-                            openDecisionTasks: {
-                                type: "integer"
-                            },
-                            openTimers: {
-                                type: "integer"
-                            },
-                            openChildWorkflowExecutions: {
-                                type: "integer"
-                            },
-                            openLambdaFunctions: {
-                                type: "integer"
-                            }
-                        }
-                    },
-                    latestActivityTaskTimestamp: {
-                        type: "timestamp"
-                    },
-                    latestExecutionContext: {}
-                }
-            }
-        },
-        DescribeWorkflowType: {
-            input: {
-                type: "structure",
-                required: [ "domain", "workflowType" ],
-                members: {
-                    domain: {},
-                    workflowType: {
-                        shape: "Sr"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                required: [ "typeInfo", "configuration" ],
-                members: {
-                    typeInfo: {
-                        shape: "S1m"
-                    },
-                    configuration: {
-                        type: "structure",
-                        members: {
-                            defaultTaskStartToCloseTimeout: {},
-                            defaultExecutionStartToCloseTimeout: {},
-                            defaultTaskList: {
-                                shape: "Sj"
-                            },
-                            defaultTaskPriority: {},
-                            defaultChildPolicy: {},
-                            defaultLambdaRole: {}
-                        }
-                    }
-                }
-            }
-        },
-        GetWorkflowExecutionHistory: {
-            input: {
-                type: "structure",
-                required: [ "domain", "execution" ],
-                members: {
-                    domain: {},
-                    execution: {
-                        shape: "S17"
-                    },
-                    nextPageToken: {},
-                    maximumPageSize: {
-                        type: "integer"
-                    },
-                    reverseOrder: {
-                        type: "boolean"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                required: [ "events" ],
-                members: {
-                    events: {
-                        shape: "S1t"
-                    },
-                    nextPageToken: {}
-                }
-            }
-        },
-        ListActivityTypes: {
-            input: {
-                type: "structure",
-                required: [ "domain", "registrationStatus" ],
-                members: {
-                    domain: {},
-                    name: {},
-                    registrationStatus: {},
-                    nextPageToken: {},
-                    maximumPageSize: {
-                        type: "integer"
-                    },
-                    reverseOrder: {
-                        type: "boolean"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                required: [ "typeInfos" ],
-                members: {
-                    typeInfos: {
-                        type: "list",
-                        member: {
-                            shape: "Su"
-                        }
-                    },
-                    nextPageToken: {}
-                }
-            }
-        },
-        ListClosedWorkflowExecutions: {
-            input: {
-                type: "structure",
-                required: [ "domain" ],
-                members: {
-                    domain: {},
-                    startTimeFilter: {
-                        shape: "S3"
-                    },
-                    closeTimeFilter: {
-                        shape: "S3"
-                    },
-                    executionFilter: {
-                        shape: "S5"
-                    },
-                    closeStatusFilter: {
-                        shape: "Sc"
-                    },
-                    typeFilter: {
-                        shape: "S7"
-                    },
-                    tagFilter: {
-                        shape: "Sa"
-                    },
-                    nextPageToken: {},
-                    maximumPageSize: {
-                        type: "integer"
-                    },
-                    reverseOrder: {
-                        type: "boolean"
-                    }
-                }
-            },
-            output: {
-                shape: "S4g"
-            }
-        },
-        ListDomains: {
-            input: {
-                type: "structure",
-                required: [ "registrationStatus" ],
-                members: {
-                    nextPageToken: {},
-                    registrationStatus: {},
-                    maximumPageSize: {
-                        type: "integer"
-                    },
-                    reverseOrder: {
-                        type: "boolean"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                required: [ "domainInfos" ],
-                members: {
-                    domainInfos: {
-                        type: "list",
-                        member: {
-                            shape: "S12"
-                        }
-                    },
-                    nextPageToken: {}
-                }
-            }
-        },
-        ListOpenWorkflowExecutions: {
-            input: {
-                type: "structure",
-                required: [ "domain", "startTimeFilter" ],
-                members: {
-                    domain: {},
-                    startTimeFilter: {
-                        shape: "S3"
-                    },
-                    typeFilter: {
-                        shape: "S7"
-                    },
-                    tagFilter: {
-                        shape: "Sa"
-                    },
-                    nextPageToken: {},
-                    maximumPageSize: {
-                        type: "integer"
-                    },
-                    reverseOrder: {
-                        type: "boolean"
-                    },
-                    executionFilter: {
-                        shape: "S5"
-                    }
-                }
-            },
-            output: {
-                shape: "S4g"
-            }
-        },
-        ListTagsForResource: {
-            input: {
-                type: "structure",
-                required: [ "resourceArn" ],
-                members: {
-                    resourceArn: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    tags: {
-                        shape: "S4o"
-                    }
-                }
-            }
-        },
-        ListWorkflowTypes: {
-            input: {
-                type: "structure",
-                required: [ "domain", "registrationStatus" ],
-                members: {
-                    domain: {},
-                    name: {},
-                    registrationStatus: {},
-                    nextPageToken: {},
-                    maximumPageSize: {
-                        type: "integer"
-                    },
-                    reverseOrder: {
-                        type: "boolean"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                required: [ "typeInfos" ],
-                members: {
-                    typeInfos: {
-                        type: "list",
-                        member: {
-                            shape: "S1m"
-                        }
-                    },
-                    nextPageToken: {}
-                }
-            }
-        },
-        PollForActivityTask: {
-            input: {
-                type: "structure",
-                required: [ "domain", "taskList" ],
-                members: {
-                    domain: {},
-                    taskList: {
-                        shape: "Sj"
-                    },
-                    identity: {}
-                }
-            },
-            output: {
-                type: "structure",
-                required: [ "taskToken", "activityId", "startedEventId", "workflowExecution", "activityType" ],
-                members: {
-                    taskToken: {},
-                    activityId: {},
-                    startedEventId: {
-                        type: "long"
-                    },
-                    workflowExecution: {
-                        shape: "S17"
-                    },
-                    activityType: {
-                        shape: "Sn"
-                    },
-                    input: {}
-                }
-            }
-        },
-        PollForDecisionTask: {
-            input: {
-                type: "structure",
-                required: [ "domain", "taskList" ],
-                members: {
-                    domain: {},
-                    taskList: {
-                        shape: "Sj"
-                    },
-                    identity: {},
-                    nextPageToken: {},
-                    maximumPageSize: {
-                        type: "integer"
-                    },
-                    reverseOrder: {
-                        type: "boolean"
-                    }
-                }
-            },
-            output: {
-                type: "structure",
-                required: [ "taskToken", "startedEventId", "workflowExecution", "workflowType", "events" ],
-                members: {
-                    taskToken: {},
-                    startedEventId: {
-                        type: "long"
-                    },
-                    workflowExecution: {
-                        shape: "S17"
-                    },
-                    workflowType: {
-                        shape: "Sr"
-                    },
-                    events: {
-                        shape: "S1t"
-                    },
-                    nextPageToken: {},
-                    previousStartedEventId: {
-                        type: "long"
-                    }
-                }
-            }
-        },
-        RecordActivityTaskHeartbeat: {
-            input: {
-                type: "structure",
-                required: [ "taskToken" ],
-                members: {
-                    taskToken: {},
-                    details: {}
-                }
-            },
-            output: {
-                type: "structure",
-                required: [ "cancelRequested" ],
-                members: {
-                    cancelRequested: {
-                        type: "boolean"
-                    }
-                }
-            }
-        },
-        RegisterActivityType: {
-            input: {
-                type: "structure",
-                required: [ "domain", "name", "version" ],
-                members: {
-                    domain: {},
-                    name: {},
-                    version: {},
-                    description: {},
-                    defaultTaskStartToCloseTimeout: {},
-                    defaultTaskHeartbeatTimeout: {},
-                    defaultTaskList: {
-                        shape: "Sj"
-                    },
-                    defaultTaskPriority: {},
-                    defaultTaskScheduleToStartTimeout: {},
-                    defaultTaskScheduleToCloseTimeout: {}
-                }
-            }
-        },
-        RegisterDomain: {
-            input: {
-                type: "structure",
-                required: [ "name", "workflowExecutionRetentionPeriodInDays" ],
-                members: {
-                    name: {},
-                    description: {},
-                    workflowExecutionRetentionPeriodInDays: {},
-                    tags: {
-                        shape: "S4o"
-                    }
-                }
-            }
-        },
-        RegisterWorkflowType: {
-            input: {
-                type: "structure",
-                required: [ "domain", "name", "version" ],
-                members: {
-                    domain: {},
-                    name: {},
-                    version: {},
-                    description: {},
-                    defaultTaskStartToCloseTimeout: {},
-                    defaultExecutionStartToCloseTimeout: {},
-                    defaultTaskList: {
-                        shape: "Sj"
-                    },
-                    defaultTaskPriority: {},
-                    defaultChildPolicy: {},
-                    defaultLambdaRole: {}
-                }
-            }
-        },
-        RequestCancelWorkflowExecution: {
-            input: {
-                type: "structure",
-                required: [ "domain", "workflowId" ],
-                members: {
-                    domain: {},
-                    workflowId: {},
-                    runId: {}
-                }
-            }
-        },
-        RespondActivityTaskCanceled: {
-            input: {
-                type: "structure",
-                required: [ "taskToken" ],
-                members: {
-                    taskToken: {},
-                    details: {}
-                }
-            }
-        },
-        RespondActivityTaskCompleted: {
-            input: {
-                type: "structure",
-                required: [ "taskToken" ],
-                members: {
-                    taskToken: {},
-                    result: {}
-                }
-            }
-        },
-        RespondActivityTaskFailed: {
-            input: {
-                type: "structure",
-                required: [ "taskToken" ],
-                members: {
-                    taskToken: {},
-                    reason: {},
-                    details: {}
-                }
-            }
-        },
-        RespondDecisionTaskCompleted: {
-            input: {
-                type: "structure",
-                required: [ "taskToken" ],
-                members: {
-                    taskToken: {},
-                    decisions: {
-                        type: "list",
-                        member: {
-                            type: "structure",
-                            required: [ "decisionType" ],
-                            members: {
-                                decisionType: {},
-                                scheduleActivityTaskDecisionAttributes: {
-                                    type: "structure",
-                                    required: [ "activityType", "activityId" ],
-                                    members: {
-                                        activityType: {
-                                            shape: "Sn"
-                                        },
-                                        activityId: {},
-                                        control: {},
-                                        input: {},
-                                        scheduleToCloseTimeout: {},
-                                        taskList: {
-                                            shape: "Sj"
-                                        },
-                                        taskPriority: {},
-                                        scheduleToStartTimeout: {},
-                                        startToCloseTimeout: {},
-                                        heartbeatTimeout: {}
-                                    }
-                                },
-                                requestCancelActivityTaskDecisionAttributes: {
-                                    type: "structure",
-                                    required: [ "activityId" ],
-                                    members: {
-                                        activityId: {}
-                                    }
-                                },
-                                completeWorkflowExecutionDecisionAttributes: {
-                                    type: "structure",
-                                    members: {
-                                        result: {}
-                                    }
-                                },
-                                failWorkflowExecutionDecisionAttributes: {
-                                    type: "structure",
-                                    members: {
-                                        reason: {},
-                                        details: {}
-                                    }
-                                },
-                                cancelWorkflowExecutionDecisionAttributes: {
-                                    type: "structure",
-                                    members: {
-                                        details: {}
-                                    }
-                                },
-                                continueAsNewWorkflowExecutionDecisionAttributes: {
-                                    type: "structure",
-                                    members: {
-                                        input: {},
-                                        executionStartToCloseTimeout: {},
-                                        taskList: {
-                                            shape: "Sj"
-                                        },
-                                        taskPriority: {},
-                                        taskStartToCloseTimeout: {},
-                                        childPolicy: {},
-                                        tagList: {
-                                            shape: "S1c"
-                                        },
-                                        workflowTypeVersion: {},
-                                        lambdaRole: {}
-                                    }
-                                },
-                                recordMarkerDecisionAttributes: {
-                                    type: "structure",
-                                    required: [ "markerName" ],
-                                    members: {
-                                        markerName: {},
-                                        details: {}
-                                    }
-                                },
-                                startTimerDecisionAttributes: {
-                                    type: "structure",
-                                    required: [ "timerId", "startToFireTimeout" ],
-                                    members: {
-                                        timerId: {},
-                                        control: {},
-                                        startToFireTimeout: {}
-                                    }
-                                },
-                                cancelTimerDecisionAttributes: {
-                                    type: "structure",
-                                    required: [ "timerId" ],
-                                    members: {
-                                        timerId: {}
-                                    }
-                                },
-                                signalExternalWorkflowExecutionDecisionAttributes: {
-                                    type: "structure",
-                                    required: [ "workflowId", "signalName" ],
-                                    members: {
-                                        workflowId: {},
-                                        runId: {},
-                                        signalName: {},
-                                        input: {},
-                                        control: {}
-                                    }
-                                },
-                                requestCancelExternalWorkflowExecutionDecisionAttributes: {
-                                    type: "structure",
-                                    required: [ "workflowId" ],
-                                    members: {
-                                        workflowId: {},
-                                        runId: {},
-                                        control: {}
-                                    }
-                                },
-                                startChildWorkflowExecutionDecisionAttributes: {
-                                    type: "structure",
-                                    required: [ "workflowType", "workflowId" ],
-                                    members: {
-                                        workflowType: {
-                                            shape: "Sr"
-                                        },
-                                        workflowId: {},
-                                        control: {},
-                                        input: {},
-                                        executionStartToCloseTimeout: {},
-                                        taskList: {
-                                            shape: "Sj"
-                                        },
-                                        taskPriority: {},
-                                        taskStartToCloseTimeout: {},
-                                        childPolicy: {},
-                                        tagList: {
-                                            shape: "S1c"
-                                        },
-                                        lambdaRole: {}
-                                    }
-                                },
-                                scheduleLambdaFunctionDecisionAttributes: {
-                                    type: "structure",
-                                    required: [ "id", "name" ],
-                                    members: {
-                                        id: {},
-                                        name: {},
-                                        control: {},
-                                        input: {},
-                                        startToCloseTimeout: {}
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    executionContext: {}
-                }
-            }
-        },
-        SignalWorkflowExecution: {
-            input: {
-                type: "structure",
-                required: [ "domain", "workflowId", "signalName" ],
-                members: {
-                    domain: {},
-                    workflowId: {},
-                    runId: {},
-                    signalName: {},
-                    input: {}
-                }
-            }
-        },
-        StartWorkflowExecution: {
-            input: {
-                type: "structure",
-                required: [ "domain", "workflowId", "workflowType" ],
-                members: {
-                    domain: {},
-                    workflowId: {},
-                    workflowType: {
-                        shape: "Sr"
-                    },
-                    taskList: {
-                        shape: "Sj"
-                    },
-                    taskPriority: {},
-                    input: {},
-                    executionStartToCloseTimeout: {},
-                    tagList: {
-                        shape: "S1c"
-                    },
-                    taskStartToCloseTimeout: {},
-                    childPolicy: {},
-                    lambdaRole: {}
-                }
-            },
-            output: {
-                type: "structure",
-                members: {
-                    runId: {}
-                }
-            }
-        },
-        TagResource: {
-            input: {
-                type: "structure",
-                required: [ "resourceArn", "tags" ],
-                members: {
-                    resourceArn: {},
-                    tags: {
-                        shape: "S4o"
-                    }
-                }
-            }
-        },
-        TerminateWorkflowExecution: {
-            input: {
-                type: "structure",
-                required: [ "domain", "workflowId" ],
-                members: {
-                    domain: {},
-                    workflowId: {},
-                    runId: {},
-                    reason: {},
-                    details: {},
-                    childPolicy: {}
-                }
-            }
-        },
-        UndeprecateActivityType: {
-            input: {
-                type: "structure",
-                required: [ "domain", "activityType" ],
-                members: {
-                    domain: {},
-                    activityType: {
-                        shape: "Sn"
-                    }
-                }
-            }
-        },
-        UndeprecateDomain: {
-            input: {
-                type: "structure",
-                required: [ "name" ],
-                members: {
-                    name: {}
-                }
-            }
-        },
-        UndeprecateWorkflowType: {
-            input: {
-                type: "structure",
-                required: [ "domain", "workflowType" ],
-                members: {
-                    domain: {},
-                    workflowType: {
-                        shape: "Sr"
-                    }
-                }
-            }
-        },
-        UntagResource: {
-            input: {
-                type: "structure",
-                required: [ "resourceArn", "tagKeys" ],
-                members: {
-                    resourceArn: {},
-                    tagKeys: {
-                        type: "list",
-                        member: {}
-                    }
-                }
-            }
-        }
-    },
-    shapes: {
-        S3: {
-            type: "structure",
-            required: [ "oldestDate" ],
-            members: {
-                oldestDate: {
-                    type: "timestamp"
-                },
-                latestDate: {
-                    type: "timestamp"
-                }
-            }
-        },
-        S5: {
-            type: "structure",
-            required: [ "workflowId" ],
-            members: {
-                workflowId: {}
-            }
-        },
-        S7: {
-            type: "structure",
-            required: [ "name" ],
-            members: {
-                name: {},
-                version: {}
-            }
-        },
-        Sa: {
-            type: "structure",
-            required: [ "tag" ],
-            members: {
-                tag: {}
-            }
-        },
-        Sc: {
-            type: "structure",
-            required: [ "status" ],
-            members: {
-                status: {}
-            }
-        },
-        Se: {
-            type: "structure",
-            required: [ "count" ],
-            members: {
-                count: {
-                    type: "integer"
-                },
-                truncated: {
-                    type: "boolean"
-                }
-            }
-        },
-        Sj: {
-            type: "structure",
-            required: [ "name" ],
-            members: {
-                name: {}
-            }
-        },
-        Sk: {
-            type: "structure",
-            required: [ "count" ],
-            members: {
-                count: {
-                    type: "integer"
-                },
-                truncated: {
-                    type: "boolean"
-                }
-            }
-        },
-        Sn: {
-            type: "structure",
-            required: [ "name", "version" ],
-            members: {
-                name: {},
-                version: {}
-            }
-        },
-        Sr: {
-            type: "structure",
-            required: [ "name", "version" ],
-            members: {
-                name: {},
-                version: {}
-            }
-        },
-        Su: {
-            type: "structure",
-            required: [ "activityType", "status", "creationDate" ],
-            members: {
-                activityType: {
-                    shape: "Sn"
-                },
-                status: {},
-                description: {},
-                creationDate: {
-                    type: "timestamp"
-                },
-                deprecationDate: {
-                    type: "timestamp"
-                }
-            }
-        },
-        S12: {
-            type: "structure",
-            required: [ "name", "status" ],
-            members: {
-                name: {},
-                status: {},
-                description: {},
-                arn: {}
-            }
-        },
-        S17: {
-            type: "structure",
-            required: [ "workflowId", "runId" ],
-            members: {
-                workflowId: {},
-                runId: {}
-            }
-        },
-        S1a: {
-            type: "structure",
-            required: [ "execution", "workflowType", "startTimestamp", "executionStatus" ],
-            members: {
-                execution: {
-                    shape: "S17"
-                },
-                workflowType: {
-                    shape: "Sr"
-                },
-                startTimestamp: {
-                    type: "timestamp"
-                },
-                closeTimestamp: {
-                    type: "timestamp"
-                },
-                executionStatus: {},
-                closeStatus: {},
-                parent: {
-                    shape: "S17"
-                },
-                tagList: {
-                    shape: "S1c"
-                },
-                cancelRequested: {
-                    type: "boolean"
-                }
-            }
-        },
-        S1c: {
-            type: "list",
-            member: {}
-        },
-        S1m: {
-            type: "structure",
-            required: [ "workflowType", "status", "creationDate" ],
-            members: {
-                workflowType: {
-                    shape: "Sr"
-                },
-                status: {},
-                description: {},
-                creationDate: {
-                    type: "timestamp"
-                },
-                deprecationDate: {
-                    type: "timestamp"
-                }
-            }
-        },
-        S1t: {
-            type: "list",
-            member: {
-                type: "structure",
-                required: [ "eventTimestamp", "eventType", "eventId" ],
-                members: {
-                    eventTimestamp: {
-                        type: "timestamp"
-                    },
-                    eventType: {},
-                    eventId: {
-                        type: "long"
-                    },
-                    workflowExecutionStartedEventAttributes: {
-                        type: "structure",
-                        required: [ "childPolicy", "taskList", "workflowType" ],
-                        members: {
-                            input: {},
-                            executionStartToCloseTimeout: {},
-                            taskStartToCloseTimeout: {},
-                            childPolicy: {},
-                            taskList: {
-                                shape: "Sj"
-                            },
-                            taskPriority: {},
-                            workflowType: {
-                                shape: "Sr"
-                            },
-                            tagList: {
-                                shape: "S1c"
-                            },
-                            continuedExecutionRunId: {},
-                            parentWorkflowExecution: {
-                                shape: "S17"
-                            },
-                            parentInitiatedEventId: {
-                                type: "long"
-                            },
-                            lambdaRole: {}
-                        }
-                    },
-                    workflowExecutionCompletedEventAttributes: {
-                        type: "structure",
-                        required: [ "decisionTaskCompletedEventId" ],
-                        members: {
-                            result: {},
-                            decisionTaskCompletedEventId: {
-                                type: "long"
-                            }
-                        }
-                    },
-                    completeWorkflowExecutionFailedEventAttributes: {
-                        type: "structure",
-                        required: [ "cause", "decisionTaskCompletedEventId" ],
-                        members: {
-                            cause: {},
-                            decisionTaskCompletedEventId: {
-                                type: "long"
-                            }
-                        }
-                    },
-                    workflowExecutionFailedEventAttributes: {
-                        type: "structure",
-                        required: [ "decisionTaskCompletedEventId" ],
-                        members: {
-                            reason: {},
-                            details: {},
-                            decisionTaskCompletedEventId: {
-                                type: "long"
-                            }
-                        }
-                    },
-                    failWorkflowExecutionFailedEventAttributes: {
-                        type: "structure",
-                        required: [ "cause", "decisionTaskCompletedEventId" ],
-                        members: {
-                            cause: {},
-                            decisionTaskCompletedEventId: {
-                                type: "long"
-                            }
-                        }
-                    },
-                    workflowExecutionTimedOutEventAttributes: {
-                        type: "structure",
-                        required: [ "timeoutType", "childPolicy" ],
-                        members: {
-                            timeoutType: {},
-                            childPolicy: {}
-                        }
-                    },
-                    workflowExecutionCanceledEventAttributes: {
-                        type: "structure",
-                        required: [ "decisionTaskCompletedEventId" ],
-                        members: {
-                            details: {},
-                            decisionTaskCompletedEventId: {
-                                type: "long"
-                            }
-                        }
-                    },
-                    cancelWorkflowExecutionFailedEventAttributes: {
-                        type: "structure",
-                        required: [ "cause", "decisionTaskCompletedEventId" ],
-                        members: {
-                            cause: {},
-                            decisionTaskCompletedEventId: {
-                                type: "long"
-                            }
-                        }
-                    },
-                    workflowExecutionContinuedAsNewEventAttributes: {
-                        type: "structure",
-                        required: [ "decisionTaskCompletedEventId", "newExecutionRunId", "taskList", "childPolicy", "workflowType" ],
-                        members: {
-                            input: {},
-                            decisionTaskCompletedEventId: {
-                                type: "long"
-                            },
-                            newExecutionRunId: {},
-                            executionStartToCloseTimeout: {},
-                            taskList: {
-                                shape: "Sj"
-                            },
-                            taskPriority: {},
-                            taskStartToCloseTimeout: {},
-                            childPolicy: {},
-                            tagList: {
-                                shape: "S1c"
-                            },
-                            workflowType: {
-                                shape: "Sr"
-                            },
-                            lambdaRole: {}
-                        }
-                    },
-                    continueAsNewWorkflowExecutionFailedEventAttributes: {
-                        type: "structure",
-                        required: [ "cause", "decisionTaskCompletedEventId" ],
-                        members: {
-                            cause: {},
-                            decisionTaskCompletedEventId: {
-                                type: "long"
-                            }
-                        }
-                    },
-                    workflowExecutionTerminatedEventAttributes: {
-                        type: "structure",
-                        required: [ "childPolicy" ],
-                        members: {
-                            reason: {},
-                            details: {},
-                            childPolicy: {},
-                            cause: {}
-                        }
-                    },
-                    workflowExecutionCancelRequestedEventAttributes: {
-                        type: "structure",
-                        members: {
-                            externalWorkflowExecution: {
-                                shape: "S17"
-                            },
-                            externalInitiatedEventId: {
-                                type: "long"
-                            },
-                            cause: {}
-                        }
-                    },
-                    decisionTaskScheduledEventAttributes: {
-                        type: "structure",
-                        required: [ "taskList" ],
-                        members: {
-                            taskList: {
-                                shape: "Sj"
-                            },
-                            taskPriority: {},
-                            startToCloseTimeout: {}
-                        }
-                    },
-                    decisionTaskStartedEventAttributes: {
-                        type: "structure",
-                        required: [ "scheduledEventId" ],
-                        members: {
-                            identity: {},
-                            scheduledEventId: {
-                                type: "long"
-                            }
-                        }
-                    },
-                    decisionTaskCompletedEventAttributes: {
-                        type: "structure",
-                        required: [ "scheduledEventId", "startedEventId" ],
-                        members: {
-                            executionContext: {},
-                            scheduledEventId: {
-                                type: "long"
-                            },
-                            startedEventId: {
-                                type: "long"
-                            }
-                        }
-                    },
-                    decisionTaskTimedOutEventAttributes: {
-                        type: "structure",
-                        required: [ "timeoutType", "scheduledEventId", "startedEventId" ],
-                        members: {
-                            timeoutType: {},
-                            scheduledEventId: {
-                                type: "long"
-                            },
-                            startedEventId: {
-                                type: "long"
-                            }
-                        }
-                    },
-                    activityTaskScheduledEventAttributes: {
-                        type: "structure",
-                        required: [ "activityType", "activityId", "taskList", "decisionTaskCompletedEventId" ],
-                        members: {
-                            activityType: {
-                                shape: "Sn"
-                            },
-                            activityId: {},
-                            input: {},
-                            control: {},
-                            scheduleToStartTimeout: {},
-                            scheduleToCloseTimeout: {},
-                            startToCloseTimeout: {},
-                            taskList: {
-                                shape: "Sj"
-                            },
-                            taskPriority: {},
-                            decisionTaskCompletedEventId: {
-                                type: "long"
-                            },
-                            heartbeatTimeout: {}
-                        }
-                    },
-                    activityTaskStartedEventAttributes: {
-                        type: "structure",
-                        required: [ "scheduledEventId" ],
-                        members: {
-                            identity: {},
-                            scheduledEventId: {
-                                type: "long"
-                            }
-                        }
-                    },
-                    activityTaskCompletedEventAttributes: {
-                        type: "structure",
-                        required: [ "scheduledEventId", "startedEventId" ],
-                        members: {
-                            result: {},
-                            scheduledEventId: {
-                                type: "long"
-                            },
-                            startedEventId: {
-                                type: "long"
-                            }
-                        }
-                    },
-                    activityTaskFailedEventAttributes: {
-                        type: "structure",
-                        required: [ "scheduledEventId", "startedEventId" ],
-                        members: {
-                            reason: {},
-                            details: {},
-                            scheduledEventId: {
-                                type: "long"
-                            },
-                            startedEventId: {
-                                type: "long"
-                            }
-                        }
-                    },
-                    activityTaskTimedOutEventAttributes: {
-                        type: "structure",
-                        required: [ "timeoutType", "scheduledEventId", "startedEventId" ],
-                        members: {
-                            timeoutType: {},
-                            scheduledEventId: {
-                                type: "long"
-                            },
-                            startedEventId: {
-                                type: "long"
-                            },
-                            details: {}
-                        }
-                    },
-                    activityTaskCanceledEventAttributes: {
-                        type: "structure",
-                        required: [ "scheduledEventId", "startedEventId" ],
-                        members: {
-                            details: {},
-                            scheduledEventId: {
-                                type: "long"
-                            },
-                            startedEventId: {
-                                type: "long"
-                            },
-                            latestCancelRequestedEventId: {
-                                type: "long"
-                            }
-                        }
-                    },
-                    activityTaskCancelRequestedEventAttributes: {
-                        type: "structure",
-                        required: [ "decisionTaskCompletedEventId", "activityId" ],
-                        members: {
-                            decisionTaskCompletedEventId: {
-                                type: "long"
-                            },
-                            activityId: {}
-                        }
-                    },
-                    workflowExecutionSignaledEventAttributes: {
-                        type: "structure",
-                        required: [ "signalName" ],
-                        members: {
-                            signalName: {},
-                            input: {},
-                            externalWorkflowExecution: {
-                                shape: "S17"
-                            },
-                            externalInitiatedEventId: {
-                                type: "long"
-                            }
-                        }
-                    },
-                    markerRecordedEventAttributes: {
-                        type: "structure",
-                        required: [ "markerName", "decisionTaskCompletedEventId" ],
-                        members: {
-                            markerName: {},
-                            details: {},
-                            decisionTaskCompletedEventId: {
-                                type: "long"
-                            }
-                        }
-                    },
-                    recordMarkerFailedEventAttributes: {
-                        type: "structure",
-                        required: [ "markerName", "cause", "decisionTaskCompletedEventId" ],
-                        members: {
-                            markerName: {},
-                            cause: {},
-                            decisionTaskCompletedEventId: {
-                                type: "long"
-                            }
-                        }
-                    },
-                    timerStartedEventAttributes: {
-                        type: "structure",
-                        required: [ "timerId", "startToFireTimeout", "decisionTaskCompletedEventId" ],
-                        members: {
-                            timerId: {},
-                            control: {},
-                            startToFireTimeout: {},
-                            decisionTaskCompletedEventId: {
-                                type: "long"
-                            }
-                        }
-                    },
-                    timerFiredEventAttributes: {
-                        type: "structure",
-                        required: [ "timerId", "startedEventId" ],
-                        members: {
-                            timerId: {},
-                            startedEventId: {
-                                type: "long"
-                            }
-                        }
-                    },
-                    timerCanceledEventAttributes: {
-                        type: "structure",
-                        required: [ "timerId", "startedEventId", "decisionTaskCompletedEventId" ],
-                        members: {
-                            timerId: {},
-                            startedEventId: {
-                                type: "long"
-                            },
-                            decisionTaskCompletedEventId: {
-                                type: "long"
-                            }
-                        }
-                    },
-                    startChildWorkflowExecutionInitiatedEventAttributes: {
-                        type: "structure",
-                        required: [ "workflowId", "workflowType", "taskList", "decisionTaskCompletedEventId", "childPolicy" ],
-                        members: {
-                            workflowId: {},
-                            workflowType: {
-                                shape: "Sr"
-                            },
-                            control: {},
-                            input: {},
-                            executionStartToCloseTimeout: {},
-                            taskList: {
-                                shape: "Sj"
-                            },
-                            taskPriority: {},
-                            decisionTaskCompletedEventId: {
-                                type: "long"
-                            },
-                            childPolicy: {},
-                            taskStartToCloseTimeout: {},
-                            tagList: {
-                                shape: "S1c"
-                            },
-                            lambdaRole: {}
-                        }
-                    },
-                    childWorkflowExecutionStartedEventAttributes: {
-                        type: "structure",
-                        required: [ "workflowExecution", "workflowType", "initiatedEventId" ],
-                        members: {
-                            workflowExecution: {
-                                shape: "S17"
-                            },
-                            workflowType: {
-                                shape: "Sr"
-                            },
-                            initiatedEventId: {
-                                type: "long"
-                            }
-                        }
-                    },
-                    childWorkflowExecutionCompletedEventAttributes: {
-                        type: "structure",
-                        required: [ "workflowExecution", "workflowType", "initiatedEventId", "startedEventId" ],
-                        members: {
-                            workflowExecution: {
-                                shape: "S17"
-                            },
-                            workflowType: {
-                                shape: "Sr"
-                            },
-                            result: {},
-                            initiatedEventId: {
-                                type: "long"
-                            },
-                            startedEventId: {
-                                type: "long"
-                            }
-                        }
-                    },
-                    childWorkflowExecutionFailedEventAttributes: {
-                        type: "structure",
-                        required: [ "workflowExecution", "workflowType", "initiatedEventId", "startedEventId" ],
-                        members: {
-                            workflowExecution: {
-                                shape: "S17"
-                            },
-                            workflowType: {
-                                shape: "Sr"
-                            },
-                            reason: {},
-                            details: {},
-                            initiatedEventId: {
-                                type: "long"
-                            },
-                            startedEventId: {
-                                type: "long"
-                            }
-                        }
-                    },
-                    childWorkflowExecutionTimedOutEventAttributes: {
-                        type: "structure",
-                        required: [ "workflowExecution", "workflowType", "timeoutType", "initiatedEventId", "startedEventId" ],
-                        members: {
-                            workflowExecution: {
-                                shape: "S17"
-                            },
-                            workflowType: {
-                                shape: "Sr"
-                            },
-                            timeoutType: {},
-                            initiatedEventId: {
-                                type: "long"
-                            },
-                            startedEventId: {
-                                type: "long"
-                            }
-                        }
-                    },
-                    childWorkflowExecutionCanceledEventAttributes: {
-                        type: "structure",
-                        required: [ "workflowExecution", "workflowType", "initiatedEventId", "startedEventId" ],
-                        members: {
-                            workflowExecution: {
-                                shape: "S17"
-                            },
-                            workflowType: {
-                                shape: "Sr"
-                            },
-                            details: {},
-                            initiatedEventId: {
-                                type: "long"
-                            },
-                            startedEventId: {
-                                type: "long"
-                            }
-                        }
-                    },
-                    childWorkflowExecutionTerminatedEventAttributes: {
-                        type: "structure",
-                        required: [ "workflowExecution", "workflowType", "initiatedEventId", "startedEventId" ],
-                        members: {
-                            workflowExecution: {
-                                shape: "S17"
-                            },
-                            workflowType: {
-                                shape: "Sr"
-                            },
-                            initiatedEventId: {
-                                type: "long"
-                            },
-                            startedEventId: {
-                                type: "long"
-                            }
-                        }
-                    },
-                    signalExternalWorkflowExecutionInitiatedEventAttributes: {
-                        type: "structure",
-                        required: [ "workflowId", "signalName", "decisionTaskCompletedEventId" ],
-                        members: {
-                            workflowId: {},
-                            runId: {},
-                            signalName: {},
-                            input: {},
-                            decisionTaskCompletedEventId: {
-                                type: "long"
-                            },
-                            control: {}
-                        }
-                    },
-                    externalWorkflowExecutionSignaledEventAttributes: {
-                        type: "structure",
-                        required: [ "workflowExecution", "initiatedEventId" ],
-                        members: {
-                            workflowExecution: {
-                                shape: "S17"
-                            },
-                            initiatedEventId: {
-                                type: "long"
-                            }
-                        }
-                    },
-                    signalExternalWorkflowExecutionFailedEventAttributes: {
-                        type: "structure",
-                        required: [ "workflowId", "cause", "initiatedEventId", "decisionTaskCompletedEventId" ],
-                        members: {
-                            workflowId: {},
-                            runId: {},
-                            cause: {},
-                            initiatedEventId: {
-                                type: "long"
-                            },
-                            decisionTaskCompletedEventId: {
-                                type: "long"
-                            },
-                            control: {}
-                        }
-                    },
-                    externalWorkflowExecutionCancelRequestedEventAttributes: {
-                        type: "structure",
-                        required: [ "workflowExecution", "initiatedEventId" ],
-                        members: {
-                            workflowExecution: {
-                                shape: "S17"
-                            },
-                            initiatedEventId: {
-                                type: "long"
-                            }
-                        }
-                    },
-                    requestCancelExternalWorkflowExecutionInitiatedEventAttributes: {
-                        type: "structure",
-                        required: [ "workflowId", "decisionTaskCompletedEventId" ],
-                        members: {
-                            workflowId: {},
-                            runId: {},
-                            decisionTaskCompletedEventId: {
-                                type: "long"
-                            },
-                            control: {}
-                        }
-                    },
-                    requestCancelExternalWorkflowExecutionFailedEventAttributes: {
-                        type: "structure",
-                        required: [ "workflowId", "cause", "initiatedEventId", "decisionTaskCompletedEventId" ],
-                        members: {
-                            workflowId: {},
-                            runId: {},
-                            cause: {},
-                            initiatedEventId: {
-                                type: "long"
-                            },
-                            decisionTaskCompletedEventId: {
-                                type: "long"
-                            },
-                            control: {}
-                        }
-                    },
-                    scheduleActivityTaskFailedEventAttributes: {
-                        type: "structure",
-                        required: [ "activityType", "activityId", "cause", "decisionTaskCompletedEventId" ],
-                        members: {
-                            activityType: {
-                                shape: "Sn"
-                            },
-                            activityId: {},
-                            cause: {},
-                            decisionTaskCompletedEventId: {
-                                type: "long"
-                            }
-                        }
-                    },
-                    requestCancelActivityTaskFailedEventAttributes: {
-                        type: "structure",
-                        required: [ "activityId", "cause", "decisionTaskCompletedEventId" ],
-                        members: {
-                            activityId: {},
-                            cause: {},
-                            decisionTaskCompletedEventId: {
-                                type: "long"
-                            }
-                        }
-                    },
-                    startTimerFailedEventAttributes: {
-                        type: "structure",
-                        required: [ "timerId", "cause", "decisionTaskCompletedEventId" ],
-                        members: {
-                            timerId: {},
-                            cause: {},
-                            decisionTaskCompletedEventId: {
-                                type: "long"
-                            }
-                        }
-                    },
-                    cancelTimerFailedEventAttributes: {
-                        type: "structure",
-                        required: [ "timerId", "cause", "decisionTaskCompletedEventId" ],
-                        members: {
-                            timerId: {},
-                            cause: {},
-                            decisionTaskCompletedEventId: {
-                                type: "long"
-                            }
-                        }
-                    },
-                    startChildWorkflowExecutionFailedEventAttributes: {
-                        type: "structure",
-                        required: [ "workflowType", "cause", "workflowId", "initiatedEventId", "decisionTaskCompletedEventId" ],
-                        members: {
-                            workflowType: {
-                                shape: "Sr"
-                            },
-                            cause: {},
-                            workflowId: {},
-                            initiatedEventId: {
-                                type: "long"
-                            },
-                            decisionTaskCompletedEventId: {
-                                type: "long"
-                            },
-                            control: {}
-                        }
-                    },
-                    lambdaFunctionScheduledEventAttributes: {
-                        type: "structure",
-                        required: [ "id", "name", "decisionTaskCompletedEventId" ],
-                        members: {
-                            id: {},
-                            name: {},
-                            control: {},
-                            input: {},
-                            startToCloseTimeout: {},
-                            decisionTaskCompletedEventId: {
-                                type: "long"
-                            }
-                        }
-                    },
-                    lambdaFunctionStartedEventAttributes: {
-                        type: "structure",
-                        required: [ "scheduledEventId" ],
-                        members: {
-                            scheduledEventId: {
-                                type: "long"
-                            }
-                        }
-                    },
-                    lambdaFunctionCompletedEventAttributes: {
-                        type: "structure",
-                        required: [ "scheduledEventId", "startedEventId" ],
-                        members: {
-                            scheduledEventId: {
-                                type: "long"
-                            },
-                            startedEventId: {
-                                type: "long"
-                            },
-                            result: {}
-                        }
-                    },
-                    lambdaFunctionFailedEventAttributes: {
-                        type: "structure",
-                        required: [ "scheduledEventId", "startedEventId" ],
-                        members: {
-                            scheduledEventId: {
-                                type: "long"
-                            },
-                            startedEventId: {
-                                type: "long"
-                            },
-                            reason: {},
-                            details: {}
-                        }
-                    },
-                    lambdaFunctionTimedOutEventAttributes: {
-                        type: "structure",
-                        required: [ "scheduledEventId", "startedEventId" ],
-                        members: {
-                            scheduledEventId: {
-                                type: "long"
-                            },
-                            startedEventId: {
-                                type: "long"
-                            },
-                            timeoutType: {}
-                        }
-                    },
-                    scheduleLambdaFunctionFailedEventAttributes: {
-                        type: "structure",
-                        required: [ "id", "name", "cause", "decisionTaskCompletedEventId" ],
-                        members: {
-                            id: {},
-                            name: {},
-                            cause: {},
-                            decisionTaskCompletedEventId: {
-                                type: "long"
-                            }
-                        }
-                    },
-                    startLambdaFunctionFailedEventAttributes: {
-                        type: "structure",
-                        members: {
-                            scheduledEventId: {
-                                type: "long"
-                            },
-                            cause: {},
-                            message: {}
-                        }
-                    }
-                }
-            }
-        },
-        S4g: {
-            type: "structure",
-            required: [ "executionInfos" ],
-            members: {
-                executionInfos: {
-                    type: "list",
-                    member: {
-                        shape: "S1a"
-                    }
-                },
-                nextPageToken: {}
-            }
-        },
-        S4o: {
-            type: "list",
-            member: {
-                type: "structure",
-                required: [ "key" ],
-                members: {
-                    key: {},
-                    value: {}
-                }
-            }
-        }
-    },
-    paginators: {
-        GetWorkflowExecutionHistory: {
-            input_token: "nextPageToken",
-            limit_key: "maximumPageSize",
-            output_token: "nextPageToken",
-            result_key: "events"
-        },
-        ListActivityTypes: {
-            input_token: "nextPageToken",
-            limit_key: "maximumPageSize",
-            output_token: "nextPageToken",
-            result_key: "typeInfos"
-        },
-        ListClosedWorkflowExecutions: {
-            input_token: "nextPageToken",
-            limit_key: "maximumPageSize",
-            output_token: "nextPageToken",
-            result_key: "executionInfos"
-        },
-        ListDomains: {
-            input_token: "nextPageToken",
-            limit_key: "maximumPageSize",
-            output_token: "nextPageToken",
-            result_key: "domainInfos"
-        },
-        ListOpenWorkflowExecutions: {
-            input_token: "nextPageToken",
-            limit_key: "maximumPageSize",
-            output_token: "nextPageToken",
-            result_key: "executionInfos"
-        },
-        ListWorkflowTypes: {
-            input_token: "nextPageToken",
-            limit_key: "maximumPageSize",
-            output_token: "nextPageToken",
-            result_key: "typeInfos"
-        },
-        PollForDecisionTask: {
-            input_token: "nextPageToken",
-            limit_key: "maximumPageSize",
-            output_token: "nextPageToken",
-            result_key: "events"
-        }
-    }
-};
-
 AWS.apiLoader.services["xray"] = {};
 
 AWS.XRay = AWS.Service.defineService("xray", [ "2016-04-12" ]);
@@ -95277,3 +89196,11236 @@ AWS.apiLoader.services["chime"]["2018-05-01"] = {
         }
     }
 };
+
+AWS.apiLoader.services["pinpointemail"] = {};
+
+AWS.PinpointEmail = AWS.Service.defineService("pinpointemail", [ "2018-07-26" ]);
+
+AWS.apiLoader.services["pinpointemail"]["2018-07-26"] = {
+    version: "2.0",
+    metadata: {
+        apiVersion: "2018-07-26",
+        endpointPrefix: "email",
+        jsonVersion: "1.1",
+        protocol: "rest-json",
+        serviceAbbreviation: "Pinpoint Email",
+        serviceFullName: "Amazon Pinpoint Email Service",
+        serviceId: "Pinpoint Email",
+        signatureVersion: "v4",
+        signingName: "ses",
+        uid: "pinpoint-email-2018-07-26"
+    },
+    operations: {
+        CreateConfigurationSet: {
+            http: {
+                requestUri: "/v1/email/configuration-sets"
+            },
+            input: {
+                type: "structure",
+                required: [ "ConfigurationSetName" ],
+                members: {
+                    ConfigurationSetName: {},
+                    TrackingOptions: {
+                        shape: "S3"
+                    },
+                    DeliveryOptions: {
+                        shape: "S5"
+                    },
+                    ReputationOptions: {
+                        shape: "S8"
+                    },
+                    SendingOptions: {
+                        shape: "Sb"
+                    },
+                    Tags: {
+                        shape: "Sc"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {}
+            }
+        },
+        CreateConfigurationSetEventDestination: {
+            http: {
+                requestUri: "/v1/email/configuration-sets/{ConfigurationSetName}/event-destinations"
+            },
+            input: {
+                type: "structure",
+                required: [ "ConfigurationSetName", "EventDestinationName", "EventDestination" ],
+                members: {
+                    ConfigurationSetName: {
+                        location: "uri",
+                        locationName: "ConfigurationSetName"
+                    },
+                    EventDestinationName: {},
+                    EventDestination: {
+                        shape: "Sj"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {}
+            }
+        },
+        CreateDedicatedIpPool: {
+            http: {
+                requestUri: "/v1/email/dedicated-ip-pools"
+            },
+            input: {
+                type: "structure",
+                required: [ "PoolName" ],
+                members: {
+                    PoolName: {},
+                    Tags: {
+                        shape: "Sc"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {}
+            }
+        },
+        CreateDeliverabilityTestReport: {
+            http: {
+                requestUri: "/v1/email/deliverability-dashboard/test"
+            },
+            input: {
+                type: "structure",
+                required: [ "FromEmailAddress", "Content" ],
+                members: {
+                    ReportName: {},
+                    FromEmailAddress: {},
+                    Content: {
+                        shape: "S12"
+                    },
+                    Tags: {
+                        shape: "Sc"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "ReportId", "DeliverabilityTestStatus" ],
+                members: {
+                    ReportId: {},
+                    DeliverabilityTestStatus: {}
+                }
+            }
+        },
+        CreateEmailIdentity: {
+            http: {
+                requestUri: "/v1/email/identities"
+            },
+            input: {
+                type: "structure",
+                required: [ "EmailIdentity" ],
+                members: {
+                    EmailIdentity: {},
+                    Tags: {
+                        shape: "Sc"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    IdentityType: {},
+                    VerifiedForSendingStatus: {
+                        type: "boolean"
+                    },
+                    DkimAttributes: {
+                        shape: "S1k"
+                    }
+                }
+            }
+        },
+        DeleteConfigurationSet: {
+            http: {
+                method: "DELETE",
+                requestUri: "/v1/email/configuration-sets/{ConfigurationSetName}"
+            },
+            input: {
+                type: "structure",
+                required: [ "ConfigurationSetName" ],
+                members: {
+                    ConfigurationSetName: {
+                        location: "uri",
+                        locationName: "ConfigurationSetName"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {}
+            }
+        },
+        DeleteConfigurationSetEventDestination: {
+            http: {
+                method: "DELETE",
+                requestUri: "/v1/email/configuration-sets/{ConfigurationSetName}/event-destinations/{EventDestinationName}"
+            },
+            input: {
+                type: "structure",
+                required: [ "ConfigurationSetName", "EventDestinationName" ],
+                members: {
+                    ConfigurationSetName: {
+                        location: "uri",
+                        locationName: "ConfigurationSetName"
+                    },
+                    EventDestinationName: {
+                        location: "uri",
+                        locationName: "EventDestinationName"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {}
+            }
+        },
+        DeleteDedicatedIpPool: {
+            http: {
+                method: "DELETE",
+                requestUri: "/v1/email/dedicated-ip-pools/{PoolName}"
+            },
+            input: {
+                type: "structure",
+                required: [ "PoolName" ],
+                members: {
+                    PoolName: {
+                        location: "uri",
+                        locationName: "PoolName"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {}
+            }
+        },
+        DeleteEmailIdentity: {
+            http: {
+                method: "DELETE",
+                requestUri: "/v1/email/identities/{EmailIdentity}"
+            },
+            input: {
+                type: "structure",
+                required: [ "EmailIdentity" ],
+                members: {
+                    EmailIdentity: {
+                        location: "uri",
+                        locationName: "EmailIdentity"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {}
+            }
+        },
+        GetAccount: {
+            http: {
+                method: "GET",
+                requestUri: "/v1/email/account"
+            },
+            input: {
+                type: "structure",
+                members: {}
+            },
+            output: {
+                type: "structure",
+                members: {
+                    SendQuota: {
+                        type: "structure",
+                        members: {
+                            Max24HourSend: {
+                                type: "double"
+                            },
+                            MaxSendRate: {
+                                type: "double"
+                            },
+                            SentLast24Hours: {
+                                type: "double"
+                            }
+                        }
+                    },
+                    SendingEnabled: {
+                        type: "boolean"
+                    },
+                    DedicatedIpAutoWarmupEnabled: {
+                        type: "boolean"
+                    },
+                    EnforcementStatus: {},
+                    ProductionAccessEnabled: {
+                        type: "boolean"
+                    }
+                }
+            }
+        },
+        GetBlacklistReports: {
+            http: {
+                method: "GET",
+                requestUri: "/v1/email/deliverability-dashboard/blacklist-report"
+            },
+            input: {
+                type: "structure",
+                required: [ "BlacklistItemNames" ],
+                members: {
+                    BlacklistItemNames: {
+                        location: "querystring",
+                        locationName: "BlacklistItemNames",
+                        type: "list",
+                        member: {}
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "BlacklistReport" ],
+                members: {
+                    BlacklistReport: {
+                        type: "map",
+                        key: {},
+                        value: {
+                            type: "list",
+                            member: {
+                                type: "structure",
+                                members: {
+                                    RblName: {},
+                                    ListingTime: {
+                                        type: "timestamp"
+                                    },
+                                    Description: {}
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        GetConfigurationSet: {
+            http: {
+                method: "GET",
+                requestUri: "/v1/email/configuration-sets/{ConfigurationSetName}"
+            },
+            input: {
+                type: "structure",
+                required: [ "ConfigurationSetName" ],
+                members: {
+                    ConfigurationSetName: {
+                        location: "uri",
+                        locationName: "ConfigurationSetName"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    ConfigurationSetName: {},
+                    TrackingOptions: {
+                        shape: "S3"
+                    },
+                    DeliveryOptions: {
+                        shape: "S5"
+                    },
+                    ReputationOptions: {
+                        shape: "S8"
+                    },
+                    SendingOptions: {
+                        shape: "Sb"
+                    },
+                    Tags: {
+                        shape: "Sc"
+                    }
+                }
+            }
+        },
+        GetConfigurationSetEventDestinations: {
+            http: {
+                method: "GET",
+                requestUri: "/v1/email/configuration-sets/{ConfigurationSetName}/event-destinations"
+            },
+            input: {
+                type: "structure",
+                required: [ "ConfigurationSetName" ],
+                members: {
+                    ConfigurationSetName: {
+                        location: "uri",
+                        locationName: "ConfigurationSetName"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    EventDestinations: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            required: [ "Name", "MatchingEventTypes" ],
+                            members: {
+                                Name: {},
+                                Enabled: {
+                                    type: "boolean"
+                                },
+                                MatchingEventTypes: {
+                                    shape: "Sk"
+                                },
+                                KinesisFirehoseDestination: {
+                                    shape: "Sm"
+                                },
+                                CloudWatchDestination: {
+                                    shape: "So"
+                                },
+                                SnsDestination: {
+                                    shape: "Su"
+                                },
+                                PinpointDestination: {
+                                    shape: "Sv"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        GetDedicatedIp: {
+            http: {
+                method: "GET",
+                requestUri: "/v1/email/dedicated-ips/{IP}"
+            },
+            input: {
+                type: "structure",
+                required: [ "Ip" ],
+                members: {
+                    Ip: {
+                        location: "uri",
+                        locationName: "IP"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    DedicatedIp: {
+                        shape: "S2m"
+                    }
+                }
+            }
+        },
+        GetDedicatedIps: {
+            http: {
+                method: "GET",
+                requestUri: "/v1/email/dedicated-ips"
+            },
+            input: {
+                type: "structure",
+                members: {
+                    PoolName: {
+                        location: "querystring",
+                        locationName: "PoolName"
+                    },
+                    NextToken: {
+                        location: "querystring",
+                        locationName: "NextToken"
+                    },
+                    PageSize: {
+                        location: "querystring",
+                        locationName: "PageSize",
+                        type: "integer"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    DedicatedIps: {
+                        type: "list",
+                        member: {
+                            shape: "S2m"
+                        }
+                    },
+                    NextToken: {}
+                }
+            }
+        },
+        GetDeliverabilityDashboardOptions: {
+            http: {
+                method: "GET",
+                requestUri: "/v1/email/deliverability-dashboard"
+            },
+            input: {
+                type: "structure",
+                members: {}
+            },
+            output: {
+                type: "structure",
+                required: [ "DashboardEnabled" ],
+                members: {
+                    DashboardEnabled: {
+                        type: "boolean"
+                    },
+                    SubscriptionExpiryDate: {
+                        type: "timestamp"
+                    },
+                    AccountStatus: {},
+                    ActiveSubscribedDomains: {
+                        shape: "S2x"
+                    },
+                    PendingExpirationSubscribedDomains: {
+                        shape: "S2x"
+                    }
+                }
+            }
+        },
+        GetDeliverabilityTestReport: {
+            http: {
+                method: "GET",
+                requestUri: "/v1/email/deliverability-dashboard/test-reports/{ReportId}"
+            },
+            input: {
+                type: "structure",
+                required: [ "ReportId" ],
+                members: {
+                    ReportId: {
+                        location: "uri",
+                        locationName: "ReportId"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "DeliverabilityTestReport", "OverallPlacement", "IspPlacements" ],
+                members: {
+                    DeliverabilityTestReport: {
+                        shape: "S35"
+                    },
+                    OverallPlacement: {
+                        shape: "S37"
+                    },
+                    IspPlacements: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            members: {
+                                IspName: {},
+                                PlacementStatistics: {
+                                    shape: "S37"
+                                }
+                            }
+                        }
+                    },
+                    Message: {},
+                    Tags: {
+                        shape: "Sc"
+                    }
+                }
+            }
+        },
+        GetDomainDeliverabilityCampaign: {
+            http: {
+                method: "GET",
+                requestUri: "/v1/email/deliverability-dashboard/campaigns/{CampaignId}"
+            },
+            input: {
+                type: "structure",
+                required: [ "CampaignId" ],
+                members: {
+                    CampaignId: {
+                        location: "uri",
+                        locationName: "CampaignId"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "DomainDeliverabilityCampaign" ],
+                members: {
+                    DomainDeliverabilityCampaign: {
+                        shape: "S3f"
+                    }
+                }
+            }
+        },
+        GetDomainStatisticsReport: {
+            http: {
+                method: "GET",
+                requestUri: "/v1/email/deliverability-dashboard/statistics-report/{Domain}"
+            },
+            input: {
+                type: "structure",
+                required: [ "Domain", "StartDate", "EndDate" ],
+                members: {
+                    Domain: {
+                        location: "uri",
+                        locationName: "Domain"
+                    },
+                    StartDate: {
+                        location: "querystring",
+                        locationName: "StartDate",
+                        type: "timestamp"
+                    },
+                    EndDate: {
+                        location: "querystring",
+                        locationName: "EndDate",
+                        type: "timestamp"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "OverallVolume", "DailyVolumes" ],
+                members: {
+                    OverallVolume: {
+                        type: "structure",
+                        members: {
+                            VolumeStatistics: {
+                                shape: "S3p"
+                            },
+                            ReadRatePercent: {
+                                type: "double"
+                            },
+                            DomainIspPlacements: {
+                                shape: "S3q"
+                            }
+                        }
+                    },
+                    DailyVolumes: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            members: {
+                                StartDate: {
+                                    type: "timestamp"
+                                },
+                                VolumeStatistics: {
+                                    shape: "S3p"
+                                },
+                                DomainIspPlacements: {
+                                    shape: "S3q"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        GetEmailIdentity: {
+            http: {
+                method: "GET",
+                requestUri: "/v1/email/identities/{EmailIdentity}"
+            },
+            input: {
+                type: "structure",
+                required: [ "EmailIdentity" ],
+                members: {
+                    EmailIdentity: {
+                        location: "uri",
+                        locationName: "EmailIdentity"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    IdentityType: {},
+                    FeedbackForwardingStatus: {
+                        type: "boolean"
+                    },
+                    VerifiedForSendingStatus: {
+                        type: "boolean"
+                    },
+                    DkimAttributes: {
+                        shape: "S1k"
+                    },
+                    MailFromAttributes: {
+                        type: "structure",
+                        required: [ "MailFromDomain", "MailFromDomainStatus", "BehaviorOnMxFailure" ],
+                        members: {
+                            MailFromDomain: {},
+                            MailFromDomainStatus: {},
+                            BehaviorOnMxFailure: {}
+                        }
+                    },
+                    Tags: {
+                        shape: "Sc"
+                    }
+                }
+            }
+        },
+        ListConfigurationSets: {
+            http: {
+                method: "GET",
+                requestUri: "/v1/email/configuration-sets"
+            },
+            input: {
+                type: "structure",
+                members: {
+                    NextToken: {
+                        location: "querystring",
+                        locationName: "NextToken"
+                    },
+                    PageSize: {
+                        location: "querystring",
+                        locationName: "PageSize",
+                        type: "integer"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    ConfigurationSets: {
+                        type: "list",
+                        member: {}
+                    },
+                    NextToken: {}
+                }
+            }
+        },
+        ListDedicatedIpPools: {
+            http: {
+                method: "GET",
+                requestUri: "/v1/email/dedicated-ip-pools"
+            },
+            input: {
+                type: "structure",
+                members: {
+                    NextToken: {
+                        location: "querystring",
+                        locationName: "NextToken"
+                    },
+                    PageSize: {
+                        location: "querystring",
+                        locationName: "PageSize",
+                        type: "integer"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    DedicatedIpPools: {
+                        type: "list",
+                        member: {}
+                    },
+                    NextToken: {}
+                }
+            }
+        },
+        ListDeliverabilityTestReports: {
+            http: {
+                method: "GET",
+                requestUri: "/v1/email/deliverability-dashboard/test-reports"
+            },
+            input: {
+                type: "structure",
+                members: {
+                    NextToken: {
+                        location: "querystring",
+                        locationName: "NextToken"
+                    },
+                    PageSize: {
+                        location: "querystring",
+                        locationName: "PageSize",
+                        type: "integer"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "DeliverabilityTestReports" ],
+                members: {
+                    DeliverabilityTestReports: {
+                        type: "list",
+                        member: {
+                            shape: "S35"
+                        }
+                    },
+                    NextToken: {}
+                }
+            }
+        },
+        ListDomainDeliverabilityCampaigns: {
+            http: {
+                method: "GET",
+                requestUri: "/v1/email/deliverability-dashboard/domains/{SubscribedDomain}/campaigns"
+            },
+            input: {
+                type: "structure",
+                required: [ "StartDate", "EndDate", "SubscribedDomain" ],
+                members: {
+                    StartDate: {
+                        location: "querystring",
+                        locationName: "StartDate",
+                        type: "timestamp"
+                    },
+                    EndDate: {
+                        location: "querystring",
+                        locationName: "EndDate",
+                        type: "timestamp"
+                    },
+                    SubscribedDomain: {
+                        location: "uri",
+                        locationName: "SubscribedDomain"
+                    },
+                    NextToken: {
+                        location: "querystring",
+                        locationName: "NextToken"
+                    },
+                    PageSize: {
+                        location: "querystring",
+                        locationName: "PageSize",
+                        type: "integer"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "DomainDeliverabilityCampaigns" ],
+                members: {
+                    DomainDeliverabilityCampaigns: {
+                        type: "list",
+                        member: {
+                            shape: "S3f"
+                        }
+                    },
+                    NextToken: {}
+                }
+            }
+        },
+        ListEmailIdentities: {
+            http: {
+                method: "GET",
+                requestUri: "/v1/email/identities"
+            },
+            input: {
+                type: "structure",
+                members: {
+                    NextToken: {
+                        location: "querystring",
+                        locationName: "NextToken"
+                    },
+                    PageSize: {
+                        location: "querystring",
+                        locationName: "PageSize",
+                        type: "integer"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    EmailIdentities: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            members: {
+                                IdentityType: {},
+                                IdentityName: {},
+                                SendingEnabled: {
+                                    type: "boolean"
+                                }
+                            }
+                        }
+                    },
+                    NextToken: {}
+                }
+            }
+        },
+        ListTagsForResource: {
+            http: {
+                method: "GET",
+                requestUri: "/v1/email/tags"
+            },
+            input: {
+                type: "structure",
+                required: [ "ResourceArn" ],
+                members: {
+                    ResourceArn: {
+                        location: "querystring",
+                        locationName: "ResourceArn"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "Tags" ],
+                members: {
+                    Tags: {
+                        shape: "Sc"
+                    }
+                }
+            }
+        },
+        PutAccountDedicatedIpWarmupAttributes: {
+            http: {
+                method: "PUT",
+                requestUri: "/v1/email/account/dedicated-ips/warmup"
+            },
+            input: {
+                type: "structure",
+                members: {
+                    AutoWarmupEnabled: {
+                        type: "boolean"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {}
+            }
+        },
+        PutAccountSendingAttributes: {
+            http: {
+                method: "PUT",
+                requestUri: "/v1/email/account/sending"
+            },
+            input: {
+                type: "structure",
+                members: {
+                    SendingEnabled: {
+                        type: "boolean"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {}
+            }
+        },
+        PutConfigurationSetDeliveryOptions: {
+            http: {
+                method: "PUT",
+                requestUri: "/v1/email/configuration-sets/{ConfigurationSetName}/delivery-options"
+            },
+            input: {
+                type: "structure",
+                required: [ "ConfigurationSetName" ],
+                members: {
+                    ConfigurationSetName: {
+                        location: "uri",
+                        locationName: "ConfigurationSetName"
+                    },
+                    TlsPolicy: {},
+                    SendingPoolName: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {}
+            }
+        },
+        PutConfigurationSetReputationOptions: {
+            http: {
+                method: "PUT",
+                requestUri: "/v1/email/configuration-sets/{ConfigurationSetName}/reputation-options"
+            },
+            input: {
+                type: "structure",
+                required: [ "ConfigurationSetName" ],
+                members: {
+                    ConfigurationSetName: {
+                        location: "uri",
+                        locationName: "ConfigurationSetName"
+                    },
+                    ReputationMetricsEnabled: {
+                        type: "boolean"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {}
+            }
+        },
+        PutConfigurationSetSendingOptions: {
+            http: {
+                method: "PUT",
+                requestUri: "/v1/email/configuration-sets/{ConfigurationSetName}/sending"
+            },
+            input: {
+                type: "structure",
+                required: [ "ConfigurationSetName" ],
+                members: {
+                    ConfigurationSetName: {
+                        location: "uri",
+                        locationName: "ConfigurationSetName"
+                    },
+                    SendingEnabled: {
+                        type: "boolean"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {}
+            }
+        },
+        PutConfigurationSetTrackingOptions: {
+            http: {
+                method: "PUT",
+                requestUri: "/v1/email/configuration-sets/{ConfigurationSetName}/tracking-options"
+            },
+            input: {
+                type: "structure",
+                required: [ "ConfigurationSetName" ],
+                members: {
+                    ConfigurationSetName: {
+                        location: "uri",
+                        locationName: "ConfigurationSetName"
+                    },
+                    CustomRedirectDomain: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {}
+            }
+        },
+        PutDedicatedIpInPool: {
+            http: {
+                method: "PUT",
+                requestUri: "/v1/email/dedicated-ips/{IP}/pool"
+            },
+            input: {
+                type: "structure",
+                required: [ "Ip", "DestinationPoolName" ],
+                members: {
+                    Ip: {
+                        location: "uri",
+                        locationName: "IP"
+                    },
+                    DestinationPoolName: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {}
+            }
+        },
+        PutDedicatedIpWarmupAttributes: {
+            http: {
+                method: "PUT",
+                requestUri: "/v1/email/dedicated-ips/{IP}/warmup"
+            },
+            input: {
+                type: "structure",
+                required: [ "Ip", "WarmupPercentage" ],
+                members: {
+                    Ip: {
+                        location: "uri",
+                        locationName: "IP"
+                    },
+                    WarmupPercentage: {
+                        type: "integer"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {}
+            }
+        },
+        PutDeliverabilityDashboardOption: {
+            http: {
+                method: "PUT",
+                requestUri: "/v1/email/deliverability-dashboard"
+            },
+            input: {
+                type: "structure",
+                required: [ "DashboardEnabled" ],
+                members: {
+                    DashboardEnabled: {
+                        type: "boolean"
+                    },
+                    SubscribedDomains: {
+                        shape: "S2x"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {}
+            }
+        },
+        PutEmailIdentityDkimAttributes: {
+            http: {
+                method: "PUT",
+                requestUri: "/v1/email/identities/{EmailIdentity}/dkim"
+            },
+            input: {
+                type: "structure",
+                required: [ "EmailIdentity" ],
+                members: {
+                    EmailIdentity: {
+                        location: "uri",
+                        locationName: "EmailIdentity"
+                    },
+                    SigningEnabled: {
+                        type: "boolean"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {}
+            }
+        },
+        PutEmailIdentityFeedbackAttributes: {
+            http: {
+                method: "PUT",
+                requestUri: "/v1/email/identities/{EmailIdentity}/feedback"
+            },
+            input: {
+                type: "structure",
+                required: [ "EmailIdentity" ],
+                members: {
+                    EmailIdentity: {
+                        location: "uri",
+                        locationName: "EmailIdentity"
+                    },
+                    EmailForwardingEnabled: {
+                        type: "boolean"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {}
+            }
+        },
+        PutEmailIdentityMailFromAttributes: {
+            http: {
+                method: "PUT",
+                requestUri: "/v1/email/identities/{EmailIdentity}/mail-from"
+            },
+            input: {
+                type: "structure",
+                required: [ "EmailIdentity" ],
+                members: {
+                    EmailIdentity: {
+                        location: "uri",
+                        locationName: "EmailIdentity"
+                    },
+                    MailFromDomain: {},
+                    BehaviorOnMxFailure: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {}
+            }
+        },
+        SendEmail: {
+            http: {
+                requestUri: "/v1/email/outbound-emails"
+            },
+            input: {
+                type: "structure",
+                required: [ "Destination", "Content" ],
+                members: {
+                    FromEmailAddress: {},
+                    Destination: {
+                        type: "structure",
+                        members: {
+                            ToAddresses: {
+                                shape: "S59"
+                            },
+                            CcAddresses: {
+                                shape: "S59"
+                            },
+                            BccAddresses: {
+                                shape: "S59"
+                            }
+                        }
+                    },
+                    ReplyToAddresses: {
+                        shape: "S59"
+                    },
+                    FeedbackForwardingEmailAddress: {},
+                    Content: {
+                        shape: "S12"
+                    },
+                    EmailTags: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            required: [ "Name", "Value" ],
+                            members: {
+                                Name: {},
+                                Value: {}
+                            }
+                        }
+                    },
+                    ConfigurationSetName: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    MessageId: {}
+                }
+            }
+        },
+        TagResource: {
+            http: {
+                requestUri: "/v1/email/tags"
+            },
+            input: {
+                type: "structure",
+                required: [ "ResourceArn", "Tags" ],
+                members: {
+                    ResourceArn: {},
+                    Tags: {
+                        shape: "Sc"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {}
+            }
+        },
+        UntagResource: {
+            http: {
+                method: "DELETE",
+                requestUri: "/v1/email/tags"
+            },
+            input: {
+                type: "structure",
+                required: [ "ResourceArn", "TagKeys" ],
+                members: {
+                    ResourceArn: {
+                        location: "querystring",
+                        locationName: "ResourceArn"
+                    },
+                    TagKeys: {
+                        location: "querystring",
+                        locationName: "TagKeys",
+                        type: "list",
+                        member: {}
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {}
+            }
+        },
+        UpdateConfigurationSetEventDestination: {
+            http: {
+                method: "PUT",
+                requestUri: "/v1/email/configuration-sets/{ConfigurationSetName}/event-destinations/{EventDestinationName}"
+            },
+            input: {
+                type: "structure",
+                required: [ "ConfigurationSetName", "EventDestinationName", "EventDestination" ],
+                members: {
+                    ConfigurationSetName: {
+                        location: "uri",
+                        locationName: "ConfigurationSetName"
+                    },
+                    EventDestinationName: {
+                        location: "uri",
+                        locationName: "EventDestinationName"
+                    },
+                    EventDestination: {
+                        shape: "Sj"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {}
+            }
+        }
+    },
+    shapes: {
+        S3: {
+            type: "structure",
+            required: [ "CustomRedirectDomain" ],
+            members: {
+                CustomRedirectDomain: {}
+            }
+        },
+        S5: {
+            type: "structure",
+            members: {
+                TlsPolicy: {},
+                SendingPoolName: {}
+            }
+        },
+        S8: {
+            type: "structure",
+            members: {
+                ReputationMetricsEnabled: {
+                    type: "boolean"
+                },
+                LastFreshStart: {
+                    type: "timestamp"
+                }
+            }
+        },
+        Sb: {
+            type: "structure",
+            members: {
+                SendingEnabled: {
+                    type: "boolean"
+                }
+            }
+        },
+        Sc: {
+            type: "list",
+            member: {
+                type: "structure",
+                required: [ "Key", "Value" ],
+                members: {
+                    Key: {},
+                    Value: {}
+                }
+            }
+        },
+        Sj: {
+            type: "structure",
+            members: {
+                Enabled: {
+                    type: "boolean"
+                },
+                MatchingEventTypes: {
+                    shape: "Sk"
+                },
+                KinesisFirehoseDestination: {
+                    shape: "Sm"
+                },
+                CloudWatchDestination: {
+                    shape: "So"
+                },
+                SnsDestination: {
+                    shape: "Su"
+                },
+                PinpointDestination: {
+                    shape: "Sv"
+                }
+            }
+        },
+        Sk: {
+            type: "list",
+            member: {}
+        },
+        Sm: {
+            type: "structure",
+            required: [ "IamRoleArn", "DeliveryStreamArn" ],
+            members: {
+                IamRoleArn: {},
+                DeliveryStreamArn: {}
+            }
+        },
+        So: {
+            type: "structure",
+            required: [ "DimensionConfigurations" ],
+            members: {
+                DimensionConfigurations: {
+                    type: "list",
+                    member: {
+                        type: "structure",
+                        required: [ "DimensionName", "DimensionValueSource", "DefaultDimensionValue" ],
+                        members: {
+                            DimensionName: {},
+                            DimensionValueSource: {},
+                            DefaultDimensionValue: {}
+                        }
+                    }
+                }
+            }
+        },
+        Su: {
+            type: "structure",
+            required: [ "TopicArn" ],
+            members: {
+                TopicArn: {}
+            }
+        },
+        Sv: {
+            type: "structure",
+            members: {
+                ApplicationArn: {}
+            }
+        },
+        S12: {
+            type: "structure",
+            members: {
+                Simple: {
+                    type: "structure",
+                    required: [ "Subject", "Body" ],
+                    members: {
+                        Subject: {
+                            shape: "S14"
+                        },
+                        Body: {
+                            type: "structure",
+                            members: {
+                                Text: {
+                                    shape: "S14"
+                                },
+                                Html: {
+                                    shape: "S14"
+                                }
+                            }
+                        }
+                    }
+                },
+                Raw: {
+                    type: "structure",
+                    required: [ "Data" ],
+                    members: {
+                        Data: {
+                            type: "blob"
+                        }
+                    }
+                },
+                Template: {
+                    type: "structure",
+                    members: {
+                        TemplateArn: {},
+                        TemplateData: {}
+                    }
+                }
+            }
+        },
+        S14: {
+            type: "structure",
+            required: [ "Data" ],
+            members: {
+                Data: {},
+                Charset: {}
+            }
+        },
+        S1k: {
+            type: "structure",
+            members: {
+                SigningEnabled: {
+                    type: "boolean"
+                },
+                Status: {},
+                Tokens: {
+                    type: "list",
+                    member: {}
+                }
+            }
+        },
+        S2m: {
+            type: "structure",
+            required: [ "Ip", "WarmupStatus", "WarmupPercentage" ],
+            members: {
+                Ip: {},
+                WarmupStatus: {},
+                WarmupPercentage: {
+                    type: "integer"
+                },
+                PoolName: {}
+            }
+        },
+        S2x: {
+            type: "list",
+            member: {
+                type: "structure",
+                members: {
+                    Domain: {},
+                    SubscriptionStartDate: {
+                        type: "timestamp"
+                    },
+                    InboxPlacementTrackingOption: {
+                        type: "structure",
+                        members: {
+                            Global: {
+                                type: "boolean"
+                            },
+                            TrackedIsps: {
+                                type: "list",
+                                member: {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        S35: {
+            type: "structure",
+            members: {
+                ReportId: {},
+                ReportName: {},
+                Subject: {},
+                FromEmailAddress: {},
+                CreateDate: {
+                    type: "timestamp"
+                },
+                DeliverabilityTestStatus: {}
+            }
+        },
+        S37: {
+            type: "structure",
+            members: {
+                InboxPercentage: {
+                    type: "double"
+                },
+                SpamPercentage: {
+                    type: "double"
+                },
+                MissingPercentage: {
+                    type: "double"
+                },
+                SpfPercentage: {
+                    type: "double"
+                },
+                DkimPercentage: {
+                    type: "double"
+                }
+            }
+        },
+        S3f: {
+            type: "structure",
+            members: {
+                CampaignId: {},
+                ImageUrl: {},
+                Subject: {},
+                FromAddress: {},
+                SendingIps: {
+                    type: "list",
+                    member: {}
+                },
+                FirstSeenDateTime: {
+                    type: "timestamp"
+                },
+                LastSeenDateTime: {
+                    type: "timestamp"
+                },
+                InboxCount: {
+                    type: "long"
+                },
+                SpamCount: {
+                    type: "long"
+                },
+                ReadRate: {
+                    type: "double"
+                },
+                DeleteRate: {
+                    type: "double"
+                },
+                ReadDeleteRate: {
+                    type: "double"
+                },
+                ProjectedVolume: {
+                    type: "long"
+                },
+                Esps: {
+                    type: "list",
+                    member: {}
+                }
+            }
+        },
+        S3p: {
+            type: "structure",
+            members: {
+                InboxRawCount: {
+                    type: "long"
+                },
+                SpamRawCount: {
+                    type: "long"
+                },
+                ProjectedInbox: {
+                    type: "long"
+                },
+                ProjectedSpam: {
+                    type: "long"
+                }
+            }
+        },
+        S3q: {
+            type: "list",
+            member: {
+                type: "structure",
+                members: {
+                    IspName: {},
+                    InboxRawCount: {
+                        type: "long"
+                    },
+                    SpamRawCount: {
+                        type: "long"
+                    },
+                    InboxPercentage: {
+                        type: "double"
+                    },
+                    SpamPercentage: {
+                        type: "double"
+                    }
+                }
+            }
+        },
+        S59: {
+            type: "list",
+            member: {}
+        }
+    },
+    paginators: {
+        GetDedicatedIps: {
+            input_token: "NextToken",
+            output_token: "NextToken",
+            limit_key: "PageSize"
+        },
+        ListConfigurationSets: {
+            input_token: "NextToken",
+            output_token: "NextToken",
+            limit_key: "PageSize"
+        },
+        ListDedicatedIpPools: {
+            input_token: "NextToken",
+            output_token: "NextToken",
+            limit_key: "PageSize"
+        },
+        ListDeliverabilityTestReports: {
+            input_token: "NextToken",
+            output_token: "NextToken",
+            limit_key: "PageSize"
+        },
+        ListDomainDeliverabilityCampaigns: {
+            input_token: "NextToken",
+            output_token: "NextToken",
+            limit_key: "PageSize"
+        },
+        ListEmailIdentities: {
+            input_token: "NextToken",
+            output_token: "NextToken",
+            limit_key: "PageSize"
+        }
+    }
+};
+
+AWS.apiLoader.services["ram"] = {};
+
+AWS.RAM = AWS.Service.defineService("ram", [ "2018-01-04" ]);
+
+AWS.apiLoader.services["ram"]["2018-01-04"] = {
+    version: "2.0",
+    metadata: {
+        apiVersion: "2018-01-04",
+        endpointPrefix: "ram",
+        jsonVersion: "1.1",
+        protocol: "rest-json",
+        serviceAbbreviation: "RAM",
+        serviceFullName: "AWS Resource Access Manager",
+        serviceId: "RAM",
+        signatureVersion: "v4",
+        uid: "ram-2018-01-04"
+    },
+    operations: {
+        AcceptResourceShareInvitation: {
+            http: {
+                requestUri: "/acceptresourceshareinvitation"
+            },
+            input: {
+                type: "structure",
+                required: [ "resourceShareInvitationArn" ],
+                members: {
+                    resourceShareInvitationArn: {},
+                    clientToken: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    resourceShareInvitation: {
+                        shape: "S4"
+                    },
+                    clientToken: {}
+                }
+            }
+        },
+        AssociateResourceShare: {
+            http: {
+                requestUri: "/associateresourceshare"
+            },
+            input: {
+                type: "structure",
+                required: [ "resourceShareArn" ],
+                members: {
+                    resourceShareArn: {},
+                    resourceArns: {
+                        shape: "Sd"
+                    },
+                    principals: {
+                        shape: "Se"
+                    },
+                    clientToken: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    resourceShareAssociations: {
+                        shape: "S7"
+                    },
+                    clientToken: {}
+                }
+            }
+        },
+        AssociateResourceSharePermission: {
+            http: {
+                requestUri: "/associateresourcesharepermission"
+            },
+            input: {
+                type: "structure",
+                required: [ "resourceShareArn", "permissionArn" ],
+                members: {
+                    resourceShareArn: {},
+                    permissionArn: {},
+                    replace: {
+                        type: "boolean"
+                    },
+                    clientToken: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    returnValue: {
+                        type: "boolean"
+                    },
+                    clientToken: {}
+                }
+            }
+        },
+        CreateResourceShare: {
+            http: {
+                requestUri: "/createresourceshare"
+            },
+            input: {
+                type: "structure",
+                required: [ "name" ],
+                members: {
+                    name: {},
+                    resourceArns: {
+                        shape: "Sd"
+                    },
+                    principals: {
+                        shape: "Se"
+                    },
+                    tags: {
+                        shape: "Sj"
+                    },
+                    allowExternalPrincipals: {
+                        type: "boolean"
+                    },
+                    clientToken: {},
+                    permissionArns: {
+                        type: "list",
+                        member: {}
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    resourceShare: {
+                        shape: "Sp"
+                    },
+                    clientToken: {}
+                }
+            }
+        },
+        DeleteResourceShare: {
+            http: {
+                method: "DELETE",
+                requestUri: "/deleteresourceshare"
+            },
+            input: {
+                type: "structure",
+                required: [ "resourceShareArn" ],
+                members: {
+                    resourceShareArn: {
+                        location: "querystring",
+                        locationName: "resourceShareArn"
+                    },
+                    clientToken: {
+                        location: "querystring",
+                        locationName: "clientToken"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    returnValue: {
+                        type: "boolean"
+                    },
+                    clientToken: {}
+                }
+            }
+        },
+        DisassociateResourceShare: {
+            http: {
+                requestUri: "/disassociateresourceshare"
+            },
+            input: {
+                type: "structure",
+                required: [ "resourceShareArn" ],
+                members: {
+                    resourceShareArn: {},
+                    resourceArns: {
+                        shape: "Sd"
+                    },
+                    principals: {
+                        shape: "Se"
+                    },
+                    clientToken: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    resourceShareAssociations: {
+                        shape: "S7"
+                    },
+                    clientToken: {}
+                }
+            }
+        },
+        DisassociateResourceSharePermission: {
+            http: {
+                requestUri: "/disassociateresourcesharepermission"
+            },
+            input: {
+                type: "structure",
+                required: [ "resourceShareArn", "permissionArn" ],
+                members: {
+                    resourceShareArn: {},
+                    permissionArn: {},
+                    clientToken: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    returnValue: {
+                        type: "boolean"
+                    },
+                    clientToken: {}
+                }
+            }
+        },
+        EnableSharingWithAwsOrganization: {
+            http: {
+                requestUri: "/enablesharingwithawsorganization"
+            },
+            input: {
+                type: "structure",
+                members: {}
+            },
+            output: {
+                type: "structure",
+                members: {
+                    returnValue: {
+                        type: "boolean"
+                    }
+                }
+            }
+        },
+        GetPermission: {
+            http: {
+                requestUri: "/getpermission"
+            },
+            input: {
+                type: "structure",
+                required: [ "permissionArn" ],
+                members: {
+                    permissionArn: {},
+                    permissionVersion: {
+                        type: "integer"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    permission: {
+                        type: "structure",
+                        members: {
+                            arn: {},
+                            version: {},
+                            defaultVersion: {
+                                type: "boolean"
+                            },
+                            name: {},
+                            resourceType: {},
+                            permission: {},
+                            creationTime: {
+                                type: "timestamp"
+                            },
+                            lastUpdatedTime: {
+                                type: "timestamp"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        GetResourcePolicies: {
+            http: {
+                requestUri: "/getresourcepolicies"
+            },
+            input: {
+                type: "structure",
+                required: [ "resourceArns" ],
+                members: {
+                    resourceArns: {
+                        shape: "Sd"
+                    },
+                    principal: {},
+                    nextToken: {},
+                    maxResults: {
+                        type: "integer"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    policies: {
+                        type: "list",
+                        member: {}
+                    },
+                    nextToken: {}
+                }
+            }
+        },
+        GetResourceShareAssociations: {
+            http: {
+                requestUri: "/getresourceshareassociations"
+            },
+            input: {
+                type: "structure",
+                required: [ "associationType" ],
+                members: {
+                    associationType: {},
+                    resourceShareArns: {
+                        shape: "S1a"
+                    },
+                    resourceArn: {},
+                    principal: {},
+                    associationStatus: {},
+                    nextToken: {},
+                    maxResults: {
+                        type: "integer"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    resourceShareAssociations: {
+                        shape: "S7"
+                    },
+                    nextToken: {}
+                }
+            }
+        },
+        GetResourceShareInvitations: {
+            http: {
+                requestUri: "/getresourceshareinvitations"
+            },
+            input: {
+                type: "structure",
+                members: {
+                    resourceShareInvitationArns: {
+                        type: "list",
+                        member: {}
+                    },
+                    resourceShareArns: {
+                        shape: "S1a"
+                    },
+                    nextToken: {},
+                    maxResults: {
+                        type: "integer"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    resourceShareInvitations: {
+                        type: "list",
+                        member: {
+                            shape: "S4"
+                        }
+                    },
+                    nextToken: {}
+                }
+            }
+        },
+        GetResourceShares: {
+            http: {
+                requestUri: "/getresourceshares"
+            },
+            input: {
+                type: "structure",
+                required: [ "resourceOwner" ],
+                members: {
+                    resourceShareArns: {
+                        shape: "S1a"
+                    },
+                    resourceShareStatus: {},
+                    resourceOwner: {},
+                    name: {},
+                    tagFilters: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            members: {
+                                tagKey: {},
+                                tagValues: {
+                                    type: "list",
+                                    member: {}
+                                }
+                            }
+                        }
+                    },
+                    nextToken: {},
+                    maxResults: {
+                        type: "integer"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    resourceShares: {
+                        type: "list",
+                        member: {
+                            shape: "Sp"
+                        }
+                    },
+                    nextToken: {}
+                }
+            }
+        },
+        ListPendingInvitationResources: {
+            http: {
+                requestUri: "/listpendinginvitationresources"
+            },
+            input: {
+                type: "structure",
+                required: [ "resourceShareInvitationArn" ],
+                members: {
+                    resourceShareInvitationArn: {},
+                    nextToken: {},
+                    maxResults: {
+                        type: "integer"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    resources: {
+                        shape: "S1p"
+                    },
+                    nextToken: {}
+                }
+            }
+        },
+        ListPermissions: {
+            http: {
+                requestUri: "/listpermissions"
+            },
+            input: {
+                type: "structure",
+                members: {
+                    resourceType: {},
+                    nextToken: {},
+                    maxResults: {
+                        type: "integer"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    permissions: {
+                        shape: "S1u"
+                    },
+                    nextToken: {}
+                }
+            }
+        },
+        ListPrincipals: {
+            http: {
+                requestUri: "/listprincipals"
+            },
+            input: {
+                type: "structure",
+                required: [ "resourceOwner" ],
+                members: {
+                    resourceOwner: {},
+                    resourceArn: {},
+                    principals: {
+                        shape: "Se"
+                    },
+                    resourceType: {},
+                    resourceShareArns: {
+                        shape: "S1a"
+                    },
+                    nextToken: {},
+                    maxResults: {
+                        type: "integer"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    principals: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            members: {
+                                id: {},
+                                resourceShareArn: {},
+                                creationTime: {
+                                    type: "timestamp"
+                                },
+                                lastUpdatedTime: {
+                                    type: "timestamp"
+                                },
+                                external: {
+                                    type: "boolean"
+                                }
+                            }
+                        }
+                    },
+                    nextToken: {}
+                }
+            }
+        },
+        ListResourceSharePermissions: {
+            http: {
+                requestUri: "/listresourcesharepermissions"
+            },
+            input: {
+                type: "structure",
+                required: [ "resourceShareArn" ],
+                members: {
+                    resourceShareArn: {},
+                    nextToken: {},
+                    maxResults: {
+                        type: "integer"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    permissions: {
+                        shape: "S1u"
+                    },
+                    nextToken: {}
+                }
+            }
+        },
+        ListResourceTypes: {
+            http: {
+                requestUri: "/listresourcetypes"
+            },
+            input: {
+                type: "structure",
+                members: {
+                    nextToken: {},
+                    maxResults: {
+                        type: "integer"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    resourceTypes: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            members: {
+                                resourceType: {},
+                                serviceName: {}
+                            }
+                        }
+                    },
+                    nextToken: {}
+                }
+            }
+        },
+        ListResources: {
+            http: {
+                requestUri: "/listresources"
+            },
+            input: {
+                type: "structure",
+                required: [ "resourceOwner" ],
+                members: {
+                    resourceOwner: {},
+                    principal: {},
+                    resourceType: {},
+                    resourceArns: {
+                        shape: "Sd"
+                    },
+                    resourceShareArns: {
+                        shape: "S1a"
+                    },
+                    nextToken: {},
+                    maxResults: {
+                        type: "integer"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    resources: {
+                        shape: "S1p"
+                    },
+                    nextToken: {}
+                }
+            }
+        },
+        PromoteResourceShareCreatedFromPolicy: {
+            http: {
+                requestUri: "/promoteresourcesharecreatedfrompolicy"
+            },
+            input: {
+                type: "structure",
+                required: [ "resourceShareArn" ],
+                members: {
+                    resourceShareArn: {
+                        location: "querystring",
+                        locationName: "resourceShareArn"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    returnValue: {
+                        type: "boolean"
+                    }
+                }
+            }
+        },
+        RejectResourceShareInvitation: {
+            http: {
+                requestUri: "/rejectresourceshareinvitation"
+            },
+            input: {
+                type: "structure",
+                required: [ "resourceShareInvitationArn" ],
+                members: {
+                    resourceShareInvitationArn: {},
+                    clientToken: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    resourceShareInvitation: {
+                        shape: "S4"
+                    },
+                    clientToken: {}
+                }
+            }
+        },
+        TagResource: {
+            http: {
+                requestUri: "/tagresource"
+            },
+            input: {
+                type: "structure",
+                required: [ "resourceShareArn", "tags" ],
+                members: {
+                    resourceShareArn: {},
+                    tags: {
+                        shape: "Sj"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {}
+            }
+        },
+        UntagResource: {
+            http: {
+                requestUri: "/untagresource"
+            },
+            input: {
+                type: "structure",
+                required: [ "resourceShareArn", "tagKeys" ],
+                members: {
+                    resourceShareArn: {},
+                    tagKeys: {
+                        type: "list",
+                        member: {}
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {}
+            }
+        },
+        UpdateResourceShare: {
+            http: {
+                requestUri: "/updateresourceshare"
+            },
+            input: {
+                type: "structure",
+                required: [ "resourceShareArn" ],
+                members: {
+                    resourceShareArn: {},
+                    name: {},
+                    allowExternalPrincipals: {
+                        type: "boolean"
+                    },
+                    clientToken: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    resourceShare: {
+                        shape: "Sp"
+                    },
+                    clientToken: {}
+                }
+            }
+        }
+    },
+    shapes: {
+        S4: {
+            type: "structure",
+            members: {
+                resourceShareInvitationArn: {},
+                resourceShareName: {},
+                resourceShareArn: {},
+                senderAccountId: {},
+                receiverAccountId: {},
+                invitationTimestamp: {
+                    type: "timestamp"
+                },
+                status: {},
+                resourceShareAssociations: {
+                    shape: "S7",
+                    deprecated: true,
+                    deprecatedMessage: "This member has been deprecated. Use ListPendingInvitationResources."
+                }
+            }
+        },
+        S7: {
+            type: "list",
+            member: {
+                type: "structure",
+                members: {
+                    resourceShareArn: {},
+                    resourceShareName: {},
+                    associatedEntity: {},
+                    associationType: {},
+                    status: {},
+                    statusMessage: {},
+                    creationTime: {
+                        type: "timestamp"
+                    },
+                    lastUpdatedTime: {
+                        type: "timestamp"
+                    },
+                    external: {
+                        type: "boolean"
+                    }
+                }
+            }
+        },
+        Sd: {
+            type: "list",
+            member: {}
+        },
+        Se: {
+            type: "list",
+            member: {}
+        },
+        Sj: {
+            type: "list",
+            member: {
+                type: "structure",
+                members: {
+                    key: {},
+                    value: {}
+                }
+            }
+        },
+        Sp: {
+            type: "structure",
+            members: {
+                resourceShareArn: {},
+                name: {},
+                owningAccountId: {},
+                allowExternalPrincipals: {
+                    type: "boolean"
+                },
+                status: {},
+                statusMessage: {},
+                tags: {
+                    shape: "Sj"
+                },
+                creationTime: {
+                    type: "timestamp"
+                },
+                lastUpdatedTime: {
+                    type: "timestamp"
+                },
+                featureSet: {}
+            }
+        },
+        S1a: {
+            type: "list",
+            member: {}
+        },
+        S1p: {
+            type: "list",
+            member: {
+                type: "structure",
+                members: {
+                    arn: {},
+                    type: {},
+                    resourceShareArn: {},
+                    resourceGroupArn: {},
+                    status: {},
+                    statusMessage: {},
+                    creationTime: {
+                        type: "timestamp"
+                    },
+                    lastUpdatedTime: {
+                        type: "timestamp"
+                    }
+                }
+            }
+        },
+        S1u: {
+            type: "list",
+            member: {
+                type: "structure",
+                members: {
+                    arn: {},
+                    version: {},
+                    defaultVersion: {
+                        type: "boolean"
+                    },
+                    name: {},
+                    resourceType: {},
+                    status: {},
+                    creationTime: {
+                        type: "timestamp"
+                    },
+                    lastUpdatedTime: {
+                        type: "timestamp"
+                    }
+                }
+            }
+        }
+    },
+    paginators: {
+        GetResourcePolicies: {
+            input_token: "nextToken",
+            output_token: "nextToken",
+            limit_key: "maxResults"
+        },
+        GetResourceShareAssociations: {
+            input_token: "nextToken",
+            output_token: "nextToken",
+            limit_key: "maxResults"
+        },
+        GetResourceShareInvitations: {
+            input_token: "nextToken",
+            output_token: "nextToken",
+            limit_key: "maxResults"
+        },
+        GetResourceShares: {
+            input_token: "nextToken",
+            output_token: "nextToken",
+            limit_key: "maxResults"
+        },
+        ListPendingInvitationResources: {
+            input_token: "nextToken",
+            output_token: "nextToken",
+            limit_key: "maxResults"
+        },
+        ListPrincipals: {
+            input_token: "nextToken",
+            output_token: "nextToken",
+            limit_key: "maxResults"
+        },
+        ListResources: {
+            input_token: "nextToken",
+            output_token: "nextToken",
+            limit_key: "maxResults"
+        }
+    }
+};
+
+AWS.apiLoader.services["route53resolver"] = {};
+
+AWS.Route53Resolver = AWS.Service.defineService("route53resolver", [ "2018-04-01" ]);
+
+AWS.apiLoader.services["route53resolver"]["2018-04-01"] = {
+    version: "2.0",
+    metadata: {
+        apiVersion: "2018-04-01",
+        endpointPrefix: "route53resolver",
+        jsonVersion: "1.1",
+        protocol: "json",
+        serviceAbbreviation: "Route53Resolver",
+        serviceFullName: "Amazon Route 53 Resolver",
+        serviceId: "Route53Resolver",
+        signatureVersion: "v4",
+        targetPrefix: "Route53Resolver",
+        uid: "route53resolver-2018-04-01"
+    },
+    operations: {
+        AssociateResolverEndpointIpAddress: {
+            input: {
+                type: "structure",
+                required: [ "ResolverEndpointId", "IpAddress" ],
+                members: {
+                    ResolverEndpointId: {},
+                    IpAddress: {
+                        shape: "S3"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    ResolverEndpoint: {
+                        shape: "S7"
+                    }
+                }
+            }
+        },
+        AssociateResolverQueryLogConfig: {
+            input: {
+                type: "structure",
+                required: [ "ResolverQueryLogConfigId", "ResourceId" ],
+                members: {
+                    ResolverQueryLogConfigId: {},
+                    ResourceId: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    ResolverQueryLogConfigAssociation: {
+                        shape: "Sj"
+                    }
+                }
+            }
+        },
+        AssociateResolverRule: {
+            input: {
+                type: "structure",
+                required: [ "ResolverRuleId", "VPCId" ],
+                members: {
+                    ResolverRuleId: {},
+                    Name: {},
+                    VPCId: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    ResolverRuleAssociation: {
+                        shape: "Sp"
+                    }
+                }
+            }
+        },
+        CreateResolverEndpoint: {
+            input: {
+                type: "structure",
+                required: [ "CreatorRequestId", "SecurityGroupIds", "Direction", "IpAddresses" ],
+                members: {
+                    CreatorRequestId: {},
+                    Name: {},
+                    SecurityGroupIds: {
+                        shape: "Sb"
+                    },
+                    Direction: {},
+                    IpAddresses: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            required: [ "SubnetId" ],
+                            members: {
+                                SubnetId: {},
+                                Ip: {}
+                            }
+                        }
+                    },
+                    Tags: {
+                        shape: "Su"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    ResolverEndpoint: {
+                        shape: "S7"
+                    }
+                }
+            }
+        },
+        CreateResolverQueryLogConfig: {
+            input: {
+                type: "structure",
+                required: [ "Name", "DestinationArn", "CreatorRequestId" ],
+                members: {
+                    Name: {},
+                    DestinationArn: {},
+                    CreatorRequestId: {
+                        idempotencyToken: true
+                    },
+                    Tags: {
+                        shape: "Su"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    ResolverQueryLogConfig: {
+                        shape: "S13"
+                    }
+                }
+            }
+        },
+        CreateResolverRule: {
+            input: {
+                type: "structure",
+                required: [ "CreatorRequestId", "RuleType", "DomainName" ],
+                members: {
+                    CreatorRequestId: {},
+                    Name: {},
+                    RuleType: {},
+                    DomainName: {},
+                    TargetIps: {
+                        shape: "S1b"
+                    },
+                    ResolverEndpointId: {},
+                    Tags: {
+                        shape: "Su"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    ResolverRule: {
+                        shape: "S1f"
+                    }
+                }
+            }
+        },
+        DeleteResolverEndpoint: {
+            input: {
+                type: "structure",
+                required: [ "ResolverEndpointId" ],
+                members: {
+                    ResolverEndpointId: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    ResolverEndpoint: {
+                        shape: "S7"
+                    }
+                }
+            }
+        },
+        DeleteResolverQueryLogConfig: {
+            input: {
+                type: "structure",
+                required: [ "ResolverQueryLogConfigId" ],
+                members: {
+                    ResolverQueryLogConfigId: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    ResolverQueryLogConfig: {
+                        shape: "S13"
+                    }
+                }
+            }
+        },
+        DeleteResolverRule: {
+            input: {
+                type: "structure",
+                required: [ "ResolverRuleId" ],
+                members: {
+                    ResolverRuleId: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    ResolverRule: {
+                        shape: "S1f"
+                    }
+                }
+            }
+        },
+        DisassociateResolverEndpointIpAddress: {
+            input: {
+                type: "structure",
+                required: [ "ResolverEndpointId", "IpAddress" ],
+                members: {
+                    ResolverEndpointId: {},
+                    IpAddress: {
+                        shape: "S3"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    ResolverEndpoint: {
+                        shape: "S7"
+                    }
+                }
+            }
+        },
+        DisassociateResolverQueryLogConfig: {
+            input: {
+                type: "structure",
+                required: [ "ResolverQueryLogConfigId", "ResourceId" ],
+                members: {
+                    ResolverQueryLogConfigId: {},
+                    ResourceId: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    ResolverQueryLogConfigAssociation: {
+                        shape: "Sj"
+                    }
+                }
+            }
+        },
+        DisassociateResolverRule: {
+            input: {
+                type: "structure",
+                required: [ "VPCId", "ResolverRuleId" ],
+                members: {
+                    VPCId: {},
+                    ResolverRuleId: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    ResolverRuleAssociation: {
+                        shape: "Sp"
+                    }
+                }
+            }
+        },
+        GetResolverDnssecConfig: {
+            input: {
+                type: "structure",
+                required: [ "ResourceId" ],
+                members: {
+                    ResourceId: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    ResolverDNSSECConfig: {
+                        shape: "S1v"
+                    }
+                }
+            }
+        },
+        GetResolverEndpoint: {
+            input: {
+                type: "structure",
+                required: [ "ResolverEndpointId" ],
+                members: {
+                    ResolverEndpointId: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    ResolverEndpoint: {
+                        shape: "S7"
+                    }
+                }
+            }
+        },
+        GetResolverQueryLogConfig: {
+            input: {
+                type: "structure",
+                required: [ "ResolverQueryLogConfigId" ],
+                members: {
+                    ResolverQueryLogConfigId: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    ResolverQueryLogConfig: {
+                        shape: "S13"
+                    }
+                }
+            }
+        },
+        GetResolverQueryLogConfigAssociation: {
+            input: {
+                type: "structure",
+                required: [ "ResolverQueryLogConfigAssociationId" ],
+                members: {
+                    ResolverQueryLogConfigAssociationId: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    ResolverQueryLogConfigAssociation: {
+                        shape: "Sj"
+                    }
+                }
+            }
+        },
+        GetResolverQueryLogConfigPolicy: {
+            input: {
+                type: "structure",
+                required: [ "Arn" ],
+                members: {
+                    Arn: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    ResolverQueryLogConfigPolicy: {}
+                }
+            }
+        },
+        GetResolverRule: {
+            input: {
+                type: "structure",
+                required: [ "ResolverRuleId" ],
+                members: {
+                    ResolverRuleId: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    ResolverRule: {
+                        shape: "S1f"
+                    }
+                }
+            }
+        },
+        GetResolverRuleAssociation: {
+            input: {
+                type: "structure",
+                required: [ "ResolverRuleAssociationId" ],
+                members: {
+                    ResolverRuleAssociationId: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    ResolverRuleAssociation: {
+                        shape: "Sp"
+                    }
+                }
+            }
+        },
+        GetResolverRulePolicy: {
+            input: {
+                type: "structure",
+                required: [ "Arn" ],
+                members: {
+                    Arn: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    ResolverRulePolicy: {}
+                }
+            }
+        },
+        ListResolverDnssecConfigs: {
+            input: {
+                type: "structure",
+                members: {
+                    MaxResults: {
+                        type: "integer"
+                    },
+                    NextToken: {},
+                    Filters: {
+                        shape: "S2g"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    NextToken: {},
+                    ResolverDnssecConfigs: {
+                        type: "list",
+                        member: {
+                            shape: "S1v"
+                        }
+                    }
+                }
+            }
+        },
+        ListResolverEndpointIpAddresses: {
+            input: {
+                type: "structure",
+                required: [ "ResolverEndpointId" ],
+                members: {
+                    ResolverEndpointId: {},
+                    MaxResults: {
+                        type: "integer"
+                    },
+                    NextToken: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    NextToken: {},
+                    MaxResults: {
+                        type: "integer"
+                    },
+                    IpAddresses: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            members: {
+                                IpId: {},
+                                SubnetId: {},
+                                Ip: {},
+                                Status: {},
+                                StatusMessage: {},
+                                CreationTime: {},
+                                ModificationTime: {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        ListResolverEndpoints: {
+            input: {
+                type: "structure",
+                members: {
+                    MaxResults: {
+                        type: "integer"
+                    },
+                    NextToken: {},
+                    Filters: {
+                        shape: "S2g"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    NextToken: {},
+                    MaxResults: {
+                        type: "integer"
+                    },
+                    ResolverEndpoints: {
+                        type: "list",
+                        member: {
+                            shape: "S7"
+                        }
+                    }
+                }
+            }
+        },
+        ListResolverQueryLogConfigAssociations: {
+            input: {
+                type: "structure",
+                members: {
+                    MaxResults: {
+                        type: "integer"
+                    },
+                    NextToken: {},
+                    Filters: {
+                        shape: "S2g"
+                    },
+                    SortBy: {},
+                    SortOrder: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    NextToken: {},
+                    TotalCount: {
+                        type: "integer"
+                    },
+                    TotalFilteredCount: {
+                        type: "integer"
+                    },
+                    ResolverQueryLogConfigAssociations: {
+                        type: "list",
+                        member: {
+                            shape: "Sj"
+                        }
+                    }
+                }
+            }
+        },
+        ListResolverQueryLogConfigs: {
+            input: {
+                type: "structure",
+                members: {
+                    MaxResults: {
+                        type: "integer"
+                    },
+                    NextToken: {},
+                    Filters: {
+                        shape: "S2g"
+                    },
+                    SortBy: {},
+                    SortOrder: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    NextToken: {},
+                    TotalCount: {
+                        type: "integer"
+                    },
+                    TotalFilteredCount: {
+                        type: "integer"
+                    },
+                    ResolverQueryLogConfigs: {
+                        type: "list",
+                        member: {
+                            shape: "S13"
+                        }
+                    }
+                }
+            }
+        },
+        ListResolverRuleAssociations: {
+            input: {
+                type: "structure",
+                members: {
+                    MaxResults: {
+                        type: "integer"
+                    },
+                    NextToken: {},
+                    Filters: {
+                        shape: "S2g"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    NextToken: {},
+                    MaxResults: {
+                        type: "integer"
+                    },
+                    ResolverRuleAssociations: {
+                        type: "list",
+                        member: {
+                            shape: "Sp"
+                        }
+                    }
+                }
+            }
+        },
+        ListResolverRules: {
+            input: {
+                type: "structure",
+                members: {
+                    MaxResults: {
+                        type: "integer"
+                    },
+                    NextToken: {},
+                    Filters: {
+                        shape: "S2g"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    NextToken: {},
+                    MaxResults: {
+                        type: "integer"
+                    },
+                    ResolverRules: {
+                        type: "list",
+                        member: {
+                            shape: "S1f"
+                        }
+                    }
+                }
+            }
+        },
+        ListTagsForResource: {
+            input: {
+                type: "structure",
+                required: [ "ResourceArn" ],
+                members: {
+                    ResourceArn: {},
+                    MaxResults: {
+                        type: "integer"
+                    },
+                    NextToken: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    Tags: {
+                        shape: "Su"
+                    },
+                    NextToken: {}
+                }
+            }
+        },
+        PutResolverQueryLogConfigPolicy: {
+            input: {
+                type: "structure",
+                required: [ "Arn", "ResolverQueryLogConfigPolicy" ],
+                members: {
+                    Arn: {},
+                    ResolverQueryLogConfigPolicy: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    ReturnValue: {
+                        type: "boolean"
+                    }
+                }
+            }
+        },
+        PutResolverRulePolicy: {
+            input: {
+                type: "structure",
+                required: [ "Arn", "ResolverRulePolicy" ],
+                members: {
+                    Arn: {},
+                    ResolverRulePolicy: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    ReturnValue: {
+                        type: "boolean"
+                    }
+                }
+            }
+        },
+        TagResource: {
+            input: {
+                type: "structure",
+                required: [ "ResourceArn", "Tags" ],
+                members: {
+                    ResourceArn: {},
+                    Tags: {
+                        shape: "Su"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {}
+            }
+        },
+        UntagResource: {
+            input: {
+                type: "structure",
+                required: [ "ResourceArn", "TagKeys" ],
+                members: {
+                    ResourceArn: {},
+                    TagKeys: {
+                        type: "list",
+                        member: {}
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {}
+            }
+        },
+        UpdateResolverDnssecConfig: {
+            input: {
+                type: "structure",
+                required: [ "ResourceId", "Validation" ],
+                members: {
+                    ResourceId: {},
+                    Validation: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    ResolverDNSSECConfig: {
+                        shape: "S1v"
+                    }
+                }
+            }
+        },
+        UpdateResolverEndpoint: {
+            input: {
+                type: "structure",
+                required: [ "ResolverEndpointId" ],
+                members: {
+                    ResolverEndpointId: {},
+                    Name: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    ResolverEndpoint: {
+                        shape: "S7"
+                    }
+                }
+            }
+        },
+        UpdateResolverRule: {
+            input: {
+                type: "structure",
+                required: [ "ResolverRuleId", "Config" ],
+                members: {
+                    ResolverRuleId: {},
+                    Config: {
+                        type: "structure",
+                        members: {
+                            Name: {},
+                            TargetIps: {
+                                shape: "S1b"
+                            },
+                            ResolverEndpointId: {}
+                        }
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    ResolverRule: {
+                        shape: "S1f"
+                    }
+                }
+            }
+        }
+    },
+    shapes: {
+        S3: {
+            type: "structure",
+            members: {
+                IpId: {},
+                SubnetId: {},
+                Ip: {}
+            }
+        },
+        S7: {
+            type: "structure",
+            members: {
+                Id: {},
+                CreatorRequestId: {},
+                Arn: {},
+                Name: {},
+                SecurityGroupIds: {
+                    shape: "Sb"
+                },
+                Direction: {},
+                IpAddressCount: {
+                    type: "integer"
+                },
+                HostVPCId: {},
+                Status: {},
+                StatusMessage: {},
+                CreationTime: {},
+                ModificationTime: {}
+            }
+        },
+        Sb: {
+            type: "list",
+            member: {}
+        },
+        Sj: {
+            type: "structure",
+            members: {
+                Id: {},
+                ResolverQueryLogConfigId: {},
+                ResourceId: {},
+                Status: {},
+                Error: {},
+                ErrorMessage: {},
+                CreationTime: {}
+            }
+        },
+        Sp: {
+            type: "structure",
+            members: {
+                Id: {},
+                ResolverRuleId: {},
+                Name: {},
+                VPCId: {},
+                Status: {},
+                StatusMessage: {}
+            }
+        },
+        Su: {
+            type: "list",
+            member: {
+                type: "structure",
+                required: [ "Key", "Value" ],
+                members: {
+                    Key: {},
+                    Value: {}
+                }
+            }
+        },
+        S13: {
+            type: "structure",
+            members: {
+                Id: {},
+                OwnerId: {},
+                Status: {},
+                ShareStatus: {},
+                AssociationCount: {
+                    type: "integer"
+                },
+                Arn: {},
+                Name: {},
+                DestinationArn: {},
+                CreatorRequestId: {},
+                CreationTime: {}
+            }
+        },
+        S1b: {
+            type: "list",
+            member: {
+                type: "structure",
+                required: [ "Ip" ],
+                members: {
+                    Ip: {},
+                    Port: {
+                        type: "integer"
+                    }
+                }
+            }
+        },
+        S1f: {
+            type: "structure",
+            members: {
+                Id: {},
+                CreatorRequestId: {},
+                Arn: {},
+                DomainName: {},
+                Status: {},
+                StatusMessage: {},
+                RuleType: {},
+                Name: {},
+                TargetIps: {
+                    shape: "S1b"
+                },
+                ResolverEndpointId: {},
+                OwnerId: {},
+                ShareStatus: {},
+                CreationTime: {},
+                ModificationTime: {}
+            }
+        },
+        S1v: {
+            type: "structure",
+            members: {
+                Id: {},
+                OwnerId: {},
+                ResourceId: {},
+                ValidationStatus: {}
+            }
+        },
+        S2g: {
+            type: "list",
+            member: {
+                type: "structure",
+                members: {
+                    Name: {},
+                    Values: {
+                        type: "list",
+                        member: {}
+                    }
+                }
+            }
+        }
+    },
+    paginators: {
+        ListResolverDnssecConfigs: {
+            input_token: "NextToken",
+            output_token: "NextToken",
+            limit_key: "MaxResults",
+            result_key: "ResolverDnssecConfigs"
+        },
+        ListResolverEndpointIpAddresses: {
+            input_token: "NextToken",
+            output_token: "NextToken",
+            limit_key: "MaxResults",
+            result_key: "IpAddresses"
+        },
+        ListResolverEndpoints: {
+            input_token: "NextToken",
+            output_token: "NextToken",
+            limit_key: "MaxResults",
+            result_key: "ResolverEndpoints"
+        },
+        ListResolverQueryLogConfigAssociations: {
+            input_token: "NextToken",
+            output_token: "NextToken",
+            limit_key: "MaxResults",
+            result_key: "ResolverQueryLogConfigAssociations"
+        },
+        ListResolverQueryLogConfigs: {
+            input_token: "NextToken",
+            output_token: "NextToken",
+            limit_key: "MaxResults",
+            result_key: "ResolverQueryLogConfigs"
+        },
+        ListResolverRuleAssociations: {
+            input_token: "NextToken",
+            output_token: "NextToken",
+            limit_key: "MaxResults",
+            result_key: "ResolverRuleAssociations"
+        },
+        ListResolverRules: {
+            input_token: "NextToken",
+            output_token: "NextToken",
+            limit_key: "MaxResults",
+            result_key: "ResolverRules"
+        },
+        ListTagsForResource: {
+            input_token: "NextToken",
+            output_token: "NextToken",
+            limit_key: "MaxResults",
+            result_key: "Tags"
+        }
+    }
+};
+
+AWS.apiLoader.services["pinpointsmsvoice"] = {};
+
+AWS.PinpointSMSVoice = AWS.Service.defineService("pinpointsmsvoice", [ "2018-09-05" ]);
+
+AWS.apiLoader.services["pinpointsmsvoice"]["2018-09-05"] = {
+    metadata: {
+        apiVersion: "2018-09-05",
+        endpointPrefix: "sms-voice.pinpoint",
+        signingName: "sms-voice",
+        serviceAbbreviation: "Pinpoint SMS Voice",
+        serviceFullName: "Amazon Pinpoint SMS and Voice Service",
+        serviceId: "Pinpoint SMS Voice",
+        protocol: "rest-json",
+        jsonVersion: "1.1",
+        uid: "pinpoint-sms-voice-2018-09-05",
+        signatureVersion: "v4"
+    },
+    operations: {
+        CreateConfigurationSet: {
+            http: {
+                requestUri: "/v1/sms-voice/configuration-sets",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                members: {
+                    ConfigurationSetName: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {}
+            }
+        },
+        CreateConfigurationSetEventDestination: {
+            http: {
+                requestUri: "/v1/sms-voice/configuration-sets/{ConfigurationSetName}/event-destinations",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                members: {
+                    ConfigurationSetName: {
+                        location: "uri",
+                        locationName: "ConfigurationSetName"
+                    },
+                    EventDestination: {
+                        shape: "S6"
+                    },
+                    EventDestinationName: {}
+                },
+                required: [ "ConfigurationSetName" ]
+            },
+            output: {
+                type: "structure",
+                members: {}
+            }
+        },
+        DeleteConfigurationSet: {
+            http: {
+                method: "DELETE",
+                requestUri: "/v1/sms-voice/configuration-sets/{ConfigurationSetName}",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                members: {
+                    ConfigurationSetName: {
+                        location: "uri",
+                        locationName: "ConfigurationSetName"
+                    }
+                },
+                required: [ "ConfigurationSetName" ]
+            },
+            output: {
+                type: "structure",
+                members: {}
+            }
+        },
+        DeleteConfigurationSetEventDestination: {
+            http: {
+                method: "DELETE",
+                requestUri: "/v1/sms-voice/configuration-sets/{ConfigurationSetName}/event-destinations/{EventDestinationName}",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                members: {
+                    ConfigurationSetName: {
+                        location: "uri",
+                        locationName: "ConfigurationSetName"
+                    },
+                    EventDestinationName: {
+                        location: "uri",
+                        locationName: "EventDestinationName"
+                    }
+                },
+                required: [ "EventDestinationName", "ConfigurationSetName" ]
+            },
+            output: {
+                type: "structure",
+                members: {}
+            }
+        },
+        GetConfigurationSetEventDestinations: {
+            http: {
+                method: "GET",
+                requestUri: "/v1/sms-voice/configuration-sets/{ConfigurationSetName}/event-destinations",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                members: {
+                    ConfigurationSetName: {
+                        location: "uri",
+                        locationName: "ConfigurationSetName"
+                    }
+                },
+                required: [ "ConfigurationSetName" ]
+            },
+            output: {
+                type: "structure",
+                members: {
+                    EventDestinations: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            members: {
+                                CloudWatchLogsDestination: {
+                                    shape: "S7"
+                                },
+                                Enabled: {
+                                    type: "boolean"
+                                },
+                                KinesisFirehoseDestination: {
+                                    shape: "Sa"
+                                },
+                                MatchingEventTypes: {
+                                    shape: "Sb"
+                                },
+                                Name: {},
+                                SnsDestination: {
+                                    shape: "Sd"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        ListConfigurationSets: {
+            http: {
+                method: "GET",
+                requestUri: "/v1/sms-voice/configuration-sets",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                members: {
+                    NextToken: {
+                        location: "querystring",
+                        locationName: "NextToken"
+                    },
+                    PageSize: {
+                        location: "querystring",
+                        locationName: "PageSize"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    ConfigurationSets: {
+                        type: "list",
+                        member: {}
+                    },
+                    NextToken: {}
+                }
+            }
+        },
+        SendVoiceMessage: {
+            http: {
+                requestUri: "/v1/sms-voice/voice/message",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                members: {
+                    CallerId: {},
+                    ConfigurationSetName: {},
+                    Content: {
+                        type: "structure",
+                        members: {
+                            CallInstructionsMessage: {
+                                type: "structure",
+                                members: {
+                                    Text: {}
+                                },
+                                required: []
+                            },
+                            PlainTextMessage: {
+                                type: "structure",
+                                members: {
+                                    LanguageCode: {},
+                                    Text: {},
+                                    VoiceId: {}
+                                },
+                                required: []
+                            },
+                            SSMLMessage: {
+                                type: "structure",
+                                members: {
+                                    LanguageCode: {},
+                                    Text: {},
+                                    VoiceId: {}
+                                },
+                                required: []
+                            }
+                        }
+                    },
+                    DestinationPhoneNumber: {},
+                    OriginationPhoneNumber: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    MessageId: {}
+                }
+            }
+        },
+        UpdateConfigurationSetEventDestination: {
+            http: {
+                method: "PUT",
+                requestUri: "/v1/sms-voice/configuration-sets/{ConfigurationSetName}/event-destinations/{EventDestinationName}",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                members: {
+                    ConfigurationSetName: {
+                        location: "uri",
+                        locationName: "ConfigurationSetName"
+                    },
+                    EventDestination: {
+                        shape: "S6"
+                    },
+                    EventDestinationName: {
+                        location: "uri",
+                        locationName: "EventDestinationName"
+                    }
+                },
+                required: [ "EventDestinationName", "ConfigurationSetName" ]
+            },
+            output: {
+                type: "structure",
+                members: {}
+            }
+        }
+    },
+    shapes: {
+        S6: {
+            type: "structure",
+            members: {
+                CloudWatchLogsDestination: {
+                    shape: "S7"
+                },
+                Enabled: {
+                    type: "boolean"
+                },
+                KinesisFirehoseDestination: {
+                    shape: "Sa"
+                },
+                MatchingEventTypes: {
+                    shape: "Sb"
+                },
+                SnsDestination: {
+                    shape: "Sd"
+                }
+            },
+            required: []
+        },
+        S7: {
+            type: "structure",
+            members: {
+                IamRoleArn: {},
+                LogGroupArn: {}
+            },
+            required: []
+        },
+        Sa: {
+            type: "structure",
+            members: {
+                DeliveryStreamArn: {},
+                IamRoleArn: {}
+            },
+            required: []
+        },
+        Sb: {
+            type: "list",
+            member: {}
+        },
+        Sd: {
+            type: "structure",
+            members: {
+                TopicArn: {}
+            },
+            required: []
+        }
+    }
+};
+
+AWS.apiLoader.services["quicksight"] = {};
+
+AWS.QuickSight = AWS.Service.defineService("quicksight", [ "2018-04-01" ]);
+
+AWS.apiLoader.services["quicksight"]["2018-04-01"] = {
+    version: "2.0",
+    metadata: {
+        apiVersion: "2018-04-01",
+        endpointPrefix: "quicksight",
+        jsonVersion: "1.0",
+        protocol: "rest-json",
+        serviceFullName: "Amazon QuickSight",
+        serviceId: "QuickSight",
+        signatureVersion: "v4",
+        uid: "quicksight-2018-04-01"
+    },
+    operations: {
+        CancelIngestion: {
+            http: {
+                method: "DELETE",
+                requestUri: "/accounts/{AwsAccountId}/data-sets/{DataSetId}/ingestions/{IngestionId}"
+            },
+            input: {
+                type: "structure",
+                required: [ "AwsAccountId", "DataSetId", "IngestionId" ],
+                members: {
+                    AwsAccountId: {
+                        location: "uri",
+                        locationName: "AwsAccountId"
+                    },
+                    DataSetId: {
+                        location: "uri",
+                        locationName: "DataSetId"
+                    },
+                    IngestionId: {
+                        location: "uri",
+                        locationName: "IngestionId"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    Arn: {},
+                    IngestionId: {},
+                    RequestId: {},
+                    Status: {
+                        location: "statusCode",
+                        type: "integer"
+                    }
+                }
+            }
+        },
+        CreateAccountCustomization: {
+            http: {
+                requestUri: "/accounts/{AwsAccountId}/customizations"
+            },
+            input: {
+                type: "structure",
+                required: [ "AwsAccountId", "AccountCustomization" ],
+                members: {
+                    AwsAccountId: {
+                        location: "uri",
+                        locationName: "AwsAccountId"
+                    },
+                    Namespace: {
+                        location: "querystring",
+                        locationName: "namespace"
+                    },
+                    AccountCustomization: {
+                        shape: "Sa"
+                    },
+                    Tags: {
+                        shape: "Sb"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    Arn: {},
+                    AwsAccountId: {},
+                    Namespace: {},
+                    AccountCustomization: {
+                        shape: "Sa"
+                    },
+                    RequestId: {},
+                    Status: {
+                        location: "statusCode",
+                        type: "integer"
+                    }
+                }
+            }
+        },
+        CreateAnalysis: {
+            http: {
+                requestUri: "/accounts/{AwsAccountId}/analyses/{AnalysisId}"
+            },
+            input: {
+                type: "structure",
+                required: [ "AwsAccountId", "AnalysisId", "Name", "SourceEntity" ],
+                members: {
+                    AwsAccountId: {
+                        location: "uri",
+                        locationName: "AwsAccountId"
+                    },
+                    AnalysisId: {
+                        location: "uri",
+                        locationName: "AnalysisId"
+                    },
+                    Name: {},
+                    Parameters: {
+                        shape: "Sk"
+                    },
+                    Permissions: {
+                        shape: "S11"
+                    },
+                    SourceEntity: {
+                        shape: "S15"
+                    },
+                    ThemeArn: {},
+                    Tags: {
+                        shape: "Sb"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    Arn: {},
+                    AnalysisId: {},
+                    CreationStatus: {},
+                    Status: {
+                        location: "statusCode",
+                        type: "integer"
+                    },
+                    RequestId: {}
+                }
+            }
+        },
+        CreateDashboard: {
+            http: {
+                requestUri: "/accounts/{AwsAccountId}/dashboards/{DashboardId}"
+            },
+            input: {
+                type: "structure",
+                required: [ "AwsAccountId", "DashboardId", "Name", "SourceEntity" ],
+                members: {
+                    AwsAccountId: {
+                        location: "uri",
+                        locationName: "AwsAccountId"
+                    },
+                    DashboardId: {
+                        location: "uri",
+                        locationName: "DashboardId"
+                    },
+                    Name: {},
+                    Parameters: {
+                        shape: "Sk"
+                    },
+                    Permissions: {
+                        shape: "S11"
+                    },
+                    SourceEntity: {
+                        shape: "S1d"
+                    },
+                    Tags: {
+                        shape: "Sb"
+                    },
+                    VersionDescription: {},
+                    DashboardPublishOptions: {
+                        shape: "S1g"
+                    },
+                    ThemeArn: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    Arn: {},
+                    VersionArn: {},
+                    DashboardId: {},
+                    CreationStatus: {},
+                    Status: {
+                        location: "statusCode",
+                        type: "integer"
+                    },
+                    RequestId: {}
+                }
+            }
+        },
+        CreateDataSet: {
+            http: {
+                requestUri: "/accounts/{AwsAccountId}/data-sets"
+            },
+            input: {
+                type: "structure",
+                required: [ "AwsAccountId", "DataSetId", "Name", "PhysicalTableMap", "ImportMode" ],
+                members: {
+                    AwsAccountId: {
+                        location: "uri",
+                        locationName: "AwsAccountId"
+                    },
+                    DataSetId: {},
+                    Name: {},
+                    PhysicalTableMap: {
+                        shape: "S1q"
+                    },
+                    LogicalTableMap: {
+                        shape: "S2b"
+                    },
+                    ImportMode: {},
+                    ColumnGroups: {
+                        shape: "S35"
+                    },
+                    FieldFolders: {
+                        shape: "S3b"
+                    },
+                    Permissions: {
+                        shape: "S11"
+                    },
+                    RowLevelPermissionDataSet: {
+                        shape: "S3g"
+                    },
+                    ColumnLevelPermissionRules: {
+                        shape: "S3i"
+                    },
+                    Tags: {
+                        shape: "Sb"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    Arn: {},
+                    DataSetId: {},
+                    IngestionArn: {},
+                    IngestionId: {},
+                    RequestId: {},
+                    Status: {
+                        location: "statusCode",
+                        type: "integer"
+                    }
+                }
+            }
+        },
+        CreateDataSource: {
+            http: {
+                requestUri: "/accounts/{AwsAccountId}/data-sources"
+            },
+            input: {
+                type: "structure",
+                required: [ "AwsAccountId", "DataSourceId", "Name", "Type" ],
+                members: {
+                    AwsAccountId: {
+                        location: "uri",
+                        locationName: "AwsAccountId"
+                    },
+                    DataSourceId: {},
+                    Name: {},
+                    Type: {},
+                    DataSourceParameters: {
+                        shape: "S3p"
+                    },
+                    Credentials: {
+                        shape: "S4q"
+                    },
+                    Permissions: {
+                        shape: "S11"
+                    },
+                    VpcConnectionProperties: {
+                        shape: "S4w"
+                    },
+                    SslProperties: {
+                        shape: "S4x"
+                    },
+                    Tags: {
+                        shape: "Sb"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    Arn: {},
+                    DataSourceId: {},
+                    CreationStatus: {},
+                    RequestId: {},
+                    Status: {
+                        location: "statusCode",
+                        type: "integer"
+                    }
+                }
+            }
+        },
+        CreateGroup: {
+            http: {
+                requestUri: "/accounts/{AwsAccountId}/namespaces/{Namespace}/groups"
+            },
+            input: {
+                type: "structure",
+                required: [ "GroupName", "AwsAccountId", "Namespace" ],
+                members: {
+                    GroupName: {},
+                    Description: {},
+                    AwsAccountId: {
+                        location: "uri",
+                        locationName: "AwsAccountId"
+                    },
+                    Namespace: {
+                        location: "uri",
+                        locationName: "Namespace"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    Group: {
+                        shape: "S53"
+                    },
+                    RequestId: {},
+                    Status: {
+                        location: "statusCode",
+                        type: "integer"
+                    }
+                }
+            }
+        },
+        CreateGroupMembership: {
+            http: {
+                method: "PUT",
+                requestUri: "/accounts/{AwsAccountId}/namespaces/{Namespace}/groups/{GroupName}/members/{MemberName}"
+            },
+            input: {
+                type: "structure",
+                required: [ "MemberName", "GroupName", "AwsAccountId", "Namespace" ],
+                members: {
+                    MemberName: {
+                        location: "uri",
+                        locationName: "MemberName"
+                    },
+                    GroupName: {
+                        location: "uri",
+                        locationName: "GroupName"
+                    },
+                    AwsAccountId: {
+                        location: "uri",
+                        locationName: "AwsAccountId"
+                    },
+                    Namespace: {
+                        location: "uri",
+                        locationName: "Namespace"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    GroupMember: {
+                        shape: "S57"
+                    },
+                    RequestId: {},
+                    Status: {
+                        location: "statusCode",
+                        type: "integer"
+                    }
+                }
+            }
+        },
+        CreateIAMPolicyAssignment: {
+            http: {
+                requestUri: "/accounts/{AwsAccountId}/namespaces/{Namespace}/iam-policy-assignments/"
+            },
+            input: {
+                type: "structure",
+                required: [ "AwsAccountId", "AssignmentName", "AssignmentStatus", "Namespace" ],
+                members: {
+                    AwsAccountId: {
+                        location: "uri",
+                        locationName: "AwsAccountId"
+                    },
+                    AssignmentName: {},
+                    AssignmentStatus: {},
+                    PolicyArn: {},
+                    Identities: {
+                        shape: "S5b"
+                    },
+                    Namespace: {
+                        location: "uri",
+                        locationName: "Namespace"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    AssignmentName: {},
+                    AssignmentId: {},
+                    AssignmentStatus: {},
+                    PolicyArn: {},
+                    Identities: {
+                        shape: "S5b"
+                    },
+                    RequestId: {},
+                    Status: {
+                        location: "statusCode",
+                        type: "integer"
+                    }
+                }
+            }
+        },
+        CreateIngestion: {
+            http: {
+                method: "PUT",
+                requestUri: "/accounts/{AwsAccountId}/data-sets/{DataSetId}/ingestions/{IngestionId}"
+            },
+            input: {
+                type: "structure",
+                required: [ "DataSetId", "IngestionId", "AwsAccountId" ],
+                members: {
+                    DataSetId: {
+                        location: "uri",
+                        locationName: "DataSetId"
+                    },
+                    IngestionId: {
+                        location: "uri",
+                        locationName: "IngestionId"
+                    },
+                    AwsAccountId: {
+                        location: "uri",
+                        locationName: "AwsAccountId"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    Arn: {},
+                    IngestionId: {},
+                    IngestionStatus: {},
+                    RequestId: {},
+                    Status: {
+                        location: "statusCode",
+                        type: "integer"
+                    }
+                }
+            }
+        },
+        CreateNamespace: {
+            http: {
+                requestUri: "/accounts/{AwsAccountId}"
+            },
+            input: {
+                type: "structure",
+                required: [ "AwsAccountId", "Namespace", "IdentityStore" ],
+                members: {
+                    AwsAccountId: {
+                        location: "uri",
+                        locationName: "AwsAccountId"
+                    },
+                    Namespace: {},
+                    IdentityStore: {},
+                    Tags: {
+                        shape: "Sb"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    Arn: {},
+                    Name: {},
+                    CapacityRegion: {},
+                    CreationStatus: {},
+                    IdentityStore: {},
+                    RequestId: {},
+                    Status: {
+                        location: "statusCode",
+                        type: "integer"
+                    }
+                }
+            }
+        },
+        CreateTemplate: {
+            http: {
+                requestUri: "/accounts/{AwsAccountId}/templates/{TemplateId}"
+            },
+            input: {
+                type: "structure",
+                required: [ "AwsAccountId", "TemplateId", "SourceEntity" ],
+                members: {
+                    AwsAccountId: {
+                        location: "uri",
+                        locationName: "AwsAccountId"
+                    },
+                    TemplateId: {
+                        location: "uri",
+                        locationName: "TemplateId"
+                    },
+                    Name: {},
+                    Permissions: {
+                        shape: "S11"
+                    },
+                    SourceEntity: {
+                        shape: "S5o"
+                    },
+                    Tags: {
+                        shape: "Sb"
+                    },
+                    VersionDescription: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    Arn: {},
+                    VersionArn: {},
+                    TemplateId: {},
+                    CreationStatus: {},
+                    Status: {
+                        location: "statusCode",
+                        type: "integer"
+                    },
+                    RequestId: {}
+                }
+            }
+        },
+        CreateTemplateAlias: {
+            http: {
+                requestUri: "/accounts/{AwsAccountId}/templates/{TemplateId}/aliases/{AliasName}"
+            },
+            input: {
+                type: "structure",
+                required: [ "AwsAccountId", "TemplateId", "AliasName", "TemplateVersionNumber" ],
+                members: {
+                    AwsAccountId: {
+                        location: "uri",
+                        locationName: "AwsAccountId"
+                    },
+                    TemplateId: {
+                        location: "uri",
+                        locationName: "TemplateId"
+                    },
+                    AliasName: {
+                        location: "uri",
+                        locationName: "AliasName"
+                    },
+                    TemplateVersionNumber: {
+                        type: "long"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    TemplateAlias: {
+                        shape: "S5w"
+                    },
+                    Status: {
+                        location: "statusCode",
+                        type: "integer"
+                    },
+                    RequestId: {}
+                }
+            }
+        },
+        CreateTheme: {
+            http: {
+                requestUri: "/accounts/{AwsAccountId}/themes/{ThemeId}"
+            },
+            input: {
+                type: "structure",
+                required: [ "AwsAccountId", "ThemeId", "Name", "BaseThemeId", "Configuration" ],
+                members: {
+                    AwsAccountId: {
+                        location: "uri",
+                        locationName: "AwsAccountId"
+                    },
+                    ThemeId: {
+                        location: "uri",
+                        locationName: "ThemeId"
+                    },
+                    Name: {},
+                    BaseThemeId: {},
+                    VersionDescription: {},
+                    Configuration: {
+                        shape: "S5z"
+                    },
+                    Permissions: {
+                        shape: "S11"
+                    },
+                    Tags: {
+                        shape: "Sb"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    Arn: {},
+                    VersionArn: {},
+                    ThemeId: {},
+                    CreationStatus: {},
+                    Status: {
+                        location: "statusCode",
+                        type: "integer"
+                    },
+                    RequestId: {}
+                }
+            }
+        },
+        CreateThemeAlias: {
+            http: {
+                requestUri: "/accounts/{AwsAccountId}/themes/{ThemeId}/aliases/{AliasName}"
+            },
+            input: {
+                type: "structure",
+                required: [ "AwsAccountId", "ThemeId", "AliasName", "ThemeVersionNumber" ],
+                members: {
+                    AwsAccountId: {
+                        location: "uri",
+                        locationName: "AwsAccountId"
+                    },
+                    ThemeId: {
+                        location: "uri",
+                        locationName: "ThemeId"
+                    },
+                    AliasName: {
+                        location: "uri",
+                        locationName: "AliasName"
+                    },
+                    ThemeVersionNumber: {
+                        type: "long"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    ThemeAlias: {
+                        shape: "S6e"
+                    },
+                    Status: {
+                        location: "statusCode",
+                        type: "integer"
+                    },
+                    RequestId: {}
+                }
+            }
+        },
+        DeleteAccountCustomization: {
+            http: {
+                method: "DELETE",
+                requestUri: "/accounts/{AwsAccountId}/customizations"
+            },
+            input: {
+                type: "structure",
+                required: [ "AwsAccountId" ],
+                members: {
+                    AwsAccountId: {
+                        location: "uri",
+                        locationName: "AwsAccountId"
+                    },
+                    Namespace: {
+                        location: "querystring",
+                        locationName: "namespace"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    RequestId: {},
+                    Status: {
+                        location: "statusCode",
+                        type: "integer"
+                    }
+                }
+            }
+        },
+        DeleteAnalysis: {
+            http: {
+                method: "DELETE",
+                requestUri: "/accounts/{AwsAccountId}/analyses/{AnalysisId}"
+            },
+            input: {
+                type: "structure",
+                required: [ "AwsAccountId", "AnalysisId" ],
+                members: {
+                    AwsAccountId: {
+                        location: "uri",
+                        locationName: "AwsAccountId"
+                    },
+                    AnalysisId: {
+                        location: "uri",
+                        locationName: "AnalysisId"
+                    },
+                    RecoveryWindowInDays: {
+                        location: "querystring",
+                        locationName: "recovery-window-in-days",
+                        type: "long"
+                    },
+                    ForceDeleteWithoutRecovery: {
+                        location: "querystring",
+                        locationName: "force-delete-without-recovery",
+                        type: "boolean"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    Status: {
+                        location: "statusCode",
+                        type: "integer"
+                    },
+                    Arn: {},
+                    AnalysisId: {},
+                    DeletionTime: {
+                        type: "timestamp"
+                    },
+                    RequestId: {}
+                }
+            }
+        },
+        DeleteDashboard: {
+            http: {
+                method: "DELETE",
+                requestUri: "/accounts/{AwsAccountId}/dashboards/{DashboardId}"
+            },
+            input: {
+                type: "structure",
+                required: [ "AwsAccountId", "DashboardId" ],
+                members: {
+                    AwsAccountId: {
+                        location: "uri",
+                        locationName: "AwsAccountId"
+                    },
+                    DashboardId: {
+                        location: "uri",
+                        locationName: "DashboardId"
+                    },
+                    VersionNumber: {
+                        location: "querystring",
+                        locationName: "version-number",
+                        type: "long"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    Status: {
+                        location: "statusCode",
+                        type: "integer"
+                    },
+                    Arn: {},
+                    DashboardId: {},
+                    RequestId: {}
+                }
+            }
+        },
+        DeleteDataSet: {
+            http: {
+                method: "DELETE",
+                requestUri: "/accounts/{AwsAccountId}/data-sets/{DataSetId}"
+            },
+            input: {
+                type: "structure",
+                required: [ "AwsAccountId", "DataSetId" ],
+                members: {
+                    AwsAccountId: {
+                        location: "uri",
+                        locationName: "AwsAccountId"
+                    },
+                    DataSetId: {
+                        location: "uri",
+                        locationName: "DataSetId"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    Arn: {},
+                    DataSetId: {},
+                    RequestId: {},
+                    Status: {
+                        location: "statusCode",
+                        type: "integer"
+                    }
+                }
+            }
+        },
+        DeleteDataSource: {
+            http: {
+                method: "DELETE",
+                requestUri: "/accounts/{AwsAccountId}/data-sources/{DataSourceId}"
+            },
+            input: {
+                type: "structure",
+                required: [ "AwsAccountId", "DataSourceId" ],
+                members: {
+                    AwsAccountId: {
+                        location: "uri",
+                        locationName: "AwsAccountId"
+                    },
+                    DataSourceId: {
+                        location: "uri",
+                        locationName: "DataSourceId"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    Arn: {},
+                    DataSourceId: {},
+                    RequestId: {},
+                    Status: {
+                        location: "statusCode",
+                        type: "integer"
+                    }
+                }
+            }
+        },
+        DeleteGroup: {
+            http: {
+                method: "DELETE",
+                requestUri: "/accounts/{AwsAccountId}/namespaces/{Namespace}/groups/{GroupName}"
+            },
+            input: {
+                type: "structure",
+                required: [ "GroupName", "AwsAccountId", "Namespace" ],
+                members: {
+                    GroupName: {
+                        location: "uri",
+                        locationName: "GroupName"
+                    },
+                    AwsAccountId: {
+                        location: "uri",
+                        locationName: "AwsAccountId"
+                    },
+                    Namespace: {
+                        location: "uri",
+                        locationName: "Namespace"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    RequestId: {},
+                    Status: {
+                        location: "statusCode",
+                        type: "integer"
+                    }
+                }
+            }
+        },
+        DeleteGroupMembership: {
+            http: {
+                method: "DELETE",
+                requestUri: "/accounts/{AwsAccountId}/namespaces/{Namespace}/groups/{GroupName}/members/{MemberName}"
+            },
+            input: {
+                type: "structure",
+                required: [ "MemberName", "GroupName", "AwsAccountId", "Namespace" ],
+                members: {
+                    MemberName: {
+                        location: "uri",
+                        locationName: "MemberName"
+                    },
+                    GroupName: {
+                        location: "uri",
+                        locationName: "GroupName"
+                    },
+                    AwsAccountId: {
+                        location: "uri",
+                        locationName: "AwsAccountId"
+                    },
+                    Namespace: {
+                        location: "uri",
+                        locationName: "Namespace"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    RequestId: {},
+                    Status: {
+                        location: "statusCode",
+                        type: "integer"
+                    }
+                }
+            }
+        },
+        DeleteIAMPolicyAssignment: {
+            http: {
+                method: "DELETE",
+                requestUri: "/accounts/{AwsAccountId}/namespace/{Namespace}/iam-policy-assignments/{AssignmentName}"
+            },
+            input: {
+                type: "structure",
+                required: [ "AwsAccountId", "AssignmentName", "Namespace" ],
+                members: {
+                    AwsAccountId: {
+                        location: "uri",
+                        locationName: "AwsAccountId"
+                    },
+                    AssignmentName: {
+                        location: "uri",
+                        locationName: "AssignmentName"
+                    },
+                    Namespace: {
+                        location: "uri",
+                        locationName: "Namespace"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    AssignmentName: {},
+                    RequestId: {},
+                    Status: {
+                        location: "statusCode",
+                        type: "integer"
+                    }
+                }
+            }
+        },
+        DeleteNamespace: {
+            http: {
+                method: "DELETE",
+                requestUri: "/accounts/{AwsAccountId}/namespaces/{Namespace}"
+            },
+            input: {
+                type: "structure",
+                required: [ "AwsAccountId", "Namespace" ],
+                members: {
+                    AwsAccountId: {
+                        location: "uri",
+                        locationName: "AwsAccountId"
+                    },
+                    Namespace: {
+                        location: "uri",
+                        locationName: "Namespace"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    RequestId: {},
+                    Status: {
+                        location: "statusCode",
+                        type: "integer"
+                    }
+                }
+            }
+        },
+        DeleteTemplate: {
+            http: {
+                method: "DELETE",
+                requestUri: "/accounts/{AwsAccountId}/templates/{TemplateId}"
+            },
+            input: {
+                type: "structure",
+                required: [ "AwsAccountId", "TemplateId" ],
+                members: {
+                    AwsAccountId: {
+                        location: "uri",
+                        locationName: "AwsAccountId"
+                    },
+                    TemplateId: {
+                        location: "uri",
+                        locationName: "TemplateId"
+                    },
+                    VersionNumber: {
+                        location: "querystring",
+                        locationName: "version-number",
+                        type: "long"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    RequestId: {},
+                    Arn: {},
+                    TemplateId: {},
+                    Status: {
+                        location: "statusCode",
+                        type: "integer"
+                    }
+                }
+            }
+        },
+        DeleteTemplateAlias: {
+            http: {
+                method: "DELETE",
+                requestUri: "/accounts/{AwsAccountId}/templates/{TemplateId}/aliases/{AliasName}"
+            },
+            input: {
+                type: "structure",
+                required: [ "AwsAccountId", "TemplateId", "AliasName" ],
+                members: {
+                    AwsAccountId: {
+                        location: "uri",
+                        locationName: "AwsAccountId"
+                    },
+                    TemplateId: {
+                        location: "uri",
+                        locationName: "TemplateId"
+                    },
+                    AliasName: {
+                        location: "uri",
+                        locationName: "AliasName"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    Status: {
+                        location: "statusCode",
+                        type: "integer"
+                    },
+                    TemplateId: {},
+                    AliasName: {},
+                    Arn: {},
+                    RequestId: {}
+                }
+            }
+        },
+        DeleteTheme: {
+            http: {
+                method: "DELETE",
+                requestUri: "/accounts/{AwsAccountId}/themes/{ThemeId}"
+            },
+            input: {
+                type: "structure",
+                required: [ "AwsAccountId", "ThemeId" ],
+                members: {
+                    AwsAccountId: {
+                        location: "uri",
+                        locationName: "AwsAccountId"
+                    },
+                    ThemeId: {
+                        location: "uri",
+                        locationName: "ThemeId"
+                    },
+                    VersionNumber: {
+                        location: "querystring",
+                        locationName: "version-number",
+                        type: "long"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    Arn: {},
+                    RequestId: {},
+                    Status: {
+                        location: "statusCode",
+                        type: "integer"
+                    },
+                    ThemeId: {}
+                }
+            }
+        },
+        DeleteThemeAlias: {
+            http: {
+                method: "DELETE",
+                requestUri: "/accounts/{AwsAccountId}/themes/{ThemeId}/aliases/{AliasName}"
+            },
+            input: {
+                type: "structure",
+                required: [ "AwsAccountId", "ThemeId", "AliasName" ],
+                members: {
+                    AwsAccountId: {
+                        location: "uri",
+                        locationName: "AwsAccountId"
+                    },
+                    ThemeId: {
+                        location: "uri",
+                        locationName: "ThemeId"
+                    },
+                    AliasName: {
+                        location: "uri",
+                        locationName: "AliasName"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    AliasName: {},
+                    Arn: {},
+                    RequestId: {},
+                    Status: {
+                        location: "statusCode",
+                        type: "integer"
+                    },
+                    ThemeId: {}
+                }
+            }
+        },
+        DeleteUser: {
+            http: {
+                method: "DELETE",
+                requestUri: "/accounts/{AwsAccountId}/namespaces/{Namespace}/users/{UserName}"
+            },
+            input: {
+                type: "structure",
+                required: [ "UserName", "AwsAccountId", "Namespace" ],
+                members: {
+                    UserName: {
+                        location: "uri",
+                        locationName: "UserName"
+                    },
+                    AwsAccountId: {
+                        location: "uri",
+                        locationName: "AwsAccountId"
+                    },
+                    Namespace: {
+                        location: "uri",
+                        locationName: "Namespace"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    RequestId: {},
+                    Status: {
+                        location: "statusCode",
+                        type: "integer"
+                    }
+                }
+            }
+        },
+        DeleteUserByPrincipalId: {
+            http: {
+                method: "DELETE",
+                requestUri: "/accounts/{AwsAccountId}/namespaces/{Namespace}/user-principals/{PrincipalId}"
+            },
+            input: {
+                type: "structure",
+                required: [ "PrincipalId", "AwsAccountId", "Namespace" ],
+                members: {
+                    PrincipalId: {
+                        location: "uri",
+                        locationName: "PrincipalId"
+                    },
+                    AwsAccountId: {
+                        location: "uri",
+                        locationName: "AwsAccountId"
+                    },
+                    Namespace: {
+                        location: "uri",
+                        locationName: "Namespace"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    RequestId: {},
+                    Status: {
+                        location: "statusCode",
+                        type: "integer"
+                    }
+                }
+            }
+        },
+        DescribeAccountCustomization: {
+            http: {
+                method: "GET",
+                requestUri: "/accounts/{AwsAccountId}/customizations"
+            },
+            input: {
+                type: "structure",
+                required: [ "AwsAccountId" ],
+                members: {
+                    AwsAccountId: {
+                        location: "uri",
+                        locationName: "AwsAccountId"
+                    },
+                    Namespace: {
+                        location: "querystring",
+                        locationName: "namespace"
+                    },
+                    Resolved: {
+                        location: "querystring",
+                        locationName: "resolved",
+                        type: "boolean"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    Arn: {},
+                    AwsAccountId: {},
+                    Namespace: {},
+                    AccountCustomization: {
+                        shape: "Sa"
+                    },
+                    RequestId: {},
+                    Status: {
+                        location: "statusCode",
+                        type: "integer"
+                    }
+                }
+            }
+        },
+        DescribeAccountSettings: {
+            http: {
+                method: "GET",
+                requestUri: "/accounts/{AwsAccountId}/settings"
+            },
+            input: {
+                type: "structure",
+                required: [ "AwsAccountId" ],
+                members: {
+                    AwsAccountId: {
+                        location: "uri",
+                        locationName: "AwsAccountId"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    AccountSettings: {
+                        type: "structure",
+                        members: {
+                            AccountName: {},
+                            Edition: {},
+                            DefaultNamespace: {},
+                            NotificationEmail: {}
+                        }
+                    },
+                    RequestId: {},
+                    Status: {
+                        location: "statusCode",
+                        type: "integer"
+                    }
+                }
+            }
+        },
+        DescribeAnalysis: {
+            http: {
+                method: "GET",
+                requestUri: "/accounts/{AwsAccountId}/analyses/{AnalysisId}"
+            },
+            input: {
+                type: "structure",
+                required: [ "AwsAccountId", "AnalysisId" ],
+                members: {
+                    AwsAccountId: {
+                        location: "uri",
+                        locationName: "AwsAccountId"
+                    },
+                    AnalysisId: {
+                        location: "uri",
+                        locationName: "AnalysisId"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    Analysis: {
+                        type: "structure",
+                        members: {
+                            AnalysisId: {},
+                            Arn: {},
+                            Name: {},
+                            Status: {},
+                            Errors: {
+                                type: "list",
+                                member: {
+                                    type: "structure",
+                                    members: {
+                                        Type: {},
+                                        Message: {}
+                                    }
+                                }
+                            },
+                            DataSetArns: {
+                                shape: "S7n"
+                            },
+                            ThemeArn: {},
+                            CreatedTime: {
+                                type: "timestamp"
+                            },
+                            LastUpdatedTime: {
+                                type: "timestamp"
+                            },
+                            Sheets: {
+                                shape: "S7o"
+                            }
+                        }
+                    },
+                    Status: {
+                        location: "statusCode",
+                        type: "integer"
+                    },
+                    RequestId: {}
+                }
+            }
+        },
+        DescribeAnalysisPermissions: {
+            http: {
+                method: "GET",
+                requestUri: "/accounts/{AwsAccountId}/analyses/{AnalysisId}/permissions"
+            },
+            input: {
+                type: "structure",
+                required: [ "AwsAccountId", "AnalysisId" ],
+                members: {
+                    AwsAccountId: {
+                        location: "uri",
+                        locationName: "AwsAccountId"
+                    },
+                    AnalysisId: {
+                        location: "uri",
+                        locationName: "AnalysisId"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    AnalysisId: {},
+                    AnalysisArn: {},
+                    Permissions: {
+                        shape: "S11"
+                    },
+                    Status: {
+                        location: "statusCode",
+                        type: "integer"
+                    },
+                    RequestId: {}
+                }
+            }
+        },
+        DescribeDashboard: {
+            http: {
+                method: "GET",
+                requestUri: "/accounts/{AwsAccountId}/dashboards/{DashboardId}"
+            },
+            input: {
+                type: "structure",
+                required: [ "AwsAccountId", "DashboardId" ],
+                members: {
+                    AwsAccountId: {
+                        location: "uri",
+                        locationName: "AwsAccountId"
+                    },
+                    DashboardId: {
+                        location: "uri",
+                        locationName: "DashboardId"
+                    },
+                    VersionNumber: {
+                        location: "querystring",
+                        locationName: "version-number",
+                        type: "long"
+                    },
+                    AliasName: {
+                        location: "querystring",
+                        locationName: "alias-name"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    Dashboard: {
+                        type: "structure",
+                        members: {
+                            DashboardId: {},
+                            Arn: {},
+                            Name: {},
+                            Version: {
+                                type: "structure",
+                                members: {
+                                    CreatedTime: {
+                                        type: "timestamp"
+                                    },
+                                    Errors: {
+                                        type: "list",
+                                        member: {
+                                            type: "structure",
+                                            members: {
+                                                Type: {},
+                                                Message: {}
+                                            }
+                                        }
+                                    },
+                                    VersionNumber: {
+                                        type: "long"
+                                    },
+                                    Status: {},
+                                    Arn: {},
+                                    SourceEntityArn: {},
+                                    DataSetArns: {
+                                        shape: "S7n"
+                                    },
+                                    Description: {},
+                                    ThemeArn: {},
+                                    Sheets: {
+                                        shape: "S7o"
+                                    }
+                                }
+                            },
+                            CreatedTime: {
+                                type: "timestamp"
+                            },
+                            LastPublishedTime: {
+                                type: "timestamp"
+                            },
+                            LastUpdatedTime: {
+                                type: "timestamp"
+                            }
+                        }
+                    },
+                    Status: {
+                        location: "statusCode",
+                        type: "integer"
+                    },
+                    RequestId: {}
+                }
+            }
+        },
+        DescribeDashboardPermissions: {
+            http: {
+                method: "GET",
+                requestUri: "/accounts/{AwsAccountId}/dashboards/{DashboardId}/permissions"
+            },
+            input: {
+                type: "structure",
+                required: [ "AwsAccountId", "DashboardId" ],
+                members: {
+                    AwsAccountId: {
+                        location: "uri",
+                        locationName: "AwsAccountId"
+                    },
+                    DashboardId: {
+                        location: "uri",
+                        locationName: "DashboardId"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    DashboardId: {},
+                    DashboardArn: {},
+                    Permissions: {
+                        shape: "S11"
+                    },
+                    Status: {
+                        location: "statusCode",
+                        type: "integer"
+                    },
+                    RequestId: {}
+                }
+            }
+        },
+        DescribeDataSet: {
+            http: {
+                method: "GET",
+                requestUri: "/accounts/{AwsAccountId}/data-sets/{DataSetId}"
+            },
+            input: {
+                type: "structure",
+                required: [ "AwsAccountId", "DataSetId" ],
+                members: {
+                    AwsAccountId: {
+                        location: "uri",
+                        locationName: "AwsAccountId"
+                    },
+                    DataSetId: {
+                        location: "uri",
+                        locationName: "DataSetId"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    DataSet: {
+                        type: "structure",
+                        members: {
+                            Arn: {},
+                            DataSetId: {},
+                            Name: {},
+                            CreatedTime: {
+                                type: "timestamp"
+                            },
+                            LastUpdatedTime: {
+                                type: "timestamp"
+                            },
+                            PhysicalTableMap: {
+                                shape: "S1q"
+                            },
+                            LogicalTableMap: {
+                                shape: "S2b"
+                            },
+                            OutputColumns: {
+                                type: "list",
+                                member: {
+                                    type: "structure",
+                                    members: {
+                                        Name: {},
+                                        Description: {},
+                                        Type: {}
+                                    }
+                                }
+                            },
+                            ImportMode: {},
+                            ConsumedSpiceCapacityInBytes: {
+                                type: "long"
+                            },
+                            ColumnGroups: {
+                                shape: "S35"
+                            },
+                            FieldFolders: {
+                                shape: "S3b"
+                            },
+                            RowLevelPermissionDataSet: {
+                                shape: "S3g"
+                            },
+                            ColumnLevelPermissionRules: {
+                                shape: "S3i"
+                            }
+                        }
+                    },
+                    RequestId: {},
+                    Status: {
+                        location: "statusCode",
+                        type: "integer"
+                    }
+                }
+            }
+        },
+        DescribeDataSetPermissions: {
+            http: {
+                method: "GET",
+                requestUri: "/accounts/{AwsAccountId}/data-sets/{DataSetId}/permissions"
+            },
+            input: {
+                type: "structure",
+                required: [ "AwsAccountId", "DataSetId" ],
+                members: {
+                    AwsAccountId: {
+                        location: "uri",
+                        locationName: "AwsAccountId"
+                    },
+                    DataSetId: {
+                        location: "uri",
+                        locationName: "DataSetId"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    DataSetArn: {},
+                    DataSetId: {},
+                    Permissions: {
+                        shape: "S11"
+                    },
+                    RequestId: {},
+                    Status: {
+                        location: "statusCode",
+                        type: "integer"
+                    }
+                }
+            }
+        },
+        DescribeDataSource: {
+            http: {
+                method: "GET",
+                requestUri: "/accounts/{AwsAccountId}/data-sources/{DataSourceId}"
+            },
+            input: {
+                type: "structure",
+                required: [ "AwsAccountId", "DataSourceId" ],
+                members: {
+                    AwsAccountId: {
+                        location: "uri",
+                        locationName: "AwsAccountId"
+                    },
+                    DataSourceId: {
+                        location: "uri",
+                        locationName: "DataSourceId"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    DataSource: {
+                        shape: "S8a"
+                    },
+                    RequestId: {},
+                    Status: {
+                        location: "statusCode",
+                        type: "integer"
+                    }
+                }
+            }
+        },
+        DescribeDataSourcePermissions: {
+            http: {
+                method: "GET",
+                requestUri: "/accounts/{AwsAccountId}/data-sources/{DataSourceId}/permissions"
+            },
+            input: {
+                type: "structure",
+                required: [ "AwsAccountId", "DataSourceId" ],
+                members: {
+                    AwsAccountId: {
+                        location: "uri",
+                        locationName: "AwsAccountId"
+                    },
+                    DataSourceId: {
+                        location: "uri",
+                        locationName: "DataSourceId"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    DataSourceArn: {},
+                    DataSourceId: {},
+                    Permissions: {
+                        shape: "S11"
+                    },
+                    RequestId: {},
+                    Status: {
+                        location: "statusCode",
+                        type: "integer"
+                    }
+                }
+            }
+        },
+        DescribeGroup: {
+            http: {
+                method: "GET",
+                requestUri: "/accounts/{AwsAccountId}/namespaces/{Namespace}/groups/{GroupName}"
+            },
+            input: {
+                type: "structure",
+                required: [ "GroupName", "AwsAccountId", "Namespace" ],
+                members: {
+                    GroupName: {
+                        location: "uri",
+                        locationName: "GroupName"
+                    },
+                    AwsAccountId: {
+                        location: "uri",
+                        locationName: "AwsAccountId"
+                    },
+                    Namespace: {
+                        location: "uri",
+                        locationName: "Namespace"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    Group: {
+                        shape: "S53"
+                    },
+                    RequestId: {},
+                    Status: {
+                        location: "statusCode",
+                        type: "integer"
+                    }
+                }
+            }
+        },
+        DescribeIAMPolicyAssignment: {
+            http: {
+                method: "GET",
+                requestUri: "/accounts/{AwsAccountId}/namespaces/{Namespace}/iam-policy-assignments/{AssignmentName}"
+            },
+            input: {
+                type: "structure",
+                required: [ "AwsAccountId", "AssignmentName", "Namespace" ],
+                members: {
+                    AwsAccountId: {
+                        location: "uri",
+                        locationName: "AwsAccountId"
+                    },
+                    AssignmentName: {
+                        location: "uri",
+                        locationName: "AssignmentName"
+                    },
+                    Namespace: {
+                        location: "uri",
+                        locationName: "Namespace"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    IAMPolicyAssignment: {
+                        type: "structure",
+                        members: {
+                            AwsAccountId: {},
+                            AssignmentId: {},
+                            AssignmentName: {},
+                            PolicyArn: {},
+                            Identities: {
+                                shape: "S5b"
+                            },
+                            AssignmentStatus: {}
+                        }
+                    },
+                    RequestId: {},
+                    Status: {
+                        location: "statusCode",
+                        type: "integer"
+                    }
+                }
+            }
+        },
+        DescribeIngestion: {
+            http: {
+                method: "GET",
+                requestUri: "/accounts/{AwsAccountId}/data-sets/{DataSetId}/ingestions/{IngestionId}"
+            },
+            input: {
+                type: "structure",
+                required: [ "AwsAccountId", "DataSetId", "IngestionId" ],
+                members: {
+                    AwsAccountId: {
+                        location: "uri",
+                        locationName: "AwsAccountId"
+                    },
+                    DataSetId: {
+                        location: "uri",
+                        locationName: "DataSetId"
+                    },
+                    IngestionId: {
+                        location: "uri",
+                        locationName: "IngestionId"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    Ingestion: {
+                        shape: "S8m"
+                    },
+                    RequestId: {},
+                    Status: {
+                        location: "statusCode",
+                        type: "integer"
+                    }
+                }
+            }
+        },
+        DescribeNamespace: {
+            http: {
+                method: "GET",
+                requestUri: "/accounts/{AwsAccountId}/namespaces/{Namespace}"
+            },
+            input: {
+                type: "structure",
+                required: [ "AwsAccountId", "Namespace" ],
+                members: {
+                    AwsAccountId: {
+                        location: "uri",
+                        locationName: "AwsAccountId"
+                    },
+                    Namespace: {
+                        location: "uri",
+                        locationName: "Namespace"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    Namespace: {
+                        shape: "S8x"
+                    },
+                    RequestId: {},
+                    Status: {
+                        location: "statusCode",
+                        type: "integer"
+                    }
+                }
+            }
+        },
+        DescribeTemplate: {
+            http: {
+                method: "GET",
+                requestUri: "/accounts/{AwsAccountId}/templates/{TemplateId}"
+            },
+            input: {
+                type: "structure",
+                required: [ "AwsAccountId", "TemplateId" ],
+                members: {
+                    AwsAccountId: {
+                        location: "uri",
+                        locationName: "AwsAccountId"
+                    },
+                    TemplateId: {
+                        location: "uri",
+                        locationName: "TemplateId"
+                    },
+                    VersionNumber: {
+                        location: "querystring",
+                        locationName: "version-number",
+                        type: "long"
+                    },
+                    AliasName: {
+                        location: "querystring",
+                        locationName: "alias-name"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    Template: {
+                        type: "structure",
+                        members: {
+                            Arn: {},
+                            Name: {},
+                            Version: {
+                                type: "structure",
+                                members: {
+                                    CreatedTime: {
+                                        type: "timestamp"
+                                    },
+                                    Errors: {
+                                        type: "list",
+                                        member: {
+                                            type: "structure",
+                                            members: {
+                                                Type: {},
+                                                Message: {}
+                                            }
+                                        }
+                                    },
+                                    VersionNumber: {
+                                        type: "long"
+                                    },
+                                    Status: {},
+                                    DataSetConfigurations: {
+                                        type: "list",
+                                        member: {
+                                            type: "structure",
+                                            members: {
+                                                Placeholder: {},
+                                                DataSetSchema: {
+                                                    type: "structure",
+                                                    members: {
+                                                        ColumnSchemaList: {
+                                                            type: "list",
+                                                            member: {
+                                                                type: "structure",
+                                                                members: {
+                                                                    Name: {},
+                                                                    DataType: {},
+                                                                    GeographicRole: {}
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                ColumnGroupSchemaList: {
+                                                    type: "list",
+                                                    member: {
+                                                        type: "structure",
+                                                        members: {
+                                                            Name: {},
+                                                            ColumnGroupColumnSchemaList: {
+                                                                type: "list",
+                                                                member: {
+                                                                    type: "structure",
+                                                                    members: {
+                                                                        Name: {}
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    },
+                                    Description: {},
+                                    SourceEntityArn: {},
+                                    ThemeArn: {},
+                                    Sheets: {
+                                        shape: "S7o"
+                                    }
+                                }
+                            },
+                            TemplateId: {},
+                            LastUpdatedTime: {
+                                type: "timestamp"
+                            },
+                            CreatedTime: {
+                                type: "timestamp"
+                            }
+                        }
+                    },
+                    Status: {
+                        location: "statusCode",
+                        type: "integer"
+                    },
+                    RequestId: {}
+                }
+            }
+        },
+        DescribeTemplateAlias: {
+            http: {
+                method: "GET",
+                requestUri: "/accounts/{AwsAccountId}/templates/{TemplateId}/aliases/{AliasName}"
+            },
+            input: {
+                type: "structure",
+                required: [ "AwsAccountId", "TemplateId", "AliasName" ],
+                members: {
+                    AwsAccountId: {
+                        location: "uri",
+                        locationName: "AwsAccountId"
+                    },
+                    TemplateId: {
+                        location: "uri",
+                        locationName: "TemplateId"
+                    },
+                    AliasName: {
+                        location: "uri",
+                        locationName: "AliasName"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    TemplateAlias: {
+                        shape: "S5w"
+                    },
+                    Status: {
+                        location: "statusCode",
+                        type: "integer"
+                    },
+                    RequestId: {}
+                }
+            }
+        },
+        DescribeTemplatePermissions: {
+            http: {
+                method: "GET",
+                requestUri: "/accounts/{AwsAccountId}/templates/{TemplateId}/permissions"
+            },
+            input: {
+                type: "structure",
+                required: [ "AwsAccountId", "TemplateId" ],
+                members: {
+                    AwsAccountId: {
+                        location: "uri",
+                        locationName: "AwsAccountId"
+                    },
+                    TemplateId: {
+                        location: "uri",
+                        locationName: "TemplateId"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    TemplateId: {},
+                    TemplateArn: {},
+                    Permissions: {
+                        shape: "S11"
+                    },
+                    RequestId: {},
+                    Status: {
+                        location: "statusCode",
+                        type: "integer"
+                    }
+                }
+            }
+        },
+        DescribeTheme: {
+            http: {
+                method: "GET",
+                requestUri: "/accounts/{AwsAccountId}/themes/{ThemeId}"
+            },
+            input: {
+                type: "structure",
+                required: [ "AwsAccountId", "ThemeId" ],
+                members: {
+                    AwsAccountId: {
+                        location: "uri",
+                        locationName: "AwsAccountId"
+                    },
+                    ThemeId: {
+                        location: "uri",
+                        locationName: "ThemeId"
+                    },
+                    VersionNumber: {
+                        location: "querystring",
+                        locationName: "version-number",
+                        type: "long"
+                    },
+                    AliasName: {
+                        location: "querystring",
+                        locationName: "alias-name"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    Theme: {
+                        type: "structure",
+                        members: {
+                            Arn: {},
+                            Name: {},
+                            ThemeId: {},
+                            Version: {
+                                type: "structure",
+                                members: {
+                                    VersionNumber: {
+                                        type: "long"
+                                    },
+                                    Arn: {},
+                                    Description: {},
+                                    BaseThemeId: {},
+                                    CreatedTime: {
+                                        type: "timestamp"
+                                    },
+                                    Configuration: {
+                                        shape: "S5z"
+                                    },
+                                    Errors: {
+                                        type: "list",
+                                        member: {
+                                            type: "structure",
+                                            members: {
+                                                Type: {},
+                                                Message: {}
+                                            }
+                                        }
+                                    },
+                                    Status: {}
+                                }
+                            },
+                            CreatedTime: {
+                                type: "timestamp"
+                            },
+                            LastUpdatedTime: {
+                                type: "timestamp"
+                            },
+                            Type: {}
+                        }
+                    },
+                    Status: {
+                        location: "statusCode",
+                        type: "integer"
+                    },
+                    RequestId: {}
+                }
+            }
+        },
+        DescribeThemeAlias: {
+            http: {
+                method: "GET",
+                requestUri: "/accounts/{AwsAccountId}/themes/{ThemeId}/aliases/{AliasName}"
+            },
+            input: {
+                type: "structure",
+                required: [ "AwsAccountId", "ThemeId", "AliasName" ],
+                members: {
+                    AwsAccountId: {
+                        location: "uri",
+                        locationName: "AwsAccountId"
+                    },
+                    ThemeId: {
+                        location: "uri",
+                        locationName: "ThemeId"
+                    },
+                    AliasName: {
+                        location: "uri",
+                        locationName: "AliasName"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    ThemeAlias: {
+                        shape: "S6e"
+                    },
+                    Status: {
+                        location: "statusCode",
+                        type: "integer"
+                    },
+                    RequestId: {}
+                }
+            }
+        },
+        DescribeThemePermissions: {
+            http: {
+                method: "GET",
+                requestUri: "/accounts/{AwsAccountId}/themes/{ThemeId}/permissions"
+            },
+            input: {
+                type: "structure",
+                required: [ "AwsAccountId", "ThemeId" ],
+                members: {
+                    AwsAccountId: {
+                        location: "uri",
+                        locationName: "AwsAccountId"
+                    },
+                    ThemeId: {
+                        location: "uri",
+                        locationName: "ThemeId"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    ThemeId: {},
+                    ThemeArn: {},
+                    Permissions: {
+                        shape: "S11"
+                    },
+                    RequestId: {},
+                    Status: {
+                        location: "statusCode",
+                        type: "integer"
+                    }
+                }
+            }
+        },
+        DescribeUser: {
+            http: {
+                method: "GET",
+                requestUri: "/accounts/{AwsAccountId}/namespaces/{Namespace}/users/{UserName}"
+            },
+            input: {
+                type: "structure",
+                required: [ "UserName", "AwsAccountId", "Namespace" ],
+                members: {
+                    UserName: {
+                        location: "uri",
+                        locationName: "UserName"
+                    },
+                    AwsAccountId: {
+                        location: "uri",
+                        locationName: "AwsAccountId"
+                    },
+                    Namespace: {
+                        location: "uri",
+                        locationName: "Namespace"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    User: {
+                        shape: "S9z"
+                    },
+                    RequestId: {},
+                    Status: {
+                        location: "statusCode",
+                        type: "integer"
+                    }
+                }
+            }
+        },
+        GetDashboardEmbedUrl: {
+            http: {
+                method: "GET",
+                requestUri: "/accounts/{AwsAccountId}/dashboards/{DashboardId}/embed-url"
+            },
+            input: {
+                type: "structure",
+                required: [ "AwsAccountId", "DashboardId", "IdentityType" ],
+                members: {
+                    AwsAccountId: {
+                        location: "uri",
+                        locationName: "AwsAccountId"
+                    },
+                    DashboardId: {
+                        location: "uri",
+                        locationName: "DashboardId"
+                    },
+                    IdentityType: {
+                        location: "querystring",
+                        locationName: "creds-type"
+                    },
+                    SessionLifetimeInMinutes: {
+                        location: "querystring",
+                        locationName: "session-lifetime",
+                        type: "long"
+                    },
+                    UndoRedoDisabled: {
+                        location: "querystring",
+                        locationName: "undo-redo-disabled",
+                        type: "boolean"
+                    },
+                    ResetDisabled: {
+                        location: "querystring",
+                        locationName: "reset-disabled",
+                        type: "boolean"
+                    },
+                    StatePersistenceEnabled: {
+                        location: "querystring",
+                        locationName: "state-persistence-enabled",
+                        type: "boolean"
+                    },
+                    UserArn: {
+                        location: "querystring",
+                        locationName: "user-arn"
+                    },
+                    Namespace: {
+                        location: "querystring",
+                        locationName: "namespace"
+                    },
+                    AdditionalDashboardIds: {
+                        location: "querystring",
+                        locationName: "additional-dashboard-ids",
+                        type: "list",
+                        member: {}
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    EmbedUrl: {
+                        shape: "Sa8"
+                    },
+                    Status: {
+                        location: "statusCode",
+                        type: "integer"
+                    },
+                    RequestId: {}
+                }
+            }
+        },
+        GetSessionEmbedUrl: {
+            http: {
+                method: "GET",
+                requestUri: "/accounts/{AwsAccountId}/session-embed-url"
+            },
+            input: {
+                type: "structure",
+                required: [ "AwsAccountId" ],
+                members: {
+                    AwsAccountId: {
+                        location: "uri",
+                        locationName: "AwsAccountId"
+                    },
+                    EntryPoint: {
+                        location: "querystring",
+                        locationName: "entry-point"
+                    },
+                    SessionLifetimeInMinutes: {
+                        location: "querystring",
+                        locationName: "session-lifetime",
+                        type: "long"
+                    },
+                    UserArn: {
+                        location: "querystring",
+                        locationName: "user-arn"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    EmbedUrl: {
+                        shape: "Sa8"
+                    },
+                    Status: {
+                        location: "statusCode",
+                        type: "integer"
+                    },
+                    RequestId: {}
+                }
+            }
+        },
+        ListAnalyses: {
+            http: {
+                method: "GET",
+                requestUri: "/accounts/{AwsAccountId}/analyses"
+            },
+            input: {
+                type: "structure",
+                required: [ "AwsAccountId" ],
+                members: {
+                    AwsAccountId: {
+                        location: "uri",
+                        locationName: "AwsAccountId"
+                    },
+                    NextToken: {
+                        location: "querystring",
+                        locationName: "next-token"
+                    },
+                    MaxResults: {
+                        location: "querystring",
+                        locationName: "max-results",
+                        type: "integer"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    AnalysisSummaryList: {
+                        shape: "Saf"
+                    },
+                    NextToken: {},
+                    Status: {
+                        location: "statusCode",
+                        type: "integer"
+                    },
+                    RequestId: {}
+                }
+            }
+        },
+        ListDashboardVersions: {
+            http: {
+                method: "GET",
+                requestUri: "/accounts/{AwsAccountId}/dashboards/{DashboardId}/versions"
+            },
+            input: {
+                type: "structure",
+                required: [ "AwsAccountId", "DashboardId" ],
+                members: {
+                    AwsAccountId: {
+                        location: "uri",
+                        locationName: "AwsAccountId"
+                    },
+                    DashboardId: {
+                        location: "uri",
+                        locationName: "DashboardId"
+                    },
+                    NextToken: {
+                        location: "querystring",
+                        locationName: "next-token"
+                    },
+                    MaxResults: {
+                        location: "querystring",
+                        locationName: "max-results",
+                        type: "integer"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    DashboardVersionSummaryList: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            members: {
+                                Arn: {},
+                                CreatedTime: {
+                                    type: "timestamp"
+                                },
+                                VersionNumber: {
+                                    type: "long"
+                                },
+                                Status: {},
+                                SourceEntityArn: {},
+                                Description: {}
+                            }
+                        }
+                    },
+                    NextToken: {},
+                    Status: {
+                        location: "statusCode",
+                        type: "integer"
+                    },
+                    RequestId: {}
+                }
+            }
+        },
+        ListDashboards: {
+            http: {
+                method: "GET",
+                requestUri: "/accounts/{AwsAccountId}/dashboards"
+            },
+            input: {
+                type: "structure",
+                required: [ "AwsAccountId" ],
+                members: {
+                    AwsAccountId: {
+                        location: "uri",
+                        locationName: "AwsAccountId"
+                    },
+                    NextToken: {
+                        location: "querystring",
+                        locationName: "next-token"
+                    },
+                    MaxResults: {
+                        location: "querystring",
+                        locationName: "max-results",
+                        type: "integer"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    DashboardSummaryList: {
+                        shape: "San"
+                    },
+                    NextToken: {},
+                    Status: {
+                        location: "statusCode",
+                        type: "integer"
+                    },
+                    RequestId: {}
+                }
+            }
+        },
+        ListDataSets: {
+            http: {
+                method: "GET",
+                requestUri: "/accounts/{AwsAccountId}/data-sets"
+            },
+            input: {
+                type: "structure",
+                required: [ "AwsAccountId" ],
+                members: {
+                    AwsAccountId: {
+                        location: "uri",
+                        locationName: "AwsAccountId"
+                    },
+                    NextToken: {
+                        location: "querystring",
+                        locationName: "next-token"
+                    },
+                    MaxResults: {
+                        location: "querystring",
+                        locationName: "max-results",
+                        type: "integer"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    DataSetSummaries: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            members: {
+                                Arn: {},
+                                DataSetId: {},
+                                Name: {},
+                                CreatedTime: {
+                                    type: "timestamp"
+                                },
+                                LastUpdatedTime: {
+                                    type: "timestamp"
+                                },
+                                ImportMode: {},
+                                RowLevelPermissionDataSet: {
+                                    shape: "S3g"
+                                },
+                                ColumnLevelPermissionRulesApplied: {
+                                    type: "boolean"
+                                }
+                            }
+                        }
+                    },
+                    NextToken: {},
+                    RequestId: {},
+                    Status: {
+                        location: "statusCode",
+                        type: "integer"
+                    }
+                }
+            }
+        },
+        ListDataSources: {
+            http: {
+                method: "GET",
+                requestUri: "/accounts/{AwsAccountId}/data-sources"
+            },
+            input: {
+                type: "structure",
+                required: [ "AwsAccountId" ],
+                members: {
+                    AwsAccountId: {
+                        location: "uri",
+                        locationName: "AwsAccountId"
+                    },
+                    NextToken: {
+                        location: "querystring",
+                        locationName: "next-token"
+                    },
+                    MaxResults: {
+                        location: "querystring",
+                        locationName: "max-results",
+                        type: "integer"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    DataSources: {
+                        type: "list",
+                        member: {
+                            shape: "S8a"
+                        }
+                    },
+                    NextToken: {},
+                    RequestId: {},
+                    Status: {
+                        location: "statusCode",
+                        type: "integer"
+                    }
+                }
+            }
+        },
+        ListGroupMemberships: {
+            http: {
+                method: "GET",
+                requestUri: "/accounts/{AwsAccountId}/namespaces/{Namespace}/groups/{GroupName}/members"
+            },
+            input: {
+                type: "structure",
+                required: [ "GroupName", "AwsAccountId", "Namespace" ],
+                members: {
+                    GroupName: {
+                        location: "uri",
+                        locationName: "GroupName"
+                    },
+                    NextToken: {
+                        location: "querystring",
+                        locationName: "next-token"
+                    },
+                    MaxResults: {
+                        location: "querystring",
+                        locationName: "max-results",
+                        type: "integer"
+                    },
+                    AwsAccountId: {
+                        location: "uri",
+                        locationName: "AwsAccountId"
+                    },
+                    Namespace: {
+                        location: "uri",
+                        locationName: "Namespace"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    GroupMemberList: {
+                        type: "list",
+                        member: {
+                            shape: "S57"
+                        }
+                    },
+                    NextToken: {},
+                    RequestId: {},
+                    Status: {
+                        location: "statusCode",
+                        type: "integer"
+                    }
+                }
+            }
+        },
+        ListGroups: {
+            http: {
+                method: "GET",
+                requestUri: "/accounts/{AwsAccountId}/namespaces/{Namespace}/groups"
+            },
+            input: {
+                type: "structure",
+                required: [ "AwsAccountId", "Namespace" ],
+                members: {
+                    AwsAccountId: {
+                        location: "uri",
+                        locationName: "AwsAccountId"
+                    },
+                    NextToken: {
+                        location: "querystring",
+                        locationName: "next-token"
+                    },
+                    MaxResults: {
+                        location: "querystring",
+                        locationName: "max-results",
+                        type: "integer"
+                    },
+                    Namespace: {
+                        location: "uri",
+                        locationName: "Namespace"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    GroupList: {
+                        shape: "Sb1"
+                    },
+                    NextToken: {},
+                    RequestId: {},
+                    Status: {
+                        location: "statusCode",
+                        type: "integer"
+                    }
+                }
+            }
+        },
+        ListIAMPolicyAssignments: {
+            http: {
+                method: "GET",
+                requestUri: "/accounts/{AwsAccountId}/namespaces/{Namespace}/iam-policy-assignments"
+            },
+            input: {
+                type: "structure",
+                required: [ "AwsAccountId", "Namespace" ],
+                members: {
+                    AwsAccountId: {
+                        location: "uri",
+                        locationName: "AwsAccountId"
+                    },
+                    AssignmentStatus: {},
+                    Namespace: {
+                        location: "uri",
+                        locationName: "Namespace"
+                    },
+                    NextToken: {
+                        location: "querystring",
+                        locationName: "next-token"
+                    },
+                    MaxResults: {
+                        location: "querystring",
+                        locationName: "max-results",
+                        type: "integer"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    IAMPolicyAssignments: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            members: {
+                                AssignmentName: {},
+                                AssignmentStatus: {}
+                            }
+                        }
+                    },
+                    NextToken: {},
+                    RequestId: {},
+                    Status: {
+                        location: "statusCode",
+                        type: "integer"
+                    }
+                }
+            }
+        },
+        ListIAMPolicyAssignmentsForUser: {
+            http: {
+                method: "GET",
+                requestUri: "/accounts/{AwsAccountId}/namespaces/{Namespace}/users/{UserName}/iam-policy-assignments"
+            },
+            input: {
+                type: "structure",
+                required: [ "AwsAccountId", "UserName", "Namespace" ],
+                members: {
+                    AwsAccountId: {
+                        location: "uri",
+                        locationName: "AwsAccountId"
+                    },
+                    UserName: {
+                        location: "uri",
+                        locationName: "UserName"
+                    },
+                    NextToken: {
+                        location: "querystring",
+                        locationName: "next-token"
+                    },
+                    MaxResults: {
+                        location: "querystring",
+                        locationName: "max-results",
+                        type: "integer"
+                    },
+                    Namespace: {
+                        location: "uri",
+                        locationName: "Namespace"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    ActiveAssignments: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            members: {
+                                AssignmentName: {},
+                                PolicyArn: {}
+                            }
+                        }
+                    },
+                    RequestId: {},
+                    NextToken: {},
+                    Status: {
+                        location: "statusCode",
+                        type: "integer"
+                    }
+                }
+            }
+        },
+        ListIngestions: {
+            http: {
+                method: "GET",
+                requestUri: "/accounts/{AwsAccountId}/data-sets/{DataSetId}/ingestions"
+            },
+            input: {
+                type: "structure",
+                required: [ "DataSetId", "AwsAccountId" ],
+                members: {
+                    DataSetId: {
+                        location: "uri",
+                        locationName: "DataSetId"
+                    },
+                    NextToken: {
+                        location: "querystring",
+                        locationName: "next-token"
+                    },
+                    AwsAccountId: {
+                        location: "uri",
+                        locationName: "AwsAccountId"
+                    },
+                    MaxResults: {
+                        location: "querystring",
+                        locationName: "max-results",
+                        type: "integer"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    Ingestions: {
+                        type: "list",
+                        member: {
+                            shape: "S8m"
+                        }
+                    },
+                    NextToken: {},
+                    RequestId: {},
+                    Status: {
+                        location: "statusCode",
+                        type: "integer"
+                    }
+                }
+            }
+        },
+        ListNamespaces: {
+            http: {
+                method: "GET",
+                requestUri: "/accounts/{AwsAccountId}/namespaces"
+            },
+            input: {
+                type: "structure",
+                required: [ "AwsAccountId" ],
+                members: {
+                    AwsAccountId: {
+                        location: "uri",
+                        locationName: "AwsAccountId"
+                    },
+                    NextToken: {
+                        location: "querystring",
+                        locationName: "next-token"
+                    },
+                    MaxResults: {
+                        location: "querystring",
+                        locationName: "max-results",
+                        type: "integer"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    Namespaces: {
+                        type: "list",
+                        member: {
+                            shape: "S8x"
+                        }
+                    },
+                    NextToken: {},
+                    RequestId: {},
+                    Status: {
+                        location: "statusCode",
+                        type: "integer"
+                    }
+                }
+            }
+        },
+        ListTagsForResource: {
+            http: {
+                method: "GET",
+                requestUri: "/resources/{ResourceArn}/tags"
+            },
+            input: {
+                type: "structure",
+                required: [ "ResourceArn" ],
+                members: {
+                    ResourceArn: {
+                        location: "uri",
+                        locationName: "ResourceArn"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    Tags: {
+                        shape: "Sb"
+                    },
+                    RequestId: {},
+                    Status: {
+                        location: "statusCode",
+                        type: "integer"
+                    }
+                }
+            }
+        },
+        ListTemplateAliases: {
+            http: {
+                method: "GET",
+                requestUri: "/accounts/{AwsAccountId}/templates/{TemplateId}/aliases"
+            },
+            input: {
+                type: "structure",
+                required: [ "AwsAccountId", "TemplateId" ],
+                members: {
+                    AwsAccountId: {
+                        location: "uri",
+                        locationName: "AwsAccountId"
+                    },
+                    TemplateId: {
+                        location: "uri",
+                        locationName: "TemplateId"
+                    },
+                    NextToken: {
+                        location: "querystring",
+                        locationName: "next-token"
+                    },
+                    MaxResults: {
+                        location: "querystring",
+                        locationName: "max-result",
+                        type: "integer"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    TemplateAliasList: {
+                        type: "list",
+                        member: {
+                            shape: "S5w"
+                        }
+                    },
+                    Status: {
+                        location: "statusCode",
+                        type: "integer"
+                    },
+                    RequestId: {},
+                    NextToken: {}
+                }
+            }
+        },
+        ListTemplateVersions: {
+            http: {
+                method: "GET",
+                requestUri: "/accounts/{AwsAccountId}/templates/{TemplateId}/versions"
+            },
+            input: {
+                type: "structure",
+                required: [ "AwsAccountId", "TemplateId" ],
+                members: {
+                    AwsAccountId: {
+                        location: "uri",
+                        locationName: "AwsAccountId"
+                    },
+                    TemplateId: {
+                        location: "uri",
+                        locationName: "TemplateId"
+                    },
+                    NextToken: {
+                        location: "querystring",
+                        locationName: "next-token"
+                    },
+                    MaxResults: {
+                        location: "querystring",
+                        locationName: "max-results",
+                        type: "integer"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    TemplateVersionSummaryList: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            members: {
+                                Arn: {},
+                                VersionNumber: {
+                                    type: "long"
+                                },
+                                CreatedTime: {
+                                    type: "timestamp"
+                                },
+                                Status: {},
+                                Description: {}
+                            }
+                        }
+                    },
+                    NextToken: {},
+                    Status: {
+                        location: "statusCode",
+                        type: "integer"
+                    },
+                    RequestId: {}
+                }
+            }
+        },
+        ListTemplates: {
+            http: {
+                method: "GET",
+                requestUri: "/accounts/{AwsAccountId}/templates"
+            },
+            input: {
+                type: "structure",
+                required: [ "AwsAccountId" ],
+                members: {
+                    AwsAccountId: {
+                        location: "uri",
+                        locationName: "AwsAccountId"
+                    },
+                    NextToken: {
+                        location: "querystring",
+                        locationName: "next-token"
+                    },
+                    MaxResults: {
+                        location: "querystring",
+                        locationName: "max-result",
+                        type: "integer"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    TemplateSummaryList: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            members: {
+                                Arn: {},
+                                TemplateId: {},
+                                Name: {},
+                                LatestVersionNumber: {
+                                    type: "long"
+                                },
+                                CreatedTime: {
+                                    type: "timestamp"
+                                },
+                                LastUpdatedTime: {
+                                    type: "timestamp"
+                                }
+                            }
+                        }
+                    },
+                    NextToken: {},
+                    Status: {
+                        location: "statusCode",
+                        type: "integer"
+                    },
+                    RequestId: {}
+                }
+            }
+        },
+        ListThemeAliases: {
+            http: {
+                method: "GET",
+                requestUri: "/accounts/{AwsAccountId}/themes/{ThemeId}/aliases"
+            },
+            input: {
+                type: "structure",
+                required: [ "AwsAccountId", "ThemeId" ],
+                members: {
+                    AwsAccountId: {
+                        location: "uri",
+                        locationName: "AwsAccountId"
+                    },
+                    ThemeId: {
+                        location: "uri",
+                        locationName: "ThemeId"
+                    },
+                    NextToken: {
+                        location: "querystring",
+                        locationName: "next-token"
+                    },
+                    MaxResults: {
+                        location: "querystring",
+                        locationName: "max-result",
+                        type: "integer"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    ThemeAliasList: {
+                        type: "list",
+                        member: {
+                            shape: "S6e"
+                        }
+                    },
+                    Status: {
+                        location: "statusCode",
+                        type: "integer"
+                    },
+                    RequestId: {},
+                    NextToken: {}
+                }
+            }
+        },
+        ListThemeVersions: {
+            http: {
+                method: "GET",
+                requestUri: "/accounts/{AwsAccountId}/themes/{ThemeId}/versions"
+            },
+            input: {
+                type: "structure",
+                required: [ "AwsAccountId", "ThemeId" ],
+                members: {
+                    AwsAccountId: {
+                        location: "uri",
+                        locationName: "AwsAccountId"
+                    },
+                    ThemeId: {
+                        location: "uri",
+                        locationName: "ThemeId"
+                    },
+                    NextToken: {
+                        location: "querystring",
+                        locationName: "next-token"
+                    },
+                    MaxResults: {
+                        location: "querystring",
+                        locationName: "max-results",
+                        type: "integer"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    ThemeVersionSummaryList: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            members: {
+                                VersionNumber: {
+                                    type: "long"
+                                },
+                                Arn: {},
+                                Description: {},
+                                CreatedTime: {
+                                    type: "timestamp"
+                                },
+                                Status: {}
+                            }
+                        }
+                    },
+                    NextToken: {},
+                    Status: {
+                        location: "statusCode",
+                        type: "integer"
+                    },
+                    RequestId: {}
+                }
+            }
+        },
+        ListThemes: {
+            http: {
+                method: "GET",
+                requestUri: "/accounts/{AwsAccountId}/themes"
+            },
+            input: {
+                type: "structure",
+                required: [ "AwsAccountId" ],
+                members: {
+                    AwsAccountId: {
+                        location: "uri",
+                        locationName: "AwsAccountId"
+                    },
+                    NextToken: {
+                        location: "querystring",
+                        locationName: "next-token"
+                    },
+                    MaxResults: {
+                        location: "querystring",
+                        locationName: "max-results",
+                        type: "integer"
+                    },
+                    Type: {
+                        location: "querystring",
+                        locationName: "type"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    ThemeSummaryList: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            members: {
+                                Arn: {},
+                                Name: {},
+                                ThemeId: {},
+                                LatestVersionNumber: {
+                                    type: "long"
+                                },
+                                CreatedTime: {
+                                    type: "timestamp"
+                                },
+                                LastUpdatedTime: {
+                                    type: "timestamp"
+                                }
+                            }
+                        }
+                    },
+                    NextToken: {},
+                    Status: {
+                        location: "statusCode",
+                        type: "integer"
+                    },
+                    RequestId: {}
+                }
+            }
+        },
+        ListUserGroups: {
+            http: {
+                method: "GET",
+                requestUri: "/accounts/{AwsAccountId}/namespaces/{Namespace}/users/{UserName}/groups"
+            },
+            input: {
+                type: "structure",
+                required: [ "UserName", "AwsAccountId", "Namespace" ],
+                members: {
+                    UserName: {
+                        location: "uri",
+                        locationName: "UserName"
+                    },
+                    AwsAccountId: {
+                        location: "uri",
+                        locationName: "AwsAccountId"
+                    },
+                    Namespace: {
+                        location: "uri",
+                        locationName: "Namespace"
+                    },
+                    NextToken: {
+                        location: "querystring",
+                        locationName: "next-token"
+                    },
+                    MaxResults: {
+                        location: "querystring",
+                        locationName: "max-results",
+                        type: "integer"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    GroupList: {
+                        shape: "Sb1"
+                    },
+                    NextToken: {},
+                    RequestId: {},
+                    Status: {
+                        location: "statusCode",
+                        type: "integer"
+                    }
+                }
+            }
+        },
+        ListUsers: {
+            http: {
+                method: "GET",
+                requestUri: "/accounts/{AwsAccountId}/namespaces/{Namespace}/users"
+            },
+            input: {
+                type: "structure",
+                required: [ "AwsAccountId", "Namespace" ],
+                members: {
+                    AwsAccountId: {
+                        location: "uri",
+                        locationName: "AwsAccountId"
+                    },
+                    NextToken: {
+                        location: "querystring",
+                        locationName: "next-token"
+                    },
+                    MaxResults: {
+                        location: "querystring",
+                        locationName: "max-results",
+                        type: "integer"
+                    },
+                    Namespace: {
+                        location: "uri",
+                        locationName: "Namespace"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    UserList: {
+                        type: "list",
+                        member: {
+                            shape: "S9z"
+                        }
+                    },
+                    NextToken: {},
+                    RequestId: {},
+                    Status: {
+                        location: "statusCode",
+                        type: "integer"
+                    }
+                }
+            }
+        },
+        RegisterUser: {
+            http: {
+                requestUri: "/accounts/{AwsAccountId}/namespaces/{Namespace}/users"
+            },
+            input: {
+                type: "structure",
+                required: [ "IdentityType", "Email", "UserRole", "AwsAccountId", "Namespace" ],
+                members: {
+                    IdentityType: {},
+                    Email: {},
+                    UserRole: {},
+                    IamArn: {},
+                    SessionName: {},
+                    AwsAccountId: {
+                        location: "uri",
+                        locationName: "AwsAccountId"
+                    },
+                    Namespace: {
+                        location: "uri",
+                        locationName: "Namespace"
+                    },
+                    UserName: {},
+                    CustomPermissionsName: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    User: {
+                        shape: "S9z"
+                    },
+                    UserInvitationUrl: {},
+                    RequestId: {},
+                    Status: {
+                        location: "statusCode",
+                        type: "integer"
+                    }
+                }
+            }
+        },
+        RestoreAnalysis: {
+            http: {
+                requestUri: "/accounts/{AwsAccountId}/restore/analyses/{AnalysisId}"
+            },
+            input: {
+                type: "structure",
+                required: [ "AwsAccountId", "AnalysisId" ],
+                members: {
+                    AwsAccountId: {
+                        location: "uri",
+                        locationName: "AwsAccountId"
+                    },
+                    AnalysisId: {
+                        location: "uri",
+                        locationName: "AnalysisId"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    Status: {
+                        location: "statusCode",
+                        type: "integer"
+                    },
+                    Arn: {},
+                    AnalysisId: {},
+                    RequestId: {}
+                }
+            }
+        },
+        SearchAnalyses: {
+            http: {
+                requestUri: "/accounts/{AwsAccountId}/search/analyses"
+            },
+            input: {
+                type: "structure",
+                required: [ "AwsAccountId", "Filters" ],
+                members: {
+                    AwsAccountId: {
+                        location: "uri",
+                        locationName: "AwsAccountId"
+                    },
+                    Filters: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            members: {
+                                Operator: {},
+                                Name: {},
+                                Value: {}
+                            }
+                        }
+                    },
+                    NextToken: {},
+                    MaxResults: {
+                        type: "integer"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    AnalysisSummaryList: {
+                        shape: "Saf"
+                    },
+                    NextToken: {},
+                    Status: {
+                        location: "statusCode",
+                        type: "integer"
+                    },
+                    RequestId: {}
+                }
+            }
+        },
+        SearchDashboards: {
+            http: {
+                requestUri: "/accounts/{AwsAccountId}/search/dashboards"
+            },
+            input: {
+                type: "structure",
+                required: [ "AwsAccountId", "Filters" ],
+                members: {
+                    AwsAccountId: {
+                        location: "uri",
+                        locationName: "AwsAccountId"
+                    },
+                    Filters: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            required: [ "Operator" ],
+                            members: {
+                                Operator: {},
+                                Name: {},
+                                Value: {}
+                            }
+                        }
+                    },
+                    NextToken: {},
+                    MaxResults: {
+                        type: "integer"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    DashboardSummaryList: {
+                        shape: "San"
+                    },
+                    NextToken: {},
+                    Status: {
+                        location: "statusCode",
+                        type: "integer"
+                    },
+                    RequestId: {}
+                }
+            }
+        },
+        TagResource: {
+            http: {
+                requestUri: "/resources/{ResourceArn}/tags"
+            },
+            input: {
+                type: "structure",
+                required: [ "ResourceArn", "Tags" ],
+                members: {
+                    ResourceArn: {
+                        location: "uri",
+                        locationName: "ResourceArn"
+                    },
+                    Tags: {
+                        shape: "Sb"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    RequestId: {},
+                    Status: {
+                        location: "statusCode",
+                        type: "integer"
+                    }
+                }
+            }
+        },
+        UntagResource: {
+            http: {
+                method: "DELETE",
+                requestUri: "/resources/{ResourceArn}/tags"
+            },
+            input: {
+                type: "structure",
+                required: [ "ResourceArn", "TagKeys" ],
+                members: {
+                    ResourceArn: {
+                        location: "uri",
+                        locationName: "ResourceArn"
+                    },
+                    TagKeys: {
+                        location: "querystring",
+                        locationName: "keys",
+                        type: "list",
+                        member: {}
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    RequestId: {},
+                    Status: {
+                        location: "statusCode",
+                        type: "integer"
+                    }
+                }
+            }
+        },
+        UpdateAccountCustomization: {
+            http: {
+                method: "PUT",
+                requestUri: "/accounts/{AwsAccountId}/customizations"
+            },
+            input: {
+                type: "structure",
+                required: [ "AwsAccountId", "AccountCustomization" ],
+                members: {
+                    AwsAccountId: {
+                        location: "uri",
+                        locationName: "AwsAccountId"
+                    },
+                    Namespace: {
+                        location: "querystring",
+                        locationName: "namespace"
+                    },
+                    AccountCustomization: {
+                        shape: "Sa"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    Arn: {},
+                    AwsAccountId: {},
+                    Namespace: {},
+                    AccountCustomization: {
+                        shape: "Sa"
+                    },
+                    RequestId: {},
+                    Status: {
+                        location: "statusCode",
+                        type: "integer"
+                    }
+                }
+            }
+        },
+        UpdateAccountSettings: {
+            http: {
+                method: "PUT",
+                requestUri: "/accounts/{AwsAccountId}/settings"
+            },
+            input: {
+                type: "structure",
+                required: [ "AwsAccountId", "DefaultNamespace" ],
+                members: {
+                    AwsAccountId: {
+                        location: "uri",
+                        locationName: "AwsAccountId"
+                    },
+                    DefaultNamespace: {},
+                    NotificationEmail: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    RequestId: {},
+                    Status: {
+                        location: "statusCode",
+                        type: "integer"
+                    }
+                }
+            }
+        },
+        UpdateAnalysis: {
+            http: {
+                method: "PUT",
+                requestUri: "/accounts/{AwsAccountId}/analyses/{AnalysisId}"
+            },
+            input: {
+                type: "structure",
+                required: [ "AwsAccountId", "AnalysisId", "Name", "SourceEntity" ],
+                members: {
+                    AwsAccountId: {
+                        location: "uri",
+                        locationName: "AwsAccountId"
+                    },
+                    AnalysisId: {
+                        location: "uri",
+                        locationName: "AnalysisId"
+                    },
+                    Name: {},
+                    Parameters: {
+                        shape: "Sk"
+                    },
+                    SourceEntity: {
+                        shape: "S15"
+                    },
+                    ThemeArn: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    Arn: {},
+                    AnalysisId: {},
+                    UpdateStatus: {},
+                    Status: {
+                        location: "statusCode",
+                        type: "integer"
+                    },
+                    RequestId: {}
+                }
+            }
+        },
+        UpdateAnalysisPermissions: {
+            http: {
+                method: "PUT",
+                requestUri: "/accounts/{AwsAccountId}/analyses/{AnalysisId}/permissions"
+            },
+            input: {
+                type: "structure",
+                required: [ "AwsAccountId", "AnalysisId" ],
+                members: {
+                    AwsAccountId: {
+                        location: "uri",
+                        locationName: "AwsAccountId"
+                    },
+                    AnalysisId: {
+                        location: "uri",
+                        locationName: "AnalysisId"
+                    },
+                    GrantPermissions: {
+                        shape: "Sd2"
+                    },
+                    RevokePermissions: {
+                        shape: "Sd2"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    AnalysisArn: {},
+                    AnalysisId: {},
+                    Permissions: {
+                        shape: "S11"
+                    },
+                    RequestId: {},
+                    Status: {
+                        location: "statusCode",
+                        type: "integer"
+                    }
+                }
+            }
+        },
+        UpdateDashboard: {
+            http: {
+                method: "PUT",
+                requestUri: "/accounts/{AwsAccountId}/dashboards/{DashboardId}"
+            },
+            input: {
+                type: "structure",
+                required: [ "AwsAccountId", "DashboardId", "Name", "SourceEntity" ],
+                members: {
+                    AwsAccountId: {
+                        location: "uri",
+                        locationName: "AwsAccountId"
+                    },
+                    DashboardId: {
+                        location: "uri",
+                        locationName: "DashboardId"
+                    },
+                    Name: {},
+                    SourceEntity: {
+                        shape: "S1d"
+                    },
+                    Parameters: {
+                        shape: "Sk"
+                    },
+                    VersionDescription: {},
+                    DashboardPublishOptions: {
+                        shape: "S1g"
+                    },
+                    ThemeArn: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    Arn: {},
+                    VersionArn: {},
+                    DashboardId: {},
+                    CreationStatus: {},
+                    Status: {
+                        type: "integer"
+                    },
+                    RequestId: {}
+                }
+            }
+        },
+        UpdateDashboardPermissions: {
+            http: {
+                method: "PUT",
+                requestUri: "/accounts/{AwsAccountId}/dashboards/{DashboardId}/permissions"
+            },
+            input: {
+                type: "structure",
+                required: [ "AwsAccountId", "DashboardId" ],
+                members: {
+                    AwsAccountId: {
+                        location: "uri",
+                        locationName: "AwsAccountId"
+                    },
+                    DashboardId: {
+                        location: "uri",
+                        locationName: "DashboardId"
+                    },
+                    GrantPermissions: {
+                        shape: "Sd2"
+                    },
+                    RevokePermissions: {
+                        shape: "Sd2"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    DashboardArn: {},
+                    DashboardId: {},
+                    Permissions: {
+                        shape: "S11"
+                    },
+                    RequestId: {},
+                    Status: {
+                        location: "statusCode",
+                        type: "integer"
+                    }
+                }
+            }
+        },
+        UpdateDashboardPublishedVersion: {
+            http: {
+                method: "PUT",
+                requestUri: "/accounts/{AwsAccountId}/dashboards/{DashboardId}/versions/{VersionNumber}"
+            },
+            input: {
+                type: "structure",
+                required: [ "AwsAccountId", "DashboardId", "VersionNumber" ],
+                members: {
+                    AwsAccountId: {
+                        location: "uri",
+                        locationName: "AwsAccountId"
+                    },
+                    DashboardId: {
+                        location: "uri",
+                        locationName: "DashboardId"
+                    },
+                    VersionNumber: {
+                        location: "uri",
+                        locationName: "VersionNumber",
+                        type: "long"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    DashboardId: {},
+                    DashboardArn: {},
+                    Status: {
+                        location: "statusCode",
+                        type: "integer"
+                    },
+                    RequestId: {}
+                }
+            }
+        },
+        UpdateDataSet: {
+            http: {
+                method: "PUT",
+                requestUri: "/accounts/{AwsAccountId}/data-sets/{DataSetId}"
+            },
+            input: {
+                type: "structure",
+                required: [ "AwsAccountId", "DataSetId", "Name", "PhysicalTableMap", "ImportMode" ],
+                members: {
+                    AwsAccountId: {
+                        location: "uri",
+                        locationName: "AwsAccountId"
+                    },
+                    DataSetId: {
+                        location: "uri",
+                        locationName: "DataSetId"
+                    },
+                    Name: {},
+                    PhysicalTableMap: {
+                        shape: "S1q"
+                    },
+                    LogicalTableMap: {
+                        shape: "S2b"
+                    },
+                    ImportMode: {},
+                    ColumnGroups: {
+                        shape: "S35"
+                    },
+                    FieldFolders: {
+                        shape: "S3b"
+                    },
+                    RowLevelPermissionDataSet: {
+                        shape: "S3g"
+                    },
+                    ColumnLevelPermissionRules: {
+                        shape: "S3i"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    Arn: {},
+                    DataSetId: {},
+                    IngestionArn: {},
+                    IngestionId: {},
+                    RequestId: {},
+                    Status: {
+                        location: "statusCode",
+                        type: "integer"
+                    }
+                }
+            }
+        },
+        UpdateDataSetPermissions: {
+            http: {
+                requestUri: "/accounts/{AwsAccountId}/data-sets/{DataSetId}/permissions"
+            },
+            input: {
+                type: "structure",
+                required: [ "AwsAccountId", "DataSetId" ],
+                members: {
+                    AwsAccountId: {
+                        location: "uri",
+                        locationName: "AwsAccountId"
+                    },
+                    DataSetId: {
+                        location: "uri",
+                        locationName: "DataSetId"
+                    },
+                    GrantPermissions: {
+                        shape: "S11"
+                    },
+                    RevokePermissions: {
+                        shape: "S11"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    DataSetArn: {},
+                    DataSetId: {},
+                    RequestId: {},
+                    Status: {
+                        location: "statusCode",
+                        type: "integer"
+                    }
+                }
+            }
+        },
+        UpdateDataSource: {
+            http: {
+                method: "PUT",
+                requestUri: "/accounts/{AwsAccountId}/data-sources/{DataSourceId}"
+            },
+            input: {
+                type: "structure",
+                required: [ "AwsAccountId", "DataSourceId", "Name" ],
+                members: {
+                    AwsAccountId: {
+                        location: "uri",
+                        locationName: "AwsAccountId"
+                    },
+                    DataSourceId: {
+                        location: "uri",
+                        locationName: "DataSourceId"
+                    },
+                    Name: {},
+                    DataSourceParameters: {
+                        shape: "S3p"
+                    },
+                    Credentials: {
+                        shape: "S4q"
+                    },
+                    VpcConnectionProperties: {
+                        shape: "S4w"
+                    },
+                    SslProperties: {
+                        shape: "S4x"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    Arn: {},
+                    DataSourceId: {},
+                    UpdateStatus: {},
+                    RequestId: {},
+                    Status: {
+                        location: "statusCode",
+                        type: "integer"
+                    }
+                }
+            }
+        },
+        UpdateDataSourcePermissions: {
+            http: {
+                requestUri: "/accounts/{AwsAccountId}/data-sources/{DataSourceId}/permissions"
+            },
+            input: {
+                type: "structure",
+                required: [ "AwsAccountId", "DataSourceId" ],
+                members: {
+                    AwsAccountId: {
+                        location: "uri",
+                        locationName: "AwsAccountId"
+                    },
+                    DataSourceId: {
+                        location: "uri",
+                        locationName: "DataSourceId"
+                    },
+                    GrantPermissions: {
+                        shape: "S11"
+                    },
+                    RevokePermissions: {
+                        shape: "S11"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    DataSourceArn: {},
+                    DataSourceId: {},
+                    RequestId: {},
+                    Status: {
+                        location: "statusCode",
+                        type: "integer"
+                    }
+                }
+            }
+        },
+        UpdateGroup: {
+            http: {
+                method: "PUT",
+                requestUri: "/accounts/{AwsAccountId}/namespaces/{Namespace}/groups/{GroupName}"
+            },
+            input: {
+                type: "structure",
+                required: [ "GroupName", "AwsAccountId", "Namespace" ],
+                members: {
+                    GroupName: {
+                        location: "uri",
+                        locationName: "GroupName"
+                    },
+                    Description: {},
+                    AwsAccountId: {
+                        location: "uri",
+                        locationName: "AwsAccountId"
+                    },
+                    Namespace: {
+                        location: "uri",
+                        locationName: "Namespace"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    Group: {
+                        shape: "S53"
+                    },
+                    RequestId: {},
+                    Status: {
+                        location: "statusCode",
+                        type: "integer"
+                    }
+                }
+            }
+        },
+        UpdateIAMPolicyAssignment: {
+            http: {
+                method: "PUT",
+                requestUri: "/accounts/{AwsAccountId}/namespaces/{Namespace}/iam-policy-assignments/{AssignmentName}"
+            },
+            input: {
+                type: "structure",
+                required: [ "AwsAccountId", "AssignmentName", "Namespace" ],
+                members: {
+                    AwsAccountId: {
+                        location: "uri",
+                        locationName: "AwsAccountId"
+                    },
+                    AssignmentName: {
+                        location: "uri",
+                        locationName: "AssignmentName"
+                    },
+                    Namespace: {
+                        location: "uri",
+                        locationName: "Namespace"
+                    },
+                    AssignmentStatus: {},
+                    PolicyArn: {},
+                    Identities: {
+                        shape: "S5b"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    AssignmentName: {},
+                    AssignmentId: {},
+                    PolicyArn: {},
+                    Identities: {
+                        shape: "S5b"
+                    },
+                    AssignmentStatus: {},
+                    RequestId: {},
+                    Status: {
+                        location: "statusCode",
+                        type: "integer"
+                    }
+                }
+            }
+        },
+        UpdateTemplate: {
+            http: {
+                method: "PUT",
+                requestUri: "/accounts/{AwsAccountId}/templates/{TemplateId}"
+            },
+            input: {
+                type: "structure",
+                required: [ "AwsAccountId", "TemplateId", "SourceEntity" ],
+                members: {
+                    AwsAccountId: {
+                        location: "uri",
+                        locationName: "AwsAccountId"
+                    },
+                    TemplateId: {
+                        location: "uri",
+                        locationName: "TemplateId"
+                    },
+                    SourceEntity: {
+                        shape: "S5o"
+                    },
+                    VersionDescription: {},
+                    Name: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    TemplateId: {},
+                    Arn: {},
+                    VersionArn: {},
+                    CreationStatus: {},
+                    Status: {
+                        location: "statusCode",
+                        type: "integer"
+                    },
+                    RequestId: {}
+                }
+            }
+        },
+        UpdateTemplateAlias: {
+            http: {
+                method: "PUT",
+                requestUri: "/accounts/{AwsAccountId}/templates/{TemplateId}/aliases/{AliasName}"
+            },
+            input: {
+                type: "structure",
+                required: [ "AwsAccountId", "TemplateId", "AliasName", "TemplateVersionNumber" ],
+                members: {
+                    AwsAccountId: {
+                        location: "uri",
+                        locationName: "AwsAccountId"
+                    },
+                    TemplateId: {
+                        location: "uri",
+                        locationName: "TemplateId"
+                    },
+                    AliasName: {
+                        location: "uri",
+                        locationName: "AliasName"
+                    },
+                    TemplateVersionNumber: {
+                        type: "long"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    TemplateAlias: {
+                        shape: "S5w"
+                    },
+                    Status: {
+                        location: "statusCode",
+                        type: "integer"
+                    },
+                    RequestId: {}
+                }
+            }
+        },
+        UpdateTemplatePermissions: {
+            http: {
+                method: "PUT",
+                requestUri: "/accounts/{AwsAccountId}/templates/{TemplateId}/permissions"
+            },
+            input: {
+                type: "structure",
+                required: [ "AwsAccountId", "TemplateId" ],
+                members: {
+                    AwsAccountId: {
+                        location: "uri",
+                        locationName: "AwsAccountId"
+                    },
+                    TemplateId: {
+                        location: "uri",
+                        locationName: "TemplateId"
+                    },
+                    GrantPermissions: {
+                        shape: "Sd2"
+                    },
+                    RevokePermissions: {
+                        shape: "Sd2"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    TemplateId: {},
+                    TemplateArn: {},
+                    Permissions: {
+                        shape: "S11"
+                    },
+                    RequestId: {},
+                    Status: {
+                        location: "statusCode",
+                        type: "integer"
+                    }
+                }
+            }
+        },
+        UpdateTheme: {
+            http: {
+                method: "PUT",
+                requestUri: "/accounts/{AwsAccountId}/themes/{ThemeId}"
+            },
+            input: {
+                type: "structure",
+                required: [ "AwsAccountId", "ThemeId", "BaseThemeId" ],
+                members: {
+                    AwsAccountId: {
+                        location: "uri",
+                        locationName: "AwsAccountId"
+                    },
+                    ThemeId: {
+                        location: "uri",
+                        locationName: "ThemeId"
+                    },
+                    Name: {},
+                    BaseThemeId: {},
+                    VersionDescription: {},
+                    Configuration: {
+                        shape: "S5z"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    ThemeId: {},
+                    Arn: {},
+                    VersionArn: {},
+                    CreationStatus: {},
+                    Status: {
+                        location: "statusCode",
+                        type: "integer"
+                    },
+                    RequestId: {}
+                }
+            }
+        },
+        UpdateThemeAlias: {
+            http: {
+                method: "PUT",
+                requestUri: "/accounts/{AwsAccountId}/themes/{ThemeId}/aliases/{AliasName}"
+            },
+            input: {
+                type: "structure",
+                required: [ "AwsAccountId", "ThemeId", "AliasName", "ThemeVersionNumber" ],
+                members: {
+                    AwsAccountId: {
+                        location: "uri",
+                        locationName: "AwsAccountId"
+                    },
+                    ThemeId: {
+                        location: "uri",
+                        locationName: "ThemeId"
+                    },
+                    AliasName: {
+                        location: "uri",
+                        locationName: "AliasName"
+                    },
+                    ThemeVersionNumber: {
+                        type: "long"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    ThemeAlias: {
+                        shape: "S6e"
+                    },
+                    Status: {
+                        location: "statusCode",
+                        type: "integer"
+                    },
+                    RequestId: {}
+                }
+            }
+        },
+        UpdateThemePermissions: {
+            http: {
+                method: "PUT",
+                requestUri: "/accounts/{AwsAccountId}/themes/{ThemeId}/permissions"
+            },
+            input: {
+                type: "structure",
+                required: [ "AwsAccountId", "ThemeId" ],
+                members: {
+                    AwsAccountId: {
+                        location: "uri",
+                        locationName: "AwsAccountId"
+                    },
+                    ThemeId: {
+                        location: "uri",
+                        locationName: "ThemeId"
+                    },
+                    GrantPermissions: {
+                        shape: "Sd2"
+                    },
+                    RevokePermissions: {
+                        shape: "Sd2"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    ThemeId: {},
+                    ThemeArn: {},
+                    Permissions: {
+                        shape: "S11"
+                    },
+                    RequestId: {},
+                    Status: {
+                        location: "statusCode",
+                        type: "integer"
+                    }
+                }
+            }
+        },
+        UpdateUser: {
+            http: {
+                method: "PUT",
+                requestUri: "/accounts/{AwsAccountId}/namespaces/{Namespace}/users/{UserName}"
+            },
+            input: {
+                type: "structure",
+                required: [ "UserName", "AwsAccountId", "Namespace", "Email", "Role" ],
+                members: {
+                    UserName: {
+                        location: "uri",
+                        locationName: "UserName"
+                    },
+                    AwsAccountId: {
+                        location: "uri",
+                        locationName: "AwsAccountId"
+                    },
+                    Namespace: {
+                        location: "uri",
+                        locationName: "Namespace"
+                    },
+                    Email: {},
+                    Role: {},
+                    CustomPermissionsName: {},
+                    UnapplyCustomPermissions: {
+                        type: "boolean"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    User: {
+                        shape: "S9z"
+                    },
+                    RequestId: {},
+                    Status: {
+                        location: "statusCode",
+                        type: "integer"
+                    }
+                }
+            }
+        }
+    },
+    shapes: {
+        Sa: {
+            type: "structure",
+            members: {
+                DefaultTheme: {}
+            }
+        },
+        Sb: {
+            type: "list",
+            member: {
+                type: "structure",
+                required: [ "Key", "Value" ],
+                members: {
+                    Key: {},
+                    Value: {}
+                }
+            }
+        },
+        Sk: {
+            type: "structure",
+            members: {
+                StringParameters: {
+                    type: "list",
+                    member: {
+                        type: "structure",
+                        required: [ "Name", "Values" ],
+                        members: {
+                            Name: {},
+                            Values: {
+                                type: "list",
+                                member: {}
+                            }
+                        }
+                    }
+                },
+                IntegerParameters: {
+                    type: "list",
+                    member: {
+                        type: "structure",
+                        required: [ "Name", "Values" ],
+                        members: {
+                            Name: {},
+                            Values: {
+                                type: "list",
+                                member: {
+                                    type: "long"
+                                }
+                            }
+                        }
+                    }
+                },
+                DecimalParameters: {
+                    type: "list",
+                    member: {
+                        type: "structure",
+                        required: [ "Name", "Values" ],
+                        members: {
+                            Name: {},
+                            Values: {
+                                type: "list",
+                                member: {
+                                    type: "double"
+                                }
+                            }
+                        }
+                    }
+                },
+                DateTimeParameters: {
+                    type: "list",
+                    member: {
+                        type: "structure",
+                        required: [ "Name", "Values" ],
+                        members: {
+                            Name: {},
+                            Values: {
+                                type: "list",
+                                member: {
+                                    type: "timestamp"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        S11: {
+            type: "list",
+            member: {
+                shape: "S12"
+            }
+        },
+        S12: {
+            type: "structure",
+            required: [ "Principal", "Actions" ],
+            members: {
+                Principal: {},
+                Actions: {
+                    type: "list",
+                    member: {}
+                }
+            }
+        },
+        S15: {
+            type: "structure",
+            members: {
+                SourceTemplate: {
+                    type: "structure",
+                    required: [ "DataSetReferences", "Arn" ],
+                    members: {
+                        DataSetReferences: {
+                            shape: "S17"
+                        },
+                        Arn: {}
+                    }
+                }
+            }
+        },
+        S17: {
+            type: "list",
+            member: {
+                type: "structure",
+                required: [ "DataSetPlaceholder", "DataSetArn" ],
+                members: {
+                    DataSetPlaceholder: {},
+                    DataSetArn: {}
+                }
+            }
+        },
+        S1d: {
+            type: "structure",
+            members: {
+                SourceTemplate: {
+                    type: "structure",
+                    required: [ "DataSetReferences", "Arn" ],
+                    members: {
+                        DataSetReferences: {
+                            shape: "S17"
+                        },
+                        Arn: {}
+                    }
+                }
+            }
+        },
+        S1g: {
+            type: "structure",
+            members: {
+                AdHocFilteringOption: {
+                    type: "structure",
+                    members: {
+                        AvailabilityStatus: {}
+                    }
+                },
+                ExportToCSVOption: {
+                    type: "structure",
+                    members: {
+                        AvailabilityStatus: {}
+                    }
+                },
+                SheetControlsOption: {
+                    type: "structure",
+                    members: {
+                        VisibilityState: {}
+                    }
+                }
+            }
+        },
+        S1q: {
+            type: "map",
+            key: {},
+            value: {
+                type: "structure",
+                members: {
+                    RelationalTable: {
+                        type: "structure",
+                        required: [ "DataSourceArn", "Name", "InputColumns" ],
+                        members: {
+                            DataSourceArn: {},
+                            Catalog: {},
+                            Schema: {},
+                            Name: {},
+                            InputColumns: {
+                                shape: "S1x"
+                            }
+                        }
+                    },
+                    CustomSql: {
+                        type: "structure",
+                        required: [ "DataSourceArn", "Name", "SqlQuery" ],
+                        members: {
+                            DataSourceArn: {},
+                            Name: {},
+                            SqlQuery: {},
+                            Columns: {
+                                shape: "S1x"
+                            }
+                        }
+                    },
+                    S3Source: {
+                        type: "structure",
+                        required: [ "DataSourceArn", "InputColumns" ],
+                        members: {
+                            DataSourceArn: {},
+                            UploadSettings: {
+                                type: "structure",
+                                members: {
+                                    Format: {},
+                                    StartFromRow: {
+                                        type: "integer"
+                                    },
+                                    ContainsHeader: {
+                                        type: "boolean"
+                                    },
+                                    TextQualifier: {},
+                                    Delimiter: {}
+                                }
+                            },
+                            InputColumns: {
+                                shape: "S1x"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        S1x: {
+            type: "list",
+            member: {
+                type: "structure",
+                required: [ "Name", "Type" ],
+                members: {
+                    Name: {},
+                    Type: {}
+                }
+            }
+        },
+        S2b: {
+            type: "map",
+            key: {},
+            value: {
+                type: "structure",
+                required: [ "Alias", "Source" ],
+                members: {
+                    Alias: {},
+                    DataTransforms: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            members: {
+                                ProjectOperation: {
+                                    type: "structure",
+                                    required: [ "ProjectedColumns" ],
+                                    members: {
+                                        ProjectedColumns: {
+                                            type: "list",
+                                            member: {}
+                                        }
+                                    }
+                                },
+                                FilterOperation: {
+                                    type: "structure",
+                                    required: [ "ConditionExpression" ],
+                                    members: {
+                                        ConditionExpression: {}
+                                    }
+                                },
+                                CreateColumnsOperation: {
+                                    type: "structure",
+                                    required: [ "Columns" ],
+                                    members: {
+                                        Columns: {
+                                            type: "list",
+                                            member: {
+                                                type: "structure",
+                                                required: [ "ColumnName", "ColumnId", "Expression" ],
+                                                members: {
+                                                    ColumnName: {},
+                                                    ColumnId: {},
+                                                    Expression: {}
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                RenameColumnOperation: {
+                                    type: "structure",
+                                    required: [ "ColumnName", "NewColumnName" ],
+                                    members: {
+                                        ColumnName: {},
+                                        NewColumnName: {}
+                                    }
+                                },
+                                CastColumnTypeOperation: {
+                                    type: "structure",
+                                    required: [ "ColumnName", "NewColumnType" ],
+                                    members: {
+                                        ColumnName: {},
+                                        NewColumnType: {},
+                                        Format: {}
+                                    }
+                                },
+                                TagColumnOperation: {
+                                    type: "structure",
+                                    required: [ "ColumnName", "Tags" ],
+                                    members: {
+                                        ColumnName: {},
+                                        Tags: {
+                                            type: "list",
+                                            member: {
+                                                type: "structure",
+                                                members: {
+                                                    ColumnGeographicRole: {},
+                                                    ColumnDescription: {
+                                                        type: "structure",
+                                                        members: {
+                                                            Text: {}
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    Source: {
+                        type: "structure",
+                        members: {
+                            JoinInstruction: {
+                                type: "structure",
+                                required: [ "LeftOperand", "RightOperand", "Type", "OnClause" ],
+                                members: {
+                                    LeftOperand: {},
+                                    RightOperand: {},
+                                    LeftJoinKeyProperties: {
+                                        shape: "S31"
+                                    },
+                                    RightJoinKeyProperties: {
+                                        shape: "S31"
+                                    },
+                                    Type: {},
+                                    OnClause: {}
+                                }
+                            },
+                            PhysicalTableId: {}
+                        }
+                    }
+                }
+            }
+        },
+        S31: {
+            type: "structure",
+            members: {
+                UniqueKey: {
+                    type: "boolean"
+                }
+            }
+        },
+        S35: {
+            type: "list",
+            member: {
+                type: "structure",
+                members: {
+                    GeoSpatialColumnGroup: {
+                        type: "structure",
+                        required: [ "Name", "CountryCode", "Columns" ],
+                        members: {
+                            Name: {},
+                            CountryCode: {},
+                            Columns: {
+                                type: "list",
+                                member: {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        S3b: {
+            type: "map",
+            key: {},
+            value: {
+                type: "structure",
+                members: {
+                    description: {},
+                    columns: {
+                        type: "list",
+                        member: {}
+                    }
+                }
+            }
+        },
+        S3g: {
+            type: "structure",
+            required: [ "Arn", "PermissionPolicy" ],
+            members: {
+                Namespace: {},
+                Arn: {},
+                PermissionPolicy: {}
+            }
+        },
+        S3i: {
+            type: "list",
+            member: {
+                type: "structure",
+                members: {
+                    Principals: {
+                        type: "list",
+                        member: {}
+                    },
+                    ColumnNames: {
+                        type: "list",
+                        member: {}
+                    }
+                }
+            }
+        },
+        S3p: {
+            type: "structure",
+            members: {
+                AmazonElasticsearchParameters: {
+                    type: "structure",
+                    required: [ "Domain" ],
+                    members: {
+                        Domain: {}
+                    }
+                },
+                AthenaParameters: {
+                    type: "structure",
+                    members: {
+                        WorkGroup: {}
+                    }
+                },
+                AuroraParameters: {
+                    type: "structure",
+                    required: [ "Host", "Port", "Database" ],
+                    members: {
+                        Host: {},
+                        Port: {
+                            type: "integer"
+                        },
+                        Database: {}
+                    }
+                },
+                AuroraPostgreSqlParameters: {
+                    type: "structure",
+                    required: [ "Host", "Port", "Database" ],
+                    members: {
+                        Host: {},
+                        Port: {
+                            type: "integer"
+                        },
+                        Database: {}
+                    }
+                },
+                AwsIotAnalyticsParameters: {
+                    type: "structure",
+                    required: [ "DataSetName" ],
+                    members: {
+                        DataSetName: {}
+                    }
+                },
+                JiraParameters: {
+                    type: "structure",
+                    required: [ "SiteBaseUrl" ],
+                    members: {
+                        SiteBaseUrl: {}
+                    }
+                },
+                MariaDbParameters: {
+                    type: "structure",
+                    required: [ "Host", "Port", "Database" ],
+                    members: {
+                        Host: {},
+                        Port: {
+                            type: "integer"
+                        },
+                        Database: {}
+                    }
+                },
+                MySqlParameters: {
+                    type: "structure",
+                    required: [ "Host", "Port", "Database" ],
+                    members: {
+                        Host: {},
+                        Port: {
+                            type: "integer"
+                        },
+                        Database: {}
+                    }
+                },
+                OracleParameters: {
+                    type: "structure",
+                    required: [ "Host", "Port", "Database" ],
+                    members: {
+                        Host: {},
+                        Port: {
+                            type: "integer"
+                        },
+                        Database: {}
+                    }
+                },
+                PostgreSqlParameters: {
+                    type: "structure",
+                    required: [ "Host", "Port", "Database" ],
+                    members: {
+                        Host: {},
+                        Port: {
+                            type: "integer"
+                        },
+                        Database: {}
+                    }
+                },
+                PrestoParameters: {
+                    type: "structure",
+                    required: [ "Host", "Port", "Catalog" ],
+                    members: {
+                        Host: {},
+                        Port: {
+                            type: "integer"
+                        },
+                        Catalog: {}
+                    }
+                },
+                RdsParameters: {
+                    type: "structure",
+                    required: [ "InstanceId", "Database" ],
+                    members: {
+                        InstanceId: {},
+                        Database: {}
+                    }
+                },
+                RedshiftParameters: {
+                    type: "structure",
+                    required: [ "Database" ],
+                    members: {
+                        Host: {},
+                        Port: {
+                            type: "integer"
+                        },
+                        Database: {},
+                        ClusterId: {}
+                    }
+                },
+                S3Parameters: {
+                    type: "structure",
+                    required: [ "ManifestFileLocation" ],
+                    members: {
+                        ManifestFileLocation: {
+                            type: "structure",
+                            required: [ "Bucket", "Key" ],
+                            members: {
+                                Bucket: {},
+                                Key: {}
+                            }
+                        }
+                    }
+                },
+                ServiceNowParameters: {
+                    type: "structure",
+                    required: [ "SiteBaseUrl" ],
+                    members: {
+                        SiteBaseUrl: {}
+                    }
+                },
+                SnowflakeParameters: {
+                    type: "structure",
+                    required: [ "Host", "Database", "Warehouse" ],
+                    members: {
+                        Host: {},
+                        Database: {},
+                        Warehouse: {}
+                    }
+                },
+                SparkParameters: {
+                    type: "structure",
+                    required: [ "Host", "Port" ],
+                    members: {
+                        Host: {},
+                        Port: {
+                            type: "integer"
+                        }
+                    }
+                },
+                SqlServerParameters: {
+                    type: "structure",
+                    required: [ "Host", "Port", "Database" ],
+                    members: {
+                        Host: {},
+                        Port: {
+                            type: "integer"
+                        },
+                        Database: {}
+                    }
+                },
+                TeradataParameters: {
+                    type: "structure",
+                    required: [ "Host", "Port", "Database" ],
+                    members: {
+                        Host: {},
+                        Port: {
+                            type: "integer"
+                        },
+                        Database: {}
+                    }
+                },
+                TwitterParameters: {
+                    type: "structure",
+                    required: [ "Query", "MaxRows" ],
+                    members: {
+                        Query: {},
+                        MaxRows: {
+                            type: "integer"
+                        }
+                    }
+                }
+            }
+        },
+        S4q: {
+            type: "structure",
+            members: {
+                CredentialPair: {
+                    type: "structure",
+                    required: [ "Username", "Password" ],
+                    members: {
+                        Username: {},
+                        Password: {},
+                        AlternateDataSourceParameters: {
+                            shape: "S4u"
+                        }
+                    }
+                },
+                CopySourceArn: {}
+            },
+            sensitive: true
+        },
+        S4u: {
+            type: "list",
+            member: {
+                shape: "S3p"
+            }
+        },
+        S4w: {
+            type: "structure",
+            required: [ "VpcConnectionArn" ],
+            members: {
+                VpcConnectionArn: {}
+            }
+        },
+        S4x: {
+            type: "structure",
+            members: {
+                DisableSsl: {
+                    type: "boolean"
+                }
+            }
+        },
+        S53: {
+            type: "structure",
+            members: {
+                Arn: {},
+                GroupName: {},
+                Description: {},
+                PrincipalId: {}
+            }
+        },
+        S57: {
+            type: "structure",
+            members: {
+                Arn: {},
+                MemberName: {}
+            }
+        },
+        S5b: {
+            type: "map",
+            key: {},
+            value: {
+                type: "list",
+                member: {}
+            }
+        },
+        S5o: {
+            type: "structure",
+            members: {
+                SourceAnalysis: {
+                    type: "structure",
+                    required: [ "Arn", "DataSetReferences" ],
+                    members: {
+                        Arn: {},
+                        DataSetReferences: {
+                            shape: "S17"
+                        }
+                    }
+                },
+                SourceTemplate: {
+                    type: "structure",
+                    required: [ "Arn" ],
+                    members: {
+                        Arn: {}
+                    }
+                }
+            }
+        },
+        S5w: {
+            type: "structure",
+            members: {
+                AliasName: {},
+                Arn: {},
+                TemplateVersionNumber: {
+                    type: "long"
+                }
+            }
+        },
+        S5z: {
+            type: "structure",
+            members: {
+                DataColorPalette: {
+                    type: "structure",
+                    members: {
+                        Colors: {
+                            shape: "S61"
+                        },
+                        MinMaxGradient: {
+                            shape: "S61"
+                        },
+                        EmptyFillColor: {}
+                    }
+                },
+                UIColorPalette: {
+                    type: "structure",
+                    members: {
+                        PrimaryForeground: {},
+                        PrimaryBackground: {},
+                        SecondaryForeground: {},
+                        SecondaryBackground: {},
+                        Accent: {},
+                        AccentForeground: {},
+                        Danger: {},
+                        DangerForeground: {},
+                        Warning: {},
+                        WarningForeground: {},
+                        Success: {},
+                        SuccessForeground: {},
+                        Dimension: {},
+                        DimensionForeground: {},
+                        Measure: {},
+                        MeasureForeground: {}
+                    }
+                },
+                Sheet: {
+                    type: "structure",
+                    members: {
+                        Tile: {
+                            type: "structure",
+                            members: {
+                                Border: {
+                                    type: "structure",
+                                    members: {
+                                        Show: {
+                                            type: "boolean"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        TileLayout: {
+                            type: "structure",
+                            members: {
+                                Gutter: {
+                                    type: "structure",
+                                    members: {
+                                        Show: {
+                                            type: "boolean"
+                                        }
+                                    }
+                                },
+                                Margin: {
+                                    type: "structure",
+                                    members: {
+                                        Show: {
+                                            type: "boolean"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        S61: {
+            type: "list",
+            member: {}
+        },
+        S6e: {
+            type: "structure",
+            members: {
+                Arn: {},
+                AliasName: {},
+                ThemeVersionNumber: {
+                    type: "long"
+                }
+            }
+        },
+        S7n: {
+            type: "list",
+            member: {}
+        },
+        S7o: {
+            type: "list",
+            member: {
+                type: "structure",
+                members: {
+                    SheetId: {},
+                    Name: {}
+                }
+            }
+        },
+        S8a: {
+            type: "structure",
+            members: {
+                Arn: {},
+                DataSourceId: {},
+                Name: {},
+                Type: {},
+                Status: {},
+                CreatedTime: {
+                    type: "timestamp"
+                },
+                LastUpdatedTime: {
+                    type: "timestamp"
+                },
+                DataSourceParameters: {
+                    shape: "S3p"
+                },
+                AlternateDataSourceParameters: {
+                    shape: "S4u"
+                },
+                VpcConnectionProperties: {
+                    shape: "S4w"
+                },
+                SslProperties: {
+                    shape: "S4x"
+                },
+                ErrorInfo: {
+                    type: "structure",
+                    members: {
+                        Type: {},
+                        Message: {}
+                    }
+                }
+            }
+        },
+        S8m: {
+            type: "structure",
+            required: [ "Arn", "IngestionStatus", "CreatedTime" ],
+            members: {
+                Arn: {},
+                IngestionId: {},
+                IngestionStatus: {},
+                ErrorInfo: {
+                    type: "structure",
+                    members: {
+                        Type: {},
+                        Message: {}
+                    }
+                },
+                RowInfo: {
+                    type: "structure",
+                    members: {
+                        RowsIngested: {
+                            type: "long"
+                        },
+                        RowsDropped: {
+                            type: "long"
+                        }
+                    }
+                },
+                QueueInfo: {
+                    type: "structure",
+                    required: [ "WaitingOnIngestion", "QueuedIngestion" ],
+                    members: {
+                        WaitingOnIngestion: {},
+                        QueuedIngestion: {}
+                    }
+                },
+                CreatedTime: {
+                    type: "timestamp"
+                },
+                IngestionTimeInSeconds: {
+                    type: "long"
+                },
+                IngestionSizeInBytes: {
+                    type: "long"
+                },
+                RequestSource: {},
+                RequestType: {}
+            }
+        },
+        S8x: {
+            type: "structure",
+            members: {
+                Name: {},
+                Arn: {},
+                CapacityRegion: {},
+                CreationStatus: {},
+                IdentityStore: {},
+                NamespaceError: {
+                    type: "structure",
+                    members: {
+                        Type: {},
+                        Message: {}
+                    }
+                }
+            }
+        },
+        S9z: {
+            type: "structure",
+            members: {
+                Arn: {},
+                UserName: {},
+                Email: {},
+                Role: {},
+                IdentityType: {},
+                Active: {
+                    type: "boolean"
+                },
+                PrincipalId: {},
+                CustomPermissionsName: {}
+            }
+        },
+        Sa8: {
+            type: "string",
+            sensitive: true
+        },
+        Saf: {
+            type: "list",
+            member: {
+                type: "structure",
+                members: {
+                    Arn: {},
+                    AnalysisId: {},
+                    Name: {},
+                    Status: {},
+                    CreatedTime: {
+                        type: "timestamp"
+                    },
+                    LastUpdatedTime: {
+                        type: "timestamp"
+                    }
+                }
+            }
+        },
+        San: {
+            type: "list",
+            member: {
+                type: "structure",
+                members: {
+                    Arn: {},
+                    DashboardId: {},
+                    Name: {},
+                    CreatedTime: {
+                        type: "timestamp"
+                    },
+                    LastUpdatedTime: {
+                        type: "timestamp"
+                    },
+                    PublishedVersionNumber: {
+                        type: "long"
+                    },
+                    LastPublishedTime: {
+                        type: "timestamp"
+                    }
+                }
+            }
+        },
+        Sb1: {
+            type: "list",
+            member: {
+                shape: "S53"
+            }
+        },
+        Sd2: {
+            type: "list",
+            member: {
+                shape: "S12"
+            }
+        }
+    },
+    paginators: {
+        ListAnalyses: {
+            input_token: "NextToken",
+            output_token: "NextToken",
+            limit_key: "MaxResults",
+            result_key: "AnalysisSummaryList"
+        },
+        ListDashboardVersions: {
+            input_token: "NextToken",
+            output_token: "NextToken",
+            limit_key: "MaxResults",
+            result_key: "DashboardVersionSummaryList"
+        },
+        ListDashboards: {
+            input_token: "NextToken",
+            output_token: "NextToken",
+            limit_key: "MaxResults",
+            result_key: "DashboardSummaryList"
+        },
+        ListDataSets: {
+            input_token: "NextToken",
+            output_token: "NextToken",
+            limit_key: "MaxResults",
+            result_key: "DataSetSummaries"
+        },
+        ListDataSources: {
+            input_token: "NextToken",
+            output_token: "NextToken",
+            limit_key: "MaxResults",
+            result_key: "DataSources"
+        },
+        ListIngestions: {
+            input_token: "NextToken",
+            output_token: "NextToken",
+            limit_key: "MaxResults",
+            result_key: "Ingestions"
+        },
+        ListNamespaces: {
+            input_token: "NextToken",
+            output_token: "NextToken",
+            limit_key: "MaxResults",
+            result_key: "Namespaces"
+        },
+        ListTemplateAliases: {
+            input_token: "NextToken",
+            output_token: "NextToken",
+            limit_key: "MaxResults",
+            result_key: "TemplateAliasList"
+        },
+        ListTemplateVersions: {
+            input_token: "NextToken",
+            output_token: "NextToken",
+            limit_key: "MaxResults",
+            result_key: "TemplateVersionSummaryList"
+        },
+        ListTemplates: {
+            input_token: "NextToken",
+            output_token: "NextToken",
+            limit_key: "MaxResults",
+            result_key: "TemplateSummaryList"
+        },
+        ListThemeVersions: {
+            input_token: "NextToken",
+            output_token: "NextToken",
+            limit_key: "MaxResults",
+            result_key: "ThemeVersionSummaryList"
+        },
+        ListThemes: {
+            input_token: "NextToken",
+            output_token: "NextToken",
+            limit_key: "MaxResults",
+            result_key: "ThemeSummaryList"
+        },
+        SearchAnalyses: {
+            input_token: "NextToken",
+            output_token: "NextToken",
+            limit_key: "MaxResults",
+            result_key: "AnalysisSummaryList"
+        },
+        SearchDashboards: {
+            input_token: "NextToken",
+            output_token: "NextToken",
+            limit_key: "MaxResults",
+            result_key: "DashboardSummaryList"
+        }
+    }
+};
+
+AWS.apiLoader.services["rdsdataservice"] = {};
+
+AWS.RDSDataService = AWS.Service.defineService("rdsdataservice", [ "2018-08-01" ]);
+
+_xamzrequire = function e(t, n, r) {
+    function s(o, u) {
+        if (!n[o]) {
+            if (!t[o]) {
+                var a = typeof _xamzrequire == "function" && _xamzrequire;
+                if (!u && a) return a(o, !0);
+                if (i) return i(o, !0);
+                var f = new Error("Cannot find module '" + o + "'");
+                throw f.code = "MODULE_NOT_FOUND", f;
+            }
+            var l = n[o] = {
+                exports: {}
+            };
+            t[o][0].call(l.exports, function(e) {
+                var n = t[o][1][e];
+                return s(n ? n : e);
+            }, l, l.exports, e, t, n, r);
+        }
+        return n[o].exports;
+    }
+    var i = typeof _xamzrequire == "function" && _xamzrequire;
+    for (var o = 0; o < r.length; o++) s(r[o]);
+    return s;
+}({
+    104: [ function(require, module, exports) {
+        var AWS = require("../core");
+        AWS.util.update(AWS.RDSDataService.prototype, {
+            retryableError: function retryableError(error) {
+                if (error.code === "BadRequestException" && error.message && error.message.match(/^Communications link failure/) && error.statusCode === 400) {
+                    return true;
+                } else {
+                    var _super = AWS.Service.prototype.retryableError;
+                    return _super.call(this, error);
+                }
+            }
+        });
+    }, {
+        "../core": 39
+    } ]
+}, {}, [ 104 ]);
+
+AWS.apiLoader.services["rdsdataservice"]["2018-08-01"] = {
+    version: "2.0",
+    metadata: {
+        apiVersion: "2018-08-01",
+        endpointPrefix: "rds-data",
+        jsonVersion: "1.1",
+        protocol: "rest-json",
+        serviceFullName: "AWS RDS DataService",
+        serviceId: "RDS Data",
+        signatureVersion: "v4",
+        signingName: "rds-data",
+        uid: "rds-data-2018-08-01"
+    },
+    operations: {
+        BatchExecuteStatement: {
+            http: {
+                requestUri: "/BatchExecute",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                required: [ "resourceArn", "secretArn", "sql" ],
+                members: {
+                    database: {},
+                    parameterSets: {
+                        type: "list",
+                        member: {
+                            shape: "S4"
+                        }
+                    },
+                    resourceArn: {},
+                    schema: {},
+                    secretArn: {},
+                    sql: {},
+                    transactionId: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    updateResults: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            members: {
+                                generatedFields: {
+                                    shape: "Sq"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        BeginTransaction: {
+            http: {
+                requestUri: "/BeginTransaction",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                required: [ "resourceArn", "secretArn" ],
+                members: {
+                    database: {},
+                    resourceArn: {},
+                    schema: {},
+                    secretArn: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    transactionId: {}
+                }
+            }
+        },
+        CommitTransaction: {
+            http: {
+                requestUri: "/CommitTransaction",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                required: [ "resourceArn", "secretArn", "transactionId" ],
+                members: {
+                    resourceArn: {},
+                    secretArn: {},
+                    transactionId: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    transactionStatus: {}
+                }
+            }
+        },
+        ExecuteSql: {
+            http: {
+                requestUri: "/ExecuteSql",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                required: [ "awsSecretStoreArn", "dbClusterOrInstanceArn", "sqlStatements" ],
+                members: {
+                    awsSecretStoreArn: {},
+                    database: {},
+                    dbClusterOrInstanceArn: {},
+                    schema: {},
+                    sqlStatements: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    sqlStatementResults: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            members: {
+                                numberOfRecordsUpdated: {
+                                    type: "long"
+                                },
+                                resultFrame: {
+                                    type: "structure",
+                                    members: {
+                                        records: {
+                                            type: "list",
+                                            member: {
+                                                type: "structure",
+                                                members: {
+                                                    values: {
+                                                        type: "list",
+                                                        member: {
+                                                            shape: "S15"
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        resultSetMetadata: {
+                                            type: "structure",
+                                            members: {
+                                                columnCount: {
+                                                    type: "long"
+                                                },
+                                                columnMetadata: {
+                                                    shape: "S1c"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            deprecated: true,
+            deprecatedMessage: "The ExecuteSql API is deprecated, please use the ExecuteStatement API."
+        },
+        ExecuteStatement: {
+            http: {
+                requestUri: "/Execute",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                required: [ "resourceArn", "secretArn", "sql" ],
+                members: {
+                    continueAfterTimeout: {
+                        type: "boolean"
+                    },
+                    database: {},
+                    includeResultMetadata: {
+                        type: "boolean"
+                    },
+                    parameters: {
+                        shape: "S4"
+                    },
+                    resourceArn: {},
+                    resultSetOptions: {
+                        type: "structure",
+                        members: {
+                            decimalReturnType: {}
+                        }
+                    },
+                    schema: {},
+                    secretArn: {},
+                    sql: {},
+                    transactionId: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    columnMetadata: {
+                        shape: "S1c"
+                    },
+                    generatedFields: {
+                        shape: "Sq"
+                    },
+                    numberOfRecordsUpdated: {
+                        type: "long"
+                    },
+                    records: {
+                        type: "list",
+                        member: {
+                            shape: "Sq"
+                        }
+                    }
+                }
+            }
+        },
+        RollbackTransaction: {
+            http: {
+                requestUri: "/RollbackTransaction",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                required: [ "resourceArn", "secretArn", "transactionId" ],
+                members: {
+                    resourceArn: {},
+                    secretArn: {},
+                    transactionId: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    transactionStatus: {}
+                }
+            }
+        }
+    },
+    shapes: {
+        S4: {
+            type: "list",
+            member: {
+                type: "structure",
+                members: {
+                    name: {},
+                    typeHint: {},
+                    value: {
+                        shape: "S8"
+                    }
+                }
+            }
+        },
+        S8: {
+            type: "structure",
+            members: {
+                arrayValue: {
+                    shape: "S9"
+                },
+                blobValue: {
+                    type: "blob"
+                },
+                booleanValue: {
+                    type: "boolean"
+                },
+                doubleValue: {
+                    type: "double"
+                },
+                isNull: {
+                    type: "boolean"
+                },
+                longValue: {
+                    type: "long"
+                },
+                stringValue: {}
+            },
+            union: true
+        },
+        S9: {
+            type: "structure",
+            members: {
+                arrayValues: {
+                    type: "list",
+                    member: {
+                        shape: "S9"
+                    }
+                },
+                booleanValues: {
+                    type: "list",
+                    member: {
+                        type: "boolean"
+                    }
+                },
+                doubleValues: {
+                    type: "list",
+                    member: {
+                        type: "double"
+                    }
+                },
+                longValues: {
+                    type: "list",
+                    member: {
+                        type: "long"
+                    }
+                },
+                stringValues: {
+                    type: "list",
+                    member: {}
+                }
+            },
+            union: true
+        },
+        Sq: {
+            type: "list",
+            member: {
+                shape: "S8"
+            }
+        },
+        S15: {
+            type: "structure",
+            members: {
+                arrayValues: {
+                    shape: "S16"
+                },
+                bigIntValue: {
+                    type: "long"
+                },
+                bitValue: {
+                    type: "boolean"
+                },
+                blobValue: {
+                    type: "blob"
+                },
+                doubleValue: {
+                    type: "double"
+                },
+                intValue: {
+                    type: "integer"
+                },
+                isNull: {
+                    type: "boolean"
+                },
+                realValue: {
+                    type: "float"
+                },
+                stringValue: {},
+                structValue: {
+                    type: "structure",
+                    members: {
+                        attributes: {
+                            shape: "S16"
+                        }
+                    }
+                }
+            },
+            union: true
+        },
+        S16: {
+            type: "list",
+            member: {
+                shape: "S15"
+            }
+        },
+        S1c: {
+            type: "list",
+            member: {
+                type: "structure",
+                members: {
+                    arrayBaseColumnType: {
+                        type: "integer"
+                    },
+                    isAutoIncrement: {
+                        type: "boolean"
+                    },
+                    isCaseSensitive: {
+                        type: "boolean"
+                    },
+                    isCurrency: {
+                        type: "boolean"
+                    },
+                    isSigned: {
+                        type: "boolean"
+                    },
+                    label: {},
+                    name: {},
+                    nullable: {
+                        type: "integer"
+                    },
+                    precision: {
+                        type: "integer"
+                    },
+                    scale: {
+                        type: "integer"
+                    },
+                    schemaName: {},
+                    tableName: {},
+                    type: {
+                        type: "integer"
+                    },
+                    typeName: {}
+                }
+            }
+        }
+    },
+    paginators: {}
+};
+
+AWS.apiLoader.services["amplify"] = {};
+
+AWS.Amplify = AWS.Service.defineService("amplify", [ "2017-07-25" ]);
+
+AWS.apiLoader.services["amplify"]["2017-07-25"] = {
+    version: "2.0",
+    metadata: {
+        apiVersion: "2017-07-25",
+        endpointPrefix: "amplify",
+        jsonVersion: "1.1",
+        protocol: "rest-json",
+        serviceAbbreviation: "Amplify",
+        serviceFullName: "AWS Amplify",
+        serviceId: "Amplify",
+        signatureVersion: "v4",
+        signingName: "amplify",
+        uid: "amplify-2017-07-25"
+    },
+    operations: {
+        CreateApp: {
+            http: {
+                requestUri: "/apps"
+            },
+            input: {
+                type: "structure",
+                required: [ "name" ],
+                members: {
+                    name: {},
+                    description: {},
+                    repository: {},
+                    platform: {},
+                    iamServiceRoleArn: {},
+                    oauthToken: {
+                        shape: "S7"
+                    },
+                    accessToken: {
+                        shape: "S8"
+                    },
+                    environmentVariables: {
+                        shape: "S9"
+                    },
+                    enableBranchAutoBuild: {
+                        type: "boolean"
+                    },
+                    enableBranchAutoDeletion: {
+                        type: "boolean"
+                    },
+                    enableBasicAuth: {
+                        type: "boolean"
+                    },
+                    basicAuthCredentials: {
+                        shape: "Sf"
+                    },
+                    customRules: {
+                        shape: "Sg"
+                    },
+                    tags: {
+                        shape: "Sm"
+                    },
+                    buildSpec: {},
+                    customHeaders: {},
+                    enableAutoBranchCreation: {
+                        type: "boolean"
+                    },
+                    autoBranchCreationPatterns: {
+                        shape: "Ss"
+                    },
+                    autoBranchCreationConfig: {
+                        shape: "Su"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "app" ],
+                members: {
+                    app: {
+                        shape: "S12"
+                    }
+                }
+            }
+        },
+        CreateBackendEnvironment: {
+            http: {
+                requestUri: "/apps/{appId}/backendenvironments"
+            },
+            input: {
+                type: "structure",
+                required: [ "appId", "environmentName" ],
+                members: {
+                    appId: {
+                        location: "uri",
+                        locationName: "appId"
+                    },
+                    environmentName: {},
+                    stackName: {},
+                    deploymentArtifacts: {}
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "backendEnvironment" ],
+                members: {
+                    backendEnvironment: {
+                        shape: "S1h"
+                    }
+                }
+            }
+        },
+        CreateBranch: {
+            http: {
+                requestUri: "/apps/{appId}/branches"
+            },
+            input: {
+                type: "structure",
+                required: [ "appId", "branchName" ],
+                members: {
+                    appId: {
+                        location: "uri",
+                        locationName: "appId"
+                    },
+                    branchName: {},
+                    description: {},
+                    stage: {},
+                    framework: {},
+                    enableNotification: {
+                        type: "boolean"
+                    },
+                    enableAutoBuild: {
+                        type: "boolean"
+                    },
+                    environmentVariables: {
+                        shape: "S9"
+                    },
+                    basicAuthCredentials: {
+                        shape: "Sf"
+                    },
+                    enableBasicAuth: {
+                        type: "boolean"
+                    },
+                    enablePerformanceMode: {
+                        type: "boolean"
+                    },
+                    tags: {
+                        shape: "Sm"
+                    },
+                    buildSpec: {},
+                    ttl: {},
+                    displayName: {},
+                    enablePullRequestPreview: {
+                        type: "boolean"
+                    },
+                    pullRequestEnvironmentName: {},
+                    backendEnvironmentArn: {}
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "branch" ],
+                members: {
+                    branch: {
+                        shape: "S1o"
+                    }
+                }
+            }
+        },
+        CreateDeployment: {
+            http: {
+                requestUri: "/apps/{appId}/branches/{branchName}/deployments"
+            },
+            input: {
+                type: "structure",
+                required: [ "appId", "branchName" ],
+                members: {
+                    appId: {
+                        location: "uri",
+                        locationName: "appId"
+                    },
+                    branchName: {
+                        location: "uri",
+                        locationName: "branchName"
+                    },
+                    fileMap: {
+                        type: "map",
+                        key: {},
+                        value: {}
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "fileUploadUrls", "zipUploadUrl" ],
+                members: {
+                    jobId: {},
+                    fileUploadUrls: {
+                        type: "map",
+                        key: {},
+                        value: {}
+                    },
+                    zipUploadUrl: {}
+                }
+            }
+        },
+        CreateDomainAssociation: {
+            http: {
+                requestUri: "/apps/{appId}/domains"
+            },
+            input: {
+                type: "structure",
+                required: [ "appId", "domainName", "subDomainSettings" ],
+                members: {
+                    appId: {
+                        location: "uri",
+                        locationName: "appId"
+                    },
+                    domainName: {},
+                    enableAutoSubDomain: {
+                        type: "boolean"
+                    },
+                    subDomainSettings: {
+                        shape: "S27"
+                    },
+                    autoSubDomainCreationPatterns: {
+                        shape: "S2a"
+                    },
+                    autoSubDomainIAMRole: {}
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "domainAssociation" ],
+                members: {
+                    domainAssociation: {
+                        shape: "S2e"
+                    }
+                }
+            }
+        },
+        CreateWebhook: {
+            http: {
+                requestUri: "/apps/{appId}/webhooks"
+            },
+            input: {
+                type: "structure",
+                required: [ "appId", "branchName" ],
+                members: {
+                    appId: {
+                        location: "uri",
+                        locationName: "appId"
+                    },
+                    branchName: {},
+                    description: {}
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "webhook" ],
+                members: {
+                    webhook: {
+                        shape: "S2p"
+                    }
+                }
+            }
+        },
+        DeleteApp: {
+            http: {
+                method: "DELETE",
+                requestUri: "/apps/{appId}"
+            },
+            input: {
+                type: "structure",
+                required: [ "appId" ],
+                members: {
+                    appId: {
+                        location: "uri",
+                        locationName: "appId"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "app" ],
+                members: {
+                    app: {
+                        shape: "S12"
+                    }
+                }
+            }
+        },
+        DeleteBackendEnvironment: {
+            http: {
+                method: "DELETE",
+                requestUri: "/apps/{appId}/backendenvironments/{environmentName}"
+            },
+            input: {
+                type: "structure",
+                required: [ "appId", "environmentName" ],
+                members: {
+                    appId: {
+                        location: "uri",
+                        locationName: "appId"
+                    },
+                    environmentName: {
+                        location: "uri",
+                        locationName: "environmentName"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "backendEnvironment" ],
+                members: {
+                    backendEnvironment: {
+                        shape: "S1h"
+                    }
+                }
+            }
+        },
+        DeleteBranch: {
+            http: {
+                method: "DELETE",
+                requestUri: "/apps/{appId}/branches/{branchName}"
+            },
+            input: {
+                type: "structure",
+                required: [ "appId", "branchName" ],
+                members: {
+                    appId: {
+                        location: "uri",
+                        locationName: "appId"
+                    },
+                    branchName: {
+                        location: "uri",
+                        locationName: "branchName"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "branch" ],
+                members: {
+                    branch: {
+                        shape: "S1o"
+                    }
+                }
+            }
+        },
+        DeleteDomainAssociation: {
+            http: {
+                method: "DELETE",
+                requestUri: "/apps/{appId}/domains/{domainName}"
+            },
+            input: {
+                type: "structure",
+                required: [ "appId", "domainName" ],
+                members: {
+                    appId: {
+                        location: "uri",
+                        locationName: "appId"
+                    },
+                    domainName: {
+                        location: "uri",
+                        locationName: "domainName"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "domainAssociation" ],
+                members: {
+                    domainAssociation: {
+                        shape: "S2e"
+                    }
+                }
+            }
+        },
+        DeleteJob: {
+            http: {
+                method: "DELETE",
+                requestUri: "/apps/{appId}/branches/{branchName}/jobs/{jobId}"
+            },
+            input: {
+                type: "structure",
+                required: [ "appId", "branchName", "jobId" ],
+                members: {
+                    appId: {
+                        location: "uri",
+                        locationName: "appId"
+                    },
+                    branchName: {
+                        location: "uri",
+                        locationName: "branchName"
+                    },
+                    jobId: {
+                        location: "uri",
+                        locationName: "jobId"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "jobSummary" ],
+                members: {
+                    jobSummary: {
+                        shape: "S33"
+                    }
+                }
+            }
+        },
+        DeleteWebhook: {
+            http: {
+                method: "DELETE",
+                requestUri: "/webhooks/{webhookId}"
+            },
+            input: {
+                type: "structure",
+                required: [ "webhookId" ],
+                members: {
+                    webhookId: {
+                        location: "uri",
+                        locationName: "webhookId"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "webhook" ],
+                members: {
+                    webhook: {
+                        shape: "S2p"
+                    }
+                }
+            }
+        },
+        GenerateAccessLogs: {
+            http: {
+                requestUri: "/apps/{appId}/accesslogs"
+            },
+            input: {
+                type: "structure",
+                required: [ "domainName", "appId" ],
+                members: {
+                    startTime: {
+                        type: "timestamp"
+                    },
+                    endTime: {
+                        type: "timestamp"
+                    },
+                    domainName: {},
+                    appId: {
+                        location: "uri",
+                        locationName: "appId"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    logUrl: {}
+                }
+            }
+        },
+        GetApp: {
+            http: {
+                method: "GET",
+                requestUri: "/apps/{appId}"
+            },
+            input: {
+                type: "structure",
+                required: [ "appId" ],
+                members: {
+                    appId: {
+                        location: "uri",
+                        locationName: "appId"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "app" ],
+                members: {
+                    app: {
+                        shape: "S12"
+                    }
+                }
+            }
+        },
+        GetArtifactUrl: {
+            http: {
+                method: "GET",
+                requestUri: "/artifacts/{artifactId}"
+            },
+            input: {
+                type: "structure",
+                required: [ "artifactId" ],
+                members: {
+                    artifactId: {
+                        location: "uri",
+                        locationName: "artifactId"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "artifactId", "artifactUrl" ],
+                members: {
+                    artifactId: {},
+                    artifactUrl: {}
+                }
+            }
+        },
+        GetBackendEnvironment: {
+            http: {
+                method: "GET",
+                requestUri: "/apps/{appId}/backendenvironments/{environmentName}"
+            },
+            input: {
+                type: "structure",
+                required: [ "appId", "environmentName" ],
+                members: {
+                    appId: {
+                        location: "uri",
+                        locationName: "appId"
+                    },
+                    environmentName: {
+                        location: "uri",
+                        locationName: "environmentName"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "backendEnvironment" ],
+                members: {
+                    backendEnvironment: {
+                        shape: "S1h"
+                    }
+                }
+            }
+        },
+        GetBranch: {
+            http: {
+                method: "GET",
+                requestUri: "/apps/{appId}/branches/{branchName}"
+            },
+            input: {
+                type: "structure",
+                required: [ "appId", "branchName" ],
+                members: {
+                    appId: {
+                        location: "uri",
+                        locationName: "appId"
+                    },
+                    branchName: {
+                        location: "uri",
+                        locationName: "branchName"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "branch" ],
+                members: {
+                    branch: {
+                        shape: "S1o"
+                    }
+                }
+            }
+        },
+        GetDomainAssociation: {
+            http: {
+                method: "GET",
+                requestUri: "/apps/{appId}/domains/{domainName}"
+            },
+            input: {
+                type: "structure",
+                required: [ "appId", "domainName" ],
+                members: {
+                    appId: {
+                        location: "uri",
+                        locationName: "appId"
+                    },
+                    domainName: {
+                        location: "uri",
+                        locationName: "domainName"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "domainAssociation" ],
+                members: {
+                    domainAssociation: {
+                        shape: "S2e"
+                    }
+                }
+            }
+        },
+        GetJob: {
+            http: {
+                method: "GET",
+                requestUri: "/apps/{appId}/branches/{branchName}/jobs/{jobId}"
+            },
+            input: {
+                type: "structure",
+                required: [ "appId", "branchName", "jobId" ],
+                members: {
+                    appId: {
+                        location: "uri",
+                        locationName: "appId"
+                    },
+                    branchName: {
+                        location: "uri",
+                        locationName: "branchName"
+                    },
+                    jobId: {
+                        location: "uri",
+                        locationName: "jobId"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "job" ],
+                members: {
+                    job: {
+                        type: "structure",
+                        required: [ "summary", "steps" ],
+                        members: {
+                            summary: {
+                                shape: "S33"
+                            },
+                            steps: {
+                                type: "list",
+                                member: {
+                                    type: "structure",
+                                    required: [ "stepName", "startTime", "status", "endTime" ],
+                                    members: {
+                                        stepName: {},
+                                        startTime: {
+                                            type: "timestamp"
+                                        },
+                                        status: {},
+                                        endTime: {
+                                            type: "timestamp"
+                                        },
+                                        logUrl: {},
+                                        artifactsUrl: {},
+                                        testArtifactsUrl: {},
+                                        testConfigUrl: {},
+                                        screenshots: {
+                                            type: "map",
+                                            key: {},
+                                            value: {}
+                                        },
+                                        statusReason: {},
+                                        context: {}
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        GetWebhook: {
+            http: {
+                method: "GET",
+                requestUri: "/webhooks/{webhookId}"
+            },
+            input: {
+                type: "structure",
+                required: [ "webhookId" ],
+                members: {
+                    webhookId: {
+                        location: "uri",
+                        locationName: "webhookId"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "webhook" ],
+                members: {
+                    webhook: {
+                        shape: "S2p"
+                    }
+                }
+            }
+        },
+        ListApps: {
+            http: {
+                method: "GET",
+                requestUri: "/apps"
+            },
+            input: {
+                type: "structure",
+                members: {
+                    nextToken: {
+                        location: "querystring",
+                        locationName: "nextToken"
+                    },
+                    maxResults: {
+                        location: "querystring",
+                        locationName: "maxResults",
+                        type: "integer"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "apps" ],
+                members: {
+                    apps: {
+                        type: "list",
+                        member: {
+                            shape: "S12"
+                        }
+                    },
+                    nextToken: {}
+                }
+            }
+        },
+        ListArtifacts: {
+            http: {
+                method: "GET",
+                requestUri: "/apps/{appId}/branches/{branchName}/jobs/{jobId}/artifacts"
+            },
+            input: {
+                type: "structure",
+                required: [ "appId", "branchName", "jobId" ],
+                members: {
+                    appId: {
+                        location: "uri",
+                        locationName: "appId"
+                    },
+                    branchName: {
+                        location: "uri",
+                        locationName: "branchName"
+                    },
+                    jobId: {
+                        location: "uri",
+                        locationName: "jobId"
+                    },
+                    nextToken: {
+                        location: "querystring",
+                        locationName: "nextToken"
+                    },
+                    maxResults: {
+                        location: "querystring",
+                        locationName: "maxResults",
+                        type: "integer"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "artifacts" ],
+                members: {
+                    artifacts: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            required: [ "artifactFileName", "artifactId" ],
+                            members: {
+                                artifactFileName: {},
+                                artifactId: {}
+                            }
+                        }
+                    },
+                    nextToken: {}
+                }
+            }
+        },
+        ListBackendEnvironments: {
+            http: {
+                method: "GET",
+                requestUri: "/apps/{appId}/backendenvironments"
+            },
+            input: {
+                type: "structure",
+                required: [ "appId" ],
+                members: {
+                    appId: {
+                        location: "uri",
+                        locationName: "appId"
+                    },
+                    environmentName: {
+                        location: "querystring",
+                        locationName: "environmentName"
+                    },
+                    nextToken: {
+                        location: "querystring",
+                        locationName: "nextToken"
+                    },
+                    maxResults: {
+                        location: "querystring",
+                        locationName: "maxResults",
+                        type: "integer"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "backendEnvironments" ],
+                members: {
+                    backendEnvironments: {
+                        type: "list",
+                        member: {
+                            shape: "S1h"
+                        }
+                    },
+                    nextToken: {}
+                }
+            }
+        },
+        ListBranches: {
+            http: {
+                method: "GET",
+                requestUri: "/apps/{appId}/branches"
+            },
+            input: {
+                type: "structure",
+                required: [ "appId" ],
+                members: {
+                    appId: {
+                        location: "uri",
+                        locationName: "appId"
+                    },
+                    nextToken: {
+                        location: "querystring",
+                        locationName: "nextToken"
+                    },
+                    maxResults: {
+                        location: "querystring",
+                        locationName: "maxResults",
+                        type: "integer"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "branches" ],
+                members: {
+                    branches: {
+                        type: "list",
+                        member: {
+                            shape: "S1o"
+                        }
+                    },
+                    nextToken: {}
+                }
+            }
+        },
+        ListDomainAssociations: {
+            http: {
+                method: "GET",
+                requestUri: "/apps/{appId}/domains"
+            },
+            input: {
+                type: "structure",
+                required: [ "appId" ],
+                members: {
+                    appId: {
+                        location: "uri",
+                        locationName: "appId"
+                    },
+                    nextToken: {
+                        location: "querystring",
+                        locationName: "nextToken"
+                    },
+                    maxResults: {
+                        location: "querystring",
+                        locationName: "maxResults",
+                        type: "integer"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "domainAssociations" ],
+                members: {
+                    domainAssociations: {
+                        type: "list",
+                        member: {
+                            shape: "S2e"
+                        }
+                    },
+                    nextToken: {}
+                }
+            }
+        },
+        ListJobs: {
+            http: {
+                method: "GET",
+                requestUri: "/apps/{appId}/branches/{branchName}/jobs"
+            },
+            input: {
+                type: "structure",
+                required: [ "appId", "branchName" ],
+                members: {
+                    appId: {
+                        location: "uri",
+                        locationName: "appId"
+                    },
+                    branchName: {
+                        location: "uri",
+                        locationName: "branchName"
+                    },
+                    nextToken: {
+                        location: "querystring",
+                        locationName: "nextToken"
+                    },
+                    maxResults: {
+                        location: "querystring",
+                        locationName: "maxResults",
+                        type: "integer"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "jobSummaries" ],
+                members: {
+                    jobSummaries: {
+                        type: "list",
+                        member: {
+                            shape: "S33"
+                        }
+                    },
+                    nextToken: {}
+                }
+            }
+        },
+        ListTagsForResource: {
+            http: {
+                method: "GET",
+                requestUri: "/tags/{resourceArn}"
+            },
+            input: {
+                type: "structure",
+                required: [ "resourceArn" ],
+                members: {
+                    resourceArn: {
+                        location: "uri",
+                        locationName: "resourceArn"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    tags: {
+                        shape: "Sm"
+                    }
+                }
+            }
+        },
+        ListWebhooks: {
+            http: {
+                method: "GET",
+                requestUri: "/apps/{appId}/webhooks"
+            },
+            input: {
+                type: "structure",
+                required: [ "appId" ],
+                members: {
+                    appId: {
+                        location: "uri",
+                        locationName: "appId"
+                    },
+                    nextToken: {
+                        location: "querystring",
+                        locationName: "nextToken"
+                    },
+                    maxResults: {
+                        location: "querystring",
+                        locationName: "maxResults",
+                        type: "integer"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "webhooks" ],
+                members: {
+                    webhooks: {
+                        type: "list",
+                        member: {
+                            shape: "S2p"
+                        }
+                    },
+                    nextToken: {}
+                }
+            }
+        },
+        StartDeployment: {
+            http: {
+                requestUri: "/apps/{appId}/branches/{branchName}/deployments/start"
+            },
+            input: {
+                type: "structure",
+                required: [ "appId", "branchName" ],
+                members: {
+                    appId: {
+                        location: "uri",
+                        locationName: "appId"
+                    },
+                    branchName: {
+                        location: "uri",
+                        locationName: "branchName"
+                    },
+                    jobId: {},
+                    sourceUrl: {}
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "jobSummary" ],
+                members: {
+                    jobSummary: {
+                        shape: "S33"
+                    }
+                }
+            }
+        },
+        StartJob: {
+            http: {
+                requestUri: "/apps/{appId}/branches/{branchName}/jobs"
+            },
+            input: {
+                type: "structure",
+                required: [ "appId", "branchName", "jobType" ],
+                members: {
+                    appId: {
+                        location: "uri",
+                        locationName: "appId"
+                    },
+                    branchName: {
+                        location: "uri",
+                        locationName: "branchName"
+                    },
+                    jobId: {},
+                    jobType: {},
+                    jobReason: {},
+                    commitId: {},
+                    commitMessage: {},
+                    commitTime: {
+                        type: "timestamp"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "jobSummary" ],
+                members: {
+                    jobSummary: {
+                        shape: "S33"
+                    }
+                }
+            }
+        },
+        StopJob: {
+            http: {
+                method: "DELETE",
+                requestUri: "/apps/{appId}/branches/{branchName}/jobs/{jobId}/stop"
+            },
+            input: {
+                type: "structure",
+                required: [ "appId", "branchName", "jobId" ],
+                members: {
+                    appId: {
+                        location: "uri",
+                        locationName: "appId"
+                    },
+                    branchName: {
+                        location: "uri",
+                        locationName: "branchName"
+                    },
+                    jobId: {
+                        location: "uri",
+                        locationName: "jobId"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "jobSummary" ],
+                members: {
+                    jobSummary: {
+                        shape: "S33"
+                    }
+                }
+            }
+        },
+        TagResource: {
+            http: {
+                requestUri: "/tags/{resourceArn}"
+            },
+            input: {
+                type: "structure",
+                required: [ "resourceArn", "tags" ],
+                members: {
+                    resourceArn: {
+                        location: "uri",
+                        locationName: "resourceArn"
+                    },
+                    tags: {
+                        shape: "Sm"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {}
+            }
+        },
+        UntagResource: {
+            http: {
+                method: "DELETE",
+                requestUri: "/tags/{resourceArn}"
+            },
+            input: {
+                type: "structure",
+                required: [ "resourceArn", "tagKeys" ],
+                members: {
+                    resourceArn: {
+                        location: "uri",
+                        locationName: "resourceArn"
+                    },
+                    tagKeys: {
+                        location: "querystring",
+                        locationName: "tagKeys",
+                        type: "list",
+                        member: {}
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {}
+            }
+        },
+        UpdateApp: {
+            http: {
+                requestUri: "/apps/{appId}"
+            },
+            input: {
+                type: "structure",
+                required: [ "appId" ],
+                members: {
+                    appId: {
+                        location: "uri",
+                        locationName: "appId"
+                    },
+                    name: {},
+                    description: {},
+                    platform: {},
+                    iamServiceRoleArn: {},
+                    environmentVariables: {
+                        shape: "S9"
+                    },
+                    enableBranchAutoBuild: {
+                        type: "boolean"
+                    },
+                    enableBranchAutoDeletion: {
+                        type: "boolean"
+                    },
+                    enableBasicAuth: {
+                        type: "boolean"
+                    },
+                    basicAuthCredentials: {
+                        shape: "Sf"
+                    },
+                    customRules: {
+                        shape: "Sg"
+                    },
+                    buildSpec: {},
+                    customHeaders: {},
+                    enableAutoBranchCreation: {
+                        type: "boolean"
+                    },
+                    autoBranchCreationPatterns: {
+                        shape: "Ss"
+                    },
+                    autoBranchCreationConfig: {
+                        shape: "Su"
+                    },
+                    repository: {},
+                    oauthToken: {
+                        shape: "S7"
+                    },
+                    accessToken: {
+                        shape: "S8"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "app" ],
+                members: {
+                    app: {
+                        shape: "S12"
+                    }
+                }
+            }
+        },
+        UpdateBranch: {
+            http: {
+                requestUri: "/apps/{appId}/branches/{branchName}"
+            },
+            input: {
+                type: "structure",
+                required: [ "appId", "branchName" ],
+                members: {
+                    appId: {
+                        location: "uri",
+                        locationName: "appId"
+                    },
+                    branchName: {
+                        location: "uri",
+                        locationName: "branchName"
+                    },
+                    description: {},
+                    framework: {},
+                    stage: {},
+                    enableNotification: {
+                        type: "boolean"
+                    },
+                    enableAutoBuild: {
+                        type: "boolean"
+                    },
+                    environmentVariables: {
+                        shape: "S9"
+                    },
+                    basicAuthCredentials: {
+                        shape: "Sf"
+                    },
+                    enableBasicAuth: {
+                        type: "boolean"
+                    },
+                    enablePerformanceMode: {
+                        type: "boolean"
+                    },
+                    buildSpec: {},
+                    ttl: {},
+                    displayName: {},
+                    enablePullRequestPreview: {
+                        type: "boolean"
+                    },
+                    pullRequestEnvironmentName: {},
+                    backendEnvironmentArn: {}
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "branch" ],
+                members: {
+                    branch: {
+                        shape: "S1o"
+                    }
+                }
+            }
+        },
+        UpdateDomainAssociation: {
+            http: {
+                requestUri: "/apps/{appId}/domains/{domainName}"
+            },
+            input: {
+                type: "structure",
+                required: [ "appId", "domainName", "subDomainSettings" ],
+                members: {
+                    appId: {
+                        location: "uri",
+                        locationName: "appId"
+                    },
+                    domainName: {
+                        location: "uri",
+                        locationName: "domainName"
+                    },
+                    enableAutoSubDomain: {
+                        type: "boolean"
+                    },
+                    subDomainSettings: {
+                        shape: "S27"
+                    },
+                    autoSubDomainCreationPatterns: {
+                        shape: "S2a"
+                    },
+                    autoSubDomainIAMRole: {}
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "domainAssociation" ],
+                members: {
+                    domainAssociation: {
+                        shape: "S2e"
+                    }
+                }
+            }
+        },
+        UpdateWebhook: {
+            http: {
+                requestUri: "/webhooks/{webhookId}"
+            },
+            input: {
+                type: "structure",
+                required: [ "webhookId" ],
+                members: {
+                    webhookId: {
+                        location: "uri",
+                        locationName: "webhookId"
+                    },
+                    branchName: {},
+                    description: {}
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "webhook" ],
+                members: {
+                    webhook: {
+                        shape: "S2p"
+                    }
+                }
+            }
+        }
+    },
+    shapes: {
+        S7: {
+            type: "string",
+            sensitive: true
+        },
+        S8: {
+            type: "string",
+            sensitive: true
+        },
+        S9: {
+            type: "map",
+            key: {},
+            value: {}
+        },
+        Sf: {
+            type: "string",
+            sensitive: true
+        },
+        Sg: {
+            type: "list",
+            member: {
+                type: "structure",
+                required: [ "source", "target" ],
+                members: {
+                    source: {},
+                    target: {},
+                    status: {},
+                    condition: {}
+                }
+            }
+        },
+        Sm: {
+            type: "map",
+            key: {},
+            value: {}
+        },
+        Ss: {
+            type: "list",
+            member: {}
+        },
+        Su: {
+            type: "structure",
+            members: {
+                stage: {},
+                framework: {},
+                enableAutoBuild: {
+                    type: "boolean"
+                },
+                environmentVariables: {
+                    shape: "S9"
+                },
+                basicAuthCredentials: {
+                    shape: "Sf"
+                },
+                enableBasicAuth: {
+                    type: "boolean"
+                },
+                enablePerformanceMode: {
+                    type: "boolean"
+                },
+                buildSpec: {},
+                enablePullRequestPreview: {
+                    type: "boolean"
+                },
+                pullRequestEnvironmentName: {}
+            }
+        },
+        S12: {
+            type: "structure",
+            required: [ "appId", "appArn", "name", "description", "repository", "platform", "createTime", "updateTime", "environmentVariables", "defaultDomain", "enableBranchAutoBuild", "enableBasicAuth" ],
+            members: {
+                appId: {},
+                appArn: {},
+                name: {},
+                tags: {
+                    shape: "Sm"
+                },
+                description: {},
+                repository: {},
+                platform: {},
+                createTime: {
+                    type: "timestamp"
+                },
+                updateTime: {
+                    type: "timestamp"
+                },
+                iamServiceRoleArn: {},
+                environmentVariables: {
+                    shape: "S9"
+                },
+                defaultDomain: {},
+                enableBranchAutoBuild: {
+                    type: "boolean"
+                },
+                enableBranchAutoDeletion: {
+                    type: "boolean"
+                },
+                enableBasicAuth: {
+                    type: "boolean"
+                },
+                basicAuthCredentials: {
+                    shape: "Sf"
+                },
+                customRules: {
+                    shape: "Sg"
+                },
+                productionBranch: {
+                    type: "structure",
+                    members: {
+                        lastDeployTime: {
+                            type: "timestamp"
+                        },
+                        status: {},
+                        thumbnailUrl: {},
+                        branchName: {}
+                    }
+                },
+                buildSpec: {},
+                customHeaders: {},
+                enableAutoBranchCreation: {
+                    type: "boolean"
+                },
+                autoBranchCreationPatterns: {
+                    shape: "Ss"
+                },
+                autoBranchCreationConfig: {
+                    shape: "Su"
+                }
+            }
+        },
+        S1h: {
+            type: "structure",
+            required: [ "backendEnvironmentArn", "environmentName", "createTime", "updateTime" ],
+            members: {
+                backendEnvironmentArn: {},
+                environmentName: {},
+                stackName: {},
+                deploymentArtifacts: {},
+                createTime: {
+                    type: "timestamp"
+                },
+                updateTime: {
+                    type: "timestamp"
+                }
+            }
+        },
+        S1o: {
+            type: "structure",
+            required: [ "branchArn", "branchName", "description", "stage", "displayName", "enableNotification", "createTime", "updateTime", "environmentVariables", "enableAutoBuild", "customDomains", "framework", "activeJobId", "totalNumberOfJobs", "enableBasicAuth", "ttl", "enablePullRequestPreview" ],
+            members: {
+                branchArn: {},
+                branchName: {},
+                description: {},
+                tags: {
+                    shape: "Sm"
+                },
+                stage: {},
+                displayName: {},
+                enableNotification: {
+                    type: "boolean"
+                },
+                createTime: {
+                    type: "timestamp"
+                },
+                updateTime: {
+                    type: "timestamp"
+                },
+                environmentVariables: {
+                    shape: "S9"
+                },
+                enableAutoBuild: {
+                    type: "boolean"
+                },
+                customDomains: {
+                    type: "list",
+                    member: {}
+                },
+                framework: {},
+                activeJobId: {},
+                totalNumberOfJobs: {},
+                enableBasicAuth: {
+                    type: "boolean"
+                },
+                enablePerformanceMode: {
+                    type: "boolean"
+                },
+                thumbnailUrl: {},
+                basicAuthCredentials: {
+                    shape: "Sf"
+                },
+                buildSpec: {},
+                ttl: {},
+                associatedResources: {
+                    type: "list",
+                    member: {}
+                },
+                enablePullRequestPreview: {
+                    type: "boolean"
+                },
+                pullRequestEnvironmentName: {},
+                destinationBranch: {},
+                sourceBranch: {},
+                backendEnvironmentArn: {}
+            }
+        },
+        S27: {
+            type: "list",
+            member: {
+                shape: "S28"
+            }
+        },
+        S28: {
+            type: "structure",
+            required: [ "prefix", "branchName" ],
+            members: {
+                prefix: {},
+                branchName: {}
+            }
+        },
+        S2a: {
+            type: "list",
+            member: {}
+        },
+        S2e: {
+            type: "structure",
+            required: [ "domainAssociationArn", "domainName", "enableAutoSubDomain", "domainStatus", "statusReason", "subDomains" ],
+            members: {
+                domainAssociationArn: {},
+                domainName: {},
+                enableAutoSubDomain: {
+                    type: "boolean"
+                },
+                autoSubDomainCreationPatterns: {
+                    shape: "S2a"
+                },
+                autoSubDomainIAMRole: {},
+                domainStatus: {},
+                statusReason: {},
+                certificateVerificationDNSRecord: {},
+                subDomains: {
+                    type: "list",
+                    member: {
+                        type: "structure",
+                        required: [ "subDomainSetting", "verified", "dnsRecord" ],
+                        members: {
+                            subDomainSetting: {
+                                shape: "S28"
+                            },
+                            verified: {
+                                type: "boolean"
+                            },
+                            dnsRecord: {}
+                        }
+                    }
+                }
+            }
+        },
+        S2p: {
+            type: "structure",
+            required: [ "webhookArn", "webhookId", "webhookUrl", "branchName", "description", "createTime", "updateTime" ],
+            members: {
+                webhookArn: {},
+                webhookId: {},
+                webhookUrl: {},
+                branchName: {},
+                description: {},
+                createTime: {
+                    type: "timestamp"
+                },
+                updateTime: {
+                    type: "timestamp"
+                }
+            }
+        },
+        S33: {
+            type: "structure",
+            required: [ "jobArn", "jobId", "commitId", "commitMessage", "commitTime", "startTime", "status", "jobType" ],
+            members: {
+                jobArn: {},
+                jobId: {},
+                commitId: {},
+                commitMessage: {},
+                commitTime: {
+                    type: "timestamp"
+                },
+                startTime: {
+                    type: "timestamp"
+                },
+                status: {},
+                endTime: {
+                    type: "timestamp"
+                },
+                jobType: {}
+            }
+        }
+    },
+    paginators: {}
+};
+

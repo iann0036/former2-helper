@@ -24,7 +24,7 @@ _xamzrequire = function() {
     }
     return r;
 }()({
-    106: [ function(require, module, exports) {
+    109: [ function(require, module, exports) {
         (function(process) {
             (function() {
                 var AWS = require("../core");
@@ -223,6 +223,53 @@ _xamzrequire = function() {
         "../region_config": 82,
         _process: 8
     } ],
+    105: [ function(require, module, exports) {
+        var AWS = require("../core");
+        var rdsutil = {
+            setupRequestListeners: function setupRequestListeners(service, request, crossRegionOperations) {
+                if (crossRegionOperations.indexOf(request.operation) !== -1 && request.params.SourceRegion) {
+                    request.params = AWS.util.copy(request.params);
+                    if (request.params.PreSignedUrl || request.params.SourceRegion === service.config.region) {
+                        delete request.params.SourceRegion;
+                    } else {
+                        var doesParamValidation = !!service.config.paramValidation;
+                        if (doesParamValidation) {
+                            request.removeListener("validate", AWS.EventListeners.Core.VALIDATE_PARAMETERS);
+                        }
+                        request.onAsync("validate", rdsutil.buildCrossRegionPresignedUrl);
+                        if (doesParamValidation) {
+                            request.addListener("validate", AWS.EventListeners.Core.VALIDATE_PARAMETERS);
+                        }
+                    }
+                }
+            },
+            buildCrossRegionPresignedUrl: function buildCrossRegionPresignedUrl(req, done) {
+                var config = AWS.util.copy(req.service.config);
+                config.region = req.params.SourceRegion;
+                delete req.params.SourceRegion;
+                delete config.endpoint;
+                delete config.params;
+                config.signatureVersion = "v4";
+                var destinationRegion = req.service.config.region;
+                var svc = new req.service.constructor(config);
+                var newReq = svc[req.operation](AWS.util.copy(req.params));
+                newReq.on("build", function addDestinationRegionParam(request) {
+                    var httpRequest = request.httpRequest;
+                    httpRequest.params.DestinationRegion = destinationRegion;
+                    httpRequest.body = AWS.util.queryParamsToString(httpRequest.params);
+                });
+                newReq.presign(function(err, url) {
+                    if (err) done(err); else {
+                        req.params.PreSignedUrl = url;
+                        done();
+                    }
+                });
+            }
+        };
+        module.exports = rdsutil;
+    }, {
+        "../core": 39
+    } ],
     38: [ function(require, module, exports) {
         (function(process) {
             (function() {
@@ -283,7 +330,7 @@ _xamzrequire = function() {
         _hidden.toString();
         module.exports = AWS;
         AWS.util.update(AWS, {
-            VERSION: "2.792.0",
+            VERSION: "2.842.0",
             Signers: {},
             Protocol: {
                 Json: require("./protocol/json"),
@@ -325,7 +372,7 @@ _xamzrequire = function() {
             return new AWS.EndpointCache(AWS.config.endpointCacheSize);
         }, true);
     }, {
-        "../vendor/endpoint-cache": 126,
+        "../vendor/endpoint-cache": 129,
         "./api_loader": 27,
         "./config": 37,
         "./event_listeners": 60,
@@ -348,11 +395,11 @@ _xamzrequire = function() {
         "./response": 86,
         "./sequential_executor": 88,
         "./service": 89,
-        "./signers/request_signer": 111,
-        "./util": 119,
-        "./xml/builder": 121
+        "./signers/request_signer": 114,
+        "./util": 122,
+        "./xml/builder": 124
     } ],
-    126: [ function(require, module, exports) {
+    129: [ function(require, module, exports) {
         "use strict";
         Object.defineProperty(exports, "__esModule", {
             value: true
@@ -424,9 +471,9 @@ _xamzrequire = function() {
         }();
         exports.EndpointCache = EndpointCache;
     }, {
-        "./utils/LRU": 127
+        "./utils/LRU": 130
     } ],
-    127: [ function(require, module, exports) {
+    130: [ function(require, module, exports) {
         "use strict";
         Object.defineProperty(exports, "__esModule", {
             value: true
@@ -535,7 +582,7 @@ _xamzrequire = function() {
         }();
         exports.LRUCache = LRUCache;
     }, {} ],
-    121: [ function(require, module, exports) {
+    124: [ function(require, module, exports) {
         var util = require("../util");
         var XmlNode = require("./xml-node").XmlNode;
         var XmlText = require("./xml-text").XmlText;
@@ -627,11 +674,11 @@ _xamzrequire = function() {
         }
         module.exports = XmlBuilder;
     }, {
-        "../util": 119,
-        "./xml-node": 124,
-        "./xml-text": 125
+        "../util": 122,
+        "./xml-node": 127,
+        "./xml-text": 128
     } ],
-    125: [ function(require, module, exports) {
+    128: [ function(require, module, exports) {
         var escapeElement = require("./escape-element").escapeElement;
         function XmlText(value) {
             this.value = value;
@@ -643,9 +690,9 @@ _xamzrequire = function() {
             XmlText: XmlText
         };
     }, {
-        "./escape-element": 123
+        "./escape-element": 126
     } ],
-    123: [ function(require, module, exports) {
+    126: [ function(require, module, exports) {
         function escapeElement(value) {
             return value.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
         }
@@ -653,7 +700,7 @@ _xamzrequire = function() {
             escapeElement: escapeElement
         };
     }, {} ],
-    124: [ function(require, module, exports) {
+    127: [ function(require, module, exports) {
         var escapeAttribute = require("./escape-attribute").escapeAttribute;
         function XmlNode(name, children) {
             if (children === void 0) {
@@ -694,9 +741,9 @@ _xamzrequire = function() {
             XmlNode: XmlNode
         };
     }, {
-        "./escape-attribute": 122
+        "./escape-attribute": 125
     } ],
-    122: [ function(require, module, exports) {
+    125: [ function(require, module, exports) {
         function escapeAttribute(value) {
             return value.replace(/&/g, "&amp;").replace(/'/g, "&apos;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
         }
@@ -704,7 +751,7 @@ _xamzrequire = function() {
             escapeAttribute: escapeAttribute
         };
     }, {} ],
-    111: [ function(require, module, exports) {
+    114: [ function(require, module, exports) {
         var AWS = require("../core");
         var inherit = AWS.util.inherit;
         AWS.Signers.RequestSigner = inherit({
@@ -748,14 +795,14 @@ _xamzrequire = function() {
         require("./presign");
     }, {
         "../core": 39,
-        "./presign": 110,
-        "./s3": 112,
-        "./v2": 113,
-        "./v3": 114,
-        "./v3https": 115,
-        "./v4": 116
+        "./presign": 113,
+        "./s3": 115,
+        "./v2": 116,
+        "./v3": 117,
+        "./v3https": 118,
+        "./v4": 119
     } ],
-    116: [ function(require, module, exports) {
+    119: [ function(require, module, exports) {
         var AWS = require("../core");
         var v4Credentials = require("./v4_credentials");
         var inherit = AWS.util.inherit;
@@ -913,9 +960,9 @@ _xamzrequire = function() {
         module.exports = AWS.Signers.V4;
     }, {
         "../core": 39,
-        "./v4_credentials": 117
+        "./v4_credentials": 120
     } ],
-    117: [ function(require, module, exports) {
+    120: [ function(require, module, exports) {
         var AWS = require("../core");
         var cachedSecret = {};
         var cacheQueue = [];
@@ -953,7 +1000,7 @@ _xamzrequire = function() {
     }, {
         "../core": 39
     } ],
-    115: [ function(require, module, exports) {
+    118: [ function(require, module, exports) {
         var AWS = require("../core");
         var inherit = AWS.util.inherit;
         require("./v3");
@@ -968,9 +1015,9 @@ _xamzrequire = function() {
         module.exports = AWS.Signers.V3Https;
     }, {
         "../core": 39,
-        "./v3": 114
+        "./v3": 117
     } ],
-    114: [ function(require, module, exports) {
+    117: [ function(require, module, exports) {
         var AWS = require("../core");
         var inherit = AWS.util.inherit;
         AWS.Signers.V3 = inherit(AWS.Signers.RequestSigner, {
@@ -1026,7 +1073,7 @@ _xamzrequire = function() {
     }, {
         "../core": 39
     } ],
-    113: [ function(require, module, exports) {
+    116: [ function(require, module, exports) {
         var AWS = require("../core");
         var inherit = AWS.util.inherit;
         AWS.Signers.V2 = inherit(AWS.Signers.RequestSigner, {
@@ -1061,7 +1108,7 @@ _xamzrequire = function() {
     }, {
         "../core": 39
     } ],
-    112: [ function(require, module, exports) {
+    115: [ function(require, module, exports) {
         var AWS = require("../core");
         var inherit = AWS.util.inherit;
         AWS.Signers.S3 = inherit(AWS.Signers.RequestSigner, {
@@ -1188,7 +1235,7 @@ _xamzrequire = function() {
     }, {
         "../core": 39
     } ],
-    110: [ function(require, module, exports) {
+    113: [ function(require, module, exports) {
         var AWS = require("../core");
         var inherit = AWS.util.inherit;
         var expiresHeader = "presigned-expires";
@@ -1898,7 +1945,7 @@ _xamzrequire = function() {
         };
     }, {
         "./region_config_data.json": 83,
-        "./util": 119
+        "./util": 122
     } ],
     83: [ function(require, module, exports) {
         module.exports = {
@@ -2541,11 +2588,11 @@ _xamzrequire = function() {
         }).call(this, require("_process"));
     }, {
         "./core": 39,
-        "./state_machine": 118,
+        "./state_machine": 121,
         _process: 8,
         jmespath: 7
     } ],
-    118: [ function(require, module, exports) {
+    121: [ function(require, module, exports) {
         function AcceptorStateMachine(states, state) {
             this.currentState = state || null;
             this.states = states || {};
@@ -2638,7 +2685,7 @@ _xamzrequire = function() {
                     if (memberShape !== undefined) {
                         var memberContext = [ context, paramName ].join(".");
                         this.validateMember(memberShape, paramValue, memberContext);
-                    } else {
+                    } else if (paramValue !== undefined && paramValue !== null) {
                         this.fail("UnexpectedParameter", "Unexpected key '" + paramName + "' found in " + context);
                     }
                 }
@@ -2876,7 +2923,7 @@ _xamzrequire = function() {
         module.exports = Api;
     }, {
         "../../apis/metadata.json": 26,
-        "../util": 119,
+        "../util": 122,
         "./collection": 66,
         "./operation": 67,
         "./paginator": 68,
@@ -2904,7 +2951,7 @@ _xamzrequire = function() {
         }
         module.exports = ResourceWaiter;
     }, {
-        "../util": 119
+        "../util": 122
     } ],
     68: [ function(require, module, exports) {
         var property = require("../util").property;
@@ -2917,7 +2964,7 @@ _xamzrequire = function() {
         }
         module.exports = Paginator;
     }, {
-        "../util": 119
+        "../util": 122
     } ],
     67: [ function(require, module, exports) {
         var Shape = require("./shape");
@@ -3009,7 +3056,7 @@ _xamzrequire = function() {
         }
         module.exports = Operation;
     }, {
-        "../util": 119,
+        "../util": 122,
         "./shape": 70
     } ],
     61: [ function(require, module, exports) {
@@ -3816,7 +3863,7 @@ _xamzrequire = function() {
         };
     }, {
         "../core": 39,
-        "../util": 119,
+        "../util": 122,
         "./rest": 76
     } ],
     77: [ function(require, module, exports) {
@@ -3902,7 +3949,7 @@ _xamzrequire = function() {
     }, {
         "../json/builder": 63,
         "../json/parser": 64,
-        "../util": 119,
+        "../util": 122,
         "./json": 74,
         "./rest": 76
     } ],
@@ -4032,7 +4079,7 @@ _xamzrequire = function() {
             generateURI: generateURI
         };
     }, {
-        "../util": 119,
+        "../util": 122,
         "./helpers": 73
     } ],
     75: [ function(require, module, exports) {
@@ -4133,7 +4180,7 @@ _xamzrequire = function() {
         "../core": 39,
         "../model/shape": 70,
         "../query/query_param_serializer": 79,
-        "../util": 119,
+        "../util": 122,
         "./helpers": 73
     } ],
     79: [ function(require, module, exports) {
@@ -4206,7 +4253,7 @@ _xamzrequire = function() {
         }
         module.exports = QueryParamSerializer;
     }, {
-        "../util": 119
+        "../util": 122
     } ],
     70: [ function(require, module, exports) {
         var Collection = require("./collection");
@@ -4544,7 +4591,7 @@ _xamzrequire = function() {
         };
         module.exports = Shape;
     }, {
-        "../util": 119,
+        "../util": 122,
         "./collection": 66
     } ],
     66: [ function(require, module, exports) {
@@ -4566,7 +4613,7 @@ _xamzrequire = function() {
         }
         module.exports = Collection;
     }, {
-        "../util": 119
+        "../util": 122
     } ],
     74: [ function(require, module, exports) {
         var util = require("../util");
@@ -4634,7 +4681,7 @@ _xamzrequire = function() {
     }, {
         "../json/builder": 63,
         "../json/parser": 64,
-        "../util": 119,
+        "../util": 122,
         "./helpers": 73
     } ],
     73: [ function(require, module, exports) {
@@ -4705,7 +4752,7 @@ _xamzrequire = function() {
         };
     }, {
         "../core": 39,
-        "../util": 119
+        "../util": 122
     } ],
     64: [ function(require, module, exports) {
         var util = require("../util");
@@ -4766,7 +4813,7 @@ _xamzrequire = function() {
         }
         module.exports = JsonParser;
     }, {
-        "../util": 119
+        "../util": 122
     } ],
     63: [ function(require, module, exports) {
         var util = require("../util");
@@ -4824,7 +4871,7 @@ _xamzrequire = function() {
         }
         module.exports = JsonBuilder;
     }, {
-        "../util": 119
+        "../util": 122
     } ],
     47: [ function(require, module, exports) {
         (function(process) {
@@ -5098,10 +5145,10 @@ _xamzrequire = function() {
         }).call(this, require("_process"));
     }, {
         "./core": 39,
-        "./util": 119,
+        "./util": 122,
         _process: 8
     } ],
-    119: [ function(require, module, exports) {
+    122: [ function(require, module, exports) {
         (function(process, setImmediate) {
             (function() {
                 var AWS;
@@ -5271,6 +5318,9 @@ _xamzrequire = function() {
                                 var section = line.match(/^\s*\[([^\[\]]+)\]\s*$/);
                                 if (section) {
                                     currentSection = section[1];
+                                    if (currentSection === "__proto__" || currentSection.split(/\s/)[1] === "__proto__") {
+                                        throw util.error(new Error("Cannot load profile name '" + currentSection + "' from shared ini file."));
+                                    }
                                 } else if (currentSection) {
                                     var item = line.match(/^\s*(.+?)\s*=\s*(.+?)\s*$/);
                                     if (item) {
@@ -7039,6 +7089,85 @@ _xamzrequire = function() {
             servicecatalogappregistry: {
                 prefix: "servicecatalog-appregistry",
                 name: "ServiceCatalogAppRegistry"
+            },
+            networkfirewall: {
+                prefix: "network-firewall",
+                name: "NetworkFirewall"
+            },
+            mwaa: {
+                name: "MWAA"
+            },
+            amplifybackend: {
+                name: "AmplifyBackend"
+            },
+            appintegrations: {
+                name: "AppIntegrations"
+            },
+            connectcontactlens: {
+                prefix: "connect-contact-lens",
+                name: "ConnectContactLens"
+            },
+            devopsguru: {
+                prefix: "devops-guru",
+                name: "DevOpsGuru"
+            },
+            ecrpublic: {
+                prefix: "ecr-public",
+                name: "ECRPUBLIC"
+            },
+            lookoutvision: {
+                name: "LookoutVision"
+            },
+            sagemakerfeaturestoreruntime: {
+                prefix: "sagemaker-featurestore-runtime",
+                name: "SageMakerFeatureStoreRuntime"
+            },
+            customerprofiles: {
+                prefix: "customer-profiles",
+                name: "CustomerProfiles"
+            },
+            auditmanager: {
+                name: "AuditManager"
+            },
+            emrcontainers: {
+                prefix: "emr-containers",
+                name: "EMRcontainers"
+            },
+            healthlake: {
+                name: "HealthLake"
+            },
+            sagemakeredge: {
+                prefix: "sagemaker-edge",
+                name: "SagemakerEdge"
+            },
+            amp: {
+                name: "Amp"
+            },
+            greengrassv2: {
+                name: "GreengrassV2"
+            },
+            iotdeviceadvisor: {
+                name: "IotDeviceAdvisor"
+            },
+            iotfleethub: {
+                name: "IoTFleetHub"
+            },
+            iotwireless: {
+                name: "IoTWireless"
+            },
+            location: {
+                name: "Location"
+            },
+            wellarchitected: {
+                name: "WellArchitected"
+            },
+            lexmodelsv2: {
+                prefix: "models.lex.v2",
+                name: "LexModelsV2"
+            },
+            lexruntimev2: {
+                prefix: "runtime.lex.v2",
+                name: "LexRuntimeV2"
             }
         };
     }, {} ],
@@ -9629,7 +9758,7 @@ _xamzrequire = function() {
         })(typeof exports === "undefined" ? this.jmespath = {} : exports);
     }, {} ],
     2: [ function(require, module, exports) {}, {} ]
-}, {}, [ 106 ]);
+}, {}, [ 105, 109 ]);
 
 _xamzrequire = function e(t, n, r) {
     function s(o, u) {
@@ -9715,14 +9844,14 @@ _xamzrequire = function e(t, n, r) {
         "./event-stream/buffered-create-event-stream": 54,
         "./http/xhr": 62,
         "./realclock/browserClock": 81,
-        "./util": 119,
-        "./xml/browser_parser": 120,
+        "./util": 122,
+        "./xml/browser_parser": 123,
         _process: 8,
         "buffer/": 3,
         "querystring/": 15,
         "url/": 17
     } ],
-    120: [ function(require, module, exports) {
+    123: [ function(require, module, exports) {
         var util = require("../util");
         var Shape = require("../model/shape");
         function DomXmlParser() {}
@@ -9908,7 +10037,7 @@ _xamzrequire = function e(t, n, r) {
         module.exports = DomXmlParser;
     }, {
         "../model/shape": 70,
-        "../util": 119
+        "../util": 122
     } ],
     81: [ function(require, module, exports) {
         module.exports = {
@@ -13779,7 +13908,9 @@ _xamzrequire = function e(t, n, r) {
             return parts.join("");
         }
     }, {} ]
-}, {}, [ 28 ]);AWS.apiLoader.services["sts"] = {};
+}, {}, [ 28 ]);
+
+AWS.apiLoader.services["sts"] = {};
 
 AWS.STS = AWS.Service.defineService("sts", [ "2011-06-15" ]);
 
@@ -13807,7 +13938,7 @@ _xamzrequire = function e(t, n, r) {
     for (var o = 0; o < r.length; o++) s(r[o]);
     return s;
 }({
-    108: [ function(require, module, exports) {
+    111: [ function(require, module, exports) {
         var AWS = require("../core");
         var resolveRegionalEndpointsFlag = require("../config_regional_endpoint");
         var ENV_REGIONAL_ENDPOINT_ENABLED = "AWS_STS_REGIONAL_ENDPOINTS";
@@ -13858,7 +13989,7 @@ _xamzrequire = function e(t, n, r) {
         "../config_regional_endpoint": 38,
         "../core": 39
     } ]
-}, {}, [ 108 ]);
+}, {}, [ 111 ]);
 
 AWS.apiLoader.services["sts"]["2011-06-15"] = {
     version: "2.0",
@@ -94882,3 +95013,7527 @@ AWS.apiLoader.services["ec2"]["2016-11-15"] = {
         }
     }
 };
+
+AWS.apiLoader.services["ecr"] = {};
+
+AWS.ECR = AWS.Service.defineService("ecr", [ "2015-09-21" ]);
+
+AWS.apiLoader.services["ecr"]["2015-09-21"] = {
+    version: "2.0",
+    metadata: {
+        apiVersion: "2015-09-21",
+        endpointPrefix: "api.ecr",
+        jsonVersion: "1.1",
+        protocol: "json",
+        serviceAbbreviation: "Amazon ECR",
+        serviceFullName: "Amazon EC2 Container Registry",
+        serviceId: "ECR",
+        signatureVersion: "v4",
+        signingName: "ecr",
+        targetPrefix: "AmazonEC2ContainerRegistry_V20150921",
+        uid: "ecr-2015-09-21"
+    },
+    operations: {
+        BatchCheckLayerAvailability: {
+            input: {
+                type: "structure",
+                required: [ "repositoryName", "layerDigests" ],
+                members: {
+                    registryId: {},
+                    repositoryName: {},
+                    layerDigests: {
+                        type: "list",
+                        member: {}
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    layers: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            members: {
+                                layerDigest: {},
+                                layerAvailability: {},
+                                layerSize: {
+                                    type: "long"
+                                },
+                                mediaType: {}
+                            }
+                        }
+                    },
+                    failures: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            members: {
+                                layerDigest: {},
+                                failureCode: {},
+                                failureReason: {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        BatchDeleteImage: {
+            input: {
+                type: "structure",
+                required: [ "repositoryName", "imageIds" ],
+                members: {
+                    registryId: {},
+                    repositoryName: {},
+                    imageIds: {
+                        shape: "Si"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    imageIds: {
+                        shape: "Si"
+                    },
+                    failures: {
+                        shape: "Sn"
+                    }
+                }
+            }
+        },
+        BatchGetImage: {
+            input: {
+                type: "structure",
+                required: [ "repositoryName", "imageIds" ],
+                members: {
+                    registryId: {},
+                    repositoryName: {},
+                    imageIds: {
+                        shape: "Si"
+                    },
+                    acceptedMediaTypes: {
+                        type: "list",
+                        member: {}
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    images: {
+                        type: "list",
+                        member: {
+                            shape: "Sv"
+                        }
+                    },
+                    failures: {
+                        shape: "Sn"
+                    }
+                }
+            }
+        },
+        CompleteLayerUpload: {
+            input: {
+                type: "structure",
+                required: [ "repositoryName", "uploadId", "layerDigests" ],
+                members: {
+                    registryId: {},
+                    repositoryName: {},
+                    uploadId: {},
+                    layerDigests: {
+                        type: "list",
+                        member: {}
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    registryId: {},
+                    repositoryName: {},
+                    uploadId: {},
+                    layerDigest: {}
+                }
+            }
+        },
+        CreateRepository: {
+            input: {
+                type: "structure",
+                required: [ "repositoryName" ],
+                members: {
+                    repositoryName: {},
+                    tags: {
+                        shape: "S12"
+                    },
+                    imageTagMutability: {},
+                    imageScanningConfiguration: {
+                        shape: "S17"
+                    },
+                    encryptionConfiguration: {
+                        shape: "S19"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    repository: {
+                        shape: "S1d"
+                    }
+                }
+            }
+        },
+        DeleteLifecyclePolicy: {
+            input: {
+                type: "structure",
+                required: [ "repositoryName" ],
+                members: {
+                    registryId: {},
+                    repositoryName: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    registryId: {},
+                    repositoryName: {},
+                    lifecyclePolicyText: {},
+                    lastEvaluatedAt: {
+                        type: "timestamp"
+                    }
+                }
+            }
+        },
+        DeleteRegistryPolicy: {
+            input: {
+                type: "structure",
+                members: {}
+            },
+            output: {
+                type: "structure",
+                members: {
+                    registryId: {},
+                    policyText: {}
+                }
+            }
+        },
+        DeleteRepository: {
+            input: {
+                type: "structure",
+                required: [ "repositoryName" ],
+                members: {
+                    registryId: {},
+                    repositoryName: {},
+                    force: {
+                        type: "boolean"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    repository: {
+                        shape: "S1d"
+                    }
+                }
+            }
+        },
+        DeleteRepositoryPolicy: {
+            input: {
+                type: "structure",
+                required: [ "repositoryName" ],
+                members: {
+                    registryId: {},
+                    repositoryName: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    registryId: {},
+                    repositoryName: {},
+                    policyText: {}
+                }
+            }
+        },
+        DescribeImageScanFindings: {
+            input: {
+                type: "structure",
+                required: [ "repositoryName", "imageId" ],
+                members: {
+                    registryId: {},
+                    repositoryName: {},
+                    imageId: {
+                        shape: "Sj"
+                    },
+                    nextToken: {},
+                    maxResults: {
+                        type: "integer"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    registryId: {},
+                    repositoryName: {},
+                    imageId: {
+                        shape: "Sj"
+                    },
+                    imageScanStatus: {
+                        shape: "S1y"
+                    },
+                    imageScanFindings: {
+                        type: "structure",
+                        members: {
+                            imageScanCompletedAt: {
+                                type: "timestamp"
+                            },
+                            vulnerabilitySourceUpdatedAt: {
+                                type: "timestamp"
+                            },
+                            findings: {
+                                type: "list",
+                                member: {
+                                    type: "structure",
+                                    members: {
+                                        name: {},
+                                        description: {},
+                                        uri: {},
+                                        severity: {},
+                                        attributes: {
+                                            type: "list",
+                                            member: {
+                                                type: "structure",
+                                                required: [ "key" ],
+                                                members: {
+                                                    key: {},
+                                                    value: {}
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            findingSeverityCounts: {
+                                shape: "S2d"
+                            }
+                        }
+                    },
+                    nextToken: {}
+                }
+            }
+        },
+        DescribeImages: {
+            input: {
+                type: "structure",
+                required: [ "repositoryName" ],
+                members: {
+                    registryId: {},
+                    repositoryName: {},
+                    imageIds: {
+                        shape: "Si"
+                    },
+                    nextToken: {},
+                    maxResults: {
+                        type: "integer"
+                    },
+                    filter: {
+                        type: "structure",
+                        members: {
+                            tagStatus: {}
+                        }
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    imageDetails: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            members: {
+                                registryId: {},
+                                repositoryName: {},
+                                imageDigest: {},
+                                imageTags: {
+                                    shape: "S2l"
+                                },
+                                imageSizeInBytes: {
+                                    type: "long"
+                                },
+                                imagePushedAt: {
+                                    type: "timestamp"
+                                },
+                                imageScanStatus: {
+                                    shape: "S1y"
+                                },
+                                imageScanFindingsSummary: {
+                                    type: "structure",
+                                    members: {
+                                        imageScanCompletedAt: {
+                                            type: "timestamp"
+                                        },
+                                        vulnerabilitySourceUpdatedAt: {
+                                            type: "timestamp"
+                                        },
+                                        findingSeverityCounts: {
+                                            shape: "S2d"
+                                        }
+                                    }
+                                },
+                                imageManifestMediaType: {},
+                                artifactMediaType: {}
+                            }
+                        }
+                    },
+                    nextToken: {}
+                }
+            }
+        },
+        DescribeRegistry: {
+            input: {
+                type: "structure",
+                members: {}
+            },
+            output: {
+                type: "structure",
+                members: {
+                    registryId: {},
+                    replicationConfiguration: {
+                        shape: "S2r"
+                    }
+                }
+            }
+        },
+        DescribeRepositories: {
+            input: {
+                type: "structure",
+                members: {
+                    registryId: {},
+                    repositoryNames: {
+                        type: "list",
+                        member: {}
+                    },
+                    nextToken: {},
+                    maxResults: {
+                        type: "integer"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    repositories: {
+                        type: "list",
+                        member: {
+                            shape: "S1d"
+                        }
+                    },
+                    nextToken: {}
+                }
+            }
+        },
+        GetAuthorizationToken: {
+            input: {
+                type: "structure",
+                members: {
+                    registryIds: {
+                        deprecated: true,
+                        deprecatedMessage: "This field is deprecated. The returned authorization token can be used to access any Amazon ECR registry that the IAM principal has access to, specifying a registry ID doesn't change the permissions scope of the authorization token.",
+                        type: "list",
+                        member: {}
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    authorizationData: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            members: {
+                                authorizationToken: {},
+                                expiresAt: {
+                                    type: "timestamp"
+                                },
+                                proxyEndpoint: {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        GetDownloadUrlForLayer: {
+            input: {
+                type: "structure",
+                required: [ "repositoryName", "layerDigest" ],
+                members: {
+                    registryId: {},
+                    repositoryName: {},
+                    layerDigest: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    downloadUrl: {},
+                    layerDigest: {}
+                }
+            }
+        },
+        GetLifecyclePolicy: {
+            input: {
+                type: "structure",
+                required: [ "repositoryName" ],
+                members: {
+                    registryId: {},
+                    repositoryName: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    registryId: {},
+                    repositoryName: {},
+                    lifecyclePolicyText: {},
+                    lastEvaluatedAt: {
+                        type: "timestamp"
+                    }
+                }
+            }
+        },
+        GetLifecyclePolicyPreview: {
+            input: {
+                type: "structure",
+                required: [ "repositoryName" ],
+                members: {
+                    registryId: {},
+                    repositoryName: {},
+                    imageIds: {
+                        shape: "Si"
+                    },
+                    nextToken: {},
+                    maxResults: {
+                        type: "integer"
+                    },
+                    filter: {
+                        type: "structure",
+                        members: {
+                            tagStatus: {}
+                        }
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    registryId: {},
+                    repositoryName: {},
+                    lifecyclePolicyText: {},
+                    status: {},
+                    nextToken: {},
+                    previewResults: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            members: {
+                                imageTags: {
+                                    shape: "S2l"
+                                },
+                                imageDigest: {},
+                                imagePushedAt: {
+                                    type: "timestamp"
+                                },
+                                action: {
+                                    type: "structure",
+                                    members: {
+                                        type: {}
+                                    }
+                                },
+                                appliedRulePriority: {
+                                    type: "integer"
+                                }
+                            }
+                        }
+                    },
+                    summary: {
+                        type: "structure",
+                        members: {
+                            expiringImageTotalCount: {
+                                type: "integer"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        GetRegistryPolicy: {
+            input: {
+                type: "structure",
+                members: {}
+            },
+            output: {
+                type: "structure",
+                members: {
+                    registryId: {},
+                    policyText: {}
+                }
+            }
+        },
+        GetRepositoryPolicy: {
+            input: {
+                type: "structure",
+                required: [ "repositoryName" ],
+                members: {
+                    registryId: {},
+                    repositoryName: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    registryId: {},
+                    repositoryName: {},
+                    policyText: {}
+                }
+            }
+        },
+        InitiateLayerUpload: {
+            input: {
+                type: "structure",
+                required: [ "repositoryName" ],
+                members: {
+                    registryId: {},
+                    repositoryName: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    uploadId: {},
+                    partSize: {
+                        type: "long"
+                    }
+                }
+            }
+        },
+        ListImages: {
+            input: {
+                type: "structure",
+                required: [ "repositoryName" ],
+                members: {
+                    registryId: {},
+                    repositoryName: {},
+                    nextToken: {},
+                    maxResults: {
+                        type: "integer"
+                    },
+                    filter: {
+                        type: "structure",
+                        members: {
+                            tagStatus: {}
+                        }
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    imageIds: {
+                        shape: "Si"
+                    },
+                    nextToken: {}
+                }
+            }
+        },
+        ListTagsForResource: {
+            input: {
+                type: "structure",
+                required: [ "resourceArn" ],
+                members: {
+                    resourceArn: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    tags: {
+                        shape: "S12"
+                    }
+                }
+            }
+        },
+        PutImage: {
+            input: {
+                type: "structure",
+                required: [ "repositoryName", "imageManifest" ],
+                members: {
+                    registryId: {},
+                    repositoryName: {},
+                    imageManifest: {},
+                    imageManifestMediaType: {},
+                    imageTag: {},
+                    imageDigest: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    image: {
+                        shape: "Sv"
+                    }
+                }
+            }
+        },
+        PutImageScanningConfiguration: {
+            input: {
+                type: "structure",
+                required: [ "repositoryName", "imageScanningConfiguration" ],
+                members: {
+                    registryId: {},
+                    repositoryName: {},
+                    imageScanningConfiguration: {
+                        shape: "S17"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    registryId: {},
+                    repositoryName: {},
+                    imageScanningConfiguration: {
+                        shape: "S17"
+                    }
+                }
+            }
+        },
+        PutImageTagMutability: {
+            input: {
+                type: "structure",
+                required: [ "repositoryName", "imageTagMutability" ],
+                members: {
+                    registryId: {},
+                    repositoryName: {},
+                    imageTagMutability: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    registryId: {},
+                    repositoryName: {},
+                    imageTagMutability: {}
+                }
+            }
+        },
+        PutLifecyclePolicy: {
+            input: {
+                type: "structure",
+                required: [ "repositoryName", "lifecyclePolicyText" ],
+                members: {
+                    registryId: {},
+                    repositoryName: {},
+                    lifecyclePolicyText: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    registryId: {},
+                    repositoryName: {},
+                    lifecyclePolicyText: {}
+                }
+            }
+        },
+        PutRegistryPolicy: {
+            input: {
+                type: "structure",
+                required: [ "policyText" ],
+                members: {
+                    policyText: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    registryId: {},
+                    policyText: {}
+                }
+            }
+        },
+        PutReplicationConfiguration: {
+            input: {
+                type: "structure",
+                required: [ "replicationConfiguration" ],
+                members: {
+                    replicationConfiguration: {
+                        shape: "S2r"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    replicationConfiguration: {
+                        shape: "S2r"
+                    }
+                }
+            }
+        },
+        SetRepositoryPolicy: {
+            input: {
+                type: "structure",
+                required: [ "repositoryName", "policyText" ],
+                members: {
+                    registryId: {},
+                    repositoryName: {},
+                    policyText: {},
+                    force: {
+                        type: "boolean"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    registryId: {},
+                    repositoryName: {},
+                    policyText: {}
+                }
+            }
+        },
+        StartImageScan: {
+            input: {
+                type: "structure",
+                required: [ "repositoryName", "imageId" ],
+                members: {
+                    registryId: {},
+                    repositoryName: {},
+                    imageId: {
+                        shape: "Sj"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    registryId: {},
+                    repositoryName: {},
+                    imageId: {
+                        shape: "Sj"
+                    },
+                    imageScanStatus: {
+                        shape: "S1y"
+                    }
+                }
+            }
+        },
+        StartLifecyclePolicyPreview: {
+            input: {
+                type: "structure",
+                required: [ "repositoryName" ],
+                members: {
+                    registryId: {},
+                    repositoryName: {},
+                    lifecyclePolicyText: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    registryId: {},
+                    repositoryName: {},
+                    lifecyclePolicyText: {},
+                    status: {}
+                }
+            }
+        },
+        TagResource: {
+            input: {
+                type: "structure",
+                required: [ "resourceArn", "tags" ],
+                members: {
+                    resourceArn: {},
+                    tags: {
+                        shape: "S12"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {}
+            }
+        },
+        UntagResource: {
+            input: {
+                type: "structure",
+                required: [ "resourceArn", "tagKeys" ],
+                members: {
+                    resourceArn: {},
+                    tagKeys: {
+                        type: "list",
+                        member: {}
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {}
+            }
+        },
+        UploadLayerPart: {
+            input: {
+                type: "structure",
+                required: [ "repositoryName", "uploadId", "partFirstByte", "partLastByte", "layerPartBlob" ],
+                members: {
+                    registryId: {},
+                    repositoryName: {},
+                    uploadId: {},
+                    partFirstByte: {
+                        type: "long"
+                    },
+                    partLastByte: {
+                        type: "long"
+                    },
+                    layerPartBlob: {
+                        type: "blob"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    registryId: {},
+                    repositoryName: {},
+                    uploadId: {},
+                    lastByteReceived: {
+                        type: "long"
+                    }
+                }
+            }
+        }
+    },
+    shapes: {
+        Si: {
+            type: "list",
+            member: {
+                shape: "Sj"
+            }
+        },
+        Sj: {
+            type: "structure",
+            members: {
+                imageDigest: {},
+                imageTag: {}
+            }
+        },
+        Sn: {
+            type: "list",
+            member: {
+                type: "structure",
+                members: {
+                    imageId: {
+                        shape: "Sj"
+                    },
+                    failureCode: {},
+                    failureReason: {}
+                }
+            }
+        },
+        Sv: {
+            type: "structure",
+            members: {
+                registryId: {},
+                repositoryName: {},
+                imageId: {
+                    shape: "Sj"
+                },
+                imageManifest: {},
+                imageManifestMediaType: {}
+            }
+        },
+        S12: {
+            type: "list",
+            member: {
+                type: "structure",
+                members: {
+                    Key: {},
+                    Value: {}
+                }
+            }
+        },
+        S17: {
+            type: "structure",
+            members: {
+                scanOnPush: {
+                    type: "boolean"
+                }
+            }
+        },
+        S19: {
+            type: "structure",
+            required: [ "encryptionType" ],
+            members: {
+                encryptionType: {},
+                kmsKey: {}
+            }
+        },
+        S1d: {
+            type: "structure",
+            members: {
+                repositoryArn: {},
+                registryId: {},
+                repositoryName: {},
+                repositoryUri: {},
+                createdAt: {
+                    type: "timestamp"
+                },
+                imageTagMutability: {},
+                imageScanningConfiguration: {
+                    shape: "S17"
+                },
+                encryptionConfiguration: {
+                    shape: "S19"
+                }
+            }
+        },
+        S1y: {
+            type: "structure",
+            members: {
+                status: {},
+                description: {}
+            }
+        },
+        S2d: {
+            type: "map",
+            key: {},
+            value: {
+                type: "integer"
+            }
+        },
+        S2l: {
+            type: "list",
+            member: {}
+        },
+        S2r: {
+            type: "structure",
+            required: [ "rules" ],
+            members: {
+                rules: {
+                    type: "list",
+                    member: {
+                        type: "structure",
+                        required: [ "destinations" ],
+                        members: {
+                            destinations: {
+                                type: "list",
+                                member: {
+                                    type: "structure",
+                                    required: [ "region", "registryId" ],
+                                    members: {
+                                        region: {},
+                                        registryId: {}
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    paginators: {
+        DescribeImageScanFindings: {
+            input_token: "nextToken",
+            limit_key: "maxResults",
+            non_aggregate_keys: [ "registryId", "repositoryName", "imageId", "imageScanStatus", "imageScanFindings" ],
+            output_token: "nextToken",
+            result_key: "imageScanFindings.findings"
+        },
+        DescribeImages: {
+            input_token: "nextToken",
+            limit_key: "maxResults",
+            output_token: "nextToken",
+            result_key: "imageDetails"
+        },
+        DescribeRepositories: {
+            input_token: "nextToken",
+            limit_key: "maxResults",
+            output_token: "nextToken",
+            result_key: "repositories"
+        },
+        GetLifecyclePolicyPreview: {
+            input_token: "nextToken",
+            limit_key: "maxResults",
+            non_aggregate_keys: [ "registryId", "repositoryName", "lifecyclePolicyText", "status", "summary" ],
+            output_token: "nextToken",
+            result_key: "previewResults"
+        },
+        ListImages: {
+            input_token: "nextToken",
+            limit_key: "maxResults",
+            output_token: "nextToken",
+            result_key: "imageIds"
+        }
+    },
+    waiters: {
+        ImageScanComplete: {
+            description: "Wait until an image scan is complete and findings can be accessed",
+            operation: "DescribeImageScanFindings",
+            delay: 5,
+            maxAttempts: 60,
+            acceptors: [ {
+                state: "success",
+                matcher: "path",
+                argument: "imageScanStatus.status",
+                expected: "COMPLETE"
+            }, {
+                state: "failure",
+                matcher: "path",
+                argument: "imageScanStatus.status",
+                expected: "FAILED"
+            } ]
+        },
+        LifecyclePolicyPreviewComplete: {
+            description: "Wait until a lifecycle policy preview request is complete and results can be accessed",
+            operation: "GetLifecyclePolicyPreview",
+            delay: 5,
+            maxAttempts: 20,
+            acceptors: [ {
+                state: "success",
+                matcher: "path",
+                argument: "status",
+                expected: "COMPLETE"
+            }, {
+                state: "failure",
+                matcher: "path",
+                argument: "status",
+                expected: "FAILED"
+            } ]
+        }
+    }
+};
+
+AWS.apiLoader.services["ecs"] = {};
+
+AWS.ECS = AWS.Service.defineService("ecs", [ "2014-11-13" ]);
+
+AWS.apiLoader.services["ecs"]["2014-11-13"] = {
+    version: "2.0",
+    metadata: {
+        apiVersion: "2014-11-13",
+        endpointPrefix: "ecs",
+        jsonVersion: "1.1",
+        protocol: "json",
+        serviceAbbreviation: "Amazon ECS",
+        serviceFullName: "Amazon EC2 Container Service",
+        serviceId: "ECS",
+        signatureVersion: "v4",
+        targetPrefix: "AmazonEC2ContainerServiceV20141113",
+        uid: "ecs-2014-11-13"
+    },
+    operations: {
+        CreateCapacityProvider: {
+            input: {
+                type: "structure",
+                required: [ "name", "autoScalingGroupProvider" ],
+                members: {
+                    name: {},
+                    autoScalingGroupProvider: {
+                        shape: "S3"
+                    },
+                    tags: {
+                        shape: "Sa"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    capacityProvider: {
+                        shape: "Sf"
+                    }
+                }
+            }
+        },
+        CreateCluster: {
+            input: {
+                type: "structure",
+                members: {
+                    clusterName: {},
+                    tags: {
+                        shape: "Sa"
+                    },
+                    settings: {
+                        shape: "Sj"
+                    },
+                    capacityProviders: {
+                        shape: "Sm"
+                    },
+                    defaultCapacityProviderStrategy: {
+                        shape: "Sn"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    cluster: {
+                        shape: "Ss"
+                    }
+                }
+            }
+        },
+        CreateService: {
+            input: {
+                type: "structure",
+                required: [ "serviceName" ],
+                members: {
+                    cluster: {},
+                    serviceName: {},
+                    taskDefinition: {},
+                    loadBalancers: {
+                        shape: "S10"
+                    },
+                    serviceRegistries: {
+                        shape: "S13"
+                    },
+                    desiredCount: {
+                        type: "integer"
+                    },
+                    clientToken: {},
+                    launchType: {},
+                    capacityProviderStrategy: {
+                        shape: "Sn"
+                    },
+                    platformVersion: {},
+                    role: {},
+                    deploymentConfiguration: {
+                        shape: "S16"
+                    },
+                    placementConstraints: {
+                        shape: "S19"
+                    },
+                    placementStrategy: {
+                        shape: "S1c"
+                    },
+                    networkConfiguration: {
+                        shape: "S1f"
+                    },
+                    healthCheckGracePeriodSeconds: {
+                        type: "integer"
+                    },
+                    schedulingStrategy: {},
+                    deploymentController: {
+                        shape: "S1j"
+                    },
+                    tags: {
+                        shape: "Sa"
+                    },
+                    enableECSManagedTags: {
+                        type: "boolean"
+                    },
+                    propagateTags: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    service: {
+                        shape: "S1n"
+                    }
+                }
+            }
+        },
+        CreateTaskSet: {
+            input: {
+                type: "structure",
+                required: [ "service", "cluster", "taskDefinition" ],
+                members: {
+                    service: {},
+                    cluster: {},
+                    externalId: {},
+                    taskDefinition: {},
+                    networkConfiguration: {
+                        shape: "S1f"
+                    },
+                    loadBalancers: {
+                        shape: "S10"
+                    },
+                    serviceRegistries: {
+                        shape: "S13"
+                    },
+                    launchType: {},
+                    capacityProviderStrategy: {
+                        shape: "Sn"
+                    },
+                    platformVersion: {},
+                    scale: {
+                        shape: "S1r"
+                    },
+                    clientToken: {},
+                    tags: {
+                        shape: "Sa"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    taskSet: {
+                        shape: "S1p"
+                    }
+                }
+            }
+        },
+        DeleteAccountSetting: {
+            input: {
+                type: "structure",
+                required: [ "name" ],
+                members: {
+                    name: {},
+                    principalArn: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    setting: {
+                        shape: "S25"
+                    }
+                }
+            }
+        },
+        DeleteAttributes: {
+            input: {
+                type: "structure",
+                required: [ "attributes" ],
+                members: {
+                    cluster: {},
+                    attributes: {
+                        shape: "S27"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    attributes: {
+                        shape: "S27"
+                    }
+                }
+            }
+        },
+        DeleteCapacityProvider: {
+            input: {
+                type: "structure",
+                required: [ "capacityProvider" ],
+                members: {
+                    capacityProvider: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    capacityProvider: {
+                        shape: "Sf"
+                    }
+                }
+            }
+        },
+        DeleteCluster: {
+            input: {
+                type: "structure",
+                required: [ "cluster" ],
+                members: {
+                    cluster: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    cluster: {
+                        shape: "Ss"
+                    }
+                }
+            }
+        },
+        DeleteService: {
+            input: {
+                type: "structure",
+                required: [ "service" ],
+                members: {
+                    cluster: {},
+                    service: {},
+                    force: {
+                        type: "boolean"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    service: {
+                        shape: "S1n"
+                    }
+                }
+            }
+        },
+        DeleteTaskSet: {
+            input: {
+                type: "structure",
+                required: [ "cluster", "service", "taskSet" ],
+                members: {
+                    cluster: {},
+                    service: {},
+                    taskSet: {},
+                    force: {
+                        type: "boolean"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    taskSet: {
+                        shape: "S1p"
+                    }
+                }
+            }
+        },
+        DeregisterContainerInstance: {
+            input: {
+                type: "structure",
+                required: [ "containerInstance" ],
+                members: {
+                    cluster: {},
+                    containerInstance: {},
+                    force: {
+                        type: "boolean"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    containerInstance: {
+                        shape: "S2m"
+                    }
+                }
+            }
+        },
+        DeregisterTaskDefinition: {
+            input: {
+                type: "structure",
+                required: [ "taskDefinition" ],
+                members: {
+                    taskDefinition: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    taskDefinition: {
+                        shape: "S2u"
+                    }
+                }
+            }
+        },
+        DescribeCapacityProviders: {
+            input: {
+                type: "structure",
+                members: {
+                    capacityProviders: {
+                        shape: "Sm"
+                    },
+                    include: {
+                        type: "list",
+                        member: {}
+                    },
+                    maxResults: {
+                        type: "integer"
+                    },
+                    nextToken: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    capacityProviders: {
+                        type: "list",
+                        member: {
+                            shape: "Sf"
+                        }
+                    },
+                    failures: {
+                        shape: "S50"
+                    },
+                    nextToken: {}
+                }
+            }
+        },
+        DescribeClusters: {
+            input: {
+                type: "structure",
+                members: {
+                    clusters: {
+                        shape: "Sm"
+                    },
+                    include: {
+                        type: "list",
+                        member: {}
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    clusters: {
+                        type: "list",
+                        member: {
+                            shape: "Ss"
+                        }
+                    },
+                    failures: {
+                        shape: "S50"
+                    }
+                }
+            }
+        },
+        DescribeContainerInstances: {
+            input: {
+                type: "structure",
+                required: [ "containerInstances" ],
+                members: {
+                    cluster: {},
+                    containerInstances: {
+                        shape: "Sm"
+                    },
+                    include: {
+                        type: "list",
+                        member: {}
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    containerInstances: {
+                        shape: "S5b"
+                    },
+                    failures: {
+                        shape: "S50"
+                    }
+                }
+            }
+        },
+        DescribeServices: {
+            input: {
+                type: "structure",
+                required: [ "services" ],
+                members: {
+                    cluster: {},
+                    services: {
+                        shape: "Sm"
+                    },
+                    include: {
+                        type: "list",
+                        member: {}
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    services: {
+                        type: "list",
+                        member: {
+                            shape: "S1n"
+                        }
+                    },
+                    failures: {
+                        shape: "S50"
+                    }
+                }
+            }
+        },
+        DescribeTaskDefinition: {
+            input: {
+                type: "structure",
+                required: [ "taskDefinition" ],
+                members: {
+                    taskDefinition: {},
+                    include: {
+                        type: "list",
+                        member: {}
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    taskDefinition: {
+                        shape: "S2u"
+                    },
+                    tags: {
+                        shape: "Sa"
+                    }
+                }
+            }
+        },
+        DescribeTaskSets: {
+            input: {
+                type: "structure",
+                required: [ "cluster", "service" ],
+                members: {
+                    cluster: {},
+                    service: {},
+                    taskSets: {
+                        shape: "Sm"
+                    },
+                    include: {
+                        type: "list",
+                        member: {}
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    taskSets: {
+                        shape: "S1o"
+                    },
+                    failures: {
+                        shape: "S50"
+                    }
+                }
+            }
+        },
+        DescribeTasks: {
+            input: {
+                type: "structure",
+                required: [ "tasks" ],
+                members: {
+                    cluster: {},
+                    tasks: {
+                        shape: "Sm"
+                    },
+                    include: {
+                        type: "list",
+                        member: {}
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    tasks: {
+                        shape: "S5t"
+                    },
+                    failures: {
+                        shape: "S50"
+                    }
+                }
+            }
+        },
+        DiscoverPollEndpoint: {
+            input: {
+                type: "structure",
+                members: {
+                    containerInstance: {},
+                    cluster: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    endpoint: {},
+                    telemetryEndpoint: {}
+                }
+            }
+        },
+        ListAccountSettings: {
+            input: {
+                type: "structure",
+                members: {
+                    name: {},
+                    value: {},
+                    principalArn: {},
+                    effectiveSettings: {
+                        type: "boolean"
+                    },
+                    nextToken: {},
+                    maxResults: {
+                        type: "integer"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    settings: {
+                        type: "list",
+                        member: {
+                            shape: "S25"
+                        }
+                    },
+                    nextToken: {}
+                }
+            }
+        },
+        ListAttributes: {
+            input: {
+                type: "structure",
+                required: [ "targetType" ],
+                members: {
+                    cluster: {},
+                    targetType: {},
+                    attributeName: {},
+                    attributeValue: {},
+                    nextToken: {},
+                    maxResults: {
+                        type: "integer"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    attributes: {
+                        shape: "S27"
+                    },
+                    nextToken: {}
+                }
+            }
+        },
+        ListClusters: {
+            input: {
+                type: "structure",
+                members: {
+                    nextToken: {},
+                    maxResults: {
+                        type: "integer"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    clusterArns: {
+                        shape: "Sm"
+                    },
+                    nextToken: {}
+                }
+            }
+        },
+        ListContainerInstances: {
+            input: {
+                type: "structure",
+                members: {
+                    cluster: {},
+                    filter: {},
+                    nextToken: {},
+                    maxResults: {
+                        type: "integer"
+                    },
+                    status: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    containerInstanceArns: {
+                        shape: "Sm"
+                    },
+                    nextToken: {}
+                }
+            }
+        },
+        ListServices: {
+            input: {
+                type: "structure",
+                members: {
+                    cluster: {},
+                    nextToken: {},
+                    maxResults: {
+                        type: "integer"
+                    },
+                    launchType: {},
+                    schedulingStrategy: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    serviceArns: {
+                        shape: "Sm"
+                    },
+                    nextToken: {}
+                }
+            }
+        },
+        ListTagsForResource: {
+            input: {
+                type: "structure",
+                required: [ "resourceArn" ],
+                members: {
+                    resourceArn: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    tags: {
+                        shape: "Sa"
+                    }
+                }
+            }
+        },
+        ListTaskDefinitionFamilies: {
+            input: {
+                type: "structure",
+                members: {
+                    familyPrefix: {},
+                    status: {},
+                    nextToken: {},
+                    maxResults: {
+                        type: "integer"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    families: {
+                        shape: "Sm"
+                    },
+                    nextToken: {}
+                }
+            }
+        },
+        ListTaskDefinitions: {
+            input: {
+                type: "structure",
+                members: {
+                    familyPrefix: {},
+                    status: {},
+                    sort: {},
+                    nextToken: {},
+                    maxResults: {
+                        type: "integer"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    taskDefinitionArns: {
+                        shape: "Sm"
+                    },
+                    nextToken: {}
+                }
+            }
+        },
+        ListTasks: {
+            input: {
+                type: "structure",
+                members: {
+                    cluster: {},
+                    containerInstance: {},
+                    family: {},
+                    nextToken: {},
+                    maxResults: {
+                        type: "integer"
+                    },
+                    startedBy: {},
+                    serviceName: {},
+                    desiredStatus: {},
+                    launchType: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    taskArns: {
+                        shape: "Sm"
+                    },
+                    nextToken: {}
+                }
+            }
+        },
+        PutAccountSetting: {
+            input: {
+                type: "structure",
+                required: [ "name", "value" ],
+                members: {
+                    name: {},
+                    value: {},
+                    principalArn: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    setting: {
+                        shape: "S25"
+                    }
+                }
+            }
+        },
+        PutAccountSettingDefault: {
+            input: {
+                type: "structure",
+                required: [ "name", "value" ],
+                members: {
+                    name: {},
+                    value: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    setting: {
+                        shape: "S25"
+                    }
+                }
+            }
+        },
+        PutAttributes: {
+            input: {
+                type: "structure",
+                required: [ "attributes" ],
+                members: {
+                    cluster: {},
+                    attributes: {
+                        shape: "S27"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    attributes: {
+                        shape: "S27"
+                    }
+                }
+            }
+        },
+        PutClusterCapacityProviders: {
+            input: {
+                type: "structure",
+                required: [ "cluster", "capacityProviders", "defaultCapacityProviderStrategy" ],
+                members: {
+                    cluster: {},
+                    capacityProviders: {
+                        shape: "Sm"
+                    },
+                    defaultCapacityProviderStrategy: {
+                        shape: "Sn"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    cluster: {
+                        shape: "Ss"
+                    }
+                }
+            }
+        },
+        RegisterContainerInstance: {
+            input: {
+                type: "structure",
+                members: {
+                    cluster: {},
+                    instanceIdentityDocument: {},
+                    instanceIdentityDocumentSignature: {},
+                    totalResources: {
+                        shape: "S2p"
+                    },
+                    versionInfo: {
+                        shape: "S2o"
+                    },
+                    containerInstanceArn: {},
+                    attributes: {
+                        shape: "S27"
+                    },
+                    platformDevices: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            required: [ "id", "type" ],
+                            members: {
+                                id: {},
+                                type: {}
+                            }
+                        }
+                    },
+                    tags: {
+                        shape: "Sa"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    containerInstance: {
+                        shape: "S2m"
+                    }
+                }
+            }
+        },
+        RegisterTaskDefinition: {
+            input: {
+                type: "structure",
+                required: [ "family", "containerDefinitions" ],
+                members: {
+                    family: {},
+                    taskRoleArn: {},
+                    executionRoleArn: {},
+                    networkMode: {},
+                    containerDefinitions: {
+                        shape: "S2v"
+                    },
+                    volumes: {
+                        shape: "S45"
+                    },
+                    placementConstraints: {
+                        shape: "S4j"
+                    },
+                    requiresCompatibilities: {
+                        shape: "S4m"
+                    },
+                    cpu: {},
+                    memory: {},
+                    tags: {
+                        shape: "Sa"
+                    },
+                    pidMode: {},
+                    ipcMode: {},
+                    proxyConfiguration: {
+                        shape: "S4s"
+                    },
+                    inferenceAccelerators: {
+                        shape: "S4o"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    taskDefinition: {
+                        shape: "S2u"
+                    },
+                    tags: {
+                        shape: "Sa"
+                    }
+                }
+            }
+        },
+        RunTask: {
+            input: {
+                type: "structure",
+                required: [ "taskDefinition" ],
+                members: {
+                    capacityProviderStrategy: {
+                        shape: "Sn"
+                    },
+                    cluster: {},
+                    count: {
+                        type: "integer"
+                    },
+                    enableECSManagedTags: {
+                        type: "boolean"
+                    },
+                    group: {},
+                    launchType: {},
+                    networkConfiguration: {
+                        shape: "S1f"
+                    },
+                    overrides: {
+                        shape: "S64"
+                    },
+                    placementConstraints: {
+                        shape: "S19"
+                    },
+                    placementStrategy: {
+                        shape: "S1c"
+                    },
+                    platformVersion: {},
+                    propagateTags: {},
+                    referenceId: {},
+                    startedBy: {},
+                    tags: {
+                        shape: "Sa"
+                    },
+                    taskDefinition: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    tasks: {
+                        shape: "S5t"
+                    },
+                    failures: {
+                        shape: "S50"
+                    }
+                }
+            }
+        },
+        StartTask: {
+            input: {
+                type: "structure",
+                required: [ "containerInstances", "taskDefinition" ],
+                members: {
+                    cluster: {},
+                    containerInstances: {
+                        shape: "Sm"
+                    },
+                    enableECSManagedTags: {
+                        type: "boolean"
+                    },
+                    group: {},
+                    networkConfiguration: {
+                        shape: "S1f"
+                    },
+                    overrides: {
+                        shape: "S64"
+                    },
+                    propagateTags: {},
+                    referenceId: {},
+                    startedBy: {},
+                    tags: {
+                        shape: "Sa"
+                    },
+                    taskDefinition: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    tasks: {
+                        shape: "S5t"
+                    },
+                    failures: {
+                        shape: "S50"
+                    }
+                }
+            }
+        },
+        StopTask: {
+            input: {
+                type: "structure",
+                required: [ "task" ],
+                members: {
+                    cluster: {},
+                    task: {},
+                    reason: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    task: {
+                        shape: "S5u"
+                    }
+                }
+            }
+        },
+        SubmitAttachmentStateChanges: {
+            input: {
+                type: "structure",
+                required: [ "attachments" ],
+                members: {
+                    cluster: {},
+                    attachments: {
+                        shape: "S7l"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    acknowledgment: {}
+                }
+            }
+        },
+        SubmitContainerStateChange: {
+            input: {
+                type: "structure",
+                members: {
+                    cluster: {},
+                    task: {},
+                    containerName: {},
+                    runtimeId: {},
+                    status: {},
+                    exitCode: {
+                        type: "integer"
+                    },
+                    reason: {},
+                    networkBindings: {
+                        shape: "S5y"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    acknowledgment: {}
+                }
+            }
+        },
+        SubmitTaskStateChange: {
+            input: {
+                type: "structure",
+                members: {
+                    cluster: {},
+                    task: {},
+                    status: {},
+                    reason: {},
+                    containers: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            members: {
+                                containerName: {},
+                                imageDigest: {},
+                                runtimeId: {},
+                                exitCode: {
+                                    type: "integer"
+                                },
+                                networkBindings: {
+                                    shape: "S5y"
+                                },
+                                reason: {},
+                                status: {}
+                            }
+                        }
+                    },
+                    attachments: {
+                        shape: "S7l"
+                    },
+                    pullStartedAt: {
+                        type: "timestamp"
+                    },
+                    pullStoppedAt: {
+                        type: "timestamp"
+                    },
+                    executionStoppedAt: {
+                        type: "timestamp"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    acknowledgment: {}
+                }
+            }
+        },
+        TagResource: {
+            input: {
+                type: "structure",
+                required: [ "resourceArn", "tags" ],
+                members: {
+                    resourceArn: {},
+                    tags: {
+                        shape: "Sa"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {}
+            }
+        },
+        UntagResource: {
+            input: {
+                type: "structure",
+                required: [ "resourceArn", "tagKeys" ],
+                members: {
+                    resourceArn: {},
+                    tagKeys: {
+                        type: "list",
+                        member: {}
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {}
+            }
+        },
+        UpdateCapacityProvider: {
+            input: {
+                type: "structure",
+                required: [ "name", "autoScalingGroupProvider" ],
+                members: {
+                    name: {},
+                    autoScalingGroupProvider: {
+                        type: "structure",
+                        members: {
+                            managedScaling: {
+                                shape: "S4"
+                            },
+                            managedTerminationProtection: {}
+                        }
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    capacityProvider: {
+                        shape: "Sf"
+                    }
+                }
+            }
+        },
+        UpdateClusterSettings: {
+            input: {
+                type: "structure",
+                required: [ "cluster", "settings" ],
+                members: {
+                    cluster: {},
+                    settings: {
+                        shape: "Sj"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    cluster: {
+                        shape: "Ss"
+                    }
+                }
+            }
+        },
+        UpdateContainerAgent: {
+            input: {
+                type: "structure",
+                required: [ "containerInstance" ],
+                members: {
+                    cluster: {},
+                    containerInstance: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    containerInstance: {
+                        shape: "S2m"
+                    }
+                }
+            }
+        },
+        UpdateContainerInstancesState: {
+            input: {
+                type: "structure",
+                required: [ "containerInstances", "status" ],
+                members: {
+                    cluster: {},
+                    containerInstances: {
+                        shape: "Sm"
+                    },
+                    status: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    containerInstances: {
+                        shape: "S5b"
+                    },
+                    failures: {
+                        shape: "S50"
+                    }
+                }
+            }
+        },
+        UpdateService: {
+            input: {
+                type: "structure",
+                required: [ "service" ],
+                members: {
+                    cluster: {},
+                    service: {},
+                    desiredCount: {
+                        type: "integer"
+                    },
+                    taskDefinition: {},
+                    capacityProviderStrategy: {
+                        shape: "Sn"
+                    },
+                    deploymentConfiguration: {
+                        shape: "S16"
+                    },
+                    networkConfiguration: {
+                        shape: "S1f"
+                    },
+                    placementConstraints: {
+                        shape: "S19"
+                    },
+                    placementStrategy: {
+                        shape: "S1c"
+                    },
+                    platformVersion: {},
+                    forceNewDeployment: {
+                        type: "boolean"
+                    },
+                    healthCheckGracePeriodSeconds: {
+                        type: "integer"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    service: {
+                        shape: "S1n"
+                    }
+                }
+            }
+        },
+        UpdateServicePrimaryTaskSet: {
+            input: {
+                type: "structure",
+                required: [ "cluster", "service", "primaryTaskSet" ],
+                members: {
+                    cluster: {},
+                    service: {},
+                    primaryTaskSet: {}
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    taskSet: {
+                        shape: "S1p"
+                    }
+                }
+            }
+        },
+        UpdateTaskSet: {
+            input: {
+                type: "structure",
+                required: [ "cluster", "service", "taskSet", "scale" ],
+                members: {
+                    cluster: {},
+                    service: {},
+                    taskSet: {},
+                    scale: {
+                        shape: "S1r"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    taskSet: {
+                        shape: "S1p"
+                    }
+                }
+            }
+        }
+    },
+    shapes: {
+        S3: {
+            type: "structure",
+            required: [ "autoScalingGroupArn" ],
+            members: {
+                autoScalingGroupArn: {},
+                managedScaling: {
+                    shape: "S4"
+                },
+                managedTerminationProtection: {}
+            }
+        },
+        S4: {
+            type: "structure",
+            members: {
+                status: {},
+                targetCapacity: {
+                    type: "integer"
+                },
+                minimumScalingStepSize: {
+                    type: "integer"
+                },
+                maximumScalingStepSize: {
+                    type: "integer"
+                },
+                instanceWarmupPeriod: {
+                    type: "integer"
+                }
+            }
+        },
+        Sa: {
+            type: "list",
+            member: {
+                type: "structure",
+                members: {
+                    key: {},
+                    value: {}
+                }
+            }
+        },
+        Sf: {
+            type: "structure",
+            members: {
+                capacityProviderArn: {},
+                name: {},
+                status: {},
+                autoScalingGroupProvider: {
+                    shape: "S3"
+                },
+                updateStatus: {},
+                updateStatusReason: {},
+                tags: {
+                    shape: "Sa"
+                }
+            }
+        },
+        Sj: {
+            type: "list",
+            member: {
+                type: "structure",
+                members: {
+                    name: {},
+                    value: {}
+                }
+            }
+        },
+        Sm: {
+            type: "list",
+            member: {}
+        },
+        Sn: {
+            type: "list",
+            member: {
+                type: "structure",
+                required: [ "capacityProvider" ],
+                members: {
+                    capacityProvider: {},
+                    weight: {
+                        type: "integer"
+                    },
+                    base: {
+                        type: "integer"
+                    }
+                }
+            }
+        },
+        Ss: {
+            type: "structure",
+            members: {
+                clusterArn: {},
+                clusterName: {},
+                status: {},
+                registeredContainerInstancesCount: {
+                    type: "integer"
+                },
+                runningTasksCount: {
+                    type: "integer"
+                },
+                pendingTasksCount: {
+                    type: "integer"
+                },
+                activeServicesCount: {
+                    type: "integer"
+                },
+                statistics: {
+                    type: "list",
+                    member: {
+                        shape: "Sv"
+                    }
+                },
+                tags: {
+                    shape: "Sa"
+                },
+                settings: {
+                    shape: "Sj"
+                },
+                capacityProviders: {
+                    shape: "Sm"
+                },
+                defaultCapacityProviderStrategy: {
+                    shape: "Sn"
+                },
+                attachments: {
+                    shape: "Sw"
+                },
+                attachmentsStatus: {}
+            }
+        },
+        Sv: {
+            type: "structure",
+            members: {
+                name: {},
+                value: {}
+            }
+        },
+        Sw: {
+            type: "list",
+            member: {
+                type: "structure",
+                members: {
+                    id: {},
+                    type: {},
+                    status: {},
+                    details: {
+                        type: "list",
+                        member: {
+                            shape: "Sv"
+                        }
+                    }
+                }
+            }
+        },
+        S10: {
+            type: "list",
+            member: {
+                type: "structure",
+                members: {
+                    targetGroupArn: {},
+                    loadBalancerName: {},
+                    containerName: {},
+                    containerPort: {
+                        type: "integer"
+                    }
+                }
+            }
+        },
+        S13: {
+            type: "list",
+            member: {
+                type: "structure",
+                members: {
+                    registryArn: {},
+                    port: {
+                        type: "integer"
+                    },
+                    containerName: {},
+                    containerPort: {
+                        type: "integer"
+                    }
+                }
+            }
+        },
+        S16: {
+            type: "structure",
+            members: {
+                deploymentCircuitBreaker: {
+                    type: "structure",
+                    required: [ "enable", "rollback" ],
+                    members: {
+                        enable: {
+                            type: "boolean"
+                        },
+                        rollback: {
+                            type: "boolean"
+                        }
+                    }
+                },
+                maximumPercent: {
+                    type: "integer"
+                },
+                minimumHealthyPercent: {
+                    type: "integer"
+                }
+            }
+        },
+        S19: {
+            type: "list",
+            member: {
+                type: "structure",
+                members: {
+                    type: {},
+                    expression: {}
+                }
+            }
+        },
+        S1c: {
+            type: "list",
+            member: {
+                type: "structure",
+                members: {
+                    type: {},
+                    field: {}
+                }
+            }
+        },
+        S1f: {
+            type: "structure",
+            members: {
+                awsvpcConfiguration: {
+                    type: "structure",
+                    required: [ "subnets" ],
+                    members: {
+                        subnets: {
+                            shape: "Sm"
+                        },
+                        securityGroups: {
+                            shape: "Sm"
+                        },
+                        assignPublicIp: {}
+                    }
+                }
+            }
+        },
+        S1j: {
+            type: "structure",
+            required: [ "type" ],
+            members: {
+                type: {}
+            }
+        },
+        S1n: {
+            type: "structure",
+            members: {
+                serviceArn: {},
+                serviceName: {},
+                clusterArn: {},
+                loadBalancers: {
+                    shape: "S10"
+                },
+                serviceRegistries: {
+                    shape: "S13"
+                },
+                status: {},
+                desiredCount: {
+                    type: "integer"
+                },
+                runningCount: {
+                    type: "integer"
+                },
+                pendingCount: {
+                    type: "integer"
+                },
+                launchType: {},
+                capacityProviderStrategy: {
+                    shape: "Sn"
+                },
+                platformVersion: {},
+                taskDefinition: {},
+                deploymentConfiguration: {
+                    shape: "S16"
+                },
+                taskSets: {
+                    shape: "S1o"
+                },
+                deployments: {
+                    type: "list",
+                    member: {
+                        type: "structure",
+                        members: {
+                            id: {},
+                            status: {},
+                            taskDefinition: {},
+                            desiredCount: {
+                                type: "integer"
+                            },
+                            pendingCount: {
+                                type: "integer"
+                            },
+                            runningCount: {
+                                type: "integer"
+                            },
+                            failedTasks: {
+                                type: "integer"
+                            },
+                            createdAt: {
+                                type: "timestamp"
+                            },
+                            updatedAt: {
+                                type: "timestamp"
+                            },
+                            capacityProviderStrategy: {
+                                shape: "Sn"
+                            },
+                            launchType: {},
+                            platformVersion: {},
+                            networkConfiguration: {
+                                shape: "S1f"
+                            },
+                            rolloutState: {},
+                            rolloutStateReason: {}
+                        }
+                    }
+                },
+                roleArn: {},
+                events: {
+                    type: "list",
+                    member: {
+                        type: "structure",
+                        members: {
+                            id: {},
+                            createdAt: {
+                                type: "timestamp"
+                            },
+                            message: {}
+                        }
+                    }
+                },
+                createdAt: {
+                    type: "timestamp"
+                },
+                placementConstraints: {
+                    shape: "S19"
+                },
+                placementStrategy: {
+                    shape: "S1c"
+                },
+                networkConfiguration: {
+                    shape: "S1f"
+                },
+                healthCheckGracePeriodSeconds: {
+                    type: "integer"
+                },
+                schedulingStrategy: {},
+                deploymentController: {
+                    shape: "S1j"
+                },
+                tags: {
+                    shape: "Sa"
+                },
+                createdBy: {},
+                enableECSManagedTags: {
+                    type: "boolean"
+                },
+                propagateTags: {}
+            }
+        },
+        S1o: {
+            type: "list",
+            member: {
+                shape: "S1p"
+            }
+        },
+        S1p: {
+            type: "structure",
+            members: {
+                id: {},
+                taskSetArn: {},
+                serviceArn: {},
+                clusterArn: {},
+                startedBy: {},
+                externalId: {},
+                status: {},
+                taskDefinition: {},
+                computedDesiredCount: {
+                    type: "integer"
+                },
+                pendingCount: {
+                    type: "integer"
+                },
+                runningCount: {
+                    type: "integer"
+                },
+                createdAt: {
+                    type: "timestamp"
+                },
+                updatedAt: {
+                    type: "timestamp"
+                },
+                launchType: {},
+                capacityProviderStrategy: {
+                    shape: "Sn"
+                },
+                platformVersion: {},
+                networkConfiguration: {
+                    shape: "S1f"
+                },
+                loadBalancers: {
+                    shape: "S10"
+                },
+                serviceRegistries: {
+                    shape: "S13"
+                },
+                scale: {
+                    shape: "S1r"
+                },
+                stabilityStatus: {},
+                stabilityStatusAt: {
+                    type: "timestamp"
+                },
+                tags: {
+                    shape: "Sa"
+                }
+            }
+        },
+        S1r: {
+            type: "structure",
+            members: {
+                value: {
+                    type: "double"
+                },
+                unit: {}
+            }
+        },
+        S25: {
+            type: "structure",
+            members: {
+                name: {},
+                value: {},
+                principalArn: {}
+            }
+        },
+        S27: {
+            type: "list",
+            member: {
+                shape: "S28"
+            }
+        },
+        S28: {
+            type: "structure",
+            required: [ "name" ],
+            members: {
+                name: {},
+                value: {},
+                targetType: {},
+                targetId: {}
+            }
+        },
+        S2m: {
+            type: "structure",
+            members: {
+                containerInstanceArn: {},
+                ec2InstanceId: {},
+                capacityProviderName: {},
+                version: {
+                    type: "long"
+                },
+                versionInfo: {
+                    shape: "S2o"
+                },
+                remainingResources: {
+                    shape: "S2p"
+                },
+                registeredResources: {
+                    shape: "S2p"
+                },
+                status: {},
+                statusReason: {},
+                agentConnected: {
+                    type: "boolean"
+                },
+                runningTasksCount: {
+                    type: "integer"
+                },
+                pendingTasksCount: {
+                    type: "integer"
+                },
+                agentUpdateStatus: {},
+                attributes: {
+                    shape: "S27"
+                },
+                registeredAt: {
+                    type: "timestamp"
+                },
+                attachments: {
+                    shape: "Sw"
+                },
+                tags: {
+                    shape: "Sa"
+                }
+            }
+        },
+        S2o: {
+            type: "structure",
+            members: {
+                agentVersion: {},
+                agentHash: {},
+                dockerVersion: {}
+            }
+        },
+        S2p: {
+            type: "list",
+            member: {
+                type: "structure",
+                members: {
+                    name: {},
+                    type: {},
+                    doubleValue: {
+                        type: "double"
+                    },
+                    longValue: {
+                        type: "long"
+                    },
+                    integerValue: {
+                        type: "integer"
+                    },
+                    stringSetValue: {
+                        shape: "Sm"
+                    }
+                }
+            }
+        },
+        S2u: {
+            type: "structure",
+            members: {
+                taskDefinitionArn: {},
+                containerDefinitions: {
+                    shape: "S2v"
+                },
+                family: {},
+                taskRoleArn: {},
+                executionRoleArn: {},
+                networkMode: {},
+                revision: {
+                    type: "integer"
+                },
+                volumes: {
+                    shape: "S45"
+                },
+                status: {},
+                requiresAttributes: {
+                    type: "list",
+                    member: {
+                        shape: "S28"
+                    }
+                },
+                placementConstraints: {
+                    shape: "S4j"
+                },
+                compatibilities: {
+                    shape: "S4m"
+                },
+                requiresCompatibilities: {
+                    shape: "S4m"
+                },
+                cpu: {},
+                memory: {},
+                inferenceAccelerators: {
+                    shape: "S4o"
+                },
+                pidMode: {},
+                ipcMode: {},
+                proxyConfiguration: {
+                    shape: "S4s"
+                },
+                registeredAt: {
+                    type: "timestamp"
+                },
+                deregisteredAt: {
+                    type: "timestamp"
+                },
+                registeredBy: {}
+            }
+        },
+        S2v: {
+            type: "list",
+            member: {
+                type: "structure",
+                members: {
+                    name: {},
+                    image: {},
+                    repositoryCredentials: {
+                        type: "structure",
+                        required: [ "credentialsParameter" ],
+                        members: {
+                            credentialsParameter: {}
+                        }
+                    },
+                    cpu: {
+                        type: "integer"
+                    },
+                    memory: {
+                        type: "integer"
+                    },
+                    memoryReservation: {
+                        type: "integer"
+                    },
+                    links: {
+                        shape: "Sm"
+                    },
+                    portMappings: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            members: {
+                                containerPort: {
+                                    type: "integer"
+                                },
+                                hostPort: {
+                                    type: "integer"
+                                },
+                                protocol: {}
+                            }
+                        }
+                    },
+                    essential: {
+                        type: "boolean"
+                    },
+                    entryPoint: {
+                        shape: "Sm"
+                    },
+                    command: {
+                        shape: "Sm"
+                    },
+                    environment: {
+                        shape: "S31"
+                    },
+                    environmentFiles: {
+                        shape: "S32"
+                    },
+                    mountPoints: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            members: {
+                                sourceVolume: {},
+                                containerPath: {},
+                                readOnly: {
+                                    type: "boolean"
+                                }
+                            }
+                        }
+                    },
+                    volumesFrom: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            members: {
+                                sourceContainer: {},
+                                readOnly: {
+                                    type: "boolean"
+                                }
+                            }
+                        }
+                    },
+                    linuxParameters: {
+                        type: "structure",
+                        members: {
+                            capabilities: {
+                                type: "structure",
+                                members: {
+                                    add: {
+                                        shape: "Sm"
+                                    },
+                                    drop: {
+                                        shape: "Sm"
+                                    }
+                                }
+                            },
+                            devices: {
+                                type: "list",
+                                member: {
+                                    type: "structure",
+                                    required: [ "hostPath" ],
+                                    members: {
+                                        hostPath: {},
+                                        containerPath: {},
+                                        permissions: {
+                                            type: "list",
+                                            member: {}
+                                        }
+                                    }
+                                }
+                            },
+                            initProcessEnabled: {
+                                type: "boolean"
+                            },
+                            sharedMemorySize: {
+                                type: "integer"
+                            },
+                            tmpfs: {
+                                type: "list",
+                                member: {
+                                    type: "structure",
+                                    required: [ "containerPath", "size" ],
+                                    members: {
+                                        containerPath: {},
+                                        size: {
+                                            type: "integer"
+                                        },
+                                        mountOptions: {
+                                            shape: "Sm"
+                                        }
+                                    }
+                                }
+                            },
+                            maxSwap: {
+                                type: "integer"
+                            },
+                            swappiness: {
+                                type: "integer"
+                            }
+                        }
+                    },
+                    secrets: {
+                        shape: "S3h"
+                    },
+                    dependsOn: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            required: [ "containerName", "condition" ],
+                            members: {
+                                containerName: {},
+                                condition: {}
+                            }
+                        }
+                    },
+                    startTimeout: {
+                        type: "integer"
+                    },
+                    stopTimeout: {
+                        type: "integer"
+                    },
+                    hostname: {},
+                    user: {},
+                    workingDirectory: {},
+                    disableNetworking: {
+                        type: "boolean"
+                    },
+                    privileged: {
+                        type: "boolean"
+                    },
+                    readonlyRootFilesystem: {
+                        type: "boolean"
+                    },
+                    dnsServers: {
+                        shape: "Sm"
+                    },
+                    dnsSearchDomains: {
+                        shape: "Sm"
+                    },
+                    extraHosts: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            required: [ "hostname", "ipAddress" ],
+                            members: {
+                                hostname: {},
+                                ipAddress: {}
+                            }
+                        }
+                    },
+                    dockerSecurityOptions: {
+                        shape: "Sm"
+                    },
+                    interactive: {
+                        type: "boolean"
+                    },
+                    pseudoTerminal: {
+                        type: "boolean"
+                    },
+                    dockerLabels: {
+                        type: "map",
+                        key: {},
+                        value: {}
+                    },
+                    ulimits: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            required: [ "name", "softLimit", "hardLimit" ],
+                            members: {
+                                name: {},
+                                softLimit: {
+                                    type: "integer"
+                                },
+                                hardLimit: {
+                                    type: "integer"
+                                }
+                            }
+                        }
+                    },
+                    logConfiguration: {
+                        type: "structure",
+                        required: [ "logDriver" ],
+                        members: {
+                            logDriver: {},
+                            options: {
+                                type: "map",
+                                key: {},
+                                value: {}
+                            },
+                            secretOptions: {
+                                shape: "S3h"
+                            }
+                        }
+                    },
+                    healthCheck: {
+                        type: "structure",
+                        required: [ "command" ],
+                        members: {
+                            command: {
+                                shape: "Sm"
+                            },
+                            interval: {
+                                type: "integer"
+                            },
+                            timeout: {
+                                type: "integer"
+                            },
+                            retries: {
+                                type: "integer"
+                            },
+                            startPeriod: {
+                                type: "integer"
+                            }
+                        }
+                    },
+                    systemControls: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            members: {
+                                namespace: {},
+                                value: {}
+                            }
+                        }
+                    },
+                    resourceRequirements: {
+                        shape: "S3y"
+                    },
+                    firelensConfiguration: {
+                        type: "structure",
+                        required: [ "type" ],
+                        members: {
+                            type: {},
+                            options: {
+                                type: "map",
+                                key: {},
+                                value: {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        S31: {
+            type: "list",
+            member: {
+                shape: "Sv"
+            }
+        },
+        S32: {
+            type: "list",
+            member: {
+                type: "structure",
+                required: [ "value", "type" ],
+                members: {
+                    value: {},
+                    type: {}
+                }
+            }
+        },
+        S3h: {
+            type: "list",
+            member: {
+                type: "structure",
+                required: [ "name", "valueFrom" ],
+                members: {
+                    name: {},
+                    valueFrom: {}
+                }
+            }
+        },
+        S3y: {
+            type: "list",
+            member: {
+                type: "structure",
+                required: [ "value", "type" ],
+                members: {
+                    value: {},
+                    type: {}
+                }
+            }
+        },
+        S45: {
+            type: "list",
+            member: {
+                type: "structure",
+                members: {
+                    name: {},
+                    host: {
+                        type: "structure",
+                        members: {
+                            sourcePath: {}
+                        }
+                    },
+                    dockerVolumeConfiguration: {
+                        type: "structure",
+                        members: {
+                            scope: {},
+                            autoprovision: {
+                                type: "boolean"
+                            },
+                            driver: {},
+                            driverOpts: {
+                                shape: "S4a"
+                            },
+                            labels: {
+                                shape: "S4a"
+                            }
+                        }
+                    },
+                    efsVolumeConfiguration: {
+                        type: "structure",
+                        required: [ "fileSystemId" ],
+                        members: {
+                            fileSystemId: {},
+                            rootDirectory: {},
+                            transitEncryption: {},
+                            transitEncryptionPort: {
+                                type: "integer"
+                            },
+                            authorizationConfig: {
+                                type: "structure",
+                                members: {
+                                    accessPointId: {},
+                                    iam: {}
+                                }
+                            }
+                        }
+                    },
+                    fsxWindowsFileServerVolumeConfiguration: {
+                        type: "structure",
+                        required: [ "fileSystemId", "rootDirectory", "authorizationConfig" ],
+                        members: {
+                            fileSystemId: {},
+                            rootDirectory: {},
+                            authorizationConfig: {
+                                type: "structure",
+                                required: [ "credentialsParameter", "domain" ],
+                                members: {
+                                    credentialsParameter: {},
+                                    domain: {}
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        S4a: {
+            type: "map",
+            key: {},
+            value: {}
+        },
+        S4j: {
+            type: "list",
+            member: {
+                type: "structure",
+                members: {
+                    type: {},
+                    expression: {}
+                }
+            }
+        },
+        S4m: {
+            type: "list",
+            member: {}
+        },
+        S4o: {
+            type: "list",
+            member: {
+                type: "structure",
+                required: [ "deviceName", "deviceType" ],
+                members: {
+                    deviceName: {},
+                    deviceType: {}
+                }
+            }
+        },
+        S4s: {
+            type: "structure",
+            required: [ "containerName" ],
+            members: {
+                type: {},
+                containerName: {},
+                properties: {
+                    type: "list",
+                    member: {
+                        shape: "Sv"
+                    }
+                }
+            }
+        },
+        S50: {
+            type: "list",
+            member: {
+                type: "structure",
+                members: {
+                    arn: {},
+                    reason: {},
+                    detail: {}
+                }
+            }
+        },
+        S5b: {
+            type: "list",
+            member: {
+                shape: "S2m"
+            }
+        },
+        S5t: {
+            type: "list",
+            member: {
+                shape: "S5u"
+            }
+        },
+        S5u: {
+            type: "structure",
+            members: {
+                attachments: {
+                    shape: "Sw"
+                },
+                attributes: {
+                    shape: "S27"
+                },
+                availabilityZone: {},
+                capacityProviderName: {},
+                clusterArn: {},
+                connectivity: {},
+                connectivityAt: {
+                    type: "timestamp"
+                },
+                containerInstanceArn: {},
+                containers: {
+                    type: "list",
+                    member: {
+                        type: "structure",
+                        members: {
+                            containerArn: {},
+                            taskArn: {},
+                            name: {},
+                            image: {},
+                            imageDigest: {},
+                            runtimeId: {},
+                            lastStatus: {},
+                            exitCode: {
+                                type: "integer"
+                            },
+                            reason: {},
+                            networkBindings: {
+                                shape: "S5y"
+                            },
+                            networkInterfaces: {
+                                type: "list",
+                                member: {
+                                    type: "structure",
+                                    members: {
+                                        attachmentId: {},
+                                        privateIpv4Address: {},
+                                        ipv6Address: {}
+                                    }
+                                }
+                            },
+                            healthStatus: {},
+                            cpu: {},
+                            memory: {},
+                            memoryReservation: {},
+                            gpuIds: {
+                                type: "list",
+                                member: {}
+                            }
+                        }
+                    }
+                },
+                cpu: {},
+                createdAt: {
+                    type: "timestamp"
+                },
+                desiredStatus: {},
+                executionStoppedAt: {
+                    type: "timestamp"
+                },
+                group: {},
+                healthStatus: {},
+                inferenceAccelerators: {
+                    shape: "S4o"
+                },
+                lastStatus: {},
+                launchType: {},
+                memory: {},
+                overrides: {
+                    shape: "S64"
+                },
+                platformVersion: {},
+                pullStartedAt: {
+                    type: "timestamp"
+                },
+                pullStoppedAt: {
+                    type: "timestamp"
+                },
+                startedAt: {
+                    type: "timestamp"
+                },
+                startedBy: {},
+                stopCode: {},
+                stoppedAt: {
+                    type: "timestamp"
+                },
+                stoppedReason: {},
+                stoppingAt: {
+                    type: "timestamp"
+                },
+                tags: {
+                    shape: "Sa"
+                },
+                taskArn: {},
+                taskDefinitionArn: {},
+                version: {
+                    type: "long"
+                }
+            }
+        },
+        S5y: {
+            type: "list",
+            member: {
+                type: "structure",
+                members: {
+                    bindIP: {},
+                    containerPort: {
+                        type: "integer"
+                    },
+                    hostPort: {
+                        type: "integer"
+                    },
+                    protocol: {}
+                }
+            }
+        },
+        S64: {
+            type: "structure",
+            members: {
+                containerOverrides: {
+                    type: "list",
+                    member: {
+                        type: "structure",
+                        members: {
+                            name: {},
+                            command: {
+                                shape: "Sm"
+                            },
+                            environment: {
+                                shape: "S31"
+                            },
+                            environmentFiles: {
+                                shape: "S32"
+                            },
+                            cpu: {
+                                type: "integer"
+                            },
+                            memory: {
+                                type: "integer"
+                            },
+                            memoryReservation: {
+                                type: "integer"
+                            },
+                            resourceRequirements: {
+                                shape: "S3y"
+                            }
+                        }
+                    }
+                },
+                cpu: {},
+                inferenceAcceleratorOverrides: {
+                    type: "list",
+                    member: {
+                        type: "structure",
+                        members: {
+                            deviceName: {},
+                            deviceType: {}
+                        }
+                    }
+                },
+                executionRoleArn: {},
+                memory: {},
+                taskRoleArn: {}
+            }
+        },
+        S7l: {
+            type: "list",
+            member: {
+                type: "structure",
+                required: [ "attachmentArn", "status" ],
+                members: {
+                    attachmentArn: {},
+                    status: {}
+                }
+            }
+        }
+    },
+    paginators: {
+        ListAccountSettings: {
+            input_token: "nextToken",
+            limit_key: "maxResults",
+            output_token: "nextToken",
+            result_key: "settings"
+        },
+        ListAttributes: {
+            input_token: "nextToken",
+            limit_key: "maxResults",
+            output_token: "nextToken",
+            result_key: "attributes"
+        },
+        ListClusters: {
+            input_token: "nextToken",
+            limit_key: "maxResults",
+            output_token: "nextToken",
+            result_key: "clusterArns"
+        },
+        ListContainerInstances: {
+            input_token: "nextToken",
+            limit_key: "maxResults",
+            output_token: "nextToken",
+            result_key: "containerInstanceArns"
+        },
+        ListServices: {
+            input_token: "nextToken",
+            limit_key: "maxResults",
+            output_token: "nextToken",
+            result_key: "serviceArns"
+        },
+        ListTaskDefinitionFamilies: {
+            input_token: "nextToken",
+            limit_key: "maxResults",
+            output_token: "nextToken",
+            result_key: "families"
+        },
+        ListTaskDefinitions: {
+            input_token: "nextToken",
+            limit_key: "maxResults",
+            output_token: "nextToken",
+            result_key: "taskDefinitionArns"
+        },
+        ListTasks: {
+            input_token: "nextToken",
+            limit_key: "maxResults",
+            output_token: "nextToken",
+            result_key: "taskArns"
+        }
+    },
+    waiters: {
+        TasksRunning: {
+            delay: 6,
+            operation: "DescribeTasks",
+            maxAttempts: 100,
+            acceptors: [ {
+                expected: "STOPPED",
+                matcher: "pathAny",
+                state: "failure",
+                argument: "tasks[].lastStatus"
+            }, {
+                expected: "MISSING",
+                matcher: "pathAny",
+                state: "failure",
+                argument: "failures[].reason"
+            }, {
+                expected: "RUNNING",
+                matcher: "pathAll",
+                state: "success",
+                argument: "tasks[].lastStatus"
+            } ]
+        },
+        TasksStopped: {
+            delay: 6,
+            operation: "DescribeTasks",
+            maxAttempts: 100,
+            acceptors: [ {
+                expected: "STOPPED",
+                matcher: "pathAll",
+                state: "success",
+                argument: "tasks[].lastStatus"
+            } ]
+        },
+        ServicesStable: {
+            delay: 15,
+            operation: "DescribeServices",
+            maxAttempts: 40,
+            acceptors: [ {
+                expected: "MISSING",
+                matcher: "pathAny",
+                state: "failure",
+                argument: "failures[].reason"
+            }, {
+                expected: "DRAINING",
+                matcher: "pathAny",
+                state: "failure",
+                argument: "services[].status"
+            }, {
+                expected: "INACTIVE",
+                matcher: "pathAny",
+                state: "failure",
+                argument: "services[].status"
+            }, {
+                expected: true,
+                matcher: "path",
+                state: "success",
+                argument: "length(services[?!(length(deployments) == `1` && runningCount == desiredCount)]) == `0`"
+            } ]
+        },
+        ServicesInactive: {
+            delay: 15,
+            operation: "DescribeServices",
+            maxAttempts: 40,
+            acceptors: [ {
+                expected: "MISSING",
+                matcher: "pathAny",
+                state: "failure",
+                argument: "failures[].reason"
+            }, {
+                expected: "INACTIVE",
+                matcher: "pathAny",
+                state: "success",
+                argument: "services[].status"
+            } ]
+        }
+    }
+};
+
+AWS.apiLoader.services["efs"] = {};
+
+AWS.EFS = AWS.Service.defineService("efs", [ "2015-02-01" ]);
+
+AWS.apiLoader.services["efs"]["2015-02-01"] = {
+    version: "2.0",
+    metadata: {
+        apiVersion: "2015-02-01",
+        endpointPrefix: "elasticfilesystem",
+        protocol: "rest-json",
+        serviceAbbreviation: "EFS",
+        serviceFullName: "Amazon Elastic File System",
+        serviceId: "EFS",
+        signatureVersion: "v4",
+        uid: "elasticfilesystem-2015-02-01"
+    },
+    operations: {
+        CreateAccessPoint: {
+            http: {
+                requestUri: "/2015-02-01/access-points",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                required: [ "ClientToken", "FileSystemId" ],
+                members: {
+                    ClientToken: {
+                        idempotencyToken: true
+                    },
+                    Tags: {
+                        shape: "S3"
+                    },
+                    FileSystemId: {},
+                    PosixUser: {
+                        shape: "S8"
+                    },
+                    RootDirectory: {
+                        shape: "Sc"
+                    }
+                }
+            },
+            output: {
+                shape: "Si"
+            }
+        },
+        CreateFileSystem: {
+            http: {
+                requestUri: "/2015-02-01/file-systems",
+                responseCode: 201
+            },
+            input: {
+                type: "structure",
+                required: [ "CreationToken" ],
+                members: {
+                    CreationToken: {
+                        idempotencyToken: true
+                    },
+                    PerformanceMode: {},
+                    Encrypted: {
+                        type: "boolean"
+                    },
+                    KmsKeyId: {},
+                    ThroughputMode: {},
+                    ProvisionedThroughputInMibps: {
+                        type: "double"
+                    },
+                    Tags: {
+                        shape: "S3"
+                    }
+                }
+            },
+            output: {
+                shape: "Sv"
+            }
+        },
+        CreateMountTarget: {
+            http: {
+                requestUri: "/2015-02-01/mount-targets",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                required: [ "FileSystemId", "SubnetId" ],
+                members: {
+                    FileSystemId: {},
+                    SubnetId: {},
+                    IpAddress: {},
+                    SecurityGroups: {
+                        shape: "S15"
+                    }
+                }
+            },
+            output: {
+                shape: "S17"
+            }
+        },
+        CreateTags: {
+            http: {
+                requestUri: "/2015-02-01/create-tags/{FileSystemId}",
+                responseCode: 204
+            },
+            input: {
+                type: "structure",
+                required: [ "FileSystemId", "Tags" ],
+                members: {
+                    FileSystemId: {
+                        location: "uri",
+                        locationName: "FileSystemId"
+                    },
+                    Tags: {
+                        shape: "S3"
+                    }
+                }
+            },
+            deprecated: true,
+            deprecatedMessage: "Use TagResource."
+        },
+        DeleteAccessPoint: {
+            http: {
+                method: "DELETE",
+                requestUri: "/2015-02-01/access-points/{AccessPointId}",
+                responseCode: 204
+            },
+            input: {
+                type: "structure",
+                required: [ "AccessPointId" ],
+                members: {
+                    AccessPointId: {
+                        location: "uri",
+                        locationName: "AccessPointId"
+                    }
+                }
+            }
+        },
+        DeleteFileSystem: {
+            http: {
+                method: "DELETE",
+                requestUri: "/2015-02-01/file-systems/{FileSystemId}",
+                responseCode: 204
+            },
+            input: {
+                type: "structure",
+                required: [ "FileSystemId" ],
+                members: {
+                    FileSystemId: {
+                        location: "uri",
+                        locationName: "FileSystemId"
+                    }
+                }
+            }
+        },
+        DeleteFileSystemPolicy: {
+            http: {
+                method: "DELETE",
+                requestUri: "/2015-02-01/file-systems/{FileSystemId}/policy",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                required: [ "FileSystemId" ],
+                members: {
+                    FileSystemId: {
+                        location: "uri",
+                        locationName: "FileSystemId"
+                    }
+                }
+            }
+        },
+        DeleteMountTarget: {
+            http: {
+                method: "DELETE",
+                requestUri: "/2015-02-01/mount-targets/{MountTargetId}",
+                responseCode: 204
+            },
+            input: {
+                type: "structure",
+                required: [ "MountTargetId" ],
+                members: {
+                    MountTargetId: {
+                        location: "uri",
+                        locationName: "MountTargetId"
+                    }
+                }
+            }
+        },
+        DeleteTags: {
+            http: {
+                requestUri: "/2015-02-01/delete-tags/{FileSystemId}",
+                responseCode: 204
+            },
+            input: {
+                type: "structure",
+                required: [ "FileSystemId", "TagKeys" ],
+                members: {
+                    FileSystemId: {
+                        location: "uri",
+                        locationName: "FileSystemId"
+                    },
+                    TagKeys: {
+                        shape: "S1j"
+                    }
+                }
+            },
+            deprecated: true,
+            deprecatedMessage: "Use UntagResource."
+        },
+        DescribeAccessPoints: {
+            http: {
+                method: "GET",
+                requestUri: "/2015-02-01/access-points",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                members: {
+                    MaxResults: {
+                        location: "querystring",
+                        locationName: "MaxResults",
+                        type: "integer"
+                    },
+                    NextToken: {
+                        location: "querystring",
+                        locationName: "NextToken"
+                    },
+                    AccessPointId: {
+                        location: "querystring",
+                        locationName: "AccessPointId"
+                    },
+                    FileSystemId: {
+                        location: "querystring",
+                        locationName: "FileSystemId"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    AccessPoints: {
+                        type: "list",
+                        member: {
+                            shape: "Si"
+                        }
+                    },
+                    NextToken: {}
+                }
+            }
+        },
+        DescribeBackupPolicy: {
+            http: {
+                method: "GET",
+                requestUri: "/2015-02-01/file-systems/{FileSystemId}/backup-policy",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                required: [ "FileSystemId" ],
+                members: {
+                    FileSystemId: {
+                        location: "uri",
+                        locationName: "FileSystemId"
+                    }
+                }
+            },
+            output: {
+                shape: "S1q"
+            }
+        },
+        DescribeFileSystemPolicy: {
+            http: {
+                method: "GET",
+                requestUri: "/2015-02-01/file-systems/{FileSystemId}/policy",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                required: [ "FileSystemId" ],
+                members: {
+                    FileSystemId: {
+                        location: "uri",
+                        locationName: "FileSystemId"
+                    }
+                }
+            },
+            output: {
+                shape: "S1u"
+            }
+        },
+        DescribeFileSystems: {
+            http: {
+                method: "GET",
+                requestUri: "/2015-02-01/file-systems",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                members: {
+                    MaxItems: {
+                        location: "querystring",
+                        locationName: "MaxItems",
+                        type: "integer"
+                    },
+                    Marker: {
+                        location: "querystring",
+                        locationName: "Marker"
+                    },
+                    CreationToken: {
+                        location: "querystring",
+                        locationName: "CreationToken"
+                    },
+                    FileSystemId: {
+                        location: "querystring",
+                        locationName: "FileSystemId"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    Marker: {},
+                    FileSystems: {
+                        type: "list",
+                        member: {
+                            shape: "Sv"
+                        }
+                    },
+                    NextMarker: {}
+                }
+            }
+        },
+        DescribeLifecycleConfiguration: {
+            http: {
+                method: "GET",
+                requestUri: "/2015-02-01/file-systems/{FileSystemId}/lifecycle-configuration",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                required: [ "FileSystemId" ],
+                members: {
+                    FileSystemId: {
+                        location: "uri",
+                        locationName: "FileSystemId"
+                    }
+                }
+            },
+            output: {
+                shape: "S22"
+            }
+        },
+        DescribeMountTargetSecurityGroups: {
+            http: {
+                method: "GET",
+                requestUri: "/2015-02-01/mount-targets/{MountTargetId}/security-groups",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                required: [ "MountTargetId" ],
+                members: {
+                    MountTargetId: {
+                        location: "uri",
+                        locationName: "MountTargetId"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "SecurityGroups" ],
+                members: {
+                    SecurityGroups: {
+                        shape: "S15"
+                    }
+                }
+            }
+        },
+        DescribeMountTargets: {
+            http: {
+                method: "GET",
+                requestUri: "/2015-02-01/mount-targets",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                members: {
+                    MaxItems: {
+                        location: "querystring",
+                        locationName: "MaxItems",
+                        type: "integer"
+                    },
+                    Marker: {
+                        location: "querystring",
+                        locationName: "Marker"
+                    },
+                    FileSystemId: {
+                        location: "querystring",
+                        locationName: "FileSystemId"
+                    },
+                    MountTargetId: {
+                        location: "querystring",
+                        locationName: "MountTargetId"
+                    },
+                    AccessPointId: {
+                        location: "querystring",
+                        locationName: "AccessPointId"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    Marker: {},
+                    MountTargets: {
+                        type: "list",
+                        member: {
+                            shape: "S17"
+                        }
+                    },
+                    NextMarker: {}
+                }
+            }
+        },
+        DescribeTags: {
+            http: {
+                method: "GET",
+                requestUri: "/2015-02-01/tags/{FileSystemId}/",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                required: [ "FileSystemId" ],
+                members: {
+                    MaxItems: {
+                        location: "querystring",
+                        locationName: "MaxItems",
+                        type: "integer"
+                    },
+                    Marker: {
+                        location: "querystring",
+                        locationName: "Marker"
+                    },
+                    FileSystemId: {
+                        location: "uri",
+                        locationName: "FileSystemId"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                required: [ "Tags" ],
+                members: {
+                    Marker: {},
+                    Tags: {
+                        shape: "S3"
+                    },
+                    NextMarker: {}
+                }
+            },
+            deprecated: true,
+            deprecatedMessage: "Use ListTagsForResource."
+        },
+        ListTagsForResource: {
+            http: {
+                method: "GET",
+                requestUri: "/2015-02-01/resource-tags/{ResourceId}",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                required: [ "ResourceId" ],
+                members: {
+                    ResourceId: {
+                        location: "uri",
+                        locationName: "ResourceId"
+                    },
+                    MaxResults: {
+                        location: "querystring",
+                        locationName: "MaxResults",
+                        type: "integer"
+                    },
+                    NextToken: {
+                        location: "querystring",
+                        locationName: "NextToken"
+                    }
+                }
+            },
+            output: {
+                type: "structure",
+                members: {
+                    Tags: {
+                        shape: "S3"
+                    },
+                    NextToken: {}
+                }
+            }
+        },
+        ModifyMountTargetSecurityGroups: {
+            http: {
+                method: "PUT",
+                requestUri: "/2015-02-01/mount-targets/{MountTargetId}/security-groups",
+                responseCode: 204
+            },
+            input: {
+                type: "structure",
+                required: [ "MountTargetId" ],
+                members: {
+                    MountTargetId: {
+                        location: "uri",
+                        locationName: "MountTargetId"
+                    },
+                    SecurityGroups: {
+                        shape: "S15"
+                    }
+                }
+            }
+        },
+        PutBackupPolicy: {
+            http: {
+                method: "PUT",
+                requestUri: "/2015-02-01/file-systems/{FileSystemId}/backup-policy",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                required: [ "FileSystemId", "BackupPolicy" ],
+                members: {
+                    FileSystemId: {
+                        location: "uri",
+                        locationName: "FileSystemId"
+                    },
+                    BackupPolicy: {
+                        shape: "S1r"
+                    }
+                }
+            },
+            output: {
+                shape: "S1q"
+            }
+        },
+        PutFileSystemPolicy: {
+            http: {
+                method: "PUT",
+                requestUri: "/2015-02-01/file-systems/{FileSystemId}/policy",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                required: [ "FileSystemId", "Policy" ],
+                members: {
+                    FileSystemId: {
+                        location: "uri",
+                        locationName: "FileSystemId"
+                    },
+                    Policy: {},
+                    BypassPolicyLockoutSafetyCheck: {
+                        type: "boolean"
+                    }
+                }
+            },
+            output: {
+                shape: "S1u"
+            }
+        },
+        PutLifecycleConfiguration: {
+            http: {
+                method: "PUT",
+                requestUri: "/2015-02-01/file-systems/{FileSystemId}/lifecycle-configuration",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                required: [ "FileSystemId", "LifecyclePolicies" ],
+                members: {
+                    FileSystemId: {
+                        location: "uri",
+                        locationName: "FileSystemId"
+                    },
+                    LifecyclePolicies: {
+                        shape: "S23"
+                    }
+                }
+            },
+            output: {
+                shape: "S22"
+            }
+        },
+        TagResource: {
+            http: {
+                requestUri: "/2015-02-01/resource-tags/{ResourceId}",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                required: [ "ResourceId", "Tags" ],
+                members: {
+                    ResourceId: {
+                        location: "uri",
+                        locationName: "ResourceId"
+                    },
+                    Tags: {
+                        shape: "S3"
+                    }
+                }
+            }
+        },
+        UntagResource: {
+            http: {
+                method: "DELETE",
+                requestUri: "/2015-02-01/resource-tags/{ResourceId}",
+                responseCode: 200
+            },
+            input: {
+                type: "structure",
+                required: [ "ResourceId", "TagKeys" ],
+                members: {
+                    ResourceId: {
+                        location: "uri",
+                        locationName: "ResourceId"
+                    },
+                    TagKeys: {
+                        shape: "S1j",
+                        location: "querystring",
+                        locationName: "tagKeys"
+                    }
+                }
+            }
+        },
+        UpdateFileSystem: {
+            http: {
+                method: "PUT",
+                requestUri: "/2015-02-01/file-systems/{FileSystemId}",
+                responseCode: 202
+            },
+            input: {
+                type: "structure",
+                required: [ "FileSystemId" ],
+                members: {
+                    FileSystemId: {
+                        location: "uri",
+                        locationName: "FileSystemId"
+                    },
+                    ThroughputMode: {},
+                    ProvisionedThroughputInMibps: {
+                        type: "double"
+                    }
+                }
+            },
+            output: {
+                shape: "Sv"
+            }
+        }
+    },
+    shapes: {
+        S3: {
+            type: "list",
+            member: {
+                type: "structure",
+                required: [ "Key", "Value" ],
+                members: {
+                    Key: {},
+                    Value: {}
+                }
+            }
+        },
+        S8: {
+            type: "structure",
+            required: [ "Uid", "Gid" ],
+            members: {
+                Uid: {
+                    type: "long"
+                },
+                Gid: {
+                    type: "long"
+                },
+                SecondaryGids: {
+                    type: "list",
+                    member: {
+                        type: "long"
+                    }
+                }
+            }
+        },
+        Sc: {
+            type: "structure",
+            members: {
+                Path: {},
+                CreationInfo: {
+                    type: "structure",
+                    required: [ "OwnerUid", "OwnerGid", "Permissions" ],
+                    members: {
+                        OwnerUid: {
+                            type: "long"
+                        },
+                        OwnerGid: {
+                            type: "long"
+                        },
+                        Permissions: {}
+                    }
+                }
+            }
+        },
+        Si: {
+            type: "structure",
+            members: {
+                ClientToken: {},
+                Name: {},
+                Tags: {
+                    shape: "S3"
+                },
+                AccessPointId: {},
+                AccessPointArn: {},
+                FileSystemId: {},
+                PosixUser: {
+                    shape: "S8"
+                },
+                RootDirectory: {
+                    shape: "Sc"
+                },
+                OwnerId: {},
+                LifeCycleState: {}
+            }
+        },
+        Sv: {
+            type: "structure",
+            required: [ "OwnerId", "CreationToken", "FileSystemId", "CreationTime", "LifeCycleState", "NumberOfMountTargets", "SizeInBytes", "PerformanceMode", "Tags" ],
+            members: {
+                OwnerId: {},
+                CreationToken: {},
+                FileSystemId: {},
+                FileSystemArn: {},
+                CreationTime: {
+                    type: "timestamp"
+                },
+                LifeCycleState: {},
+                Name: {},
+                NumberOfMountTargets: {
+                    type: "integer"
+                },
+                SizeInBytes: {
+                    type: "structure",
+                    required: [ "Value" ],
+                    members: {
+                        Value: {
+                            type: "long"
+                        },
+                        Timestamp: {
+                            type: "timestamp"
+                        },
+                        ValueInIA: {
+                            type: "long"
+                        },
+                        ValueInStandard: {
+                            type: "long"
+                        }
+                    }
+                },
+                PerformanceMode: {},
+                Encrypted: {
+                    type: "boolean"
+                },
+                KmsKeyId: {},
+                ThroughputMode: {},
+                ProvisionedThroughputInMibps: {
+                    type: "double"
+                },
+                Tags: {
+                    shape: "S3"
+                }
+            }
+        },
+        S15: {
+            type: "list",
+            member: {}
+        },
+        S17: {
+            type: "structure",
+            required: [ "MountTargetId", "FileSystemId", "SubnetId", "LifeCycleState" ],
+            members: {
+                OwnerId: {},
+                MountTargetId: {},
+                FileSystemId: {},
+                SubnetId: {},
+                LifeCycleState: {},
+                IpAddress: {},
+                NetworkInterfaceId: {},
+                AvailabilityZoneId: {},
+                AvailabilityZoneName: {},
+                VpcId: {}
+            }
+        },
+        S1j: {
+            type: "list",
+            member: {}
+        },
+        S1q: {
+            type: "structure",
+            members: {
+                BackupPolicy: {
+                    shape: "S1r"
+                }
+            }
+        },
+        S1r: {
+            type: "structure",
+            required: [ "Status" ],
+            members: {
+                Status: {}
+            }
+        },
+        S1u: {
+            type: "structure",
+            members: {
+                FileSystemId: {},
+                Policy: {}
+            }
+        },
+        S22: {
+            type: "structure",
+            members: {
+                LifecyclePolicies: {
+                    shape: "S23"
+                }
+            }
+        },
+        S23: {
+            type: "list",
+            member: {
+                type: "structure",
+                members: {
+                    TransitionToIA: {}
+                }
+            }
+        }
+    },
+    paginators: {
+        DescribeAccessPoints: {
+            input_token: "NextToken",
+            output_token: "NextToken",
+            limit_key: "MaxResults"
+        },
+        DescribeFileSystems: {
+            input_token: "Marker",
+            output_token: "NextMarker",
+            limit_key: "MaxItems"
+        },
+        DescribeTags: {
+            input_token: "Marker",
+            output_token: "NextMarker",
+            limit_key: "MaxItems"
+        },
+        ListTagsForResource: {
+            input_token: "NextToken",
+            output_token: "NextToken",
+            limit_key: "MaxResults"
+        }
+    }
+};
+
+AWS.apiLoader.services["elasticache"] = {};
+
+AWS.ElastiCache = AWS.Service.defineService("elasticache", [ "2015-02-02" ]);
+
+AWS.apiLoader.services["elasticache"]["2015-02-02"] = {
+    version: "2.0",
+    metadata: {
+        apiVersion: "2015-02-02",
+        endpointPrefix: "elasticache",
+        protocol: "query",
+        serviceFullName: "Amazon ElastiCache",
+        serviceId: "ElastiCache",
+        signatureVersion: "v4",
+        uid: "elasticache-2015-02-02",
+        xmlNamespace: "http://elasticache.amazonaws.com/doc/2015-02-02/"
+    },
+    operations: {
+        AddTagsToResource: {
+            input: {
+                type: "structure",
+                required: [ "ResourceName", "Tags" ],
+                members: {
+                    ResourceName: {},
+                    Tags: {
+                        shape: "S3"
+                    }
+                }
+            },
+            output: {
+                shape: "S5",
+                resultWrapper: "AddTagsToResourceResult"
+            }
+        },
+        AuthorizeCacheSecurityGroupIngress: {
+            input: {
+                type: "structure",
+                required: [ "CacheSecurityGroupName", "EC2SecurityGroupName", "EC2SecurityGroupOwnerId" ],
+                members: {
+                    CacheSecurityGroupName: {},
+                    EC2SecurityGroupName: {},
+                    EC2SecurityGroupOwnerId: {}
+                }
+            },
+            output: {
+                resultWrapper: "AuthorizeCacheSecurityGroupIngressResult",
+                type: "structure",
+                members: {
+                    CacheSecurityGroup: {
+                        shape: "S8"
+                    }
+                }
+            }
+        },
+        BatchApplyUpdateAction: {
+            input: {
+                type: "structure",
+                required: [ "ServiceUpdateName" ],
+                members: {
+                    ReplicationGroupIds: {
+                        shape: "Sc"
+                    },
+                    CacheClusterIds: {
+                        shape: "Sd"
+                    },
+                    ServiceUpdateName: {}
+                }
+            },
+            output: {
+                shape: "Se",
+                resultWrapper: "BatchApplyUpdateActionResult"
+            }
+        },
+        BatchStopUpdateAction: {
+            input: {
+                type: "structure",
+                required: [ "ServiceUpdateName" ],
+                members: {
+                    ReplicationGroupIds: {
+                        shape: "Sc"
+                    },
+                    CacheClusterIds: {
+                        shape: "Sd"
+                    },
+                    ServiceUpdateName: {}
+                }
+            },
+            output: {
+                shape: "Se",
+                resultWrapper: "BatchStopUpdateActionResult"
+            }
+        },
+        CompleteMigration: {
+            input: {
+                type: "structure",
+                required: [ "ReplicationGroupId" ],
+                members: {
+                    ReplicationGroupId: {},
+                    Force: {
+                        type: "boolean"
+                    }
+                }
+            },
+            output: {
+                resultWrapper: "CompleteMigrationResult",
+                type: "structure",
+                members: {
+                    ReplicationGroup: {
+                        shape: "So"
+                    }
+                }
+            }
+        },
+        CopySnapshot: {
+            input: {
+                type: "structure",
+                required: [ "SourceSnapshotName", "TargetSnapshotName" ],
+                members: {
+                    SourceSnapshotName: {},
+                    TargetSnapshotName: {},
+                    TargetBucket: {},
+                    KmsKeyId: {}
+                }
+            },
+            output: {
+                resultWrapper: "CopySnapshotResult",
+                type: "structure",
+                members: {
+                    Snapshot: {
+                        shape: "S1e"
+                    }
+                }
+            }
+        },
+        CreateCacheCluster: {
+            input: {
+                type: "structure",
+                required: [ "CacheClusterId" ],
+                members: {
+                    CacheClusterId: {},
+                    ReplicationGroupId: {},
+                    AZMode: {},
+                    PreferredAvailabilityZone: {},
+                    PreferredAvailabilityZones: {
+                        shape: "S1n"
+                    },
+                    NumCacheNodes: {
+                        type: "integer"
+                    },
+                    CacheNodeType: {},
+                    Engine: {},
+                    EngineVersion: {},
+                    CacheParameterGroupName: {},
+                    CacheSubnetGroupName: {},
+                    CacheSecurityGroupNames: {
+                        shape: "S1o"
+                    },
+                    SecurityGroupIds: {
+                        shape: "S1p"
+                    },
+                    Tags: {
+                        shape: "S3"
+                    },
+                    SnapshotArns: {
+                        shape: "S1q"
+                    },
+                    SnapshotName: {},
+                    PreferredMaintenanceWindow: {},
+                    Port: {
+                        type: "integer"
+                    },
+                    NotificationTopicArn: {},
+                    AutoMinorVersionUpgrade: {
+                        type: "boolean"
+                    },
+                    SnapshotRetentionLimit: {
+                        type: "integer"
+                    },
+                    SnapshotWindow: {},
+                    AuthToken: {},
+                    OutpostMode: {},
+                    PreferredOutpostArn: {},
+                    PreferredOutpostArns: {
+                        shape: "S1s"
+                    }
+                }
+            },
+            output: {
+                resultWrapper: "CreateCacheClusterResult",
+                type: "structure",
+                members: {
+                    CacheCluster: {
+                        shape: "S1u"
+                    }
+                }
+            }
+        },
+        CreateCacheParameterGroup: {
+            input: {
+                type: "structure",
+                required: [ "CacheParameterGroupName", "CacheParameterGroupFamily", "Description" ],
+                members: {
+                    CacheParameterGroupName: {},
+                    CacheParameterGroupFamily: {},
+                    Description: {}
+                }
+            },
+            output: {
+                resultWrapper: "CreateCacheParameterGroupResult",
+                type: "structure",
+                members: {
+                    CacheParameterGroup: {
+                        shape: "S27"
+                    }
+                }
+            }
+        },
+        CreateCacheSecurityGroup: {
+            input: {
+                type: "structure",
+                required: [ "CacheSecurityGroupName", "Description" ],
+                members: {
+                    CacheSecurityGroupName: {},
+                    Description: {}
+                }
+            },
+            output: {
+                resultWrapper: "CreateCacheSecurityGroupResult",
+                type: "structure",
+                members: {
+                    CacheSecurityGroup: {
+                        shape: "S8"
+                    }
+                }
+            }
+        },
+        CreateCacheSubnetGroup: {
+            input: {
+                type: "structure",
+                required: [ "CacheSubnetGroupName", "CacheSubnetGroupDescription", "SubnetIds" ],
+                members: {
+                    CacheSubnetGroupName: {},
+                    CacheSubnetGroupDescription: {},
+                    SubnetIds: {
+                        shape: "S2b"
+                    }
+                }
+            },
+            output: {
+                resultWrapper: "CreateCacheSubnetGroupResult",
+                type: "structure",
+                members: {
+                    CacheSubnetGroup: {
+                        shape: "S2d"
+                    }
+                }
+            }
+        },
+        CreateGlobalReplicationGroup: {
+            input: {
+                type: "structure",
+                required: [ "GlobalReplicationGroupIdSuffix", "PrimaryReplicationGroupId" ],
+                members: {
+                    GlobalReplicationGroupIdSuffix: {},
+                    GlobalReplicationGroupDescription: {},
+                    PrimaryReplicationGroupId: {}
+                }
+            },
+            output: {
+                resultWrapper: "CreateGlobalReplicationGroupResult",
+                type: "structure",
+                members: {
+                    GlobalReplicationGroup: {
+                        shape: "S2k"
+                    }
+                }
+            }
+        },
+        CreateReplicationGroup: {
+            input: {
+                type: "structure",
+                required: [ "ReplicationGroupId", "ReplicationGroupDescription" ],
+                members: {
+                    ReplicationGroupId: {},
+                    ReplicationGroupDescription: {},
+                    GlobalReplicationGroupId: {},
+                    PrimaryClusterId: {},
+                    AutomaticFailoverEnabled: {
+                        type: "boolean"
+                    },
+                    MultiAZEnabled: {
+                        type: "boolean"
+                    },
+                    NumCacheClusters: {
+                        type: "integer"
+                    },
+                    PreferredCacheClusterAZs: {
+                        shape: "S1j"
+                    },
+                    NumNodeGroups: {
+                        type: "integer"
+                    },
+                    ReplicasPerNodeGroup: {
+                        type: "integer"
+                    },
+                    NodeGroupConfiguration: {
+                        type: "list",
+                        member: {
+                            shape: "S1h",
+                            locationName: "NodeGroupConfiguration"
+                        }
+                    },
+                    CacheNodeType: {},
+                    Engine: {},
+                    EngineVersion: {},
+                    CacheParameterGroupName: {},
+                    CacheSubnetGroupName: {},
+                    CacheSecurityGroupNames: {
+                        shape: "S1o"
+                    },
+                    SecurityGroupIds: {
+                        shape: "S1p"
+                    },
+                    Tags: {
+                        shape: "S3"
+                    },
+                    SnapshotArns: {
+                        shape: "S1q"
+                    },
+                    SnapshotName: {},
+                    PreferredMaintenanceWindow: {},
+                    Port: {
+                        type: "integer"
+                    },
+                    NotificationTopicArn: {},
+                    AutoMinorVersionUpgrade: {
+                        type: "boolean"
+                    },
+                    SnapshotRetentionLimit: {
+                        type: "integer"
+                    },
+                    SnapshotWindow: {},
+                    AuthToken: {},
+                    TransitEncryptionEnabled: {
+                        type: "boolean"
+                    },
+                    AtRestEncryptionEnabled: {
+                        type: "boolean"
+                    },
+                    KmsKeyId: {},
+                    UserGroupIds: {
+                        type: "list",
+                        member: {}
+                    }
+                }
+            },
+            output: {
+                resultWrapper: "CreateReplicationGroupResult",
+                type: "structure",
+                members: {
+                    ReplicationGroup: {
+                        shape: "So"
+                    }
+                }
+            }
+        },
+        CreateSnapshot: {
+            input: {
+                type: "structure",
+                required: [ "SnapshotName" ],
+                members: {
+                    ReplicationGroupId: {},
+                    CacheClusterId: {},
+                    SnapshotName: {},
+                    KmsKeyId: {}
+                }
+            },
+            output: {
+                resultWrapper: "CreateSnapshotResult",
+                type: "structure",
+                members: {
+                    Snapshot: {
+                        shape: "S1e"
+                    }
+                }
+            }
+        },
+        CreateUser: {
+            input: {
+                type: "structure",
+                required: [ "UserId", "UserName", "Engine", "AccessString" ],
+                members: {
+                    UserId: {},
+                    UserName: {},
+                    Engine: {},
+                    Passwords: {
+                        shape: "S2z"
+                    },
+                    AccessString: {},
+                    NoPasswordRequired: {
+                        type: "boolean"
+                    }
+                }
+            },
+            output: {
+                shape: "S31",
+                resultWrapper: "CreateUserResult"
+            }
+        },
+        CreateUserGroup: {
+            input: {
+                type: "structure",
+                required: [ "UserGroupId", "Engine" ],
+                members: {
+                    UserGroupId: {},
+                    Engine: {},
+                    UserIds: {
+                        shape: "S35"
+                    }
+                }
+            },
+            output: {
+                shape: "S36",
+                resultWrapper: "CreateUserGroupResult"
+            }
+        },
+        DecreaseNodeGroupsInGlobalReplicationGroup: {
+            input: {
+                type: "structure",
+                required: [ "GlobalReplicationGroupId", "NodeGroupCount", "ApplyImmediately" ],
+                members: {
+                    GlobalReplicationGroupId: {},
+                    NodeGroupCount: {
+                        type: "integer"
+                    },
+                    GlobalNodeGroupsToRemove: {
+                        shape: "S3b"
+                    },
+                    GlobalNodeGroupsToRetain: {
+                        shape: "S3b"
+                    },
+                    ApplyImmediately: {
+                        type: "boolean"
+                    }
+                }
+            },
+            output: {
+                resultWrapper: "DecreaseNodeGroupsInGlobalReplicationGroupResult",
+                type: "structure",
+                members: {
+                    GlobalReplicationGroup: {
+                        shape: "S2k"
+                    }
+                }
+            }
+        },
+        DecreaseReplicaCount: {
+            input: {
+                type: "structure",
+                required: [ "ReplicationGroupId", "ApplyImmediately" ],
+                members: {
+                    ReplicationGroupId: {},
+                    NewReplicaCount: {
+                        type: "integer"
+                    },
+                    ReplicaConfiguration: {
+                        shape: "S3e"
+                    },
+                    ReplicasToRemove: {
+                        type: "list",
+                        member: {}
+                    },
+                    ApplyImmediately: {
+                        type: "boolean"
+                    }
+                }
+            },
+            output: {
+                resultWrapper: "DecreaseReplicaCountResult",
+                type: "structure",
+                members: {
+                    ReplicationGroup: {
+                        shape: "So"
+                    }
+                }
+            }
+        },
+        DeleteCacheCluster: {
+            input: {
+                type: "structure",
+                required: [ "CacheClusterId" ],
+                members: {
+                    CacheClusterId: {},
+                    FinalSnapshotIdentifier: {}
+                }
+            },
+            output: {
+                resultWrapper: "DeleteCacheClusterResult",
+                type: "structure",
+                members: {
+                    CacheCluster: {
+                        shape: "S1u"
+                    }
+                }
+            }
+        },
+        DeleteCacheParameterGroup: {
+            input: {
+                type: "structure",
+                required: [ "CacheParameterGroupName" ],
+                members: {
+                    CacheParameterGroupName: {}
+                }
+            }
+        },
+        DeleteCacheSecurityGroup: {
+            input: {
+                type: "structure",
+                required: [ "CacheSecurityGroupName" ],
+                members: {
+                    CacheSecurityGroupName: {}
+                }
+            }
+        },
+        DeleteCacheSubnetGroup: {
+            input: {
+                type: "structure",
+                required: [ "CacheSubnetGroupName" ],
+                members: {
+                    CacheSubnetGroupName: {}
+                }
+            }
+        },
+        DeleteGlobalReplicationGroup: {
+            input: {
+                type: "structure",
+                required: [ "GlobalReplicationGroupId", "RetainPrimaryReplicationGroup" ],
+                members: {
+                    GlobalReplicationGroupId: {},
+                    RetainPrimaryReplicationGroup: {
+                        type: "boolean"
+                    }
+                }
+            },
+            output: {
+                resultWrapper: "DeleteGlobalReplicationGroupResult",
+                type: "structure",
+                members: {
+                    GlobalReplicationGroup: {
+                        shape: "S2k"
+                    }
+                }
+            }
+        },
+        DeleteReplicationGroup: {
+            input: {
+                type: "structure",
+                required: [ "ReplicationGroupId" ],
+                members: {
+                    ReplicationGroupId: {},
+                    RetainPrimaryCluster: {
+                        type: "boolean"
+                    },
+                    FinalSnapshotIdentifier: {}
+                }
+            },
+            output: {
+                resultWrapper: "DeleteReplicationGroupResult",
+                type: "structure",
+                members: {
+                    ReplicationGroup: {
+                        shape: "So"
+                    }
+                }
+            }
+        },
+        DeleteSnapshot: {
+            input: {
+                type: "structure",
+                required: [ "SnapshotName" ],
+                members: {
+                    SnapshotName: {}
+                }
+            },
+            output: {
+                resultWrapper: "DeleteSnapshotResult",
+                type: "structure",
+                members: {
+                    Snapshot: {
+                        shape: "S1e"
+                    }
+                }
+            }
+        },
+        DeleteUser: {
+            input: {
+                type: "structure",
+                required: [ "UserId" ],
+                members: {
+                    UserId: {}
+                }
+            },
+            output: {
+                shape: "S31",
+                resultWrapper: "DeleteUserResult"
+            }
+        },
+        DeleteUserGroup: {
+            input: {
+                type: "structure",
+                required: [ "UserGroupId" ],
+                members: {
+                    UserGroupId: {}
+                }
+            },
+            output: {
+                shape: "S36",
+                resultWrapper: "DeleteUserGroupResult"
+            }
+        },
+        DescribeCacheClusters: {
+            input: {
+                type: "structure",
+                members: {
+                    CacheClusterId: {},
+                    MaxRecords: {
+                        type: "integer"
+                    },
+                    Marker: {},
+                    ShowCacheNodeInfo: {
+                        type: "boolean"
+                    },
+                    ShowCacheClustersNotInReplicationGroups: {
+                        type: "boolean"
+                    }
+                }
+            },
+            output: {
+                resultWrapper: "DescribeCacheClustersResult",
+                type: "structure",
+                members: {
+                    Marker: {},
+                    CacheClusters: {
+                        type: "list",
+                        member: {
+                            shape: "S1u",
+                            locationName: "CacheCluster"
+                        }
+                    }
+                }
+            }
+        },
+        DescribeCacheEngineVersions: {
+            input: {
+                type: "structure",
+                members: {
+                    Engine: {},
+                    EngineVersion: {},
+                    CacheParameterGroupFamily: {},
+                    MaxRecords: {
+                        type: "integer"
+                    },
+                    Marker: {},
+                    DefaultOnly: {
+                        type: "boolean"
+                    }
+                }
+            },
+            output: {
+                resultWrapper: "DescribeCacheEngineVersionsResult",
+                type: "structure",
+                members: {
+                    Marker: {},
+                    CacheEngineVersions: {
+                        type: "list",
+                        member: {
+                            locationName: "CacheEngineVersion",
+                            type: "structure",
+                            members: {
+                                Engine: {},
+                                EngineVersion: {},
+                                CacheParameterGroupFamily: {},
+                                CacheEngineDescription: {},
+                                CacheEngineVersionDescription: {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        DescribeCacheParameterGroups: {
+            input: {
+                type: "structure",
+                members: {
+                    CacheParameterGroupName: {},
+                    MaxRecords: {
+                        type: "integer"
+                    },
+                    Marker: {}
+                }
+            },
+            output: {
+                resultWrapper: "DescribeCacheParameterGroupsResult",
+                type: "structure",
+                members: {
+                    Marker: {},
+                    CacheParameterGroups: {
+                        type: "list",
+                        member: {
+                            shape: "S27",
+                            locationName: "CacheParameterGroup"
+                        }
+                    }
+                }
+            }
+        },
+        DescribeCacheParameters: {
+            input: {
+                type: "structure",
+                required: [ "CacheParameterGroupName" ],
+                members: {
+                    CacheParameterGroupName: {},
+                    Source: {},
+                    MaxRecords: {
+                        type: "integer"
+                    },
+                    Marker: {}
+                }
+            },
+            output: {
+                resultWrapper: "DescribeCacheParametersResult",
+                type: "structure",
+                members: {
+                    Marker: {},
+                    Parameters: {
+                        shape: "S47"
+                    },
+                    CacheNodeTypeSpecificParameters: {
+                        shape: "S4a"
+                    }
+                }
+            }
+        },
+        DescribeCacheSecurityGroups: {
+            input: {
+                type: "structure",
+                members: {
+                    CacheSecurityGroupName: {},
+                    MaxRecords: {
+                        type: "integer"
+                    },
+                    Marker: {}
+                }
+            },
+            output: {
+                resultWrapper: "DescribeCacheSecurityGroupsResult",
+                type: "structure",
+                members: {
+                    Marker: {},
+                    CacheSecurityGroups: {
+                        type: "list",
+                        member: {
+                            shape: "S8",
+                            locationName: "CacheSecurityGroup"
+                        }
+                    }
+                }
+            }
+        },
+        DescribeCacheSubnetGroups: {
+            input: {
+                type: "structure",
+                members: {
+                    CacheSubnetGroupName: {},
+                    MaxRecords: {
+                        type: "integer"
+                    },
+                    Marker: {}
+                }
+            },
+            output: {
+                resultWrapper: "DescribeCacheSubnetGroupsResult",
+                type: "structure",
+                members: {
+                    Marker: {},
+                    CacheSubnetGroups: {
+                        type: "list",
+                        member: {
+                            shape: "S2d",
+                            locationName: "CacheSubnetGroup"
+                        }
+                    }
+                }
+            }
+        },
+        DescribeEngineDefaultParameters: {
+            input: {
+                type: "structure",
+                required: [ "CacheParameterGroupFamily" ],
+                members: {
+                    CacheParameterGroupFamily: {},
+                    MaxRecords: {
+                        type: "integer"
+                    },
+                    Marker: {}
+                }
+            },
+            output: {
+                resultWrapper: "DescribeEngineDefaultParametersResult",
+                type: "structure",
+                members: {
+                    EngineDefaults: {
+                        type: "structure",
+                        members: {
+                            CacheParameterGroupFamily: {},
+                            Marker: {},
+                            Parameters: {
+                                shape: "S47"
+                            },
+                            CacheNodeTypeSpecificParameters: {
+                                shape: "S4a"
+                            }
+                        },
+                        wrapper: true
+                    }
+                }
+            }
+        },
+        DescribeEvents: {
+            input: {
+                type: "structure",
+                members: {
+                    SourceIdentifier: {},
+                    SourceType: {},
+                    StartTime: {
+                        type: "timestamp"
+                    },
+                    EndTime: {
+                        type: "timestamp"
+                    },
+                    Duration: {
+                        type: "integer"
+                    },
+                    MaxRecords: {
+                        type: "integer"
+                    },
+                    Marker: {}
+                }
+            },
+            output: {
+                resultWrapper: "DescribeEventsResult",
+                type: "structure",
+                members: {
+                    Marker: {},
+                    Events: {
+                        type: "list",
+                        member: {
+                            locationName: "Event",
+                            type: "structure",
+                            members: {
+                                SourceIdentifier: {},
+                                SourceType: {},
+                                Message: {},
+                                Date: {
+                                    type: "timestamp"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        DescribeGlobalReplicationGroups: {
+            input: {
+                type: "structure",
+                members: {
+                    GlobalReplicationGroupId: {},
+                    MaxRecords: {
+                        type: "integer"
+                    },
+                    Marker: {},
+                    ShowMemberInfo: {
+                        type: "boolean"
+                    }
+                }
+            },
+            output: {
+                resultWrapper: "DescribeGlobalReplicationGroupsResult",
+                type: "structure",
+                members: {
+                    Marker: {},
+                    GlobalReplicationGroups: {
+                        type: "list",
+                        member: {
+                            shape: "S2k",
+                            locationName: "GlobalReplicationGroup"
+                        }
+                    }
+                }
+            }
+        },
+        DescribeReplicationGroups: {
+            input: {
+                type: "structure",
+                members: {
+                    ReplicationGroupId: {},
+                    MaxRecords: {
+                        type: "integer"
+                    },
+                    Marker: {}
+                }
+            },
+            output: {
+                resultWrapper: "DescribeReplicationGroupsResult",
+                type: "structure",
+                members: {
+                    Marker: {},
+                    ReplicationGroups: {
+                        type: "list",
+                        member: {
+                            shape: "So",
+                            locationName: "ReplicationGroup"
+                        }
+                    }
+                }
+            }
+        },
+        DescribeReservedCacheNodes: {
+            input: {
+                type: "structure",
+                members: {
+                    ReservedCacheNodeId: {},
+                    ReservedCacheNodesOfferingId: {},
+                    CacheNodeType: {},
+                    Duration: {},
+                    ProductDescription: {},
+                    OfferingType: {},
+                    MaxRecords: {
+                        type: "integer"
+                    },
+                    Marker: {}
+                }
+            },
+            output: {
+                resultWrapper: "DescribeReservedCacheNodesResult",
+                type: "structure",
+                members: {
+                    Marker: {},
+                    ReservedCacheNodes: {
+                        type: "list",
+                        member: {
+                            shape: "S51",
+                            locationName: "ReservedCacheNode"
+                        }
+                    }
+                }
+            }
+        },
+        DescribeReservedCacheNodesOfferings: {
+            input: {
+                type: "structure",
+                members: {
+                    ReservedCacheNodesOfferingId: {},
+                    CacheNodeType: {},
+                    Duration: {},
+                    ProductDescription: {},
+                    OfferingType: {},
+                    MaxRecords: {
+                        type: "integer"
+                    },
+                    Marker: {}
+                }
+            },
+            output: {
+                resultWrapper: "DescribeReservedCacheNodesOfferingsResult",
+                type: "structure",
+                members: {
+                    Marker: {},
+                    ReservedCacheNodesOfferings: {
+                        type: "list",
+                        member: {
+                            locationName: "ReservedCacheNodesOffering",
+                            type: "structure",
+                            members: {
+                                ReservedCacheNodesOfferingId: {},
+                                CacheNodeType: {},
+                                Duration: {
+                                    type: "integer"
+                                },
+                                FixedPrice: {
+                                    type: "double"
+                                },
+                                UsagePrice: {
+                                    type: "double"
+                                },
+                                ProductDescription: {},
+                                OfferingType: {},
+                                RecurringCharges: {
+                                    shape: "S52"
+                                }
+                            },
+                            wrapper: true
+                        }
+                    }
+                }
+            }
+        },
+        DescribeServiceUpdates: {
+            input: {
+                type: "structure",
+                members: {
+                    ServiceUpdateName: {},
+                    ServiceUpdateStatus: {
+                        shape: "S59"
+                    },
+                    MaxRecords: {
+                        type: "integer"
+                    },
+                    Marker: {}
+                }
+            },
+            output: {
+                resultWrapper: "DescribeServiceUpdatesResult",
+                type: "structure",
+                members: {
+                    Marker: {},
+                    ServiceUpdates: {
+                        type: "list",
+                        member: {
+                            locationName: "ServiceUpdate",
+                            type: "structure",
+                            members: {
+                                ServiceUpdateName: {},
+                                ServiceUpdateReleaseDate: {
+                                    type: "timestamp"
+                                },
+                                ServiceUpdateEndDate: {
+                                    type: "timestamp"
+                                },
+                                ServiceUpdateSeverity: {},
+                                ServiceUpdateRecommendedApplyByDate: {
+                                    type: "timestamp"
+                                },
+                                ServiceUpdateStatus: {},
+                                ServiceUpdateDescription: {},
+                                ServiceUpdateType: {},
+                                Engine: {},
+                                EngineVersion: {},
+                                AutoUpdateAfterRecommendedApplyByDate: {
+                                    type: "boolean"
+                                },
+                                EstimatedUpdateTime: {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        DescribeSnapshots: {
+            input: {
+                type: "structure",
+                members: {
+                    ReplicationGroupId: {},
+                    CacheClusterId: {},
+                    SnapshotName: {},
+                    SnapshotSource: {},
+                    Marker: {},
+                    MaxRecords: {
+                        type: "integer"
+                    },
+                    ShowNodeGroupConfig: {
+                        type: "boolean"
+                    }
+                }
+            },
+            output: {
+                resultWrapper: "DescribeSnapshotsResult",
+                type: "structure",
+                members: {
+                    Marker: {},
+                    Snapshots: {
+                        type: "list",
+                        member: {
+                            shape: "S1e",
+                            locationName: "Snapshot"
+                        }
+                    }
+                }
+            }
+        },
+        DescribeUpdateActions: {
+            input: {
+                type: "structure",
+                members: {
+                    ServiceUpdateName: {},
+                    ReplicationGroupIds: {
+                        shape: "Sc"
+                    },
+                    CacheClusterIds: {
+                        shape: "Sd"
+                    },
+                    Engine: {},
+                    ServiceUpdateStatus: {
+                        shape: "S59"
+                    },
+                    ServiceUpdateTimeRange: {
+                        type: "structure",
+                        members: {
+                            StartTime: {
+                                type: "timestamp"
+                            },
+                            EndTime: {
+                                type: "timestamp"
+                            }
+                        }
+                    },
+                    UpdateActionStatus: {
+                        type: "list",
+                        member: {}
+                    },
+                    ShowNodeLevelUpdateStatus: {
+                        type: "boolean"
+                    },
+                    MaxRecords: {
+                        type: "integer"
+                    },
+                    Marker: {}
+                }
+            },
+            output: {
+                resultWrapper: "DescribeUpdateActionsResult",
+                type: "structure",
+                members: {
+                    Marker: {},
+                    UpdateActions: {
+                        type: "list",
+                        member: {
+                            locationName: "UpdateAction",
+                            type: "structure",
+                            members: {
+                                ReplicationGroupId: {},
+                                CacheClusterId: {},
+                                ServiceUpdateName: {},
+                                ServiceUpdateReleaseDate: {
+                                    type: "timestamp"
+                                },
+                                ServiceUpdateSeverity: {},
+                                ServiceUpdateStatus: {},
+                                ServiceUpdateRecommendedApplyByDate: {
+                                    type: "timestamp"
+                                },
+                                ServiceUpdateType: {},
+                                UpdateActionAvailableDate: {
+                                    type: "timestamp"
+                                },
+                                UpdateActionStatus: {},
+                                NodesUpdated: {},
+                                UpdateActionStatusModifiedDate: {
+                                    type: "timestamp"
+                                },
+                                SlaMet: {},
+                                NodeGroupUpdateStatus: {
+                                    type: "list",
+                                    member: {
+                                        locationName: "NodeGroupUpdateStatus",
+                                        type: "structure",
+                                        members: {
+                                            NodeGroupId: {},
+                                            NodeGroupMemberUpdateStatus: {
+                                                type: "list",
+                                                member: {
+                                                    locationName: "NodeGroupMemberUpdateStatus",
+                                                    type: "structure",
+                                                    members: {
+                                                        CacheClusterId: {},
+                                                        CacheNodeId: {},
+                                                        NodeUpdateStatus: {},
+                                                        NodeDeletionDate: {
+                                                            type: "timestamp"
+                                                        },
+                                                        NodeUpdateStartDate: {
+                                                            type: "timestamp"
+                                                        },
+                                                        NodeUpdateEndDate: {
+                                                            type: "timestamp"
+                                                        },
+                                                        NodeUpdateInitiatedBy: {},
+                                                        NodeUpdateInitiatedDate: {
+                                                            type: "timestamp"
+                                                        },
+                                                        NodeUpdateStatusModifiedDate: {
+                                                            type: "timestamp"
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                CacheNodeUpdateStatus: {
+                                    type: "list",
+                                    member: {
+                                        locationName: "CacheNodeUpdateStatus",
+                                        type: "structure",
+                                        members: {
+                                            CacheNodeId: {},
+                                            NodeUpdateStatus: {},
+                                            NodeDeletionDate: {
+                                                type: "timestamp"
+                                            },
+                                            NodeUpdateStartDate: {
+                                                type: "timestamp"
+                                            },
+                                            NodeUpdateEndDate: {
+                                                type: "timestamp"
+                                            },
+                                            NodeUpdateInitiatedBy: {},
+                                            NodeUpdateInitiatedDate: {
+                                                type: "timestamp"
+                                            },
+                                            NodeUpdateStatusModifiedDate: {
+                                                type: "timestamp"
+                                            }
+                                        }
+                                    }
+                                },
+                                EstimatedUpdateTime: {},
+                                Engine: {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        DescribeUserGroups: {
+            input: {
+                type: "structure",
+                members: {
+                    UserGroupId: {},
+                    MaxRecords: {
+                        type: "integer"
+                    },
+                    Marker: {}
+                }
+            },
+            output: {
+                resultWrapper: "DescribeUserGroupsResult",
+                type: "structure",
+                members: {
+                    UserGroups: {
+                        type: "list",
+                        member: {
+                            shape: "S36"
+                        }
+                    },
+                    Marker: {}
+                }
+            }
+        },
+        DescribeUsers: {
+            input: {
+                type: "structure",
+                members: {
+                    Engine: {},
+                    UserId: {},
+                    Filters: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            required: [ "Name", "Values" ],
+                            members: {
+                                Name: {},
+                                Values: {
+                                    type: "list",
+                                    member: {}
+                                }
+                            }
+                        }
+                    },
+                    MaxRecords: {
+                        type: "integer"
+                    },
+                    Marker: {}
+                }
+            },
+            output: {
+                resultWrapper: "DescribeUsersResult",
+                type: "structure",
+                members: {
+                    Users: {
+                        type: "list",
+                        member: {
+                            shape: "S31"
+                        }
+                    },
+                    Marker: {}
+                }
+            }
+        },
+        DisassociateGlobalReplicationGroup: {
+            input: {
+                type: "structure",
+                required: [ "GlobalReplicationGroupId", "ReplicationGroupId", "ReplicationGroupRegion" ],
+                members: {
+                    GlobalReplicationGroupId: {},
+                    ReplicationGroupId: {},
+                    ReplicationGroupRegion: {}
+                }
+            },
+            output: {
+                resultWrapper: "DisassociateGlobalReplicationGroupResult",
+                type: "structure",
+                members: {
+                    GlobalReplicationGroup: {
+                        shape: "S2k"
+                    }
+                }
+            }
+        },
+        FailoverGlobalReplicationGroup: {
+            input: {
+                type: "structure",
+                required: [ "GlobalReplicationGroupId", "PrimaryRegion", "PrimaryReplicationGroupId" ],
+                members: {
+                    GlobalReplicationGroupId: {},
+                    PrimaryRegion: {},
+                    PrimaryReplicationGroupId: {}
+                }
+            },
+            output: {
+                resultWrapper: "FailoverGlobalReplicationGroupResult",
+                type: "structure",
+                members: {
+                    GlobalReplicationGroup: {
+                        shape: "S2k"
+                    }
+                }
+            }
+        },
+        IncreaseNodeGroupsInGlobalReplicationGroup: {
+            input: {
+                type: "structure",
+                required: [ "GlobalReplicationGroupId", "NodeGroupCount", "ApplyImmediately" ],
+                members: {
+                    GlobalReplicationGroupId: {},
+                    NodeGroupCount: {
+                        type: "integer"
+                    },
+                    RegionalConfigurations: {
+                        type: "list",
+                        member: {
+                            locationName: "RegionalConfiguration",
+                            type: "structure",
+                            required: [ "ReplicationGroupId", "ReplicationGroupRegion", "ReshardingConfiguration" ],
+                            members: {
+                                ReplicationGroupId: {},
+                                ReplicationGroupRegion: {},
+                                ReshardingConfiguration: {
+                                    shape: "S6g"
+                                }
+                            }
+                        }
+                    },
+                    ApplyImmediately: {
+                        type: "boolean"
+                    }
+                }
+            },
+            output: {
+                resultWrapper: "IncreaseNodeGroupsInGlobalReplicationGroupResult",
+                type: "structure",
+                members: {
+                    GlobalReplicationGroup: {
+                        shape: "S2k"
+                    }
+                }
+            }
+        },
+        IncreaseReplicaCount: {
+            input: {
+                type: "structure",
+                required: [ "ReplicationGroupId", "ApplyImmediately" ],
+                members: {
+                    ReplicationGroupId: {},
+                    NewReplicaCount: {
+                        type: "integer"
+                    },
+                    ReplicaConfiguration: {
+                        shape: "S3e"
+                    },
+                    ApplyImmediately: {
+                        type: "boolean"
+                    }
+                }
+            },
+            output: {
+                resultWrapper: "IncreaseReplicaCountResult",
+                type: "structure",
+                members: {
+                    ReplicationGroup: {
+                        shape: "So"
+                    }
+                }
+            }
+        },
+        ListAllowedNodeTypeModifications: {
+            input: {
+                type: "structure",
+                members: {
+                    CacheClusterId: {},
+                    ReplicationGroupId: {}
+                }
+            },
+            output: {
+                resultWrapper: "ListAllowedNodeTypeModificationsResult",
+                type: "structure",
+                members: {
+                    ScaleUpModifications: {
+                        shape: "S6n"
+                    },
+                    ScaleDownModifications: {
+                        shape: "S6n"
+                    }
+                }
+            }
+        },
+        ListTagsForResource: {
+            input: {
+                type: "structure",
+                required: [ "ResourceName" ],
+                members: {
+                    ResourceName: {}
+                }
+            },
+            output: {
+                shape: "S5",
+                resultWrapper: "ListTagsForResourceResult"
+            }
+        },
+        ModifyCacheCluster: {
+            input: {
+                type: "structure",
+                required: [ "CacheClusterId" ],
+                members: {
+                    CacheClusterId: {},
+                    NumCacheNodes: {
+                        type: "integer"
+                    },
+                    CacheNodeIdsToRemove: {
+                        shape: "S1w"
+                    },
+                    AZMode: {},
+                    NewAvailabilityZones: {
+                        shape: "S1n"
+                    },
+                    CacheSecurityGroupNames: {
+                        shape: "S1o"
+                    },
+                    SecurityGroupIds: {
+                        shape: "S1p"
+                    },
+                    PreferredMaintenanceWindow: {},
+                    NotificationTopicArn: {},
+                    CacheParameterGroupName: {},
+                    NotificationTopicStatus: {},
+                    ApplyImmediately: {
+                        type: "boolean"
+                    },
+                    EngineVersion: {},
+                    AutoMinorVersionUpgrade: {
+                        type: "boolean"
+                    },
+                    SnapshotRetentionLimit: {
+                        type: "integer"
+                    },
+                    SnapshotWindow: {},
+                    CacheNodeType: {},
+                    AuthToken: {},
+                    AuthTokenUpdateStrategy: {}
+                }
+            },
+            output: {
+                resultWrapper: "ModifyCacheClusterResult",
+                type: "structure",
+                members: {
+                    CacheCluster: {
+                        shape: "S1u"
+                    }
+                }
+            }
+        },
+        ModifyCacheParameterGroup: {
+            input: {
+                type: "structure",
+                required: [ "CacheParameterGroupName", "ParameterNameValues" ],
+                members: {
+                    CacheParameterGroupName: {},
+                    ParameterNameValues: {
+                        shape: "S6t"
+                    }
+                }
+            },
+            output: {
+                shape: "S6v",
+                resultWrapper: "ModifyCacheParameterGroupResult"
+            }
+        },
+        ModifyCacheSubnetGroup: {
+            input: {
+                type: "structure",
+                required: [ "CacheSubnetGroupName" ],
+                members: {
+                    CacheSubnetGroupName: {},
+                    CacheSubnetGroupDescription: {},
+                    SubnetIds: {
+                        shape: "S2b"
+                    }
+                }
+            },
+            output: {
+                resultWrapper: "ModifyCacheSubnetGroupResult",
+                type: "structure",
+                members: {
+                    CacheSubnetGroup: {
+                        shape: "S2d"
+                    }
+                }
+            }
+        },
+        ModifyGlobalReplicationGroup: {
+            input: {
+                type: "structure",
+                required: [ "GlobalReplicationGroupId", "ApplyImmediately" ],
+                members: {
+                    GlobalReplicationGroupId: {},
+                    ApplyImmediately: {
+                        type: "boolean"
+                    },
+                    CacheNodeType: {},
+                    EngineVersion: {},
+                    CacheParameterGroupName: {},
+                    GlobalReplicationGroupDescription: {},
+                    AutomaticFailoverEnabled: {
+                        type: "boolean"
+                    }
+                }
+            },
+            output: {
+                resultWrapper: "ModifyGlobalReplicationGroupResult",
+                type: "structure",
+                members: {
+                    GlobalReplicationGroup: {
+                        shape: "S2k"
+                    }
+                }
+            }
+        },
+        ModifyReplicationGroup: {
+            input: {
+                type: "structure",
+                required: [ "ReplicationGroupId" ],
+                members: {
+                    ReplicationGroupId: {},
+                    ReplicationGroupDescription: {},
+                    PrimaryClusterId: {},
+                    SnapshottingClusterId: {},
+                    AutomaticFailoverEnabled: {
+                        type: "boolean"
+                    },
+                    MultiAZEnabled: {
+                        type: "boolean"
+                    },
+                    NodeGroupId: {
+                        deprecated: true
+                    },
+                    CacheSecurityGroupNames: {
+                        shape: "S1o"
+                    },
+                    SecurityGroupIds: {
+                        shape: "S1p"
+                    },
+                    PreferredMaintenanceWindow: {},
+                    NotificationTopicArn: {},
+                    CacheParameterGroupName: {},
+                    NotificationTopicStatus: {},
+                    ApplyImmediately: {
+                        type: "boolean"
+                    },
+                    EngineVersion: {},
+                    AutoMinorVersionUpgrade: {
+                        type: "boolean"
+                    },
+                    SnapshotRetentionLimit: {
+                        type: "integer"
+                    },
+                    SnapshotWindow: {},
+                    CacheNodeType: {},
+                    AuthToken: {},
+                    AuthTokenUpdateStrategy: {},
+                    UserGroupIdsToAdd: {
+                        shape: "Sx"
+                    },
+                    UserGroupIdsToRemove: {
+                        shape: "Sx"
+                    },
+                    RemoveUserGroups: {
+                        type: "boolean"
+                    }
+                }
+            },
+            output: {
+                resultWrapper: "ModifyReplicationGroupResult",
+                type: "structure",
+                members: {
+                    ReplicationGroup: {
+                        shape: "So"
+                    }
+                }
+            }
+        },
+        ModifyReplicationGroupShardConfiguration: {
+            input: {
+                type: "structure",
+                required: [ "ReplicationGroupId", "NodeGroupCount", "ApplyImmediately" ],
+                members: {
+                    ReplicationGroupId: {},
+                    NodeGroupCount: {
+                        type: "integer"
+                    },
+                    ApplyImmediately: {
+                        type: "boolean"
+                    },
+                    ReshardingConfiguration: {
+                        shape: "S6g"
+                    },
+                    NodeGroupsToRemove: {
+                        type: "list",
+                        member: {
+                            locationName: "NodeGroupToRemove"
+                        }
+                    },
+                    NodeGroupsToRetain: {
+                        type: "list",
+                        member: {
+                            locationName: "NodeGroupToRetain"
+                        }
+                    }
+                }
+            },
+            output: {
+                resultWrapper: "ModifyReplicationGroupShardConfigurationResult",
+                type: "structure",
+                members: {
+                    ReplicationGroup: {
+                        shape: "So"
+                    }
+                }
+            }
+        },
+        ModifyUser: {
+            input: {
+                type: "structure",
+                required: [ "UserId" ],
+                members: {
+                    UserId: {},
+                    AccessString: {},
+                    AppendAccessString: {},
+                    Passwords: {
+                        shape: "S2z"
+                    },
+                    NoPasswordRequired: {
+                        type: "boolean"
+                    }
+                }
+            },
+            output: {
+                shape: "S31",
+                resultWrapper: "ModifyUserResult"
+            }
+        },
+        ModifyUserGroup: {
+            input: {
+                type: "structure",
+                required: [ "UserGroupId" ],
+                members: {
+                    UserGroupId: {},
+                    UserIdsToAdd: {
+                        shape: "S35"
+                    },
+                    UserIdsToRemove: {
+                        shape: "S35"
+                    }
+                }
+            },
+            output: {
+                shape: "S36",
+                resultWrapper: "ModifyUserGroupResult"
+            }
+        },
+        PurchaseReservedCacheNodesOffering: {
+            input: {
+                type: "structure",
+                required: [ "ReservedCacheNodesOfferingId" ],
+                members: {
+                    ReservedCacheNodesOfferingId: {},
+                    ReservedCacheNodeId: {},
+                    CacheNodeCount: {
+                        type: "integer"
+                    }
+                }
+            },
+            output: {
+                resultWrapper: "PurchaseReservedCacheNodesOfferingResult",
+                type: "structure",
+                members: {
+                    ReservedCacheNode: {
+                        shape: "S51"
+                    }
+                }
+            }
+        },
+        RebalanceSlotsInGlobalReplicationGroup: {
+            input: {
+                type: "structure",
+                required: [ "GlobalReplicationGroupId", "ApplyImmediately" ],
+                members: {
+                    GlobalReplicationGroupId: {},
+                    ApplyImmediately: {
+                        type: "boolean"
+                    }
+                }
+            },
+            output: {
+                resultWrapper: "RebalanceSlotsInGlobalReplicationGroupResult",
+                type: "structure",
+                members: {
+                    GlobalReplicationGroup: {
+                        shape: "S2k"
+                    }
+                }
+            }
+        },
+        RebootCacheCluster: {
+            input: {
+                type: "structure",
+                required: [ "CacheClusterId", "CacheNodeIdsToReboot" ],
+                members: {
+                    CacheClusterId: {},
+                    CacheNodeIdsToReboot: {
+                        shape: "S1w"
+                    }
+                }
+            },
+            output: {
+                resultWrapper: "RebootCacheClusterResult",
+                type: "structure",
+                members: {
+                    CacheCluster: {
+                        shape: "S1u"
+                    }
+                }
+            }
+        },
+        RemoveTagsFromResource: {
+            input: {
+                type: "structure",
+                required: [ "ResourceName", "TagKeys" ],
+                members: {
+                    ResourceName: {},
+                    TagKeys: {
+                        type: "list",
+                        member: {}
+                    }
+                }
+            },
+            output: {
+                shape: "S5",
+                resultWrapper: "RemoveTagsFromResourceResult"
+            }
+        },
+        ResetCacheParameterGroup: {
+            input: {
+                type: "structure",
+                required: [ "CacheParameterGroupName" ],
+                members: {
+                    CacheParameterGroupName: {},
+                    ResetAllParameters: {
+                        type: "boolean"
+                    },
+                    ParameterNameValues: {
+                        shape: "S6t"
+                    }
+                }
+            },
+            output: {
+                shape: "S6v",
+                resultWrapper: "ResetCacheParameterGroupResult"
+            }
+        },
+        RevokeCacheSecurityGroupIngress: {
+            input: {
+                type: "structure",
+                required: [ "CacheSecurityGroupName", "EC2SecurityGroupName", "EC2SecurityGroupOwnerId" ],
+                members: {
+                    CacheSecurityGroupName: {},
+                    EC2SecurityGroupName: {},
+                    EC2SecurityGroupOwnerId: {}
+                }
+            },
+            output: {
+                resultWrapper: "RevokeCacheSecurityGroupIngressResult",
+                type: "structure",
+                members: {
+                    CacheSecurityGroup: {
+                        shape: "S8"
+                    }
+                }
+            }
+        },
+        StartMigration: {
+            input: {
+                type: "structure",
+                required: [ "ReplicationGroupId", "CustomerNodeEndpointList" ],
+                members: {
+                    ReplicationGroupId: {},
+                    CustomerNodeEndpointList: {
+                        type: "list",
+                        member: {
+                            type: "structure",
+                            members: {
+                                Address: {},
+                                Port: {
+                                    type: "integer"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            output: {
+                resultWrapper: "StartMigrationResult",
+                type: "structure",
+                members: {
+                    ReplicationGroup: {
+                        shape: "So"
+                    }
+                }
+            }
+        },
+        TestFailover: {
+            input: {
+                type: "structure",
+                required: [ "ReplicationGroupId", "NodeGroupId" ],
+                members: {
+                    ReplicationGroupId: {},
+                    NodeGroupId: {}
+                }
+            },
+            output: {
+                resultWrapper: "TestFailoverResult",
+                type: "structure",
+                members: {
+                    ReplicationGroup: {
+                        shape: "So"
+                    }
+                }
+            }
+        }
+    },
+    shapes: {
+        S3: {
+            type: "list",
+            member: {
+                locationName: "Tag",
+                type: "structure",
+                members: {
+                    Key: {},
+                    Value: {}
+                }
+            }
+        },
+        S5: {
+            type: "structure",
+            members: {
+                TagList: {
+                    shape: "S3"
+                }
+            }
+        },
+        S8: {
+            type: "structure",
+            members: {
+                OwnerId: {},
+                CacheSecurityGroupName: {},
+                Description: {},
+                EC2SecurityGroups: {
+                    type: "list",
+                    member: {
+                        locationName: "EC2SecurityGroup",
+                        type: "structure",
+                        members: {
+                            Status: {},
+                            EC2SecurityGroupName: {},
+                            EC2SecurityGroupOwnerId: {}
+                        }
+                    }
+                },
+                ARN: {}
+            },
+            wrapper: true
+        },
+        Sc: {
+            type: "list",
+            member: {}
+        },
+        Sd: {
+            type: "list",
+            member: {}
+        },
+        Se: {
+            type: "structure",
+            members: {
+                ProcessedUpdateActions: {
+                    type: "list",
+                    member: {
+                        locationName: "ProcessedUpdateAction",
+                        type: "structure",
+                        members: {
+                            ReplicationGroupId: {},
+                            CacheClusterId: {},
+                            ServiceUpdateName: {},
+                            UpdateActionStatus: {}
+                        }
+                    }
+                },
+                UnprocessedUpdateActions: {
+                    type: "list",
+                    member: {
+                        locationName: "UnprocessedUpdateAction",
+                        type: "structure",
+                        members: {
+                            ReplicationGroupId: {},
+                            CacheClusterId: {},
+                            ServiceUpdateName: {},
+                            ErrorType: {},
+                            ErrorMessage: {}
+                        }
+                    }
+                }
+            }
+        },
+        So: {
+            type: "structure",
+            members: {
+                ReplicationGroupId: {},
+                Description: {},
+                GlobalReplicationGroupInfo: {
+                    type: "structure",
+                    members: {
+                        GlobalReplicationGroupId: {},
+                        GlobalReplicationGroupMemberRole: {}
+                    }
+                },
+                Status: {},
+                PendingModifiedValues: {
+                    type: "structure",
+                    members: {
+                        PrimaryClusterId: {},
+                        AutomaticFailoverStatus: {},
+                        Resharding: {
+                            type: "structure",
+                            members: {
+                                SlotMigration: {
+                                    type: "structure",
+                                    members: {
+                                        ProgressPercentage: {
+                                            type: "double"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        AuthTokenStatus: {},
+                        UserGroups: {
+                            type: "structure",
+                            members: {
+                                UserGroupIdsToAdd: {
+                                    shape: "Sx"
+                                },
+                                UserGroupIdsToRemove: {
+                                    shape: "Sx"
+                                }
+                            }
+                        }
+                    }
+                },
+                MemberClusters: {
+                    type: "list",
+                    member: {
+                        locationName: "ClusterId"
+                    }
+                },
+                NodeGroups: {
+                    type: "list",
+                    member: {
+                        locationName: "NodeGroup",
+                        type: "structure",
+                        members: {
+                            NodeGroupId: {},
+                            Status: {},
+                            PrimaryEndpoint: {
+                                shape: "S12"
+                            },
+                            ReaderEndpoint: {
+                                shape: "S12"
+                            },
+                            Slots: {},
+                            NodeGroupMembers: {
+                                type: "list",
+                                member: {
+                                    locationName: "NodeGroupMember",
+                                    type: "structure",
+                                    members: {
+                                        CacheClusterId: {},
+                                        CacheNodeId: {},
+                                        ReadEndpoint: {
+                                            shape: "S12"
+                                        },
+                                        PreferredAvailabilityZone: {},
+                                        PreferredOutpostArn: {},
+                                        CurrentRole: {}
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                SnapshottingClusterId: {},
+                AutomaticFailover: {},
+                MultiAZ: {},
+                ConfigurationEndpoint: {
+                    shape: "S12"
+                },
+                SnapshotRetentionLimit: {
+                    type: "integer"
+                },
+                SnapshotWindow: {},
+                ClusterEnabled: {
+                    type: "boolean"
+                },
+                CacheNodeType: {},
+                AuthTokenEnabled: {
+                    type: "boolean"
+                },
+                AuthTokenLastModifiedDate: {
+                    type: "timestamp"
+                },
+                TransitEncryptionEnabled: {
+                    type: "boolean"
+                },
+                AtRestEncryptionEnabled: {
+                    type: "boolean"
+                },
+                MemberClustersOutpostArns: {
+                    type: "list",
+                    member: {
+                        locationName: "ReplicationGroupOutpostArn"
+                    }
+                },
+                KmsKeyId: {},
+                ARN: {},
+                UserGroupIds: {
+                    shape: "Sx"
+                }
+            },
+            wrapper: true
+        },
+        Sx: {
+            type: "list",
+            member: {}
+        },
+        S12: {
+            type: "structure",
+            members: {
+                Address: {},
+                Port: {
+                    type: "integer"
+                }
+            }
+        },
+        S1e: {
+            type: "structure",
+            members: {
+                SnapshotName: {},
+                ReplicationGroupId: {},
+                ReplicationGroupDescription: {},
+                CacheClusterId: {},
+                SnapshotStatus: {},
+                SnapshotSource: {},
+                CacheNodeType: {},
+                Engine: {},
+                EngineVersion: {},
+                NumCacheNodes: {
+                    type: "integer"
+                },
+                PreferredAvailabilityZone: {},
+                PreferredOutpostArn: {},
+                CacheClusterCreateTime: {
+                    type: "timestamp"
+                },
+                PreferredMaintenanceWindow: {},
+                TopicArn: {},
+                Port: {
+                    type: "integer"
+                },
+                CacheParameterGroupName: {},
+                CacheSubnetGroupName: {},
+                VpcId: {},
+                AutoMinorVersionUpgrade: {
+                    type: "boolean"
+                },
+                SnapshotRetentionLimit: {
+                    type: "integer"
+                },
+                SnapshotWindow: {},
+                NumNodeGroups: {
+                    type: "integer"
+                },
+                AutomaticFailover: {},
+                NodeSnapshots: {
+                    type: "list",
+                    member: {
+                        locationName: "NodeSnapshot",
+                        type: "structure",
+                        members: {
+                            CacheClusterId: {},
+                            NodeGroupId: {},
+                            CacheNodeId: {},
+                            NodeGroupConfiguration: {
+                                shape: "S1h"
+                            },
+                            CacheSize: {},
+                            CacheNodeCreateTime: {
+                                type: "timestamp"
+                            },
+                            SnapshotCreateTime: {
+                                type: "timestamp"
+                            }
+                        },
+                        wrapper: true
+                    }
+                },
+                KmsKeyId: {},
+                ARN: {}
+            },
+            wrapper: true
+        },
+        S1h: {
+            type: "structure",
+            members: {
+                NodeGroupId: {},
+                Slots: {},
+                ReplicaCount: {
+                    type: "integer"
+                },
+                PrimaryAvailabilityZone: {},
+                ReplicaAvailabilityZones: {
+                    shape: "S1j"
+                },
+                PrimaryOutpostArn: {},
+                ReplicaOutpostArns: {
+                    type: "list",
+                    member: {
+                        locationName: "OutpostArn"
+                    }
+                }
+            }
+        },
+        S1j: {
+            type: "list",
+            member: {
+                locationName: "AvailabilityZone"
+            }
+        },
+        S1n: {
+            type: "list",
+            member: {
+                locationName: "PreferredAvailabilityZone"
+            }
+        },
+        S1o: {
+            type: "list",
+            member: {
+                locationName: "CacheSecurityGroupName"
+            }
+        },
+        S1p: {
+            type: "list",
+            member: {
+                locationName: "SecurityGroupId"
+            }
+        },
+        S1q: {
+            type: "list",
+            member: {
+                locationName: "SnapshotArn"
+            }
+        },
+        S1s: {
+            type: "list",
+            member: {
+                locationName: "PreferredOutpostArn"
+            }
+        },
+        S1u: {
+            type: "structure",
+            members: {
+                CacheClusterId: {},
+                ConfigurationEndpoint: {
+                    shape: "S12"
+                },
+                ClientDownloadLandingPage: {},
+                CacheNodeType: {},
+                Engine: {},
+                EngineVersion: {},
+                CacheClusterStatus: {},
+                NumCacheNodes: {
+                    type: "integer"
+                },
+                PreferredAvailabilityZone: {},
+                PreferredOutpostArn: {},
+                CacheClusterCreateTime: {
+                    type: "timestamp"
+                },
+                PreferredMaintenanceWindow: {},
+                PendingModifiedValues: {
+                    type: "structure",
+                    members: {
+                        NumCacheNodes: {
+                            type: "integer"
+                        },
+                        CacheNodeIdsToRemove: {
+                            shape: "S1w"
+                        },
+                        EngineVersion: {},
+                        CacheNodeType: {},
+                        AuthTokenStatus: {}
+                    }
+                },
+                NotificationConfiguration: {
+                    type: "structure",
+                    members: {
+                        TopicArn: {},
+                        TopicStatus: {}
+                    }
+                },
+                CacheSecurityGroups: {
+                    type: "list",
+                    member: {
+                        locationName: "CacheSecurityGroup",
+                        type: "structure",
+                        members: {
+                            CacheSecurityGroupName: {},
+                            Status: {}
+                        }
+                    }
+                },
+                CacheParameterGroup: {
+                    type: "structure",
+                    members: {
+                        CacheParameterGroupName: {},
+                        ParameterApplyStatus: {},
+                        CacheNodeIdsToReboot: {
+                            shape: "S1w"
+                        }
+                    }
+                },
+                CacheSubnetGroupName: {},
+                CacheNodes: {
+                    type: "list",
+                    member: {
+                        locationName: "CacheNode",
+                        type: "structure",
+                        members: {
+                            CacheNodeId: {},
+                            CacheNodeStatus: {},
+                            CacheNodeCreateTime: {
+                                type: "timestamp"
+                            },
+                            Endpoint: {
+                                shape: "S12"
+                            },
+                            ParameterGroupStatus: {},
+                            SourceCacheNodeId: {},
+                            CustomerAvailabilityZone: {},
+                            CustomerOutpostArn: {}
+                        }
+                    }
+                },
+                AutoMinorVersionUpgrade: {
+                    type: "boolean"
+                },
+                SecurityGroups: {
+                    type: "list",
+                    member: {
+                        type: "structure",
+                        members: {
+                            SecurityGroupId: {},
+                            Status: {}
+                        }
+                    }
+                },
+                ReplicationGroupId: {},
+                SnapshotRetentionLimit: {
+                    type: "integer"
+                },
+                SnapshotWindow: {},
+                AuthTokenEnabled: {
+                    type: "boolean"
+                },
+                AuthTokenLastModifiedDate: {
+                    type: "timestamp"
+                },
+                TransitEncryptionEnabled: {
+                    type: "boolean"
+                },
+                AtRestEncryptionEnabled: {
+                    type: "boolean"
+                },
+                ARN: {}
+            },
+            wrapper: true
+        },
+        S1w: {
+            type: "list",
+            member: {
+                locationName: "CacheNodeId"
+            }
+        },
+        S27: {
+            type: "structure",
+            members: {
+                CacheParameterGroupName: {},
+                CacheParameterGroupFamily: {},
+                Description: {},
+                IsGlobal: {
+                    type: "boolean"
+                },
+                ARN: {}
+            },
+            wrapper: true
+        },
+        S2b: {
+            type: "list",
+            member: {
+                locationName: "SubnetIdentifier"
+            }
+        },
+        S2d: {
+            type: "structure",
+            members: {
+                CacheSubnetGroupName: {},
+                CacheSubnetGroupDescription: {},
+                VpcId: {},
+                Subnets: {
+                    type: "list",
+                    member: {
+                        locationName: "Subnet",
+                        type: "structure",
+                        members: {
+                            SubnetIdentifier: {},
+                            SubnetAvailabilityZone: {
+                                type: "structure",
+                                members: {
+                                    Name: {}
+                                },
+                                wrapper: true
+                            },
+                            SubnetOutpost: {
+                                type: "structure",
+                                members: {
+                                    SubnetOutpostArn: {}
+                                }
+                            }
+                        }
+                    }
+                },
+                ARN: {}
+            },
+            wrapper: true
+        },
+        S2k: {
+            type: "structure",
+            members: {
+                GlobalReplicationGroupId: {},
+                GlobalReplicationGroupDescription: {},
+                Status: {},
+                CacheNodeType: {},
+                Engine: {},
+                EngineVersion: {},
+                Members: {
+                    type: "list",
+                    member: {
+                        locationName: "GlobalReplicationGroupMember",
+                        type: "structure",
+                        members: {
+                            ReplicationGroupId: {},
+                            ReplicationGroupRegion: {},
+                            Role: {},
+                            AutomaticFailover: {},
+                            Status: {}
+                        },
+                        wrapper: true
+                    }
+                },
+                ClusterEnabled: {
+                    type: "boolean"
+                },
+                GlobalNodeGroups: {
+                    type: "list",
+                    member: {
+                        locationName: "GlobalNodeGroup",
+                        type: "structure",
+                        members: {
+                            GlobalNodeGroupId: {},
+                            Slots: {}
+                        }
+                    }
+                },
+                AuthTokenEnabled: {
+                    type: "boolean"
+                },
+                TransitEncryptionEnabled: {
+                    type: "boolean"
+                },
+                AtRestEncryptionEnabled: {
+                    type: "boolean"
+                },
+                ARN: {}
+            },
+            wrapper: true
+        },
+        S2z: {
+            type: "list",
+            member: {}
+        },
+        S31: {
+            type: "structure",
+            members: {
+                UserId: {},
+                UserName: {},
+                Status: {},
+                Engine: {},
+                AccessString: {},
+                UserGroupIds: {
+                    shape: "Sx"
+                },
+                Authentication: {
+                    type: "structure",
+                    members: {
+                        Type: {},
+                        PasswordCount: {
+                            type: "integer"
+                        }
+                    }
+                },
+                ARN: {}
+            }
+        },
+        S35: {
+            type: "list",
+            member: {}
+        },
+        S36: {
+            type: "structure",
+            members: {
+                UserGroupId: {},
+                Status: {},
+                Engine: {},
+                UserIds: {
+                    shape: "S37"
+                },
+                PendingChanges: {
+                    type: "structure",
+                    members: {
+                        UserIdsToRemove: {
+                            shape: "S37"
+                        },
+                        UserIdsToAdd: {
+                            shape: "S37"
+                        }
+                    }
+                },
+                ReplicationGroups: {
+                    type: "list",
+                    member: {}
+                },
+                ARN: {}
+            }
+        },
+        S37: {
+            type: "list",
+            member: {}
+        },
+        S3b: {
+            type: "list",
+            member: {
+                locationName: "GlobalNodeGroupId"
+            }
+        },
+        S3e: {
+            type: "list",
+            member: {
+                locationName: "ConfigureShard",
+                type: "structure",
+                required: [ "NodeGroupId", "NewReplicaCount" ],
+                members: {
+                    NodeGroupId: {},
+                    NewReplicaCount: {
+                        type: "integer"
+                    },
+                    PreferredAvailabilityZones: {
+                        shape: "S1n"
+                    },
+                    PreferredOutpostArns: {
+                        shape: "S1s"
+                    }
+                }
+            }
+        },
+        S47: {
+            type: "list",
+            member: {
+                locationName: "Parameter",
+                type: "structure",
+                members: {
+                    ParameterName: {},
+                    ParameterValue: {},
+                    Description: {},
+                    Source: {},
+                    DataType: {},
+                    AllowedValues: {},
+                    IsModifiable: {
+                        type: "boolean"
+                    },
+                    MinimumEngineVersion: {},
+                    ChangeType: {}
+                }
+            }
+        },
+        S4a: {
+            type: "list",
+            member: {
+                locationName: "CacheNodeTypeSpecificParameter",
+                type: "structure",
+                members: {
+                    ParameterName: {},
+                    Description: {},
+                    Source: {},
+                    DataType: {},
+                    AllowedValues: {},
+                    IsModifiable: {
+                        type: "boolean"
+                    },
+                    MinimumEngineVersion: {},
+                    CacheNodeTypeSpecificValues: {
+                        type: "list",
+                        member: {
+                            locationName: "CacheNodeTypeSpecificValue",
+                            type: "structure",
+                            members: {
+                                CacheNodeType: {},
+                                Value: {}
+                            }
+                        }
+                    },
+                    ChangeType: {}
+                }
+            }
+        },
+        S51: {
+            type: "structure",
+            members: {
+                ReservedCacheNodeId: {},
+                ReservedCacheNodesOfferingId: {},
+                CacheNodeType: {},
+                StartTime: {
+                    type: "timestamp"
+                },
+                Duration: {
+                    type: "integer"
+                },
+                FixedPrice: {
+                    type: "double"
+                },
+                UsagePrice: {
+                    type: "double"
+                },
+                CacheNodeCount: {
+                    type: "integer"
+                },
+                ProductDescription: {},
+                OfferingType: {},
+                State: {},
+                RecurringCharges: {
+                    shape: "S52"
+                },
+                ReservationARN: {}
+            },
+            wrapper: true
+        },
+        S52: {
+            type: "list",
+            member: {
+                locationName: "RecurringCharge",
+                type: "structure",
+                members: {
+                    RecurringChargeAmount: {
+                        type: "double"
+                    },
+                    RecurringChargeFrequency: {}
+                },
+                wrapper: true
+            }
+        },
+        S59: {
+            type: "list",
+            member: {}
+        },
+        S6g: {
+            type: "list",
+            member: {
+                locationName: "ReshardingConfiguration",
+                type: "structure",
+                members: {
+                    NodeGroupId: {},
+                    PreferredAvailabilityZones: {
+                        shape: "S1j"
+                    }
+                }
+            }
+        },
+        S6n: {
+            type: "list",
+            member: {}
+        },
+        S6t: {
+            type: "list",
+            member: {
+                locationName: "ParameterNameValue",
+                type: "structure",
+                members: {
+                    ParameterName: {},
+                    ParameterValue: {}
+                }
+            }
+        },
+        S6v: {
+            type: "structure",
+            members: {
+                CacheParameterGroupName: {}
+            }
+        }
+    },
+    paginators: {
+        DescribeCacheClusters: {
+            input_token: "Marker",
+            limit_key: "MaxRecords",
+            output_token: "Marker",
+            result_key: "CacheClusters"
+        },
+        DescribeCacheEngineVersions: {
+            input_token: "Marker",
+            limit_key: "MaxRecords",
+            output_token: "Marker",
+            result_key: "CacheEngineVersions"
+        },
+        DescribeCacheParameterGroups: {
+            input_token: "Marker",
+            limit_key: "MaxRecords",
+            output_token: "Marker",
+            result_key: "CacheParameterGroups"
+        },
+        DescribeCacheParameters: {
+            input_token: "Marker",
+            limit_key: "MaxRecords",
+            output_token: "Marker",
+            result_key: "Parameters"
+        },
+        DescribeCacheSecurityGroups: {
+            input_token: "Marker",
+            limit_key: "MaxRecords",
+            output_token: "Marker",
+            result_key: "CacheSecurityGroups"
+        },
+        DescribeCacheSubnetGroups: {
+            input_token: "Marker",
+            limit_key: "MaxRecords",
+            output_token: "Marker",
+            result_key: "CacheSubnetGroups"
+        },
+        DescribeEngineDefaultParameters: {
+            input_token: "Marker",
+            limit_key: "MaxRecords",
+            output_token: "EngineDefaults.Marker",
+            result_key: "EngineDefaults.Parameters"
+        },
+        DescribeEvents: {
+            input_token: "Marker",
+            limit_key: "MaxRecords",
+            output_token: "Marker",
+            result_key: "Events"
+        },
+        DescribeGlobalReplicationGroups: {
+            input_token: "Marker",
+            limit_key: "MaxRecords",
+            output_token: "Marker",
+            result_key: "GlobalReplicationGroups"
+        },
+        DescribeReplicationGroups: {
+            input_token: "Marker",
+            limit_key: "MaxRecords",
+            output_token: "Marker",
+            result_key: "ReplicationGroups"
+        },
+        DescribeReservedCacheNodes: {
+            input_token: "Marker",
+            limit_key: "MaxRecords",
+            output_token: "Marker",
+            result_key: "ReservedCacheNodes"
+        },
+        DescribeReservedCacheNodesOfferings: {
+            input_token: "Marker",
+            limit_key: "MaxRecords",
+            output_token: "Marker",
+            result_key: "ReservedCacheNodesOfferings"
+        },
+        DescribeServiceUpdates: {
+            input_token: "Marker",
+            limit_key: "MaxRecords",
+            output_token: "Marker",
+            result_key: "ServiceUpdates"
+        },
+        DescribeSnapshots: {
+            input_token: "Marker",
+            limit_key: "MaxRecords",
+            output_token: "Marker",
+            result_key: "Snapshots"
+        },
+        DescribeUpdateActions: {
+            input_token: "Marker",
+            limit_key: "MaxRecords",
+            output_token: "Marker",
+            result_key: "UpdateActions"
+        },
+        DescribeUserGroups: {
+            input_token: "Marker",
+            limit_key: "MaxRecords",
+            output_token: "Marker",
+            result_key: "UserGroups"
+        },
+        DescribeUsers: {
+            input_token: "Marker",
+            limit_key: "MaxRecords",
+            output_token: "Marker",
+            result_key: "Users"
+        }
+    },
+    waiters: {
+        CacheClusterAvailable: {
+            acceptors: [ {
+                argument: "CacheClusters[].CacheClusterStatus",
+                expected: "available",
+                matcher: "pathAll",
+                state: "success"
+            }, {
+                argument: "CacheClusters[].CacheClusterStatus",
+                expected: "deleted",
+                matcher: "pathAny",
+                state: "failure"
+            }, {
+                argument: "CacheClusters[].CacheClusterStatus",
+                expected: "deleting",
+                matcher: "pathAny",
+                state: "failure"
+            }, {
+                argument: "CacheClusters[].CacheClusterStatus",
+                expected: "incompatible-network",
+                matcher: "pathAny",
+                state: "failure"
+            }, {
+                argument: "CacheClusters[].CacheClusterStatus",
+                expected: "restore-failed",
+                matcher: "pathAny",
+                state: "failure"
+            } ],
+            delay: 15,
+            description: "Wait until ElastiCache cluster is available.",
+            maxAttempts: 40,
+            operation: "DescribeCacheClusters"
+        },
+        CacheClusterDeleted: {
+            acceptors: [ {
+                argument: "CacheClusters[].CacheClusterStatus",
+                expected: "deleted",
+                matcher: "pathAll",
+                state: "success"
+            }, {
+                expected: "CacheClusterNotFound",
+                matcher: "error",
+                state: "success"
+            }, {
+                argument: "CacheClusters[].CacheClusterStatus",
+                expected: "available",
+                matcher: "pathAny",
+                state: "failure"
+            }, {
+                argument: "CacheClusters[].CacheClusterStatus",
+                expected: "creating",
+                matcher: "pathAny",
+                state: "failure"
+            }, {
+                argument: "CacheClusters[].CacheClusterStatus",
+                expected: "incompatible-network",
+                matcher: "pathAny",
+                state: "failure"
+            }, {
+                argument: "CacheClusters[].CacheClusterStatus",
+                expected: "modifying",
+                matcher: "pathAny",
+                state: "failure"
+            }, {
+                argument: "CacheClusters[].CacheClusterStatus",
+                expected: "restore-failed",
+                matcher: "pathAny",
+                state: "failure"
+            }, {
+                argument: "CacheClusters[].CacheClusterStatus",
+                expected: "snapshotting",
+                matcher: "pathAny",
+                state: "failure"
+            } ],
+            delay: 15,
+            description: "Wait until ElastiCache cluster is deleted.",
+            maxAttempts: 40,
+            operation: "DescribeCacheClusters"
+        },
+        ReplicationGroupAvailable: {
+            acceptors: [ {
+                argument: "ReplicationGroups[].Status",
+                expected: "available",
+                matcher: "pathAll",
+                state: "success"
+            }, {
+                argument: "ReplicationGroups[].Status",
+                expected: "deleted",
+                matcher: "pathAny",
+                state: "failure"
+            } ],
+            delay: 15,
+            description: "Wait until ElastiCache replication group is available.",
+            maxAttempts: 40,
+            operation: "DescribeReplicationGroups"
+        },
+        ReplicationGroupDeleted: {
+            acceptors: [ {
+                argument: "ReplicationGroups[].Status",
+                expected: "deleted",
+                matcher: "pathAll",
+                state: "success"
+            }, {
+                argument: "ReplicationGroups[].Status",
+                expected: "available",
+                matcher: "pathAny",
+                state: "failure"
+            }, {
+                expected: "ReplicationGroupNotFoundFault",
+                matcher: "error",
+                state: "success"
+            } ],
+            delay: 15,
+            description: "Wait until ElastiCache replication group is deleted.",
+            maxAttempts: 40,
+            operation: "DescribeReplicationGroups"
+        }
+    }
+};
+
