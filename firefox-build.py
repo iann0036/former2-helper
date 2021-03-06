@@ -13,7 +13,7 @@ output = ''
 partno = 1
 line = 'x'
 
-with open('aws-sdk-2.842.0.js', 'r') as f:
+with open('aws-sdk-' + version + '.js', 'r') as f:
     while line != '':
         i = 0
         while i < 100000 and line != '':
