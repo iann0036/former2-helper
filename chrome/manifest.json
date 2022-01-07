@@ -1,19 +1,18 @@
 {
   "name": "Former2 Helper",
-  "version": "1.55",
-  "manifest_version": 2,
+  "version": "1.57",
+  "manifest_version": 3,
   "description": "Helps avoid CORS issues with former2.com",
-  "content_security_policy": "script-src 'self'; object-src 'self'",
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
   "background":  {
-    "scripts": [
-      "aws-sdk-2.1046.0.js",
-      "bg.js"
-    ]
+    "service_worker": "bg.js"
   },
   "icons": {
     "128": "icon-128.png"
   },
-  "permissions": [
+  "host_permissions": [
     "https://*.aws.amazon.com/*",
     "https://*.amazonaws.com/*",
     "https://*.amazonaws.com.cn/*",
