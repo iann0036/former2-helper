@@ -1,4 +1,4 @@
-importScripts("aws-sdk-2.1051.0-sw.js");
+importScripts("aws-sdk-2.1116.0-sw.js");
 
 chrome.runtime.onMessageExternal.addListener(
     function (request, sender, sendResponse) {
