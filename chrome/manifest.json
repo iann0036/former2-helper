@@ -22,6 +22,8 @@
     "matches": [
       "https://former2.com/*",
       "https://*.former2.com/*",
+      "https://former2.softrams.cloud/*",
+      "https://*.former2.softrams.cloud/*",
       "http://127.0.0.1/*",
       "https://127.0.0.1/*",
       "http://localhost/*",

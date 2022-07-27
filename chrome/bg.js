@@ -2,7 +2,7 @@ importScripts("aws-sdk-2.1116.0-sw.js");
 
 chrome.runtime.onMessageExternal.addListener(
     function (request, sender, sendResponse) {
-        if (["127.0.0.1", "localhost", "former2.com", "www.former2.com"].includes(new URL(sender.url).hostname)) {
+        if (["127.0.0.1", "localhost", "former2.com", "www.former2.com", "former2.softrams.cloud"].includes(new URL(sender.url).hostname)) {
             if (request.action == "ping") {
                 sendResponse({
                     'success': true,
@@ -29,7 +29,7 @@ chrome.runtime.onMessageExternal.addListener(
                             request.config.credentials[1],
                             request.config.credentials[2]
                         );
-        
+
                         AWS.config.update(request.config);
                     }
 
