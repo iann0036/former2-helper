@@ -11,15 +11,15 @@ jobs:
       - uses: vimtor/action-zip@v1
         with:
           files: chrome/
-          dest: chrome-extension.zip
+          dest: former2-chrome-extension.zip
       - uses: vimtor/action-zip@v1
         with:
           files: firefox/
-          dest: firefox-extension.zip
+          dest: former2-firefox-extension.zip
       - name: Release
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
         with:
           files: |
-            chrome-extension.zip
-            firefox-extension.zip
+            former2-chrome-extension.zip
+            former2-firefox-extension.zip
