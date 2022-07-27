@@ -1,12 +1,12 @@
 browser.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
-        if (["127.0.0.1", "localhost", "former2.com", "www.former2.com"].includes(new URL(sender.url).hostname)) {
+        if (["127.0.0.1", "localhost", "former2.com", "www.former2.com", "former2.softrams.cloud"].includes(new URL(sender.url).hostname)) {
             if (request.action == "ping") {
                 sendResponse({
                     'success': true,
                     'data': {}
                 });
-                
+
                 return true;
             } else if (request.action == "configUpdate") {
                 request.obj.credentials = new AWS.Credentials(
@@ -21,7 +21,7 @@ browser.runtime.onMessage.addListener(
                     'success': true,
                     'data': {}
                 });
-                
+
                 return true;
             } else if (request.action == "serviceAction") {
                 try {
