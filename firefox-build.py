@@ -4,10 +4,14 @@ import os
 import json
 import requests
 import pprint
+import sys
 
-stream = os.popen('npm show aws-sdk version')
-version = stream.read().replace('\n','')
-metadata = json.loads(requests.get('https://sdk.amazonaws.com/builder/js/cache/' + version + '/metadata.json').text)
+if len(sys.argv) > 1:
+    version = sys.argv[1]
+else:
+    stream = os.popen('npm show aws-sdk version')
+    version = stream.read().replace('\n','')
+    metadata = json.loads(requests.get('https://sdk.amazonaws.com/builder/js/cache/' + version + '/metadata.json').text)
 
 output = ''
 partno = 1
