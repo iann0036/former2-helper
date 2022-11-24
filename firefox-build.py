@@ -12,7 +12,7 @@ import sys
 #     stream = os.popen('npm show aws-sdk version')
 #     version = stream.read().replace('\n','')
 #     metadata = json.loads(requests.get('https://sdk.amazonaws.com/builder/js/cache/' + version + '/metadata.json').text)
-version = '2.1233.0'
+version = '2.1260.0'
 
 output = ''
 partno = 1
