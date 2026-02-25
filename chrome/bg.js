@@ -63,5 +63,7 @@ chrome.runtime.onMessageExternal.addListener(
         } else {
             console.log("Received request from non-whitelisted URL: " + sender.url);
         }
+
+        return true;
     }
 );
